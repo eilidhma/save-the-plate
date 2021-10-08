@@ -1,0 +1,8 @@
+Installed the following dependancies:
+
+
+
+lottie expo --> expo install lottie-react-native
+styled components --> npm install styled-components --save
+UI kitten --> npm i @ui-kitten/components @eva-design/eva react-native-svg
+axios --> npm install axios --save
