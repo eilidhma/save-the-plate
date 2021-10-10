@@ -17,6 +17,7 @@ export default function App() {
     return <Text>loading</Text>;
   } else {
   return (
+
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
       <Text style={{color:'white', fontFamily:'Raleway_700Bold', fontSize:32}}>SaveThePlate</Text>
       <Image style={{width:100, height:100, marginTop:20}} source={logo}/>
@@ -32,5 +33,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-//#E94168
