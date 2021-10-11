@@ -40,6 +40,9 @@ function HomeScreen({ navigation }) {
 }
 
 function Login({ navigation }) {
+// Eilidh's section - customer UI
+
+function Login() {
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
       <Text style={{color:'white', fontFamily:'Raleway_700Bold', fontSize:32}}>SaveThePlate</Text>
@@ -54,6 +57,11 @@ function Login({ navigation }) {
   );
 }
 
+//
+
+
+// Adrian's's section - restaurant UI
+
 function RestaurantHome ({  navigation }) {
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
@@ -66,6 +74,8 @@ function RestaurantHome ({  navigation }) {
   </LinearGradient>
   )
 }
+
+// 
 
 function App() {
   return (
@@ -86,5 +96,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+}
 
 export default App;
