@@ -29,12 +29,17 @@ function HomeScreen({ navigation }) {
         title="Login"
         onPress={() => navigation.navigate('Login')}
       />
+      {/* just testing, feel free to delete once we get everything going */}
+      <Button
+          title="Restaurant"
+          onPress={() => navigation.navigate('RestaurantHome')}
+      />
     </LinearGradient>
   );
   }
 }
 
-function Login() {
+function Login({ navigation }) {
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
       <Text style={{color:'white', fontFamily:'Raleway_700Bold', fontSize:32}}>SaveThePlate</Text>
@@ -43,8 +48,23 @@ function Login() {
         title="Login"
         onPress={() => navigation.navigate('Login')}
       />
+      {/* just added this to see if it works, feel free to delete */}
+      <Text>you are on the login page</Text>
     </LinearGradient>
   );
+}
+
+function RestaurantHome ({  navigation }) {
+  return (
+    <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
+    <Image style={{width:40, height:40, marginTop:5}} source={logo}/>
+    <Text>you are on restaurant homepage</Text>
+    <Button
+      title="Back"
+      onPress={() => navigation.goBack()}
+    />
+  </LinearGradient>
+  )
 }
 
 function App() {
@@ -53,6 +73,7 @@ function App() {
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Home" style={{display:'none'}}>
         <Stack.Screen name="Home" component={HomeScreen}/>
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="RestaurantHome" component={RestaurantHome}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
