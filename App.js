@@ -34,6 +34,8 @@ function HomeScreen({ navigation }) {
   }
 }
 
+// Eilidh's section - customer UI
+
 function Login() {
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
@@ -46,6 +48,14 @@ function Login() {
     </LinearGradient>
   );
 }
+
+//
+
+
+// Adrian's's section - restaurant UI
+
+
+// 
 
 function App() {
   return (
