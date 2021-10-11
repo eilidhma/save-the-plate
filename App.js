@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Button } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   useFonts,
@@ -41,8 +41,6 @@ function HomeScreen({ navigation }) {
 
 function Login({ navigation }) {
 // Eilidh's section - customer UI
-
-function Login() {
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
       <Text style={{color:'white', fontFamily:'Raleway_700Bold', fontSize:32}}>SaveThePlate</Text>
@@ -64,20 +62,46 @@ function Login() {
 
 function RestaurantHome ({  navigation }) {
   return (
-    <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
-    <Image style={{width:40, height:40, marginTop:5}} source={logo}/>
-    <Text>you are on restaurant homepage</Text>
-    <Button
-      title="Back"
-      onPress={() => navigation.goBack()}
-    />
+    <LinearGradient colors={['#F3AE81', '#E94168']} style={homeStyles.container}>
+      {/* top bar goes here */}
+
+      <View>
+
+        <View>
+          <Text>Orders</Text>
+
+          <Text>Listed</Text>
+        </View>
+
+
+
+        {/* seleciton UI component goes here */}
+        
+      </View>
+
+      {/* search component goes here */}
+
+      <View>
+        {/* orders go here */}
+      </View>
+
+
+      
+
+
+      
+
+        
+
+
+    {/* bottom bar */}
   </LinearGradient>
   )
 }
 
 // 
 
-function App() {
+function App () {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Home" style={{display:'none'}}>
@@ -96,6 +120,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-}
+
+const homeStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center' 
+  }
+});
 
 export default App;
