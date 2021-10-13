@@ -40,6 +40,7 @@ function Landing({ navigation }) {
   }
 }
 
+function Login({ navigation }) {
 // Eilidh's section - customer UI
 
 function Login({ navigation }) {
@@ -72,16 +73,55 @@ function Home() {
 
 // Adrian's's section - restaurant UI
 
+function RestaurantHome ({  navigation }) {
+  return (
+    <LinearGradient colors={['#F3AE81', '#E94168']} style={homeStyles.container}>
+      {/* top bar goes here */}
+
+      <View>
+
+        <View>
+          <Text>Orders</Text>
+
+          <Text>Listed</Text>
+        </View>
+
+
+
+        {/* seleciton UI component goes here */}
+        
+      </View>
+
+      {/* search component goes here */}
+
+      <View>
+        {/* orders go here */}
+      </View>
+
+
+      
+
+
+      
+
+        
+
+
+    {/* bottom bar */}
+  </LinearGradient>
+  )
+}
 
 // 
 
-function App() {
+function App () {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
         <Stack.Screen name="Landing" component={Landing}/>
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="RestaurantHome" component={RestaurantHome}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -125,4 +165,13 @@ const styles = StyleSheet.create({
   }
 });
 
-export default App;
+const homeStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center' 
+  }
+});
+
+export default App
