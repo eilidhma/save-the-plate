@@ -40,7 +40,6 @@ function Landing({ navigation }) {
   }
 }
 
-function Login({ navigation }) {
 // Eilidh's section - customer UI
 
 function Login({ navigation }) {
