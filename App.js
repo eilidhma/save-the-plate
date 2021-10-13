@@ -17,7 +17,7 @@ var logo = require ('./assets/logo1.png');
 const Stack = createNativeStackNavigator();
 
 
-function HomeScreen({ navigation }) {
+function Landing({ navigation }) {
   let [fontsLoaded] = useFonts({
     Raleway_700Bold, Quicksand_300Light
   });
@@ -42,7 +42,7 @@ function HomeScreen({ navigation }) {
 
 // Eilidh's section - customer UI
 
-function Login() {
+function Login({ navigation }) {
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
       <Text style={{color:'white', fontFamily:'Raleway_700Bold', fontSize:32}}>SaveThePlate</Text>
@@ -51,9 +51,18 @@ function Login() {
       <TextInput autoCompleteType={'username'} style={styles.username} placeholder={'username'} textAlign={'center'} textContentType={'username'}/>
       <TextInput autoCompleteType={'password'} style={styles.username} placeholder={'password'} textAlign={'center'} textContentType={'password'}/>
       <Pressable style={styles.shadowProp} title="Login"
-        onPress={() => navigation.navigate('Login')} >
+        onPress={() => navigation.navigate('Home')} >
         <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Login</Text>
       </Pressable>
+    </LinearGradient>
+  );
+}
+
+function Home() {
+  return (
+    <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
+      <Text style={{color:'white', fontFamily:'Raleway_700Bold', fontSize:32}}>Home</Text>
+      
     </LinearGradient>
   );
 }
@@ -69,9 +78,10 @@ function Login() {
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Home" style={{display:'none'}}>
-        <Stack.Screen name="Home" component={HomeScreen}/>
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
+        <Stack.Screen name="Landing" component={Landing}/>
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>
   );
