@@ -40,9 +40,8 @@ function HomeScreen({ navigation }) {
   }
 }
 
+function Login({ navigation }) {
 // Eilidh's section - customer UI
-
-function Login() {
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
       <Text style={{color:'white', fontFamily:'Raleway_700Bold', fontSize:32}}>SaveThePlate</Text>
@@ -63,15 +62,54 @@ function Login() {
 
 // Adrian's's section - restaurant UI
 
+function RestaurantHome ({  navigation }) {
+  return (
+    <LinearGradient colors={['#F3AE81', '#E94168']} style={homeStyles.container}>
+      {/* top bar goes here */}
+
+      <View>
+
+        <View>
+          <Text>Orders</Text>
+
+          <Text>Listed</Text>
+        </View>
+
+
+
+        {/* seleciton UI component goes here */}
+        
+      </View>
+
+      {/* search component goes here */}
+
+      <View>
+        {/* orders go here */}
+      </View>
+
+
+      
+
+
+      
+
+        
+
+
+    {/* bottom bar */}
+  </LinearGradient>
+  )
+}
 
 // 
 
-function App() {
+function App () {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Home" style={{display:'none'}}>
         <Stack.Screen name="Home" component={HomeScreen}/>
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="RestaurantHome" component={RestaurantHome}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -112,6 +150,15 @@ const styles = StyleSheet.create({
     borderRadius:20,
     fontFamily:'Quicksand_300Light', 
     fontSize:16
+  }
+});
+
+const homeStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center' 
   }
 });
 
