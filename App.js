@@ -11,6 +11,7 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
+import CustMealCard from './comps/CustMealCard';
 
 var logo = require ('./assets/logo1.png');
 
@@ -61,7 +62,7 @@ function Login({ navigation }) {
 function Home() {
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
-      <Text style={{color:'white', fontFamily:'Raleway_700Bold', fontSize:32}}>Home</Text>
+      <CustMealCard />
       
     </LinearGradient>
   );
