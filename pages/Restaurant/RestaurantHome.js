@@ -5,12 +5,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import ListingCard from '../../comps/Restaurant/ListingCard';
 import OrderCard from '../../comps/Restaurant/OrderCard';
+// import InfoCard from "../../comps/Restaurant/InfoCard";
 
 export default function RestaurantHome ({  navigation }) {
     return (
       <LinearGradient colors={['#F3AE81', '#E94168']} style={homeStyles.container}>
           <OrderCard/>
           <ListingCard/>
+          {/* <InfoCard/> */}
     </LinearGradient>
     )
   }
