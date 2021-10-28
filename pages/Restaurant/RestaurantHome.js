@@ -2,12 +2,15 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
-import OrderCard from '../../comps/OrderCard'
+
+import ListingCard from '../../comps/Restaurant/ListingCard';
+import OrderCard from '../../comps/Restaurant/OrderCard';
 
 export default function RestaurantHome ({  navigation }) {
     return (
       <LinearGradient colors={['#F3AE81', '#E94168']} style={homeStyles.container}>
-          <OrderCard></OrderCard>
+          <OrderCard/>
+          <ListingCard/>
     </LinearGradient>
     )
   }
