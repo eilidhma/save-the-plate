@@ -13,6 +13,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
 import CustMealCard from './comps/CustMealCard';
 
+//pages
+import RestaurantHome from './pages/Restaurant/RestaurantHome'
+
 var logo = require ('./assets/logo1.png');
 
 const Stack = createNativeStackNavigator();
@@ -70,49 +73,6 @@ function Home() {
 
 //
 
-
-// Adrian's's section - restaurant UI
-
-function RestaurantHome ({  navigation }) {
-  return (
-    <LinearGradient colors={['#F3AE81', '#E94168']} style={homeStyles.container}>
-      {/* top bar goes here */}
-
-      <View>
-
-        <View>
-          <Text>Orders</Text>
-
-          <Text>Listed</Text>
-        </View>
-
-
-
-        {/* seleciton UI component goes here */}
-        
-      </View>
-
-      {/* search component goes here */}
-
-      <View>
-        {/* orders go here */}
-      </View>
-
-
-      
-
-
-      
-
-        
-
-
-    {/* bottom bar */}
-  </LinearGradient>
-  )
-}
-
-// 
 
 function App () {
   return (
