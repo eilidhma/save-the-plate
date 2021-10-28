@@ -10,21 +10,23 @@ import {
 import styled from 'styled-components';
 
 const But = styled.Button`
-
+display:flex;
+width:25%;
 `
 
 const ButText = styled.Text`
-
+font-family:'Quicksand_400Regular
 `;
 
 
-const CustMealCard = ({
-  text="button"
+const But = ({
+  text="button",
+  fontSize=18
 }) =>{
 
   return <But>
-    <ButText>{text}</ButText>
+    <ButText fontSize={fontSize}>{text}</ButText>
   </But>
 }
 
-export default CustMealCard;
+export default But;
