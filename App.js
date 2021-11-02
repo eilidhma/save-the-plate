@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
@@ -93,6 +93,26 @@ function RestaurantHome ({  navigation }) {
 // 
 
 function App () {
+
+
+  const [nav, setNav] = useState(0)
+
+  const NavHome = () => {
+    setNav(0)
+  }
+
+  const NavOrders = () => {
+    setNav(1)
+  }
+
+  const NavCart = () => {
+    setNav(2)
+  }
+
+  const NavAccount = () => {
+    setNav(3)
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Home" style={{display:'none'}}>
@@ -101,7 +121,16 @@ function App () {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="RestaurantHome" component={RestaurantHome}/>
       </Stack.Navigator>
-      <Nav />
+      <Nav 
+      onPressHome={NavHome}
+      onPressOrders={NavOrders}
+      onPressCart={NavCart}
+      onPressAccount={NavAccount}
+      bgHome={nav === 0 ? "rgba(250,250,250,0.3)" : "rgba(250,250,250,0)"}
+      bgOrders={nav === 1 ? "rgba(250,250,250,0.3)" : "rgba(250,250,250,0)"}
+      bgCart={nav === 2 ? "rgba(250,250,250,0.3)" : "rgba(250,250,250,0)"}
+      bgAccount={nav === 3 ? "rgba(250,250,250,0.3)" : "rgba(250,250,250,0)"}
+      />
     </NavigationContainer>
   );
 }

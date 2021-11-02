@@ -43,10 +43,10 @@ export default function Home({navigation}) {
       alignItems={mealtab ? "flex-start" : "flex-end"}
       />
       <CustMealCard />
-      {/* <Pressable style={styles.shadowProp} title="Login"
+      <Pressable style={styles.shadowProp} title="Login"
         onPress={() => navigation.navigate('Login')} >
         <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Login</Text>
-      </Pressable> */}
+      </Pressable>
     </LinearGradient>
   ); 
 }
