@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, Button, Pressable, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   Raleway_700Bold,
@@ -11,9 +11,9 @@ import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
-import CustMealCard from '../../comps/CustMealCard';
-import But from '../../comps/customer/Button';
+import CustMealCard from '../../comps/customer/CustMealCard';
 import Tabs from '../../comps/customer/Tabs';
+import Location from '../../comps/customer/Location';
 
 
 export default function Home({navigation}) {
@@ -37,16 +37,25 @@ export default function Home({navigation}) {
 
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
-      <Tabs onPressMeal={HandleMealTab} onPressMap={HandleMapTab}
-      fontWeightMeals={mealtab ? 400 : 200}
-      fontWeightMap={maptab ? 400 : 200}
-      alignItems={mealtab ? "flex-start" : "flex-end"}
-      />
-      <CustMealCard />
-      <Pressable style={styles.shadowProp} title="Login"
+      <View style={{width:'100%', position:"absolute", top:80, display:'flex', justifyContent:'center', alignItems:'center'}}>
+        <Tabs onPressMeal={HandleMealTab} onPressMap={HandleMapTab}
+          fontWeightMeals={mealtab ? 400 : 200}
+          fontWeightMap={maptab ? 400 : 200}
+          alignItems={mealtab ? "flex-start" : "flex-end"}
+          />
+          <View style={{width:'90%'}}>
+            <Location />
+          </View>
+      </View>
+      {mealtab === true && <View style={{display:'flex', justifyContent:'center', alignItems:'center', overflow:'hidden'}}>
+        <CustMealCard />
+        <CustMealCard />
+        <CustMealCard />
+      </View>}
+      {/* <Pressable style={styles.shadowProp} title="Login"
         onPress={() => navigation.navigate('Login')} >
         <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Login</Text>
-      </Pressable>
+      </Pressable> */}
     </LinearGradient>
   ); 
 }

@@ -95,6 +95,7 @@ function RestaurantHome ({  navigation }) {
 function App () {
 
 
+  const [loaded, setLoaded] = useState(false)
   const [nav, setNav] = useState(0)
 
   const NavHome = () => {
@@ -115,7 +116,7 @@ function App () {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Home" style={{display:'none'}}>
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
         <Stack.Screen name="Landing" component={Landing}/>
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={Home} />

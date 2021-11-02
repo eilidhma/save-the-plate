@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
 import {
   useFonts,
@@ -8,6 +8,7 @@ import {
   Quicksand_300, Quicksand_300Light, Quicksand_400Regular
 } from '@expo-google-fonts/quicksand';
 import styled from 'styled-components';
+import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
 
 const CardCont = styled.View`
   display:flex;
@@ -15,6 +16,38 @@ const CardCont = styled.View`
   width:90%;
   flexDirection:row;
   borderRadius:15px;
+  overflow:hidden;
+  height:${props=>props.height};
+  margin-top:10px;
+`;
+
+const RestCont = styled.View`
+  display:flex;
+  width:100%;
+  flexDirection:row;
+  justify-content:space-between;
+`;
+
+const PriceCont = styled.View`
+  display:flex;
+  width:50%;
+  flexDirection:row;
+  justify-content:space-between;
+`;
+
+const DetailsCont = styled.View`
+  display:flex;
+  width:50%;
+  flexDirection:row;
+  align-items:center;
+`;
+
+const StarsCont = styled.View`
+  display:flex;
+  width:100%;
+  flexDirection:row;
+  align-items:center;
+  margin-top:10px;
 `;
 
 const Left = styled.View`
@@ -47,32 +80,60 @@ const CardText = styled.Text`
 // var mealImg = require('../../assets/meal.png');
 
 const CustMealCard = ({
-  src=require("../../assets/meal.png"),
-  plateImg=require("../../assets/plate.png"),
-  restaurant="Fratelli's Bistro        ", //fix this
+  src=require("../../../assets/meal.png"),
+  plateImg=require("../../../assets/plate.png"),
+  restaurant="Fratelli's Bistro", //fix this
   meal="Fettuccine Alfredo",
-  distance="400m",
+  distance="400m away",
   plates="217",
-  description="fettuccine pasta tossed with Parmesan cheese and butter and served with garlic toast on the side"
+  description="fettuccine pasta tossed with Parmesan cheese and butter and served with garlic toast on the side",
+  newprice="$5.00",
+  oldprice="$21.00",
+  height="135px"
 }) =>{
 
-  return <CardCont>
+  const [card, setCard] = useState(false)
+
+  if(card === false) {
+    height="135px"
+  } else {
+    height="330px"
+  }
+
+  const HandleCard = () => {
+    setCard(!card)
+  }
+
+  return <CardCont height={height}>
     <Left>
       <Image style={{width:115, height:105, borderRadius:15}} source={src}/>
+      <Text style={{marginTop:30, fontFamily:'Quicksand_300Light', fontSize:16}}>Description:</Text>
       <Text style={{marginTop:30, fontFamily:'Quicksand_300Light', fontSize:16}}>Restaurant's Rating:</Text>
       <Text style={{marginTop:15, fontFamily:'Quicksand_300Light', fontSize:16}}>Dietary Information:</Text>
     </Left>
     <Right>
       <Text style={{fontFamily:'Raleway_700Bold', fontSize:20}}>{meal}</Text>
-      <Text style={{marginTop:8, fontFamily:'Quicksand_300Light', fontSize:14}}>
-        {restaurant}
-        <Text style={{marginLeft:15}}>{distance}</Text>
-      </Text>
-      <Plates>
-        <Text style={{marginBottom:-10, marginTop:10, color:'#FE4265', fontSize:12}}>{plates}</Text>
-        <Image source={plateImg}/>
-      </Plates>
-      <Text style={{marginTop:8, fontFamily:'Quicksand_300Light', fontSize:12}}>{description}</Text>
+      <RestCont>
+        <Text style={{marginTop:8, fontFamily:'Quicksand_300Light', fontSize:14}}>{restaurant}</Text>
+        <Text style={{marginTop:10, fontFamily:'Quicksand_300Light', fontSize:12}}>{distance}</Text>
+      </RestCont>
+      <PriceCont>
+        <Text style={{marginTop:8, fontFamily:'Quicksand_300Light', fontSize:16, color:'#FE4265', fontWeight:'700'}}>{newprice}</Text>
+        <Text style={{marginTop:10, fontFamily:'Quicksand_300Light', fontSize:12, textDecorationLine:'line-through'}}>{oldprice}</Text>
+      </PriceCont>
+      <DetailsCont>
+        <Pressable onPress={HandleCard}><Text style={{marginTop:5, fontFamily:'Quicksand_300Light', fontSize:14, color:'#FE4265'}}>More Details</Text></Pressable>
+        <MaterialIcons style={{marginTop:5}} name="arrow-drop-down" size={33} color="#FE4265" />
+      </DetailsCont>
+      
+      <Text style={{marginTop:10, fontFamily:'Quicksand_300Light', fontSize:12}}>{description}</Text>
+      <StarsCont>
+        <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
+        <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
+        <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
+        <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
+        <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
+      </StarsCont>
     </Right>
   </CardCont>
 }

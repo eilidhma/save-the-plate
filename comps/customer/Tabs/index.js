@@ -47,7 +47,7 @@ const SliderCont = styled.View`
   align-items:${props=>props.alignItems};
   justify-content:flex-start;
   width:100%;
-  margin-bottom:30px;
+  margin-bottom:15px;
 `
 const Slider = styled.View`
   width:50%;
