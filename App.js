@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
@@ -11,7 +11,9 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
-import CustMealCard from './comps/CustMealCard';
+import Home from './pages/customer/home';
+import Login from './pages/customer/login';
+import Nav from './comps/customer/Nav';
 
 //pages
 import RestaurantHome from './pages/Restaurant/home'
@@ -46,35 +48,32 @@ function Landing({ navigation }) {
 
 // Eilidh's section - customer UI
 
-function Login({ navigation }) {
-  return (
-    <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
-      <Text style={{color:'white', fontFamily:'Raleway_700Bold', fontSize:32}}>SaveThePlate</Text>
-      <Image style={{width:70, height:70, marginTop:5}} source={logo}/>
-      <TextInput/>
-      <TextInput autoCompleteType={'username'} style={styles.username} placeholder={'username'} textAlign={'center'} textContentType={'username'}/>
-      <TextInput autoCompleteType={'password'} style={styles.username} placeholder={'password'} textAlign={'center'} textContentType={'password'}/>
-      <Pressable style={styles.shadowProp} title="Login"
-        onPress={() => navigation.navigate('Home')} >
-        <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Login</Text>
-      </Pressable>
-    </LinearGradient>
-  );
-}
-
-function Home() {
-  return (
-    <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
-      <CustMealCard />
-      
-    </LinearGradient>
-  );
-}
 
 //
 
 
 function App () {
+
+
+  const [loaded, setLoaded] = useState(false)
+  const [nav, setNav] = useState(0)
+
+  const NavHome = () => {
+    setNav(0)
+  }
+
+  const NavOrders = () => {
+    setNav(1)
+  }
+
+  const NavCart = () => {
+    setNav(2)
+  }
+
+  const NavAccount = () => {
+    setNav(3)
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="RestaurantHome" style={{display:'none'}}>
@@ -83,6 +82,16 @@ function App () {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="RestaurantHome" component={RestaurantHome}/>
       </Stack.Navigator>
+      <Nav 
+      onPressHome={NavHome}
+      onPressOrders={NavOrders}
+      onPressCart={NavCart}
+      onPressAccount={NavAccount}
+      bgHome={nav === 0 ? "rgba(250,250,250,0.3)" : "rgba(250,250,250,0)"}
+      bgOrders={nav === 1 ? "rgba(250,250,250,0.3)" : "rgba(250,250,250,0)"}
+      bgCart={nav === 2 ? "rgba(250,250,250,0.3)" : "rgba(250,250,250,0)"}
+      bgAccount={nav === 3 ? "rgba(250,250,250,0.3)" : "rgba(250,250,250,0)"}
+      />
     </NavigationContainer>
   );
 }
