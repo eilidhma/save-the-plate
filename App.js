@@ -6,7 +6,7 @@ import {
   Raleway_700Bold,
 } from '@expo-google-fonts/raleway';
 import {
-  Quicksand_300, Quicksand_300Light
+  Quicksand_300, Quicksand_300Light, Quicksand_400Regular
 } from '@expo-google-fonts/quicksand';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -14,7 +14,7 @@ import styled from 'styled-components';
 import CustMealCard from './comps/CustMealCard';
 
 //pages
-import RestaurantHome from './pages/Restaurant/RestaurantHome'
+import RestaurantHome from './pages/Restaurant/home'
 
 var logo = require ('./assets/logo1.png');
 
@@ -23,7 +23,7 @@ const Stack = createNativeStackNavigator();
 
 function Landing({ navigation }) {
   let [fontsLoaded] = useFonts({
-    Raleway_700Bold, Quicksand_300Light
+    Raleway_700Bold, Quicksand_300Light, Quicksand_400Regular
   });
 
   setTimeout(() => { 
@@ -77,7 +77,7 @@ function Home() {
 function App () {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="RestaurantHome" style={{display:'none'}}>
         <Stack.Screen name="Landing" component={Landing}/>
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={Home} />
