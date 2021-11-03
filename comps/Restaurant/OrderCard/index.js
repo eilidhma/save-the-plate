@@ -17,10 +17,10 @@ const CardCont = styled.View`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 387;
+  width: 387px;
   height: ${props=>props.height};
   background-color: white;
-  border-radius: 15;
+  border-radius: 15px;
   overflow: hidden;
 `
 
@@ -28,8 +28,8 @@ const FirstLayer = styled.View`
   display: flex;
   flex-direction: row;
   padding: 11px;
-  width: 387;
-  height: 131;
+  width: 387px;
+  height: 131px;
 `;
 
 const Details = styled.View`
@@ -65,8 +65,8 @@ const TextCont = styled.View`
 `;
 
 const TimerCont = styled.View`
-  width: 160;
-  height: 25;
+  width: 160px;
+  height: 25pxx;
   border: 1px solid #FE4265;
   display: flex;
   justify-content: center;
@@ -81,11 +81,6 @@ const ExpandCont = styled.TouchableOpacity`
   align-items: center;
 `;
 
-const ImageCont = styled.Image`
-  transform: rotate(0deg);
-  width: 15;
-  height: 15;
-`
 
 
 
@@ -101,19 +96,19 @@ const RestaurantCard = ({
 
   const [isexpanded, setExpand] = useState(false)
 
-  const [cardheight, setCardHeight] = useState(131)
+  const [cardheight, setCardHeight] = useState("131px")
 
   const [arrow, setArrow] = useState("arrow-drop-down")
 
   function Expand () {
     if (isexpanded == false)
     {
-      setCardHeight(272)
+      setCardHeight("272px")
       setArrow("arrow-drop-up")
       setExpand(!isexpanded)
     }
     else {
-      setCardHeight(131)
+      setCardHeight("131px")
       setArrow("arrow-drop-down")
       setExpand(!isexpanded)
     }

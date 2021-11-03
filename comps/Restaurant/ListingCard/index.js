@@ -15,19 +15,20 @@ const CardCont = styled.View`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 387;
+  width: 387px;
   height: ${props=>props.height};
   background-color: white;
-  border-radius: 15;
+  border-radius: 15px;
   overflow: hidden;
+  /* box-shadow: 0px 4px 4px 0px #00000040; */
 `
 
 const FirstLayer = styled.View`
   display: flex;
   flex-direction: row;
   padding: 11px;
-  width: 387;
-  height: 131;
+  width: 387px;
+  height: 131px;
 `;
 
 const Details = styled.View`
@@ -40,7 +41,7 @@ const Details = styled.View`
 
 const DetailsText = styled.View`
     width: "100%";
-    height: 35;
+    height: 35px;
     border: 1px solid #FE4265;
     border-radius: 15px;
     padding: 5px;
@@ -56,16 +57,16 @@ const TextCont = styled.View`
 `;
 
 const TimerAndQuant = styled.View`
-  width: 217;
+  width: 217px;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  flex-direction: row;
+  /* flex-direction: row; */
 `
 
 const TimerCont = styled.View`
-  width: 160;
-  height: 25;
+  width: 160px;
+  height: 25px;
   border: 1px solid #FE4265;
   display: flex;
   justify-content: center;
@@ -75,12 +76,12 @@ const TimerCont = styled.View`
 `;
 
 const Quant = styled.View`
-  width: 34;
-  height: 34;
+  width: 34px;
+  height: 34px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 17;
+  border-radius: 17px;
   background-color: #FE4265;
 `;
 
@@ -90,11 +91,6 @@ const ExpandCont = styled.TouchableOpacity`
   align-items: center;
 `;
 
-const ImageCont = styled.Image`
-  transform: rotate(0deg);
-  width: 15;
-  height: 15;
-`
 
 
 
@@ -107,19 +103,19 @@ const ListingCard = ({
 
   const [isexpanded, setExpand] = useState(false)
 
-  const [cardheight, setCardHeight] = useState(131)
+  const [cardheight, setCardHeight] = useState("131px")
 
   const [arrow, setArrow] = useState("arrow-drop-down")
 
   function Expand () {
     if (isexpanded == false)
     {
-      setCardHeight(185)
+      setCardHeight("185px")
       setArrow("arrow-drop-up")
       setExpand(!isexpanded)
     }
     else {
-      setCardHeight(131)
+      setCardHeight("131px")
       setArrow("arrow-drop-down")
       setExpand(!isexpanded)
     }
@@ -138,9 +134,9 @@ const ListingCard = ({
               <Text style={{color: '#FE4265'}}>Available in: <Text style={{fontWeight: 'bold'}}>{timer}</Text></Text>
             </TimerCont>
 
-            <Quant>
+            {/* <Quant>
               <Text style={{fontSize: 20, fontWeight: 'bold', color: 'white'}}>{quant}</Text>
-            </Quant>
+            </Quant> */}
           </TimerAndQuant>
 
           <ExpandCont onPress={Expand}>
