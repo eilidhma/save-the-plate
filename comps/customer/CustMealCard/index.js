@@ -89,7 +89,9 @@ const Cart = styled.Pressable`
   z-index:10;
   justify-content:center;
   align-items:center;
+  height:30px;
 `
+
 
 const AddToCart = styled.Text`
   color:white;
@@ -108,13 +110,13 @@ const CustMealCard = ({
   description="fettuccine pasta tossed with Parmesan cheese and butter and served with garlic toast on the side",
   newprice="$5.00",
   oldprice="$21.00",
-  height="135px"
+  height="135px",
 }) =>{
 
   const [card, setCard] = useState(false)
 
   if(card === false) {
-    height="160px"
+    height="170px"
   } else {
     height="330px"
   }
@@ -163,3 +165,5 @@ const CustMealCard = ({
 }
 
 export default CustMealCard;
+
+
