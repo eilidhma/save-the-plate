@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
@@ -8,7 +8,7 @@ import {
 import {
   Quicksand_300, Quicksand_300Light
 } from '@expo-google-fonts/quicksand';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
 import Home from './pages/customer/home';
@@ -56,12 +56,19 @@ function Landing({ navigation }) {
 
 
 function App () {
-  
+  const [showNav, setShowNav] = useState(false);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer onStateChange={(state)=>{
+      console.log(state);
+      if(state.index >= 2){
+        setShowNav(true)
+      } else {
+        setShowNav(false)
+      }
+    }}>
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
-        <Stack.Screen name="Landing" component={Landing}/>
+        <Stack.Screen name="Landing" component={Landing} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Orders" component={Orders} />
@@ -70,7 +77,7 @@ function App () {
         <Stack.Screen name="RestaurantHome" component={RestaurantHome}/>
       
       </Stack.Navigator>
-      <Nav />
+      {showNav && <Nav />}
     </NavigationContainer>
   );
 }
