@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Text, TouchableOpacity, View, Image, Button} from 'react-native'
+import {Text, TouchableOpacity} from 'react-native'
 import styled from 'styled-components';
 
 const ButtonCont = styled.TouchableOpacity`
@@ -7,6 +7,7 @@ const ButtonCont = styled.TouchableOpacity`
  height: ${props=>props.height};
  background-color: ${props=>props.bgColor};
  display:flex;
+ border-radius: ${props=>props.radius};
  justify-content: center;
  align-items: center;
 `;
@@ -15,11 +16,21 @@ const ButtonCont = styled.TouchableOpacity`
 
 const But = ({
     width=387,
-    height=387,
-    bgColor="white"
+    height=50,
+    bgColor="#FE4265",
+    radius=20,
+    txtColor="white",
+    text="button comp",
+    onPress="()=>{}"
 }) => {
-    return <ButtonCont width={width} height={height} bgColor={bgColor}>
-        <Text>bruh</Text>
+    return <ButtonCont
+        width={width}
+        height={height}
+        bgColor={bgColor}
+        radius={radius}
+        onPress={onPress}
+        >
+        <Text style={{color:txtColor, fontFamily: 'Quicksand_400Regular', fontWeight: 'bold'}}>{text}</Text>
     </ButtonCont>
 }
 

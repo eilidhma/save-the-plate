@@ -3,11 +3,16 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 
+import {
+  Raleway_700Bold,
+} from '@expo-google-fonts/raleway';
+import {
+  Quicksand_300, Quicksand_300Light, Quicksand_400Regular
+} from '@expo-google-fonts/quicksand';
+import { useFonts } from 'expo-font';
+
 import ListingCard from '../../comps/Restaurant/ListingCard';
 import OrderCard from '../../comps/Restaurant/OrderCard';
-// import InfoCard from "../../comps/Restaurant/InfoCard";
-
-import But from '../../comps/global/Button'
 
 export default function RestaurantHome ({  navigation }) {
     return (
@@ -15,7 +20,7 @@ export default function RestaurantHome ({  navigation }) {
           <OrderCard/>
           <ListingCard/>
           {/* <InfoCard/> */}
-          <But/>
+          {/* <But/> */}
     </LinearGradient>
     )
   }

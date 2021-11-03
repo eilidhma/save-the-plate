@@ -16,7 +16,7 @@ import Login from './pages/customer/login';
 import Nav from './comps/customer/Nav';
 
 //pages
-import RestaurantHome from './pages/Restaurant/home'
+import RestaurantHome from './pages/restaurant/home'
 
 var logo = require ('./assets/logo1.png');
 
@@ -76,7 +76,7 @@ function App () {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="RestaurantHome" style={{display:'none'}}>
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
         <Stack.Screen name="Landing" component={Landing}/>
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={Home} />

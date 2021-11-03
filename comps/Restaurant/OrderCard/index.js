@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import {Text, TouchableOpacity, View, Image, Button} from 'react-native'
 import styled from 'styled-components';
+import { MaterialIcons } from '@expo/vector-icons'
+
+import But from '../../global/Button'
 
 import {
-    useFonts,
-    Raleway_700Bold,
-  } from '@expo-google-fonts/raleway';
-  import {
-    Quicksand_300, Quicksand_300Light, Quicksand_400Regular
-  } from '@expo-google-fonts/quicksand';
+  useFonts,
+  Raleway_700Bold,
+} from '@expo-google-fonts/raleway';
+import {
+  Quicksand_300, Quicksand_300Light, Quicksand_400Regular
+} from '@expo-google-fonts/quicksand';
 
 const CardCont = styled.View`
   display: flex;
@@ -31,10 +34,10 @@ const FirstLayer = styled.View`
 
 const Details = styled.View`
   padding: 11px;
-  height: 141;
+  height: 111;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
 `;
 
 const ButtonRow = styled.View`
@@ -75,6 +78,7 @@ const TimerCont = styled.View`
 const ExpandCont = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
+  align-items: center;
 `;
 
 const ImageCont = styled.Image`
@@ -99,17 +103,23 @@ const RestaurantCard = ({
 
   const [cardheight, setCardHeight] = useState(131)
 
+  const [arrow, setArrow] = useState("arrow-drop-down")
+
   function Expand () {
     if (isexpanded == false)
     {
       setCardHeight(272)
+      setArrow("arrow-drop-up")
       setExpand(!isexpanded)
     }
     else {
       setCardHeight(131)
+      setArrow("arrow-drop-down")
       setExpand(!isexpanded)
     }
   }
+
+
 
 
 
@@ -128,7 +138,7 @@ const RestaurantCard = ({
           <ExpandCont onPress={Expand}>
             <Text style={{color: '#FE4265', fontWeight:'bold'}}>More details</Text>
 
-            <ImageCont source={{uri:"expandtriangle.png"}}></ImageCont>
+            <MaterialIcons name={arrow} size={33} color="#FE4265" />
           </ExpandCont>
         </TextCont>
       </FirstLayer>
@@ -139,15 +149,15 @@ const RestaurantCard = ({
         <Text style={{fontSize:14, fontFamily:'Quicksand_400Regular', paddingBottom: 4}}>Phone number: {phonenum}</Text>
 
           <Order>
-            <Text style={{fontSize:14, fontFamily:'Quicksand_400Regular', fontWeight: 'bold'}}>Order Details</Text>
+            <Text style={{fontSize:14, fontFamily:'Quicksand_400Regular', fontWeight: 'bold', paddingBottom:9, paddingTop:12}}>Order Details</Text>
             <OrderRow>
-              <Text style={{fontSize:14, fontFamily:'Quicksand_400Regular', fontWeight: 'bold', paddingLeft: 4, paddingRight: 5}}>{orderquant}</Text>
+              <Text style={{fontSize:14, fontFamily:'Quicksand_400Regular', fontWeight: 'bold', paddingLeft: 9, paddingRight: 15}}>{orderquant}</Text>
               <Text style={{fontSize:14, fontFamily:'Quicksand_400Regular'}}>{ordername}</Text>
             </OrderRow>
           </Order>
 
-
       </Details>
+      <But width="100%" radius="0px" height="30" text="Confirm Pickup"/>
     </CardCont>
 }
 
