@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   useFonts,
@@ -11,6 +11,9 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
+import CustCurrentOrder from '../../comps/customer/CustCurrentOrder';
+import CustMealCard from '../../comps/customer/CustMealCard';
+import PastOrder from '../../comps/customer/PastOrder';
 
 var logo = require ('../../assets/logo1.png');
 const Stack = createNativeStackNavigator();
@@ -18,7 +21,30 @@ const Stack = createNativeStackNavigator();
 export default function Orders({ navigation }) {
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
-      <Pressable onPress={()=>navigation.navigate('Home')}><Text>orders --</Text></Pressable>
+      <View style={{width:'100%', position:'absolute', top:80, display:'flex', justifyContent:'center', alignItems:'center'}}>
+        <Text style={styles.heading}>Current Orders</Text>
+      </View>
+      <ScrollView style={styles.scrollViewSmall}>
+        <View style={{display:'flex', justifyContent:'center', alignItems:'center', overflow:'hidden'}}>
+          <CustCurrentOrder /> 
+        </View>
+      </ScrollView>
+      <View style={{width:'90%', backgroundColor:'white', height:2, position:'absolute', top:320}}></View> 
+      <View style={{width:'100%', display:'flex', justifyContent:'center', alignItems:'center', position:'absolute', top:340,}}>
+        <Text style={{color:'white', fontSize:26, paddingLeft:'5%', paddingRight:'5%', fontWeight:'400', width:'100%'}}>Past Orders</Text>
+      </View> 
+      <ScrollView style={styles.scrollView}>
+        <View style={{display:'flex', justifyContent:'center', alignItems:'center', overflow:'hidden'}}>
+          <PastOrder />
+          <PastOrder />
+          <PastOrder />
+          <PastOrder />
+          <PastOrder />
+          <PastOrder />
+          <PastOrder />
+        </View>
+      </ScrollView>
+      
     </LinearGradient>
   );
 }
@@ -58,5 +84,29 @@ const styles = StyleSheet.create({
     borderRadius:20,
     fontFamily:'Quicksand_300Light', 
     fontSize:16
-  }
+  },
+  scrollView: {
+    marginHorizontal: 0,
+    width:'100%',
+    height:'100%',
+    position:'absolute',
+    top:380,
+    bottom:0,
+  },
+  scrollViewSmall: {
+    marginHorizontal: 0,
+    width:'100%',
+    height:200,
+    position:'absolute',
+    top:120,
+    bottom:0,
+  },
+  heading: {
+    color:'white',
+    fontSize:26,
+    paddingLeft:'5%',
+    paddingRight:'5%',
+    fontWeight:'400',
+    width:'100%',
+  },
 });
