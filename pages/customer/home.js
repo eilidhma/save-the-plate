@@ -49,9 +49,14 @@ export default function Home({navigation}) {
             <Location />
           </View>
       </View>
-        <ScrollView style={styles.scrollView}>
-          {mealtab === true && <View style={{display:'flex', justifyContent:'center', alignItems:'center', overflow:'hidden'}}>
-
+       
+       {mealtab === true && <View style={{marginHorizontal: 0,
+            width:'100%',
+            position:'absolute',
+            top:200,
+            bottom:0,
+            flex:1}}>
+        <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
             <CustMealCard />
             <CustMealCard />
             <CustMealCard />
@@ -64,11 +69,17 @@ export default function Home({navigation}) {
             <CustMealCard />
             <CustMealCard />
             <CustMealCard />
-          </View>}
-          {maptab === true && <View style={styles.container}>
+        </ScrollView>
+        </View>}
+        {maptab === true && <View style={{marginHorizontal: 0,
+            width:'100%',
+            position:'absolute',
+            top:200,
+            flex:1,
+            justifyContent:'center',
+            alignItems:'center'}}>
             <Image style={{width:'90%', height:500, marginTop:20}} source={map}></Image>
           </View>}
-        </ScrollView>
     </LinearGradient>
   ); 
 }
