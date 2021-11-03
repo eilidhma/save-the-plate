@@ -11,16 +11,13 @@ import {
 } from '@expo-google-fonts/quicksand';
 import { useFonts } from 'expo-font';
 
-import ListingCard from '../../comps/Restaurant/ListingCard';
-import OrderCard from '../../comps/Restaurant/OrderCard';
+import AddedItem from "../../comps/customer/AddedItem";
+
 
 export default function RestaurantHome ({  navigation }) {
     return (
       <LinearGradient colors={['#F3AE81', '#E94168']} style={homeStyles.container}>
-          <OrderCard/>
-          <ListingCard/>
-          {/* <InfoCard/> */}
-          {/* <But/> */}
+        <AddedItem/>
     </LinearGradient>
     )
   }
