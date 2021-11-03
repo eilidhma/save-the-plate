@@ -46,9 +46,10 @@ const ButtonCont = styled.View`
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-between; 
     padding-top: 27px;
 `;
+// get this to work
 
 
 const AddedItemOverlay = (
