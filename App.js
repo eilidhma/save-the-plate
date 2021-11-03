@@ -97,35 +97,10 @@ function RestaurantHome ({  navigation }) {
 
 function App () {
   
-  
-  // const navigation = useNavigation(); 
-  // const [loaded, setLoaded] = useState(false)
-  // const [nav, setNav] = useState(0)
-
-  // const NavHome = () => {
-  //   setNav(0)
-  //   // navigation.navigate('Home')
-  // }
-
-  // const NavOrders = () => {
-  //   setNav(1)
-  //   // navigation.navigate('Orders')
-  // }
-
-  // const NavCart = () => {
-  //   setNav(2)
-  //   // navigation.navigate('Cart')
-  // }
-
-  // const NavAccount = ({}) => {
-  //   setNav(3)
-  //   // navigation.navigate('Account')
-  // }
-
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Orders" style={{display:'none'}}>
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
         <Stack.Screen name="Landing" component={Landing}/>
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={Home} />

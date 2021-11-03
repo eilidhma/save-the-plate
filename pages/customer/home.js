@@ -15,6 +15,7 @@ import CustMealCard from '../../comps/customer/CustMealCard';
 import Tabs from '../../comps/customer/Tabs';
 import Location from '../../comps/customer/Location';
 
+var map = require ('../../assets/map.png');
 
 export default function Home({navigation}) {
 
@@ -64,10 +65,9 @@ export default function Home({navigation}) {
             <CustMealCard />
             <CustMealCard />
           </View>}
-          {/* <Pressable style={styles.shadowProp} title="Login"
-            onPress={() => navigation.navigate('Login')} >
-            <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Login</Text>
-          </Pressable> */}
+          {maptab === true && <View style={styles.container}>
+            <Image style={{width:'90%', height:500, marginTop:20}} source={map}></Image>
+          </View>}
         </ScrollView>
     </LinearGradient>
   ); 
