@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, Button, Pressable, TextInput } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, Button, Pressable, TextInput,  SafeAreaView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   Raleway_700Bold,
@@ -37,28 +37,43 @@ export default function Home({navigation}) {
 
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
-      <View style={{width:'100%', position:"absolute", top:80, display:'flex', justifyContent:'center', alignItems:'center'}}>
+
+      <View style={{width:'100%', position:'absolute', top:80, display:'flex', justifyContent:'center', alignItems:'center'}}>
         <Tabs onPressMeal={HandleMealTab} onPressMap={HandleMapTab}
           fontWeightMeals={mealtab ? 400 : 200}
           fontWeightMap={maptab ? 400 : 200}
-          alignItems={mealtab ? "flex-start" : "flex-end"}
+          alignItems={mealtab ? 'flex-start' : 'flex-end'}
           />
           <View style={{width:'90%'}}>
             <Location />
           </View>
       </View>
-      {mealtab === true && <View style={{display:'flex', justifyContent:'center', alignItems:'center', overflow:'hidden'}}>
-        <CustMealCard />
-        <CustMealCard />
-        <CustMealCard />
-      </View>}
-      {/* <Pressable style={styles.shadowProp} title="Login"
-        onPress={() => navigation.navigate('Login')} >
-        <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Login</Text>
-      </Pressable> */}
+        <ScrollView style={styles.scrollView}>
+          {mealtab === true && <View style={{display:'flex', justifyContent:'center', alignItems:'center', overflow:'hidden'}}>
+
+            <CustMealCard />
+            <CustMealCard />
+            <CustMealCard />
+            <CustMealCard />
+            <CustMealCard />
+            <CustMealCard />
+            <CustMealCard />
+            <CustMealCard />
+            <CustMealCard />
+            <CustMealCard />
+            <CustMealCard />
+            <CustMealCard />
+          </View>}
+          {/* <Pressable style={styles.shadowProp} title="Login"
+            onPress={() => navigation.navigate('Login')} >
+            <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Login</Text>
+          </Pressable> */}
+        </ScrollView>
     </LinearGradient>
   ); 
 }
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -95,6 +110,16 @@ const styles = StyleSheet.create({
     borderRadius:20,
     fontFamily:'Quicksand_300Light', 
     fontSize:16
-  }
+  },
+  scrollView: {
+    marginHorizontal: 0,
+    width:'100%',
+    height:'100%',
+    position:'absolute',
+    top:200,
+    bottom:0,
+  },
+  text: {
+    fontSize: 42,
+  },
 });
-

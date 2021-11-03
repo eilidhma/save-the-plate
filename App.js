@@ -8,11 +8,14 @@ import {
 import {
   Quicksand_300, Quicksand_300Light
 } from '@expo-google-fonts/quicksand';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
 import Home from './pages/customer/home';
 import Login from './pages/customer/login';
+import Orders from './pages/customer/orders';
+import Checkout from './pages/customer/checkout';
+import Account from './pages/customer/account';
 import Nav from './comps/customer/Nav';
 
 //pages
@@ -53,45 +56,46 @@ function Landing({ navigation }) {
 
 
 function App () {
+  
+  
+  // const navigation = useNavigation(); 
+  // const [loaded, setLoaded] = useState(false)
+  // const [nav, setNav] = useState(0)
 
+  // const NavHome = () => {
+  //   setNav(0)
+  //   // navigation.navigate('Home')
+  // }
 
-  const [loaded, setLoaded] = useState(false)
-  const [nav, setNav] = useState(0)
+  // const NavOrders = () => {
+  //   setNav(1)
+  //   // navigation.navigate('Orders')
+  // }
 
-  const NavHome = () => {
-    setNav(0)
-  }
+  // const NavCart = () => {
+  //   setNav(2)
+  //   // navigation.navigate('Cart')
+  // }
 
-  const NavOrders = () => {
-    setNav(1)
-  }
+  // const NavAccount = ({}) => {
+  //   setNav(3)
+  //   // navigation.navigate('Account')
+  // }
 
-  const NavCart = () => {
-    setNav(2)
-  }
-
-  const NavAccount = () => {
-    setNav(3)
-  }
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Orders" style={{display:'none'}}>
         <Stack.Screen name="Landing" component={Landing}/>
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Orders" component={Orders} />
+        <Stack.Screen name="Cart" component={Checkout} />
+        <Stack.Screen name="Account" component={Account} />
         <Stack.Screen name="RestaurantHome" component={RestaurantHome}/>
+      
       </Stack.Navigator>
-      <Nav 
-      onPressHome={NavHome}
-      onPressOrders={NavOrders}
-      onPressCart={NavCart}
-      onPressAccount={NavAccount}
-      bgHome={nav === 0 ? "rgba(250,250,250,0.3)" : "rgba(250,250,250,0)"}
-      bgOrders={nav === 1 ? "rgba(250,250,250,0.3)" : "rgba(250,250,250,0)"}
-      bgCart={nav === 2 ? "rgba(250,250,250,0.3)" : "rgba(250,250,250,0)"}
-      bgAccount={nav === 3 ? "rgba(250,250,250,0.3)" : "rgba(250,250,250,0)"}
-      />
+      <Nav />
     </NavigationContainer>
   );
 }
