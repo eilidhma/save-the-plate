@@ -14,7 +14,10 @@ import styled from 'styled-components';
 import CustMealCard from '../../comps/customer/CustMealCard';
 import Tabs from '../../comps/customer/Tabs';
 import Location from '../../comps/customer/Location';
+
+import MapView from 'react-native-maps';
 import Filters from '../../comps/customer/Filters';
+
 
 var map = require ('../../assets/map.png');
 
@@ -80,7 +83,7 @@ export default function Home({navigation}) {
             flex:1,
             justifyContent:'center',
             alignItems:'center'}}>
-            <Image style={{width:'90%', height:500, marginTop:20}} source={map}></Image>
+            <MapView style={{width:'100%', height:600}}/>
           </View>}
     </LinearGradient>
   ); 
