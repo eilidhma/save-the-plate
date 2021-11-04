@@ -19,7 +19,7 @@ import Account from './pages/customer/account';
 import Nav from './comps/customer/Nav';
 
 //pages
-import RestaurantHome from './pages/restaurant/home'
+import RestaurantHome from './pages/Restaurant/home';
 
 var logo = require ('./assets/logo1.png');
 
@@ -60,7 +60,7 @@ function App () {
 
   return (
     <NavigationContainer onStateChange={(state)=>{
-      console.log(state);
+      // console.log(state);
       if(state.index >= 2){
         setShowNav(true)
       } else {
