@@ -18,8 +18,9 @@ const CardCont = styled.View`
   overflow:hidden;
   height:132px;
   padding: 11px;
-  
+  border: 1px solid #2b2b2b;
 `;
+// border is tentative, its going to be replaced with drop shadow
 
 const RestCont = styled.View`
   display:flex;
