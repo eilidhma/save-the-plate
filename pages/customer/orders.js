@@ -33,17 +33,19 @@ export default function Orders({ navigation }) {
       <View style={{width:'100%', display:'flex', justifyContent:'center', alignItems:'center', position:'absolute', top:340,}}>
         <Text style={{color:'white', fontSize:26, paddingLeft:'5%', paddingRight:'5%', fontWeight:'400', width:'100%'}}>Past Orders</Text>
       </View> 
-      <ScrollView style={styles.scrollView}>
-        <View style={{display:'flex', justifyContent:'center', alignItems:'center', overflow:'hidden'}}>
-          <PastOrder />
-          <PastOrder />
-          <PastOrder />
-          <PastOrder />
-          <PastOrder />
-          <PastOrder />
-          <PastOrder />
-        </View>
+      <View style={styles.scrollView}>
+      <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
+      
+        <PastOrder />
+        <PastOrder />
+        <PastOrder />
+        <PastOrder />
+        <PastOrder />
+        <PastOrder />
+        <PastOrder />
+
       </ScrollView>
+      </View>
       
     </LinearGradient>
   );
@@ -88,10 +90,10 @@ const styles = StyleSheet.create({
   scrollView: {
     marginHorizontal: 0,
     width:'100%',
-    height:'100%',
     position:'absolute',
     top:380,
     bottom:0,
+    flex:1,
   },
   scrollViewSmall: {
     marginHorizontal: 0,

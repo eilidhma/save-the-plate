@@ -11,14 +11,26 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
+import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+
 
 var logo = require ('../../assets/logo1.png');
 const Stack = createNativeStackNavigator();
 
+const IconCont = styled.Pressable`
+  display:flex;
+  border-radius:100px;
+  border:2px solid white;
+  width:200px;
+  height:200px;
+  justify-content:center;
+  align-items:center;
+`
+
 export default function Checkout({ navigation }) {
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
-      <Text>this is cart</Text>
+      <Text>this is checkout</Text>
     </LinearGradient>
   );
 }

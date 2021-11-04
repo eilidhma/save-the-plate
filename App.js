@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
@@ -6,9 +6,9 @@ import {
   Raleway_700Bold,
 } from '@expo-google-fonts/raleway';
 import {
-  Quicksand_300, Quicksand_300Light
+  Quicksand_300, Quicksand_300Light, Quicksand_400Regular
 } from '@expo-google-fonts/quicksand';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
 import Home from './pages/customer/home';
@@ -19,7 +19,7 @@ import Account from './pages/customer/account';
 import Nav from './comps/customer/Nav';
 
 //pages
-import RestaurantHome from './pages/Restaurant/RestaurantHome'
+import RestaurantHome from './pages/restaurant/home'
 
 var logo = require ('./assets/logo1.png');
 
@@ -28,7 +28,7 @@ const Stack = createNativeStackNavigator();
 
 function Landing({ navigation }) {
   let [fontsLoaded] = useFonts({
-    Raleway_700Bold, Quicksand_300Light
+    Raleway_700Bold, Quicksand_300Light, Quicksand_400Regular
   });
 
   setTimeout(() => { 
@@ -56,12 +56,19 @@ function Landing({ navigation }) {
 
 
 function App () {
-  
+  const [showNav, setShowNav] = useState(false);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer onStateChange={(state)=>{
+      console.log(state);
+      if(state.index >= 2){
+        setShowNav(true)
+      } else {
+        setShowNav(false)
+      }
+    }}>
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
-        <Stack.Screen name="Landing" component={Landing}/>
+        <Stack.Screen name="Landing" component={Landing} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Orders" component={Orders} />
@@ -70,7 +77,7 @@ function App () {
         <Stack.Screen name="RestaurantHome" component={RestaurantHome}/>
       
       </Stack.Navigator>
-      <Nav />
+      {showNav && <Nav />}
     </NavigationContainer>
   );
 }
