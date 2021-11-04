@@ -19,7 +19,7 @@ import Account from './pages/customer/account';
 import Nav from './comps/customer/Nav';
 
 //pages
-import RestaurantHome from './pages/Restaurant/home';
+import RestaurantHome from './pages/restaurant/home';
 
 var logo = require ('./assets/logo1.png');
 
