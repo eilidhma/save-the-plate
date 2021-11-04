@@ -11,14 +11,68 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
+import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import PlatesSaved from '../../comps/customer/PlatesSaved';
+import InfoCard from '../../comps/customer/InfoCard';
+
 
 var logo = require ('../../assets/logo1.png');
 const Stack = createNativeStackNavigator();
 
-export default function Account({ navigation }) {
+const TopCont = styled.Pressable`
+  display:flex;
+  flex-direction:row;
+  width:90%;
+  justify-content:flex-start;
+  align-items:center;
+  position:absolute;
+  top:80px;
+`
+
+const IconCont = styled.Pressable`
+  display:flex;
+  border-radius:100px;
+  border:2px solid white;
+  width:100px;
+  height:100px;
+  justify-content:center;
+  align-items:center;
+`
+
+const Cards = styled.View`
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:absolute;
+  top:200px;
+  width:100%;
+`
+
+export default function Checkout({
+  user="John Smith"
+}) {
+
+  const EditContact = () => {
+
+  }
+
+  const EditCard = () => {
+    
+  }
+
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
-      <Text>this is account</Text>
+      <TopCont>
+        <IconCont >
+          <MaterialCommunityIcons name="account" size={60} color="white" />
+        </IconCont>
+      <Text style={{fontSize:30, fontWeight:'400', color:'white', marginLeft:20}}>{user}</Text>
+      </TopCont>
+      <Cards>
+        <PlatesSaved/>
+        <InfoCard onPress={EditContact} title="Contact Information" sectiontitle1="Phone number:" sectiontitle2="Address:" phone="604-315-3122" addressline1="1798 Granville Street" addressline2="V6J 3F2" edit="Edit Contact Information"/>
+        <InfoCard onPress={EditCard} title="Payment Information" sectiontitle1="Card Number:" sectiontitle2="Expiration Date:" cvc="CVC" phone="**** **** **** 8954" addressline1="**/**" addressline2="***" edit="Edit Credit Card Information"/>
+      </Cards>
     </LinearGradient>
   );
 }
