@@ -21,11 +21,13 @@ import AddedItemOverlay from "../../comps/customer/AddedItemOverlay";
 export default function RestaurantHome ({  navigation }) {
     return (
       <LinearGradient colors={['#F3AE81', '#E94168']} style={homeStyles.container}>
-        {/* <AddedItem/> */}
-        {/* <ListingCard/> */}
-        {/* <OrderCard/> */}
-        {/* <AddedItemOverlay/> */}
+        {/* <AddedItem/>
+        <ListingCard/>
+        <OrderCard/>
+        <AddedItemOverlay/> */}
 
+
+        
     </LinearGradient>
     )
   }
