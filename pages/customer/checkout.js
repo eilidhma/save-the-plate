@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   useFonts,
@@ -11,166 +11,114 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
-
+import CustCurrentOrder from '../../comps/customer/CustCurrentOrder';
+import CustMealCard from '../../comps/customer/CustMealCard';
+import PastOrder from '../../comps/customer/PastOrder';
+// import Star from 'react-native-star-view/lib/Star';
+import StarRating from 'react-native-star-rating';
 import { SimpleLineIcons } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
 
-var map = require ('../../assets/checkout_map_placeholder.png');
+
+var cardtype = require ('../../assets/visa.png');
 const Stack = createNativeStackNavigator();
 
-//imported components
-import AddedItem from '../../comps/customer/AddedItem'
-import But from '../../comps/global/Button'
+var map = require ('../../assets/map.png');
 
-const MainArea = styled.View`
-  width: 100%;
-  height: 82%;
-  background-color: #ffffff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 9px;
-  padding-bottom: 120px;
-`;
-
-const TitleCont = styled.View`
-  width: 100%;
-  height: 13.2%;
-  padding-left: 5%;
-  padding-right: 5%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-`;
-
-const TitleDivider = styled.View`
-  width: 100%;
-  height: 2px;
-  background-color: #ffffff;
-  margin-top: 4px;
-`;
-
-const RestaurantCont = styled.View`
-  width: 90%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: baseline;
+const Cont = styled.View`
+  display:flex;
+  width:100%;
+  height:100%;
+  top:170px;
+  backgroundColor:white;
+  paddingTop:10px;
+  paddingBottom:10px;
+  justify-content:flex-start;
+  align-items:center;
 `
 
-const StarCont = styled.View`
-  width: 144px;
-  justify-content: space-between;
-  flex-direction: row;
-`;
+const TitleCont = styled.View`
+  display:flex;
+  width:100%;
+  flex-direction:row;
+  justify-content:space-between;
+  align-items:center;
+  padding-left:20px;
+  padding-right:20px;
+`
 
-const LocationCont = styled.View`
-  width: 90%;
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-`;
+const Distance = styled.View`
+  display:flex;
+  flex-direction:row;
+  width:90%;
+  margin-bottom:15px;
+  margin-top:10px;
+`
 
-const TotalCont = styled.View`
-  width: 90%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-`;
+export default function Orders({
+  restaurant="Fratelli's Bistro",
+  distance="1.2 km",
+  price="$5.00"
+}) {
 
-const PayCont = styled.View`
-  width: 90%;
-  height: 75px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px;
-  border-radius: 20px;
-  border: 1px solid #C4C4C4;
-`;
-
-const VisaCont = styled.View`
-  width: 200px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-
-export default function Checkout({ navigation }) {
+  
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
-
-      <TitleCont>
-        <Text style={{fontSize: 26, color: 'white'}}>Checkout</Text>
-        <TitleDivider/>
-      </TitleCont>
-
-
-      <MainArea>
-        <RestaurantCont>
-          <Text style={{fontSize: 30, fontWeight: 'bold'}}>Fratelli's Bistro</Text>
-          <StarCont>
-            <SimpleLineIcons name="star" size={24} color="#FE4265" />
-            <SimpleLineIcons name="star" size={24} color="#FE4265" />
-            <SimpleLineIcons name="star" size={24} color="#FE4265" />
-            <SimpleLineIcons name="star" size={24} color="#FE4265" />
-            <SimpleLineIcons name="star" size={24} color="#FE4265" />
-          </StarCont>
-        </RestaurantCont>
-
-        <LocationCont>
-          <Entypo name="location-pin" size={18} color="black" />
-          <Text> 12km away</Text>
-        </LocationCont>
-
-
-        <TouchableOpacity style={{width:"90%", height: 187, backgroundColor: 'black'}}>
-          <Image source={{uri:"https://placekitten.com/"}}/>
-        </TouchableOpacity>
-
-        <ScrollView contentContainerStyle={{width:'100%', alignItems:'center'}}>
-          <AddedItem/>
-          <AddedItem/>
-          <AddedItem/>
-          <AddedItem/>
-        </ScrollView>
-
-        <TotalCont>
-          <Text style={{fontSize: 20, fontWeight: "bold"}}>Total: $5.00</Text>
-        </TotalCont>
-
-        <PayCont>
-          <VisaCont>
-            <View style={{backgroundColor: 'black', width:58, height:18}}></View>
-            <Text>**** **** **** 2345</Text>
-          </VisaCont>
-
-          <But width="100px" height="29px" text="Change" bgColor="#F3AD81"/>
-        </PayCont>
-
-        <But text="Confirm order"/>
-      </MainArea>
+      <View style={{width:'100%', position:'absolute', top:80, display:'flex', justifyContent:'center', alignItems:'center'}}>
+        <Text style={styles.heading}>Checkout</Text>
+      </View>
+      <View style={{width:'90%', backgroundColor:'white', height:2, position:'absolute', top:118}}></View> 
+      <Cont>
+        <TitleCont>
+          <Text style={{fontSize:30}}>{restaurant}</Text>
+          <StarRating
+            disabled={false}
+            maxStars={5}
+            starSize="30"
+            // rating={state.starCount}
+            // selectedStar={(rating) => this.onStarRatingPress(rating)}
+            // fullStarColor = 
+          />
+        </TitleCont>
+        <Distance>
+          <SimpleLineIcons style={{marginRight:5}} name="location-pin" size={18} color="black" />
+          <Text style={{fontSize:16, color:'black'}}>{distance}<Text> away</Text></Text>
+        </Distance>
+        <View style={{
+          width:'100%',
+          justifyContent:'center',
+          alignItems:'center'}}>
+          <Image style={{width:'90%', height:150}} source={map}></Image>
+        </View>
+        <CustCurrentOrder />
+        <View style={{width:'100%', display:'flex', justifyContent:'space-between', alignItems:'center', paddingLeft:20, paddingRight:20, marginTop:30, flexDirection:'row'}}>
+          <View style={{width:120, display:'flex', flexDirection:'row'}}>
+            <Image style={{width:50, height:15}} source={cardtype}></Image>
+            <Text style={{marginLeft:5}}>***7896</Text>
+          </View>
+          <Text style={{fontSize:22, fontWeight:'500'}}>Total: {price}</Text>
+        </View>
+        <Pressable style={styles.shadowProp} title="Confirm" onPress={() => navigation.navigate('Orders')} >
+        <Text style={{color:'white', fontSize:22}}>Confirm Order</Text>
+      </Pressable>
+      </Cont>
+      
+      
     </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    
   },
   shadowProp: {
     shadowColor: '#171717',
     shadowOffset: {width: -2, height: 4},
     shadowOpacity: 0.2,
     shadowRadius: 3,
-    backgroundColor:'#FF1A44',
-    width:200,
+    backgroundColor:'#FE4265',
+    width:'90%',
+    height:50,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -191,7 +139,34 @@ const styles = StyleSheet.create({
     marginTop:20,
     padding:5,
     borderRadius:20,
-    fontFamily:'Quicksand_300Light', 
     fontSize:16
+  },
+  scrollView: {
+    marginHorizontal: 0,
+    width:'100%',
+    position:'absolute',
+    top:380,
+    bottom:0,
+    flex:1,
+  },
+  scrollViewSmall: {
+    marginHorizontal: 0,
+    width:'100%',
+    height:200,
+    position:'absolute',
+    top:120,
+    bottom:0,
+  },
+  heading: {
+    color:'white',
+    fontSize:26,
+    paddingLeft:'5%',
+    paddingRight:'5%',
+    fontWeight:'400',
+    width:'100%',
+  },
+  starStyle: {
+    width: 100,
+    height: 20,
   }
 });

@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
-import {
-  useFonts,
-  Raleway_700Bold,
-} from '@expo-google-fonts/raleway';
-import {
-  Quicksand_300, Quicksand_300Light, Quicksand_400Regular
-} from '@expo-google-fonts/quicksand';
 import styled from 'styled-components';
 import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
 
@@ -42,9 +35,9 @@ const PriceCont = styled.View`
   justify-content:space-between;
 `;
 
-const DetailsCont = styled.View`
+const DetailsCont = styled.Pressable`
   display:flex;
-  width:50%;
+  width:55%;
   flexDirection:row;
   align-items:center;
 `;
@@ -132,26 +125,26 @@ const CustMealCard = ({
     <Content>
       <Left>
         <Image style={{width:115, height:105, borderRadius:15}} source={src}/>
-        <Text style={{marginTop:30, fontFamily:'Quicksand_300Light', fontSize:16}}>Description:</Text>
-        <Text style={{marginTop:30, fontFamily:'Quicksand_300Light', fontSize:16}}>Restaurant's Rating:</Text>
-        <Text style={{marginTop:15, fontFamily:'Quicksand_300Light', fontSize:16}}>Dietary Information:</Text>
+        <Text style={{marginTop:30, fontSize:16}}>Description:</Text>
+        <Text style={{marginTop:30, fontSize:16}}>Restaurant's Rating:</Text>
+        <Text style={{marginTop:15, fontSize:16}}>Dietary Information:</Text>
       </Left>
       <Right>
-        <Text style={{fontFamily:'Raleway_700Bold', fontSize:20}}>{meal}</Text>
+        <Text style={{fontSize:20}}>{meal}</Text>
         <RestCont>
-          <Text style={{marginTop:8, fontFamily:'Quicksand_300Light', fontSize:14}}>{restaurant}</Text>
-          <Text style={{marginTop:10, fontFamily:'Quicksand_300Light', fontSize:12}}>{distance}</Text>
+          <Text style={{marginTop:8, fontSize:14}}>{restaurant}</Text>
+          <Text style={{marginTop:10, fontSize:12}}>{distance}</Text>
         </RestCont>
         <PriceCont>
-          <Text style={{marginTop:8, fontFamily:'Quicksand_300Light', fontSize:16, color:'#FE4265', fontWeight:'700'}}>{newprice}</Text>
-          <Text style={{marginTop:10, fontFamily:'Quicksand_300Light', fontSize:12, textDecorationLine:'line-through'}}>{oldprice}</Text>
+          <Text style={{marginTop:8, fontSize:16, color:'#FE4265', fontWeight:'700'}}>{newprice}</Text>
+          <Text style={{marginTop:10, fontSize:12, textDecorationLine:'line-through'}}>{oldprice}</Text>
         </PriceCont>
-        <DetailsCont>
-          <Pressable onPress={HandleCard}><Text style={{marginTop:5, fontFamily:'Quicksand_300Light', fontSize:14, color:'#FE4265'}}>More Details</Text></Pressable>
+        <DetailsCont onPress={HandleCard}>
+          <Pressable onPress={HandleCard}><Text style={{marginTop:5, fontSize:18, fontWeight:'600', color:'#FE4265'}}>More Details</Text></Pressable>
           <MaterialIcons style={{marginTop:5}} name="arrow-drop-down" size={33} color="#FE4265" />
         </DetailsCont>
         
-        <Text style={{marginTop:10, fontFamily:'Quicksand_300Light', fontSize:12}}>{description}</Text>
+        <Text style={{marginTop:10, fontSize:12}}>{description}</Text>
         <StarsCont>
           <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
           <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
