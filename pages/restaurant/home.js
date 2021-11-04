@@ -17,6 +17,10 @@ import ListingCard from '../../comps/Restaurant/ListingCard'
 import OrderCard from '../../comps/Restaurant/OrderCard'
 import AddedItemOverlay from "../../comps/customer/AddedItemOverlay";
 
+import Tabs from '../../comps/global/Tabs'
+
+
+
 
 export default function RestaurantHome ({  navigation }) {
     return (
@@ -25,6 +29,7 @@ export default function RestaurantHome ({  navigation }) {
         <ListingCard/>
         <OrderCard/>
         <AddedItemOverlay/> */}
+        <Tabs/>
 
 
         

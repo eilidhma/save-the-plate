@@ -61,31 +61,26 @@ function Landing({ navigation }) {
 function App () {
   const [showNav, setShowNav] = useState(false);
 
+  const [showRestNav, setRestNav] = useState(false)
+
   return (
     <NavigationContainer onStateChange={(state)=>{
-      // console.log(state);
+     console.log(state);
       if(state.index >= 2){
         setShowNav(true)
       } else {
         setShowNav(false)
       }
-
-
     }}>
-      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="RestaurantAccount" style={{display:'none'}}>
-
-        {/* customer */}
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="RestaurantHome" style={{display:'none'}}>
         <Stack.Screen name="Landing" component={Landing} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Orders" component={Orders} />
         <Stack.Screen name="Cart" component={Checkout} />
         <Stack.Screen name="Account" component={Account} />
-
-        {/* restaurant */}
         <Stack.Screen name="RestaurantHome" component={RestaurantHome}/>
         <Stack.Screen name="RestaurantAccount" component={RestaurantAccount}/>
-      
       </Stack.Navigator>
       {showNav && <Nav />}
     </NavigationContainer>
