@@ -12,20 +12,16 @@ import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, SimpleLineIco
 
 
 const CardCont = styled.View`
-  display:flex;
-  backgroundColor:white;
-  width:90%;
-  flexDirection:column;
-  borderRadius:15px;
-  overflow:hidden;
-  height:190px;
-  margin-top:10px;
+  
 `;
 
 const Content = styled.View`
   width:80%;
   display:flex;
-  padding:20px;
+  padding-right:20px;
+  padding-left:20px;
+  padding-top:10px;
+  padding-bottom:10px;
   flex-direction:column;
 `
 const Section = styled.View`
@@ -55,7 +51,8 @@ const Edit = styled.Pressable`
 
 const EditText = styled.Text`
   color:white;
-  font-size:18px;
+  font-size:16px;
+  font-weight:500;
 `
 
 // var mealImg = require('../../assets/meal.png');
@@ -72,7 +69,7 @@ const InfoCard = ({
   onPress=()=>{}
 }) =>{
 
-  return <CardCont >
+  return <CardCont style={styles.shadowProp}>
     <Edit onPress={onPress}>
       <EditText>{edit}</EditText>
     </Edit>
@@ -94,3 +91,40 @@ const InfoCard = ({
 export default InfoCard;
 
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  shadowProp: {
+    display:'flex',
+    backgroundColor:'white',
+    width:'90%',
+    flexDirection:'column',
+    borderRadius:15,
+    overflow:'hidden',
+    height:170,
+    marginTop:10,
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+  },
+  username: {
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    backgroundColor:'#FFF',
+    width:200,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:20,
+    padding:5,
+    borderRadius:20,
+    fontFamily:'Quicksand_300Light', 
+    fontSize:16
+  }
+});
