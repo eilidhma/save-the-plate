@@ -66,7 +66,7 @@ const Filters = ({
             </SearchCont>
 
             <View style={{margin:5}}>
-                <Text style={{fontFamily:'Quicksand', fontSize:16, padding:5}}>Cuisine</Text>
+                <Text style={{fontFamily:'Quicksand_400Regular', fontSize:16, padding:5}}>Cuisine</Text>
               <ScrollView horizontal={true} contentContainerStyle={{width:'100%', justifyContent:'space-between'}}>
                 <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
                   <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:16, padding:5}}>Italian</Text>
@@ -84,7 +84,7 @@ const Filters = ({
             </View>
 
             <View style={{margin:5}}>
-                <Text style={{fontFamily:'Quicksand', fontSize:16, padding:5}}>Distance from me</Text>
+                <Text style={{fontFamily:'Quicksand_400Regular', fontSize:16, padding:5}}>Distance from me</Text>
               <ScrollView horizontal={true} contentContainerStyle={{width:'100%', justifyContent:'space-between'}}>
                 <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
                   <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:18, padding:5}}>200m</Text>
@@ -105,7 +105,7 @@ const Filters = ({
             </View>
 
             <View style={{margin:5}}>
-                <Text style={{fontFamily:'Quicksand', fontSize:16, padding:5}}>Dietary restrictions</Text>
+                <Text style={{fontFamily:'Quicksand_400Regular', fontSize:16, padding:5}}>Dietary restrictions</Text>
               <ScrollView horizontal={true} contentContainerStyle={{width:'100%', justifyContent:'space-between'}}>
                 <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
                   <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:18, padding:5}}>Gluten Free</Text>
@@ -123,7 +123,7 @@ const Filters = ({
             </View>
 
             <View style={{margin:5}}>
-                <Text style={{fontFamily:'Quicksand', fontSize:16, padding:5}}>Time available</Text>
+                <Text style={{fontFamily:'Quicksand_400Regular', fontSize:16, padding:5}}>Time available</Text>
               <ScrollView horizontal={true} contentContainerStyle={{width:'100%', justifyContent:'space-between'}}>
                 <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
                   <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:18, padding:5}}>Now</Text>
