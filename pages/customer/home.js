@@ -14,7 +14,10 @@ import styled from 'styled-components';
 import CustMealCard from '../../comps/customer/CustMealCard';
 import Tabs from '../../comps/customer/Tabs';
 import Location from '../../comps/customer/Location';
+
 import MapView from 'react-native-maps';
+import Filters from '../../comps/customer/Filters';
+
 
 var map = require ('../../assets/map.png');
 
@@ -54,10 +57,11 @@ export default function Home({navigation}) {
        {mealtab === true && <View style={{marginHorizontal: 0,
             width:'100%',
             position:'absolute',
-            top:200,
+            top:170,
             bottom:0,
             flex:1}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
+            <Filters/>
             <CustMealCard />
             <CustMealCard />
             <CustMealCard />

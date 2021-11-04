@@ -6,7 +6,7 @@ import {
   Raleway_700Bold,
 } from '@expo-google-fonts/raleway';
 import {
-  Quicksand_300, Quicksand_300Light
+  Quicksand_300, Quicksand_300Light, Quicksand_400Regular
 } from '@expo-google-fonts/quicksand';
 import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -18,6 +18,9 @@ import Checkout from './pages/customer/checkout';
 import Account from './pages/customer/account';
 import Nav from './comps/customer/Nav';
 
+//pages
+import RestaurantHome from './pages/Restaurant/home';
+
 var logo = require ('./assets/logo1.png');
 
 const Stack = createNativeStackNavigator();
@@ -25,7 +28,7 @@ const Stack = createNativeStackNavigator();
 
 function Landing({ navigation }) {
   let [fontsLoaded] = useFonts({
-    Raleway_700Bold, Quicksand_300Light
+    Raleway_700Bold, Quicksand_300Light, Quicksand_400Regular
   });
 
   setTimeout(() => { 
@@ -52,55 +55,12 @@ function Landing({ navigation }) {
 //
 
 
-// Adrian's's section - restaurant UI
-
-function RestaurantHome ({  navigation }) {
-  return (
-    <LinearGradient colors={['#F3AE81', '#E94168']} style={homeStyles.container}>
-      {/* top bar goes here */}
-
-      <View>
-
-        <View>
-          <Text>Orders</Text>
-
-          <Text>Listed</Text>
-        </View>
-
-
-
-        {/* seleciton UI component goes here */}
-        
-      </View>
-
-      {/* search component goes here */}
-
-      <View>
-        {/* orders go here */}
-      </View>
-
-
-      
-
-
-      
-
-        
-
-
-    {/* bottom bar */}
-  </LinearGradient>
-  )
-}
-
-// 
-
 function App () {
   const [showNav, setShowNav] = useState(false);
 
   return (
     <NavigationContainer onStateChange={(state)=>{
-      console.log(state);
+      // console.log(state);
       if(state.index >= 2){
         setShowNav(true)
       } else {
