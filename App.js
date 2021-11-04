@@ -6,7 +6,7 @@ import {
   Raleway_700Bold,
 } from '@expo-google-fonts/raleway';
 import {
-  Quicksand_300, Quicksand_300Light
+  Quicksand_300, Quicksand_300Light, Quicksand_400Regular
 } from '@expo-google-fonts/quicksand';
 import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -19,7 +19,7 @@ import Account from './pages/customer/account';
 import Nav from './comps/customer/Nav';
 
 //pages
-import RestaurantHome from './pages/Restaurant/RestaurantHome'
+import RestaurantHome from './pages/restaurant/home'
 
 var logo = require ('./assets/logo1.png');
 
@@ -28,7 +28,7 @@ const Stack = createNativeStackNavigator();
 
 function Landing({ navigation }) {
   let [fontsLoaded] = useFonts({
-    Raleway_700Bold, Quicksand_300Light
+    Raleway_700Bold, Quicksand_300Light, Quicksand_400Regular
   });
 
   setTimeout(() => { 
