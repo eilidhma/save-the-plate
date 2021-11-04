@@ -23,6 +23,7 @@ import Nav from './comps/customer/Nav';
 //restuarant pages
 import RestaurantHome from './pages/Restaurant/home';
 import RestaurantAccount from './pages/Restaurant/account';
+import RestaurantNav from './comps/Restaurant/Nav';
 
 var logo = require ('./assets/logo1.png');
 
@@ -65,14 +66,20 @@ function App () {
 
   return (
     <NavigationContainer onStateChange={(state)=>{
-     console.log(state);
-      if(state.index >= 2){
+     console.log(state.index);
+      if(state.index >= 2 && state.index < 6){
         setShowNav(true)
-      } else {
+        setRestNav(false)
+      } else if (state.index >= 6) {
         setShowNav(false)
+        setRestNav(true)
+      }
+      else {
+        setShowNav(false)
+        setRestNav(false)
       }
     }}>
-      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="RestaurantHome" style={{display:'none'}}>
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
         <Stack.Screen name="Landing" component={Landing} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={Home} />
@@ -83,6 +90,7 @@ function App () {
         <Stack.Screen name="RestaurantAccount" component={RestaurantAccount}/>
       </Stack.Navigator>
       {showNav && <Nav />}
+      {showRestNav && <RestaurantNav/>}
     </NavigationContainer>
   );
 }
