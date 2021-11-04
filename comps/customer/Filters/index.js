@@ -16,12 +16,12 @@ import Search from '../SearchBar';
 const FiltersCont = styled.View`
   display:flex;
   backgroundColor:white;
-  width:100%;
+  width:90%;
   flexDirection:row;
   borderRadius:15px;
   overflow:hidden;
   height:${props=>props.height};
-  margin-top:10px;
+  
 `;
 
 const SearchCont = styled.View`
@@ -38,13 +38,13 @@ const Left = styled.View`
 `
 const Right = styled.View`
   display:flex;
-  backgroundColor:#fad;
+  backgroundColor:white;
   flexDirection:column;
   flex:2;
 `
 
 const Filters = ({
-    height="50px",
+    height="50px"
 }) => {
     const [filters, setFilters] = useState(false)
 
@@ -63,9 +63,10 @@ const Filters = ({
             <SearchCont>
                 <Search/>
             </SearchCont>
+            <Text>hello</Text>
         </Left>
         <Right>
-            <Pressable onPress={HandleFilters}><MaterialCommunityIcons style={{marginRight:0}} name="filter-outline" size={30} color="#FE4265" /></Pressable>
+            <Pressable onPress={HandleFilters}><MaterialCommunityIcons style={{margin:10}} name="filter-outline" size={30} color="#FE4265" /></Pressable>
         </Right>
     </FiltersCont>
 }
