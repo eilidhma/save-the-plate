@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, Button, Pressable, TextInput } from 'react-native';
 import {
   useFonts,
   Raleway_700Bold,
@@ -35,10 +35,11 @@ const Left = styled.View`
   backgroundColor:white;
   flexDirection:column;
   flex:10;
+  z-index:2;
 `
 const Right = styled.View`
   display:flex;
-  backgroundColor:white;
+  backgroundColor:#d3d3d3;
   flexDirection:column;
   flex:2;
 `
@@ -51,7 +52,7 @@ const Filters = ({
     if(filters === false){
         height="50px"
     } else {
-        height="330px"
+        height="350px"
     }
 
     const HandleFilters = () => {
@@ -63,7 +64,84 @@ const Filters = ({
             <SearchCont>
                 <Search/>
             </SearchCont>
-            <Text>hello</Text>
+
+            <View style={{margin:5}}>
+                <Text style={{fontFamily:'Quicksand', fontSize:16, padding:5}}>Cuisine</Text>
+              <ScrollView horizontal={true} contentContainerStyle={{width:'100%', justifyContent:'space-between'}}>
+                <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
+                  <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:16, padding:5}}>Italian</Text>
+                </Pressable>
+                <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
+                  <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:16, padding:5}}>Mexican</Text>
+                </Pressable>
+                <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
+                  <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:16, padding:5}}>Vietnamese</Text>
+                </Pressable>
+                <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
+                  <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:16, padding:5}}>American</Text>
+                </Pressable>
+              </ScrollView>
+            </View>
+
+            <View style={{margin:5}}>
+                <Text style={{fontFamily:'Quicksand', fontSize:16, padding:5}}>Distance from me</Text>
+              <ScrollView horizontal={true} contentContainerStyle={{width:'100%', justifyContent:'space-between'}}>
+                <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
+                  <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:18, padding:5}}>200m</Text>
+                </Pressable>
+                <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
+                  <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:18, padding:5}}>500m</Text>
+                </Pressable>
+                <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
+                  <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:18, padding:5}}>1km</Text>
+                </Pressable>
+                <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
+                  <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:18, padding:5}}>5km</Text>
+                </Pressable>
+                <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
+                  <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:18, padding:5}}>10km</Text>
+                </Pressable>
+              </ScrollView>
+            </View>
+
+            <View style={{margin:5}}>
+                <Text style={{fontFamily:'Quicksand', fontSize:16, padding:5}}>Dietary restrictions</Text>
+              <ScrollView horizontal={true} contentContainerStyle={{width:'100%', justifyContent:'space-between'}}>
+                <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
+                  <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:18, padding:5}}>Gluten Free</Text>
+                </Pressable>
+                <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
+                  <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:18, padding:5}}>Dairy Free</Text>
+                </Pressable>
+                <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
+                  <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:18, padding:5}}>Nut Free</Text>
+                </Pressable>
+                <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
+                  <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:18, padding:5}}>Vegetarian</Text>
+                </Pressable>
+              </ScrollView>
+            </View>
+
+            <View style={{margin:5}}>
+                <Text style={{fontFamily:'Quicksand', fontSize:16, padding:5}}>Time available</Text>
+              <ScrollView horizontal={true} contentContainerStyle={{width:'100%', justifyContent:'space-between'}}>
+                <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
+                  <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:18, padding:5}}>Now</Text>
+                </Pressable>
+                <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
+                  <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:18, padding:5}}>30 min</Text>
+                </Pressable>
+                <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
+                  <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:18, padding:5}}>1 hr</Text>
+                </Pressable>
+                <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
+                  <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:18, padding:5}}>2 hrs</Text>
+                </Pressable>
+                <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
+                  <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:18, padding:5}}>2+ hrs</Text>
+                </Pressable>
+              </ScrollView>
+            </View>
         </Left>
         <Right>
             <Pressable onPress={HandleFilters}><MaterialCommunityIcons style={{margin:10}} name="filter-outline" size={30} color="#FE4265" /></Pressable>
