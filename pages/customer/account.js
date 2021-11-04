@@ -44,7 +44,7 @@ const Cards = styled.View`
   justify-content:center;
   align-items:center;
   position:absolute;
-  top:200px;
+  top:190px;
   width:100%;
 `
 
@@ -72,6 +72,12 @@ export default function Checkout({
         <PlatesSaved/>
         <InfoCard onPress={EditContact} title="Contact Information" sectiontitle1="Phone number:" sectiontitle2="Address:" phone="604-315-3122" addressline1="1798 Granville Street" addressline2="V6J 3F2" edit="Edit Contact Information"/>
         <InfoCard onPress={EditCard} title="Payment Information" sectiontitle1="Card Number:" sectiontitle2="Expiration Date:" cvc="CVC" phone="**** **** **** 8954" addressline1="**/**" addressline2="***" edit="Edit Credit Card Information"/>
+        <Pressable style={styles.shadowProp} title="Save Changes" onPress={() => navigation.navigate('Home')} >
+          <Text style={{fontSize:18, color:'white'}}>Save Changes</Text>
+        </Pressable>
+        <Pressable style={styles.whiteButton} title="< Back" onPress={() => navigation.navigate('Home')} >
+          <Text style={{fontSize:18, color:'#E94168'}}>Back</Text>
+        </Pressable>
       </Cards>
     </LinearGradient>
   );
@@ -88,7 +94,21 @@ const styles = StyleSheet.create({
     shadowOffset: {width: -2, height: 4},
     shadowOpacity: 0.2,
     shadowRadius: 3,
-    backgroundColor:'#FF1A44',
+    backgroundColor:'#F3AE81',
+    width:200,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:20,
+    padding:5,
+    borderRadius:20,
+  },
+  whiteButton: {
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    backgroundColor:'white',
     width:200,
     display: 'flex',
     justifyContent: 'center',

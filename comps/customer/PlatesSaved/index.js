@@ -12,7 +12,7 @@ const CardCont = styled.View`
   flexDirection:row;
   borderRadius:15px;
   overflow:hidden;
-  height:100px;
+  height:60px;
   margin-top:10px;
   justify-content:center;
   align-items:center;
@@ -21,7 +21,7 @@ const CardCont = styled.View`
 const PlateCont = styled.View`
   display:flex;
   flex-direction:column;
-  height:80px;
+  height:40px;
   justify-content:center;
   align-items:center;
   margin-right:5px;
@@ -29,14 +29,14 @@ const PlateCont = styled.View`
 
 const Quantity = styled.Text`
   marginBottom:0;
-  fontSize:25px;
+  fontSize:20px;
   color:#FE4265;
   text-align:center;
   font-weight:700;
 `
 
 const Plates = styled.Text`
-  fontSize:25px;
+  fontSize:20px;
   color:#FE4265;
   text-align:center;
   font-weight:700;
@@ -53,7 +53,7 @@ const PlatesSaved = ({
   return <CardCont>
     <PlateCont>
       <Quantity>{quantity}</Quantity>
-      <Image style={{width:100, height:25}} source={plate}></Image>
+      <Image style={{width:60, height:15}} source={plate}></Image>
     </PlateCont>
     <Plates>plates saved!</Plates>
   </CardCont>
