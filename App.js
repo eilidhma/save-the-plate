@@ -11,6 +11,8 @@ import {
 import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
+
+// customer pages
 import Home from './pages/customer/home';
 import Login from './pages/customer/login';
 import Orders from './pages/customer/orders';
@@ -18,8 +20,9 @@ import Checkout from './pages/customer/checkout';
 import Account from './pages/customer/account';
 import Nav from './comps/customer/Nav';
 
-//pages
+//restuarant pages
 import RestaurantHome from './pages/Restaurant/home';
+import RestaurantAccount from './pages/Restaurant/account';
 
 var logo = require ('./assets/logo1.png');
 
@@ -66,15 +69,22 @@ function App () {
       } else {
         setShowNav(false)
       }
+
+
     }}>
-      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="RestaurantAccount" style={{display:'none'}}>
+
+        {/* customer */}
         <Stack.Screen name="Landing" component={Landing} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Orders" component={Orders} />
         <Stack.Screen name="Cart" component={Checkout} />
         <Stack.Screen name="Account" component={Account} />
+
+        {/* restaurant */}
         <Stack.Screen name="RestaurantHome" component={RestaurantHome}/>
+        <Stack.Screen name="RestaurantAccount" component={RestaurantAccount}/>
       
       </Stack.Navigator>
       {showNav && <Nav />}
