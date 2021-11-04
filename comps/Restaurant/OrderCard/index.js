@@ -17,7 +17,7 @@ const CardCont = styled.View`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 387px;
+  width: 90%;
   height: ${props=>props.height};
   background-color: white;
   border-radius: 15px;
@@ -66,13 +66,12 @@ const TextCont = styled.View`
 
 const TimerCont = styled.View`
   width: 160px;
-  height: 25pxx;
+  height: 25px;
   border: 1px solid #FE4265;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 25px;
-  font-family:'Quicksand_400Regular';
 `;
 
 const ExpandCont = styled.TouchableOpacity`
@@ -122,9 +121,9 @@ const RestaurantCard = ({
       <FirstLayer>
         <Image source={{uri:img}} style={{width:126, height:108, borderRadius:10}}/>
         <TextCont>
-          <Text style={{fontSize:20, fontFamily:'Raleway_700Bold', fontWeight: 'bold'}}>Order #{ordernum}</Text>
+          <Text style={{fontSize:20, fontWeight: 'bold'}}>Order #{ordernum}</Text>
 
-          <Text style={{fontSize:18, fontFamily:'Quicksand_400Regular'}}>{name}</Text>
+          <Text style={{fontSize:18}}>{name}</Text>
 
           <TimerCont>
             <Text style={{color: '#FE4265'}}>Time left: <Text style={{fontWeight: 'bold'}}>{timer}</Text></Text>
@@ -141,13 +140,13 @@ const RestaurantCard = ({
 
       <Details>
 
-        <Text style={{fontSize:14, fontFamily:'Quicksand_400Regular', paddingBottom: 4}}>Phone number: {phonenum}</Text>
+        <Text style={{fontSize:14, paddingBottom: 4}}>Phone number: {phonenum}</Text>
 
           <Order>
-            <Text style={{fontSize:14, fontFamily:'Quicksand_400Regular', fontWeight: 'bold', paddingBottom:9, paddingTop:12}}>Order Details</Text>
+            <Text style={{fontSize:14, fontWeight: 'bold', paddingBottom:9, paddingTop:12}}>Order Details</Text>
             <OrderRow>
-              <Text style={{fontSize:14, fontFamily:'Quicksand_400Regular', fontWeight: 'bold', paddingLeft: 9, paddingRight: 15}}>{orderquant}</Text>
-              <Text style={{fontSize:14, fontFamily:'Quicksand_400Regular'}}>{ordername}</Text>
+              <Text style={{fontSize:14, fontWeight: 'bold', paddingLeft: 9, paddingRight: 15}}>{orderquant}</Text>
+              <Text style={{fontSize:14}}>{ordername}</Text>
             </OrderRow>
           </Order>
 

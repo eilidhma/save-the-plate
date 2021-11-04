@@ -24,7 +24,7 @@ export default function RestaurantHome ({  navigation }) {
         {/* <AddedItem/> */}
         {/* <ListingCard/> */}
         {/* <OrderCard/> */}
-        <AddedItemOverlay/>
+        {/* <AddedItemOverlay/> */}
 
     </LinearGradient>
     )

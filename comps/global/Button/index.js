@@ -15,10 +15,10 @@ const ButtonCont = styled.TouchableOpacity`
 
 
 const But = ({
-    width=387,
-    height=50,
+    width="90%",
+    height="50px",
     bgColor="#FE4265",
-    radius=20,
+    radius="20px",
     txtColor="white",
     text="button comp",
     onPress="()=>{}"
@@ -30,7 +30,7 @@ const But = ({
         radius={radius}
         onPress={onPress}
         >
-        <Text style={{color:txtColor, fontFamily: 'Quicksand_400Regular', fontWeight: 'bold'}}>{text}</Text>
+        <Text style={{color:txtColor, fontWeight: 'bold'}}>{text}</Text>
     </ButtonCont>
 }
 
