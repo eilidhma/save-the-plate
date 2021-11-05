@@ -11,6 +11,8 @@ import {
 } from '@expo-google-fonts/quicksand';
 import { useFonts } from 'expo-font';
 
+
+
 export default function RestaurantAccount ({  navigation }) {
     return (
       <LinearGradient colors={['#F3AE81', '#E94168']} style={homeStyles.container}>

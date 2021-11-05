@@ -79,7 +79,7 @@ function App () {
         setRestNav(false)
       }
     }}>
-      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="RestaurantAccount" style={{display:'none'}}>
         <Stack.Screen name="Landing" component={Landing} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={Home} />
