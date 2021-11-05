@@ -62,22 +62,22 @@ function Landing({ navigation }) {
 function App () {
   const [showNav, setShowNav] = useState(false);
 
-  const [showRestNav, setRestNav] = useState(false)
+  const [showRestNav, setRestNav] = useState(true)
 
   return (
     <NavigationContainer onStateChange={(state)=>{
      console.log(state.index);
-      if(state.index >= 2 && state.index < 6){
-        setShowNav(true)
-        setRestNav(false)
-      } else if (state.index >= 6) {
-        setShowNav(false)
-        setRestNav(true)
-      }
-      else {
-        setShowNav(false)
-        setRestNav(false)
-      }
+      // if(state.index >= 2 && state.index < 6){
+      //   setShowNav(true)
+      //   setRestNav(false)
+      // } else if (state.index >= 6) {
+      //   setShowNav(false)
+      //   setRestNav(true)
+      // }
+      // else {
+      //   setShowNav(false)
+      //   setRestNav(false)
+      // }
     }}>
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
         <Stack.Screen name="Landing" component={Landing} />

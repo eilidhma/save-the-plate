@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, TouchableOpacity } from 'react-native';
 import {
   useFonts,
   Raleway_700Bold,
@@ -14,8 +14,6 @@ import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons } from '@expo/
 
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-// #F3AD81
 
 const Cont = styled.View`
   display:flex;
@@ -40,11 +38,22 @@ const IconCont = styled.Pressable`
   background-color:${props=>props.backgroundColor};
 `
 
+const AddItem = styled.TouchableOpacity`
+  width: 143px;
+  height: 45px;
+  border-radius: 20px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const RestaurantNav = ({ 
   home="white",
   orders="white",
   cart="white",
   account="white",
+  onPress=()=>{},
 }) =>{
 
   const Stack = createNativeStackNavigator();
@@ -58,7 +67,7 @@ onPressHome=()=>{
 }
 
 onPressAccount=()=>{
-  setNav(3)
+  setNav(1)
   navigation.navigate('RestaurantAccount')
 }
   
@@ -67,8 +76,12 @@ onPressAccount=()=>{
     <IconCont onPress={onPressHome} backgroundColor={nav === 0 ? "rgba(250,250,250,0.3)" : "rgba(250,250,250,0)"}>
       <Feather name="home" size={24} color={home} />
     </IconCont>
+
+    <AddItem onPress={onPress}>
+    <Feather name="plus" size={30} color="#FE4265" />
+    </AddItem>
     
-    <IconCont onPress={onPressAccount} backgroundColor={nav === 3 ? "rgba(250,250,250,0.3)" : "rgba(250,250,250,0)"}>
+    <IconCont onPress={onPressAccount} backgroundColor={nav === 1 ? "rgba(250,250,250,0.3)" : "rgba(250,250,250,0)"}>
       <MaterialCommunityIcons name="account-outline" size={24} color={account} />
     </IconCont>
 
