@@ -8,11 +8,13 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@eva-design/eva": "^2.1.1",
     "@expo-google-fonts/inter": "^0.2.0",
     "@expo-google-fonts/quicksand": "^0.2.0",
     "@expo-google-fonts/raleway": "^0.2.0",
     "@react-navigation/native": "^6.0.5",
     "@react-navigation/native-stack": "^6.2.3",
+    "@ui-kitten/components": "^5.1.1",
     "axios": "^0.22.0",
     "expo": "~42.0.1",
     "expo-font": "~9.2.1",
@@ -24,8 +26,9 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.4.0",
+    "react-native-svg": "^12.1.1",
     "react-native-web": "^0.17.5",
-    "styled-components": "^5.3.1"
+    "styled-components": "^5.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"

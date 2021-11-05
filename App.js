@@ -14,7 +14,8 @@ import styled from 'styled-components';
 import CustMealCard from './comps/CustMealCard';
 
 //pages
-import RestaurantHome from './pages/Restaurant/RestaurantHome'
+import RestaurantHome from './pages/restaurant/RestaurantHome'
+import ThanksOverlay from './comps/customer/ThanksOverlay';
 
 var logo = require ('./assets/logo1.png');
 
