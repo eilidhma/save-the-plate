@@ -20,10 +20,12 @@ import Checkout from './pages/customer/checkout';
 import Account from './pages/customer/account';
 import Nav from './comps/customer/Nav';
 
+
 //restuarant pages
 import RestaurantHome from './pages/Restaurant/home';
 import RestaurantAccount from './pages/Restaurant/account';
 import RestaurantNav from './comps/Restaurant/Nav';
+
 
 var logo = require ('./assets/logo1.png');
 
