@@ -12,12 +12,15 @@ import {
 import { useFonts } from 'expo-font';
 
 
+import RatingCard from "../../comps/customer/RatingCard";
 
 export default function RestaurantAccount ({  navigation }) {
     return (
       <LinearGradient colors={['#F3AE81', '#E94168']} style={homeStyles.container}>
 
-        <Text>This is restaurant acc</Text>
+      <Text>This is restaurant acc</Text>
+      <RatingCard/>
+
     </LinearGradient>
     )
   }
