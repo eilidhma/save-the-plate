@@ -12,6 +12,9 @@ import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
 
+
+//pages
+
 // customer pages
 import Home from './pages/customer/home';
 import Login from './pages/customer/login';
@@ -19,6 +22,7 @@ import Orders from './pages/customer/orders';
 import Checkout from './pages/customer/checkout';
 import Account from './pages/customer/account';
 import Nav from './comps/customer/Nav';
+import ThanksOverlay from './comps/customer/ThanksOverlay';
 
 
 //restuarant pages
