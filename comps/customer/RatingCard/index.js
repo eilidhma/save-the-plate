@@ -37,7 +37,7 @@ const RatingCard = ({
         <Text style={{fontSize: 14, textAlign: "center"}}>Please rate your meal from</Text>
         <Text style={{fontSize: 14, fontWeight:"700", textAlign: "center"}}>Fratelli's Bistro</Text>
         </Head>
-        <Image source={{uri:"../../../assets/plate.png"}}></Image>
+        <Image source={{uri:"../../../assets/plate.png"}}>         /*use required */</Image>
         <Stars>
         <SimpleLineIcons name="star" size={24} color="#FE4265" />
         <SimpleLineIcons name="star" size={24} color="#FE4265" />
