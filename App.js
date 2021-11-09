@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
@@ -6,16 +6,30 @@ import {
   Raleway_700Bold,
 } from '@expo-google-fonts/raleway';
 import {
-  Quicksand_300, Quicksand_300Light
+  Quicksand_300, Quicksand_300Light, Quicksand_400Regular
 } from '@expo-google-fonts/quicksand';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
-import CustMealCard from './comps/CustMealCard';
+
 
 //pages
-import RestaurantHome from './pages/restaurant/RestaurantHome'
+
+// customer pages
+import Home from './pages/customer/home';
+import Login from './pages/customer/login';
+import Orders from './pages/customer/orders';
+import Checkout from './pages/customer/checkout';
+import Account from './pages/customer/account';
+import Nav from './comps/customer/Nav';
 import ThanksOverlay from './comps/customer/ThanksOverlay';
+
+
+//restuarant pages
+import RestaurantHome from './pages/Restaurant/home';
+import RestaurantAccount from './pages/Restaurant/account';
+import RestaurantNav from './comps/Restaurant/Nav';
+
 
 var logo = require ('./assets/logo1.png');
 
@@ -24,7 +38,7 @@ const Stack = createNativeStackNavigator();
 
 function Landing({ navigation }) {
   let [fontsLoaded] = useFonts({
-    Raleway_700Bold, Quicksand_300Light
+    Raleway_700Bold, Quicksand_300Light, Quicksand_400Regular
   });
 
   setTimeout(() => { 
@@ -47,43 +61,42 @@ function Landing({ navigation }) {
 
 // Eilidh's section - customer UI
 
-function Login({ navigation }) {
-  return (
-    <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
-      <Text style={{color:'white', fontFamily:'Raleway_700Bold', fontSize:32}}>SaveThePlate</Text>
-      <Image style={{width:70, height:70, marginTop:5}} source={logo}/>
-      <TextInput/>
-      <TextInput autoCompleteType={'username'} style={styles.username} placeholder={'username'} textAlign={'center'} textContentType={'username'}/>
-      <TextInput autoCompleteType={'password'} style={styles.username} placeholder={'password'} textAlign={'center'} textContentType={'password'}/>
-      <Pressable style={styles.shadowProp} title="Login"
-        onPress={() => navigation.navigate('Home')} >
-        <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Login</Text>
-      </Pressable>
-    </LinearGradient>
-  );
-}
-
-function Home() {
-  return (
-    <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
-      <CustMealCard />
-      
-    </LinearGradient>
-  );
-}
 
 //
 
 
 function App () {
+  const [showNav, setShowNav] = useState(false);
+
+  const [showRestNav, setRestNav] = useState(true)
+
   return (
-    <NavigationContainer>
+    <NavigationContainer onStateChange={(state)=>{
+     console.log(state.index);
+      // if(state.index >= 2 && state.index < 6){
+      //   setShowNav(true)
+      //   setRestNav(false)
+      // } else if (state.index >= 6) {
+      //   setShowNav(false)
+      //   setRestNav(true)
+      // }
+      // else {
+      //   setShowNav(false)
+      //   setRestNav(false)
+      // }
+    }}>
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
-        <Stack.Screen name="Landing" component={Landing}/>
+        <Stack.Screen name="Landing" component={Landing} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Orders" component={Orders} />
+        <Stack.Screen name="Cart" component={Checkout} />
+        <Stack.Screen name="Account" component={Account} />
         <Stack.Screen name="RestaurantHome" component={RestaurantHome}/>
+        <Stack.Screen name="RestaurantAccount" component={RestaurantAccount}/>
       </Stack.Navigator>
+      {showNav && <Nav />}
+      {showRestNav && <RestaurantNav/>}
     </NavigationContainer>
   );
 }

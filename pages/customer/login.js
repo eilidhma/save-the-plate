@@ -12,7 +12,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
 
-
+var logo = require ('../../assets/logo1.png');
 const Stack = createNativeStackNavigator();
 
 export default function Login({ navigation }) {
@@ -27,6 +27,48 @@ export default function Login({ navigation }) {
         onPress={() => navigation.navigate('Home')} >
         <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Login</Text>
       </Pressable>
+      <Pressable style={styles.shadowProp} title="RestaurantHome"
+        onPress={() => navigation.navigate('RestaurantHome')} >
+        <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Temporary button for restaurant</Text>
+      </Pressable>
     </LinearGradient>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  shadowProp: {
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    backgroundColor:'#FF1A44',
+    width:200,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:20,
+    padding:5,
+    borderRadius:20,
+  },
+  username: {
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    backgroundColor:'#FFF',
+    width:200,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:20,
+    padding:5,
+    borderRadius:20,
+    fontFamily:'Quicksand_300Light', 
+    fontSize:16
+  }
+});

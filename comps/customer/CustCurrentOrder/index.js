@@ -73,7 +73,27 @@ const Plates = styled.View`
   alignItems:center;
 `
 
-const Cart = styled.Pressable`
+const QuantityCont = styled.View`
+  display:flex;
+  align-items:center;
+  background-color:white;
+  border-radius:25px;
+  height:40px;
+  width:40px;
+  border:1px solid #FE4265;
+  position:absolute;
+  top:25px;
+  right:10px;
+`
+
+const Quantity = styled.Text`
+  marginTop:10px;
+  fontSize:16px;
+  color:#FE4265;
+  text-align:center;
+  font-weight:700;
+`
+const TimerCont = styled.Pressable`
   display:flex;
   background-color:#FE4265;
   position:absolute;
@@ -85,25 +105,24 @@ const Cart = styled.Pressable`
   height:30px;
 `
 
-
-const AddToCart = styled.Text`
+const Timer = styled.Text`
   color:white;
   font-size:18px;
 `
 
-// var mealImg = require('../../assets/meal.png');
 
-const CustMealCard = ({
+const CustCurrentOrder = ({
   src=require("../../../assets/meal.png"),
   plateImg=require("../../../assets/plate.png"),
-  restaurant="Fratelli's Bistro", //fix this
+  restaurant="Fratelli's Bistro", 
   meal="Fettuccine Alfredo",
-  distance="400m away",
   plates="217",
   description="fettuccine pasta tossed with Parmesan cheese and butter and served with garlic toast on the side",
   newprice="$5.00",
   oldprice="$21.00",
   height="170px",
+  quantity="1",
+
 }) =>{
 
   const [card, setCard] = useState(false)
@@ -116,12 +135,13 @@ const CustMealCard = ({
 
   const HandleCard = () => {
     setCard(!card)
+    console.log(this)
   }
 
   return <CardCont height={height}>
-    <Cart>
-      <AddToCart>+ Add to cart</AddToCart>
-    </Cart>
+    <TimerCont>
+      <Timer>Available in: 1:32:11</Timer>
+    </TimerCont>
     <Content>
       <Left>
         <Image style={{width:115, height:105, borderRadius:15}} source={src}/>
@@ -133,14 +153,16 @@ const CustMealCard = ({
         <Text style={{fontSize:20}}>{meal}</Text>
         <RestCont>
           <Text style={{marginTop:8, fontSize:14}}>{restaurant}</Text>
-          <Text style={{marginTop:10, fontSize:12}}>{distance}</Text>
+          <QuantityCont>
+            <Quantity>{quantity}</Quantity>
+          </QuantityCont>
         </RestCont>
         <PriceCont>
           <Text style={{marginTop:8, fontSize:16, color:'#FE4265', fontWeight:'700'}}>{newprice}</Text>
           <Text style={{marginTop:10, fontSize:12, textDecorationLine:'line-through'}}>{oldprice}</Text>
         </PriceCont>
         <DetailsCont onPress={HandleCard}>
-          <Pressable onPress={HandleCard}><Text style={{marginTop:5, fontSize:18, fontWeight:'600', color:'#FE4265'}}>More Details</Text></Pressable>
+          <Pressable onPress={HandleCard}><Text style={{marginTop:5, fontSize:18, fontWeight:'500', color:'#FE4265'}}>More Details</Text></Pressable>
           <MaterialIcons style={{marginTop:5}} name="arrow-drop-down" size={33} color="#FE4265" />
         </DetailsCont>
         
@@ -157,6 +179,6 @@ const CustMealCard = ({
   </CardCont>
 }
 
-export default CustMealCard;
+export default CustCurrentOrder;
 
 

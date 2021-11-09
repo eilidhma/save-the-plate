@@ -13,17 +13,16 @@ const Cont = styled.View`
   display:flex;
   flex-direction:column;
   width:100%;
-
 `
 
 const TopCont = styled.View`
   display:flex;
   flex-direction:row;
-  alignItems:center;
-  justifyContent:center;
-  flexDirection:row;
+  align-items:center;
+  justify-content:center;
+  flex-direction:row;
   width:100%;
-  borderColor:black;
+  border-color:black;
 `
 
 const TitlesCont = styled.Pressable`
@@ -36,9 +35,9 @@ const TitlesCont = styled.Pressable`
 const Titles = styled.Text`
   color:white;
   font-size:26px;
-  paddingLeft:10%;
-  paddingRight:10%;
-  font-weight:${props=>props.fontWeight},
+  padding-left:10%;
+  padding-right:10%;
+  font-weight:${props=>props.fontWeight};
   text-align:center;
 `
 
@@ -67,8 +66,8 @@ const Tabs = ({
 
   return <Cont>
     <TopCont >
-    <TitlesCont onPress={onPressMeal}><Titles fontWeight={fontWeightMeals}>Meals</Titles></TitlesCont>
-    <TitlesCont onPress={onPressMap}><Titles fontWeight={fontWeightMap}>Map</Titles></TitlesCont>
+    <TitlesCont onPress={onPressMeal}><Titles fontWeight={fontWeightMeals}>Orders</Titles></TitlesCont>
+    <TitlesCont onPress={onPressMap}><Titles fontWeight={fontWeightMap}>Listed</Titles></TitlesCont>
   </TopCont>
   <SliderCont alignItems={alignItems}>
     <Slider></Slider>
