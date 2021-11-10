@@ -26,7 +26,7 @@ export default function Orders({ navigation }) {
       </View>
       <ScrollView style={styles.scrollViewSmall}>
         <View style={{display:'flex', justifyContent:'center', alignItems:'center', overflow:'hidden'}}>
-          <CustCurrentOrder /> 
+          <CustCurrentOrder HandleDetails={()=>{}}/> 
         </View>
       </ScrollView>
       <View style={{width:'90%', backgroundColor:'white', height:2, position:'absolute', top:320}}></View> 
