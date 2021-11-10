@@ -104,6 +104,7 @@ const CustMealCard = ({
   newprice="$5.00",
   oldprice="$21.00",
   height="170px",
+  addToCart=()=>{}
 }) =>{
 
   const [card, setCard] = useState(false)
@@ -120,7 +121,7 @@ const CustMealCard = ({
 
   return <CardCont height={height}>
     <Cart>
-      <AddToCart>+ Add to cart</AddToCart>
+      <AddToCart onPress={addToCart} >+ Add to cart</AddToCart>
     </Cart>
     <Content>
       <Left>
