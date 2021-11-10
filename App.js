@@ -64,22 +64,25 @@ function Landing({ navigation }) {
 function App () {
   const [showNav, setShowNav] = useState(false);
 
-  const [showRestNav, setRestNav] = useState(true)
+  const [showRestNav, setRestNav] = useState(false)
 
   return (
     <NavigationContainer onStateChange={(state)=>{
-     console.log(state.index);
-      // if(state.index >= 2 && state.index < 6) {
-      //   setShowNav(true)
-      //   setRestNav(false)
-      // } else if (state.index >= 6) {
-      //   setShowNav(false)
-      //   setRestNav(true)
-      // }
-      // else {
-      //   setShowNav(false)
-      //   setRestNav(false)
-      // }
+    const CustomerPageNames = ["Home", "Orders", "Cart", "Account"];
+      if(CustomerPageNames.indexOf(state.routes[state.index].name) !== -1) {
+        setShowNav(true)
+      }
+      else {
+        setShowNav(false)
+      }
+
+    const RestaurantPageNames = ["RestaurantHome", "RestaurantAccount", "Menu"];
+      if(RestaurantPageNames.indexOf(state.routes[state.index].name) !== -1) {
+        setRestNav(true);
+      }
+      else {
+        setRestNav(false)
+      }
     }}>
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
         <Stack.Screen name="Landing" component={Landing} />
@@ -88,10 +91,11 @@ function App () {
         <Stack.Screen name="Orders" component={Orders} />
         <Stack.Screen name="Cart" component={Checkout} />
         <Stack.Screen name="Account" component={Account} />
+
         <Stack.Screen name="RestaurantHome" component={RestaurantHome}/>
         <Stack.Screen name="RestaurantAccount" component={RestaurantAccount}/>
       </Stack.Navigator>
-      {showNav && <Nav />}
+      {showNav && <Nav/>}
       {showRestNav && <RestaurantNav/>}
     </NavigationContainer>
   );
