@@ -11,15 +11,30 @@ import {
 import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
+
+
+//pages
+
+// customer pages
 import Home from './pages/customer/home';
 import Login from './pages/customer/login';
 import Orders from './pages/customer/orders';
 import Checkout from './pages/customer/checkout';
 import Account from './pages/customer/account';
 import Nav from './comps/customer/Nav';
+import ThanksOverlay from './comps/customer/ThanksOverlay';
+
 
 //pages
 import RestaurantHome from './pages/restaurant/home';
+
+
+//restuarant pages
+import RestaurantHome from './pages/Restaurant/home';
+import RestaurantAccount from './pages/Restaurant/account';
+import RestaurantNav from './comps/Restaurant/Nav';
+
+
 
 var logo = require ('./assets/logo1.png');
 
@@ -58,14 +73,22 @@ function Landing({ navigation }) {
 function App () {
   const [showNav, setShowNav] = useState(false);
 
+  const [showRestNav, setRestNav] = useState(true)
+
   return (
     <NavigationContainer onStateChange={(state)=>{
-      // console.log(state);
-      if(state.index >= 2){
-        setShowNav(true)
-      } else {
-        setShowNav(false)
-      }
+     console.log(state.index);
+      // if(state.index >= 2 && state.index < 6){
+      //   setShowNav(true)
+      //   setRestNav(false)
+      // } else if (state.index >= 6) {
+      //   setShowNav(false)
+      //   setRestNav(true)
+      // }
+      // else {
+      //   setShowNav(false)
+      //   setRestNav(false)
+      // }
     }}>
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
         <Stack.Screen name="Landing" component={Landing} />
@@ -75,9 +98,10 @@ function App () {
         <Stack.Screen name="Cart" component={Checkout} />
         <Stack.Screen name="Account" component={Account} />
         <Stack.Screen name="RestaurantHome" component={RestaurantHome}/>
-      
+        <Stack.Screen name="RestaurantAccount" component={RestaurantAccount}/>
       </Stack.Navigator>
       {showNav && <Nav />}
+      {showRestNav && <RestaurantNav/>}
     </NavigationContainer>
   );
 }

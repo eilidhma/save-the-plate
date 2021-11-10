@@ -21,7 +21,7 @@ const But = ({
     radius="20px",
     txtColor="white",
     text="button comp",
-    onPress="()=>{}"
+    onPress=()=>{}
 }) => {
     return <ButtonCont
         width={width}
