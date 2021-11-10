@@ -25,10 +25,15 @@ import Nav from './comps/customer/Nav';
 import ThanksOverlay from './comps/customer/ThanksOverlay';
 
 
+//pages
+import RestaurantHome from './pages/restaurant/home';
+
+
 //restuarant pages
 import RestaurantHome from './pages/Restaurant/home';
 import RestaurantAccount from './pages/Restaurant/account';
 import RestaurantNav from './comps/Restaurant/Nav';
+
 
 
 var logo = require ('./assets/logo1.png');
