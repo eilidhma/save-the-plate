@@ -26,8 +26,8 @@ import ThanksOverlay from './comps/customer/ThanksOverlay';
 
 
 //restuarant pages
-import RestaurantHome from './pages/Restaurant/home';
-import RestaurantAccount from './pages/Restaurant/account';
+import RestaurantHome from './pages/restaurant/home';
+import RestaurantAccount from './pages/restaurant/account';
 import RestaurantNav from './comps/Restaurant/Nav';
 
 
