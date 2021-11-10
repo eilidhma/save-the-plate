@@ -14,6 +14,7 @@ import MapView from 'react-native-maps';
 import Filters from '../../comps/customer/Filters';
 import CustCurrentOrder from '../../comps/customer/CustCurrentOrder';
 import SimpleOrderCard from '../../comps/customer/SimpleOrderCard';
+import Nav from '../../comps/customer/Nav';
 
 
 var map = require ('../../assets/map.png');
@@ -67,6 +68,9 @@ export default function Home({
             top:170,
             bottom:0,
             flex:1}}>
+        
+        
+        
         <Modal
           animationType="slide"
           transparent={true}
@@ -194,8 +198,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
     alignItems: "center",
-    marginTop: 22,
-    zIndex:2
+    zIndex:2,
   },
   modalView: {
     margin: 0,
