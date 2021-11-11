@@ -15,11 +15,12 @@ const CardCont = styled.View`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 387px;
+  width: 90%;
   height: ${props=>props.height};
   background-color: white;
   border-radius: 15px;
   overflow: hidden;
+  margin-top: 10px;
   /* box-shadow: 0px 4px 4px 0px #00000040; */
 `
 
@@ -40,7 +41,7 @@ const Details = styled.View`
 `;
 
 const DetailsText = styled.View`
-    width: "100%";
+    width: 100%;
     height: 35px;
     border: 1px solid #FE4265;
     border-radius: 15px;
@@ -134,9 +135,9 @@ const ListingCard = ({
               <Text style={{color: '#FE4265'}}>Available in: <Text style={{fontWeight: 'bold'}}>{timer}</Text></Text>
             </TimerCont>
 
-            {/* <Quant>
+            <Quant>
               <Text style={{fontSize: 20, fontWeight: 'bold', color: 'white'}}>{quant}</Text>
-            </Quant> */}
+            </Quant>
           </TimerAndQuant>
 
           <ExpandCont onPress={Expand}>

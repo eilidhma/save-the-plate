@@ -48,7 +48,7 @@ const Cards = styled.View`
 
 const EditMenuCont = styled.View`
   width: 90%;
-  height: 170;
+  height: 170px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -81,13 +81,12 @@ export default function RestarantAccount({
 
         <EditMenuCont>
         <Text style={{color: "#FE4265", fontSize: 18, fontWeight: 'bold', alignSelf: 'flex-start'}} >Menu</Text>
-        <But width="100%" height="40px" text="View Menu"/>
-        <But width="100%" height="40px" text="Edit Menu"/>
+        <But width="100%" height="40px" text="View Menu" onPress={()=>navigation.navigate('Menu')}/>
+        <But width="100%" height="40px" text="Edit Menu" onPress={()=>navigation.navigate('Menu')}/>
         </EditMenuCont>
 
         <But text="Save Changes" margintop="10px" bgColor="#F3AD81"/>
-        <But text="< Back" margintop="10px" txtColor="#FE4265" bgColor="#ffffff"/>
-        {/* navigation.goback */}
+        <But text="< Back" margintop="10px" txtColor="#FE4265" bgColor="#ffffff" onPress={()=>navigation.goBack()}/>
       </Cards>
     </LinearGradient>
   );
