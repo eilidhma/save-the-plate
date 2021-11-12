@@ -27,13 +27,13 @@ import ThanksOverlay from './comps/customer/ThanksOverlay';
 
 
 //pages
-import RestaurantHome from './pages/restaurant/home';
+// import RestaurantHome from './pages/restaurant/home';
 
 
 //restuarant pages
-import RestaurantHome from './pages/Restaurant/home';
-import RestaurantAccount from './pages/Restaurant/account';
-import RestaurantNav from './comps/Restaurant/Nav';
+// import RestaurantHome from './pages/Restaurant/home';
+// import RestaurantAccount from './pages/Restaurant/account';
+// import RestaurantNav from './comps/Restaurant/Nav';
 
 
 
@@ -93,11 +93,11 @@ function App () {
         <Stack.Screen name="Orders" component={Orders} />
         <Stack.Screen name="Cart" component={Checkout} />
         <Stack.Screen name="Account" component={Account} />
-        <Stack.Screen name="RestaurantHome" component={RestaurantHome}/>
-        <Stack.Screen name="RestaurantAccount" component={RestaurantAccount}/>
+        {/* <Stack.Screen name="RestaurantHome" component={RestaurantHome}/>
+        <Stack.Screen name="RestaurantAccount" component={RestaurantAccount}/> */}
       </Stack.Navigator>
       {showNav && <Nav />}
-      {showRestNav && <RestaurantNav/>}
+      {/* {showRestNav && <RestaurantNav/>} */}
     </NavigationContainer>
   );
 }

@@ -35,9 +35,15 @@ export default function Signup({ navigation }) {
       </View>
       <View style={{width:'90%', backgroundColor:'white', height:2, position:'absolute', top:118}}></View> 
       <View style={styles.gradient}>
+        {/* <View style={styles.itemCont}>
+          <Pressable style={styles.back} title="Signup"
+            onPress={() => navigation.navigate('Login')} >
+            <Text style={{color:'white', fontSize:18, fontWeight:'600'}}>Back</Text>
+          </Pressable>
+        </View> */}
         <View style={styles.itemCont}> 
           <View style={styles.left}>
-            <Text>Name</Text>
+            <Text style={{fontWeight:'500', fontSize:16}}>Name</Text>
           </View>
           <View style={styles.left}>
             <TextInput autoCompleteType={'name'} style={styles.username} placeholder={'name'} textAlign={'center'} textContentType={'name'}/>
@@ -45,15 +51,15 @@ export default function Signup({ navigation }) {
         </View>
         <View style={styles.itemCont}> 
           <View style={styles.left}>
-            <Text>Email</Text>
+            <Text style={{fontWeight:'500', fontSize:16}}>Email</Text>
           </View>
           <View style={styles.left}>
-            <TextInput autoCompleteType={'email'} style={styles.username} placeholder={'email'} textAlign={'center'} textContentType={'email'}/>
+            <TextInput autoCompleteType={'email'} style={styles.username} placeholder={'email'} textAlign={'center'} textContentType={'emailAddress'}/>
           </View>
         </View>
         <View style={styles.itemCont}> 
           <View style={styles.left}>
-            <Text>Password</Text>
+            <Text style={{fontWeight:'500', fontSize:16}}>Password</Text>
           </View>
           <View style={styles.left}>
             <TextInput autoCompleteType={'password'} style={styles.username} placeholder={'password'} textAlign={'center'} textContentType={'password'}/>
@@ -61,33 +67,87 @@ export default function Signup({ navigation }) {
         </View>
         <View style={styles.itemCont}> 
           <View style={styles.left}>
-            <Text>Phone</Text>
+            <Text style={{fontWeight:'500', fontSize:16}}>Phone</Text>
           </View>
           <View style={styles.left}>
-            <TextInput autoCompleteType={'phone'} style={styles.username} placeholder={'phone'} textAlign={'center'} textContentType={'phone'}/>
+            <TextInput autoCompleteType={'tel'} style={styles.username} placeholder={'phone'} textAlign={'center'} textContentType={'telephoneNumber'}/>
           </View>
         </View>
         <View style={styles.itemCont}> 
           <View style={styles.left}>
-            <Text>Address</Text>
+            <Text style={{fontWeight:'500', fontSize:16}}>Address</Text>
           </View>
-          <View style={styles.left}>
-            <TextInput autoCompleteType={'address'} style={styles.username} placeholder={'street address'} textAlign={'center'} textContentType={'address'}/>
+          <View style={{display:'flex', flexDirection:'column'}}>
+             <View style={styles.left}>
+              <TextInput autoCompleteType={'street-address'} style={styles.username} placeholder={'street address'} textAlign={'center'} textContentType={'streetAddressLine1'}/>
+            </View>
           </View>
         </View>
         <View style={styles.itemCont}> 
           <View style={styles.left}>
-            <Text>Payment</Text>
+            <Text></Text>
           </View>
-          <View style={styles.left}>
-            <TextInput autoCompleteType={'username'} style={styles.username} placeholder={'Name'} textAlign={'center'} textContentType={''}/>
+          <View style={{display:'flex', flexDirection:'row', justifyContent:'space-between', width:200}}>
+             <View style={styles.left}>
+              <TextInput autoCompleteType={'off'} style={styles.smallInput} placeholder={'apt #'} textAlign={'center'} textContentType={'streetAddressLine2'}/>
+            </View>
+            <View style={styles.left}>
+              <TextInput autoCompleteType={'postal-code'} style={styles.smallInput} placeholder={'postal code'} textAlign={'center'} textContentType={'postalCode'}/>
+            </View>
           </View>
         </View>
-      </View> 
-      <Pressable style={styles.shadowProp} title="Signup"
-        onPress={() => navigation.navigate('Signup')} >
+        <View style={styles.itemCont}> 
+          <View style={styles.left}>
+            <Text></Text>
+          </View>
+          <View style={{display:'flex', flexDirection:'row', justifyContent:'space-between', width:200}}>
+             <View style={styles.left}>
+              <TextInput autoCompleteType={'address'} style={styles.smallInput} placeholder={'city'} textAlign={'center'} textContentType={'addressCity'}/>
+            </View>
+            <View style={styles.left}>
+              <TextInput autoCompleteType={'address'} style={styles.smallInput} placeholder={'province'} textAlign={'center'} textContentType={'addressState'}/>
+            </View>
+          </View>
+        </View>
+        <View style={styles.itemCont}> 
+          <View style={styles.left}>
+            <Text style={{fontWeight:'500', fontSize:16}}>Payment</Text>
+          </View>
+          <View style={{display:'flex', flexDirection:'column'}}>
+             <View style={styles.left}>
+              <TextInput autoCompleteType={'cc-number'} style={styles.username} placeholder={'card number'} textAlign={'center'} textContentType={'creditCardNumber'}/>
+            </View>
+          </View>
+        </View>
+        <View style={styles.itemCont}> 
+          <View style={styles.left}>
+            <Text></Text>
+          </View>
+          <View style={{display:'flex', flexDirection:'row', justifyContent:'space-between', width:200}}>
+             <View style={styles.left}>
+              <TextInput autoCompleteType={'name'} style={styles.username} placeholder={'name on card'} textAlign={'center'} textContentType={'name'}/>
+            </View>
+          </View>
+        </View>
+        <View style={styles.itemCont}> 
+          <View style={styles.left}>
+            <Text></Text>
+          </View>
+          <View style={{display:'flex', flexDirection:'row', justifyContent:'space-between', width:200}}>
+             <View style={styles.left}>
+              <TextInput autoCompleteType={'cc-exp'} style={styles.smallInput} placeholder={'expiry'} textAlign={'center'} textContentType={'none'}/>
+            </View>
+            <View style={styles.left}>
+              <TextInput autoCompleteType={'cc-csc'} style={styles.smallInput} placeholder={'CVC'} textAlign={'center'} textContentType={'none'}/>
+            </View>
+          </View>
+        </View>
+        <Pressable style={styles.shadowProp} title="Signup"
+        onPress={() => navigation.navigate('Login')} >
         <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Sign Up</Text>
       </Pressable>
+      </View> 
+      
     </LinearGradient>
   );
 }
@@ -96,11 +156,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
+    paddingBottom:50
   },
   gradient: {
     width:'90%',
-    height:'50%',
+    height:'80%',
     backgroundColor:'rgba(255,255,255,0.4)',
     display:'flex',
     flexDirection:'column',
@@ -119,9 +180,23 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop:20,
+    marginTop:50,
     padding:5,
     borderRadius:20,
+  },
+  back: {
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    backgroundColor:'rgba(254,66,101,0.25)',
+    width:100,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding:5,
+    borderRadius:20,
+
   },
   username: {
     shadowColor: '#171717',
@@ -130,6 +205,21 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     backgroundColor:'#FFF',
     width:200,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding:5,
+    borderRadius:20,
+    fontFamily:'Quicksand_300Light', 
+    fontSize:16
+  },
+  smallInput: {
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    backgroundColor:'#FFF',
+    width:95,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
