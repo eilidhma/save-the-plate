@@ -27,6 +27,7 @@ const Cont = styled.View`
   border-color:white;
   border-top-width:2px;
   background-color:#FE4265;
+  z-index:5;
 `
 
 const IconCont = styled.Pressable`

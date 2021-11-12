@@ -1,20 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, ScrollView, Modal } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import {
-  useFonts,
-  Raleway_700Bold,
-} from '@expo-google-fonts/raleway';
-import {
-  Quicksand_300, Quicksand_300Light
-} from '@expo-google-fonts/quicksand';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
 import CustCurrentOrder from '../../comps/customer/CustCurrentOrder';
 import CustMealCard from '../../comps/customer/CustMealCard';
 import PastOrder from '../../comps/customer/PastOrder';
-// import Star from 'react-native-star-view/lib/Star';
 import StarRating from 'react-native-star-rating';
 import { SimpleLineIcons } from '@expo/vector-icons';
 
@@ -54,11 +46,25 @@ const Distance = styled.View`
   margin-top:10px;
 `
 
-export default function Orders({
+export default function Checkout({
   restaurant="Fratelli's Bistro",
   distance="1.2 km",
-  price="$5.00"
+  price="$5.00",
+  navigation,
+  src=require("../../assets/plate.png"),
 }) {
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const ViewOrder = () => {
+    navigation.navigate('Orders')
+    setModalVisible(false)
+  }
+
+  const GoHome = () => {
+    navigation.navigate('Home')
+    setModalVisible(false)
+  }
 
   
   return (
@@ -83,25 +89,52 @@ export default function Orders({
           <SimpleLineIcons style={{marginRight:5}} name="location-pin" size={18} color="black" />
           <Text style={{fontSize:16, color:'black'}}>{distance}<Text> away</Text></Text>
         </Distance>
-        <View style={{
-          width:'100%',
-          justifyContent:'center',
-          alignItems:'center'}}>
-          <Image style={{width:'90%', height:150}} source={map}></Image>
+        <View style={styles.scrollView}>
+           <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:300}}>
+            <View style={{
+            width:'100%',
+            justifyContent:'center',
+            alignItems:'center'}}>
+              <Image style={{width:'90%', height:150}} source={map}></Image>
+            </View>
+            <CustCurrentOrder />
+            <View style={{width:'100%', display:'flex', justifyContent:'space-between', alignItems:'center', paddingLeft:20, paddingRight:20, marginTop:30, flexDirection:'row'}}>
+              <View style={{width:120, display:'flex', flexDirection:'row'}}>
+                <Image style={{width:50, height:15}} source={cardtype}></Image>
+                <Text style={{marginLeft:5}}>***7896</Text>
+              </View>
+              <Text style={{fontSize:22, fontWeight:'500'}}>Total: {price}</Text>
+            </View>
+            <Pressable style={styles.shadowProp} title="Confirm" onPress={() => setModalVisible(!modalVisible)} >
+            <Text style={{color:'white', fontSize:22}}>Confirm Order</Text>
+          </Pressable>
+          </ScrollView>
+
         </View>
-        <CustCurrentOrder />
-        <View style={{width:'100%', display:'flex', justifyContent:'space-between', alignItems:'center', paddingLeft:20, paddingRight:20, marginTop:30, flexDirection:'row'}}>
-          <View style={{width:120, display:'flex', flexDirection:'row'}}>
-            <Image style={{width:50, height:15}} source={cardtype}></Image>
-            <Text style={{marginLeft:5}}>***7896</Text>
-          </View>
-          <Text style={{fontSize:22, fontWeight:'500'}}>Total: {price}</Text>
-        </View>
-        <Pressable style={styles.shadowProp} title="Confirm" onPress={() => navigation.navigate('Orders')} >
-        <Text style={{color:'white', fontSize:22}}>Confirm Order</Text>
-      </Pressable>
+        
+        
       </Cont>
       
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={{display:'flex', flexDirection:'column', width:'90%', justifyContent:'center', alignItems:'center'}}>
+              <Text>Thank you for your order!</Text>
+              {/* <Image source={src} style={{width:100, height:100}}/> */}
+              <Pressable style={styles.shadowPropDark} title="Checkout" onPress={ViewOrder} >
+                <Text style={{color:'white', fontSize:18}}>View Order</Text>
+              </Pressable>
+              <Pressable style={styles.shadowPropLight} title="Add more" onPress={GoHome} >
+                <Text style={{color:'white', fontSize:18}}>Home</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
       
     </LinearGradient>
   );
@@ -145,7 +178,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 0,
     width:'100%',
     position:'absolute',
-    top:380,
+    top:110,
     bottom:0,
     flex:1,
   },
@@ -168,5 +201,78 @@ const styles = StyleSheet.create({
   starStyle: {
     width: 100,
     height: 20,
-  }
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex:2,
+    backgroundColor:'rgba(0,0,0,0.25)'
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 0,
+    alignItems: "center",
+    justifyContent:'center',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    width:250,
+    height:200
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  },
+  shadowPropDark: {
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    backgroundColor:'#FE4265',
+    width:150,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:20,
+    padding:5,
+    borderRadius:20,
+  },
+  shadowPropLight: {
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    backgroundColor:'#F3AD81',
+    width:150,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:20,
+    padding:5,
+    borderRadius:20,
+  },
 });
