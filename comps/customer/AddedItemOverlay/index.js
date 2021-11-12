@@ -74,8 +74,8 @@ const X = styled.TouchableOpacity`
 
 const AddedItemOverlay = (
     amount="$5.00",
-    onHandle="()=>{}",
-    onClose="()=>{}"
+    onHandle=()=>{},
+    onClose=()=>{}
 ) => {
     return <Cont>
 
