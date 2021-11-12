@@ -16,6 +16,7 @@ import Login from './pages/customer/login';
 import Orders from './pages/customer/orders';
 import Checkout from './pages/customer/checkout';
 import Account from './pages/customer/account';
+import Signup from './pages/customer/signup';
 import Nav from './comps/customer/Nav';
 
 //pages
@@ -61,7 +62,7 @@ function App () {
   return (
     <NavigationContainer onStateChange={(state)=>{
       // console.log(state);
-      if(state.index >= 2){
+      if(state.index >= 3){
         setShowNav(true)
       } else {
         setShowNav(false)
@@ -69,6 +70,7 @@ function App () {
     }}>
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
         <Stack.Screen name="Landing" component={Landing} />
+        <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Orders" component={Orders} />
