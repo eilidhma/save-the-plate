@@ -17,7 +17,7 @@ const FiltersCont = styled.View`
   display:flex;
   backgroundColor:white;
   width:90%;
-  flexDirection:row;
+  flexDirection:column;
   borderRadius:15px;
   overflow:hidden;
   height:${props=>props.height};
@@ -34,51 +34,104 @@ const Left = styled.View`
   display:flex;
   backgroundColor:white;
   flexDirection:column;
-  flex:10;
-  z-index:2;
+  width:85%;
 `
 const Right = styled.View`
   display:flex;
-  backgroundColor:#d3d3d3;
+  backgroundColor:white;
   flexDirection:column;
-  flex:2;
+`
+const Top = styled.View`
+  display:flex;
+  flexDirection:row;
+`
+const Bottom = styled.View`
+  display:flex;
+  backgroundColor:white;
 `
 
+const styles = StyleSheet.create({
+  containerButton: {
+    borderColor:'#FF1A44', 
+    borderWidth:1, 
+    borderRadius:10, 
+    marginHorizontal:5
+  },
+  textButton: { 
+    fontSize:16, 
+    padding:5,
+  }
+})
+
 const Filters = ({
-    height="50px"
+    height="50px",
 }) => {
     const [filters, setFilters] = useState(false)
 
     if(filters === false){
         height="50px"
     } else {
-        height="350px"
+        height="360px"
     }
 
     const HandleFilters = () => {
         setFilters(!filters)
     }
 
+    const [filterColor, setFilterColor] = useState("white")
+    const [textColor, setTextColor] = useState("#ff1a44")
+    const [selected, setSelected] = useState(false)
+    
+    const SelectFilter1 = () => {
+      setSelected(!selected)
+      
+      if(selected === false){
+        setFilterColor("#ff1a44")
+        setTextColor("white")
+      } else {
+        setFilterColor("white")
+        setTextColor("#ff1a44")
+      }
+    }
+    const SelectFilter2 = () => {
+      setSelected(!selected)
+      
+      if(selected === false){
+        setFilterColor("#ff1a44")
+        setTextColor("white")
+      } else {
+        setFilterColor("white")
+        setTextColor("#ff1a44")
+      }
+    }
+
     return <FiltersCont height={height}>
-        <Left>
+      <Top>
+        <Left style={{zIndex:1,}}>
             <SearchCont>
                 <Search/>
             </SearchCont>
+        </Left>
 
+        <Right style={{zIndex:1,}}>
+            <Pressable onPress={HandleFilters}><MaterialCommunityIcons style={{margin:10}} name="filter-outline" size={30} color="#FE4265" /></Pressable>
+        </Right>
+      </Top>
+        <Bottom>
             <View style={{margin:5}}>
                 <Text style={{fontFamily:'Quicksand_400Regular', fontSize:16, padding:5}}>Cuisine</Text>
               <ScrollView horizontal={true} contentContainerStyle={{width:'100%', justifyContent:'space-between'}}>
-                <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
-                  <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:16, padding:5}}>Italian</Text>
+                <Pressable onPress={SelectFilter1} backgroundColor={filterColor} style={styles.containerButton}>
+                  <Text textColor={textColor} style={{color:textColor, fontSize:16, padding:5,}}>Italian</Text>
+                </Pressable>
+                <Pressable onPress={SelectFilter2} backgroundColor={filterColor} style={styles.containerButton}>
+                  <Text textColor={textColor} style={{color:textColor, fontSize:16, padding:5,}}>Mexican</Text>
                 </Pressable>
                 <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
-                  <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:16, padding:5}}>Mexican</Text>
+                  <Text textColor={textColor} style={{color:textColor, fontSize:16, padding:5,}}>Vietnamese</Text>
                 </Pressable>
                 <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
-                  <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:16, padding:5}}>Vietnamese</Text>
-                </Pressable>
-                <Pressable style={{backgroundColor:'white', borderColor:'#FF1A44', borderWidth:1, borderRadius:10, marginHorizontal:5}}>
-                  <Text style={{color:'#FF1A44', fontFamily:'Quicksand_300Light', fontSize:16, padding:5}}>American</Text>
+                  <Text textColor={textColor} style={{color:textColor, fontSize:16, padding:5,}}>American</Text>
                 </Pressable>
               </ScrollView>
             </View>
@@ -142,10 +195,7 @@ const Filters = ({
                 </Pressable>
               </ScrollView>
             </View>
-        </Left>
-        <Right>
-            <Pressable onPress={HandleFilters}><MaterialCommunityIcons style={{margin:10}} name="filter-outline" size={30} color="#FE4265" /></Pressable>
-        </Right>
+        </Bottom>
     </FiltersCont>
 }
 
