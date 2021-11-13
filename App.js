@@ -31,9 +31,10 @@ import ThanksOverlay from './comps/customer/ThanksOverlay';
 
 
 //restuarant pages
-// import RestaurantHome from './pages/Restaurant/home';
-// import RestaurantAccount from './pages/Restaurant/account';
-// import RestaurantNav from './comps/Restaurant/Nav';
+
+import RestaurantHome from './pages/restaurant/home';
+import RestaurantAccount from './pages/restaurant/account';
+import RestaurantNav from './comps/Restaurant/Nav';
 
 
 
@@ -74,12 +75,13 @@ function Landing({ navigation }) {
 function App () {
   const [showNav, setShowNav] = useState(false);
 
-  const [showRestNav, setRestNav] = useState(true)
+  const [showRestNav, setRestNav] = useState(false)
 
   const [page, setPage] = useState("Home")
 
   return (
     <NavigationContainer onStateChange={(state)=>{
+
       
       const CustomerPageNames = ["Home", "Orders", "Cart", "Account"];
 
@@ -114,6 +116,7 @@ function App () {
           setRestNav(false)
         }
       }}>
+
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
         <Stack.Screen  name="Landing" component={Landing} />
         <Stack.Screen name="Signup" component={Signup} />
@@ -122,11 +125,13 @@ function App () {
         <Stack.Screen name="Orders" component={Orders} />
         <Stack.Screen name="Cart" component={Checkout} />
         <Stack.Screen name="Account" component={Account} />
-        {/* <Stack.Screen name="RestaurantHome" component={RestaurantHome}/>
-        <Stack.Screen name="RestaurantAccount" component={RestaurantAccount}/> */}
+
+        <Stack.Screen name="RestaurantHome" component={RestaurantHome}/>
+        <Stack.Screen name="RestaurantAccount" component={RestaurantAccount}/>
       </Stack.Navigator>
-      {showNav && <Nav page={page}/>}
-      {/* {showRestNav && <RestaurantNav/>} */}
+      {showNav && <Nav/>}
+      {showRestNav && <RestaurantNav/>}
+
     </NavigationContainer>
   );
 }

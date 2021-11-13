@@ -10,6 +10,7 @@ const ButtonCont = styled.TouchableOpacity`
  border-radius: ${props=>props.radius};
  justify-content: center;
  align-items: center;
+ margin-top: ${props=>props.margintop};
 `;
 
 
@@ -21,6 +22,7 @@ const But = ({
     radius="20px",
     txtColor="white",
     text="button comp",
+    margintop="0px",
     onPress=()=>{}
 }) => {
     return <ButtonCont
@@ -29,6 +31,7 @@ const But = ({
         bgColor={bgColor}
         radius={radius}
         onPress={onPress}
+        margintop={margintop}
         >
         <Text style={{color:txtColor, fontWeight: 'bold'}}>{text}</Text>
     </ButtonCont>
