@@ -27,9 +27,9 @@ export default function Login({ navigation }) {
         onPress={() => navigation.navigate('Home')} >
         <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Login</Text>
       </Pressable>
-      <Pressable style={styles.shadowProp} title="RestaurantHome"
-        onPress={() => navigation.navigate('RestaurantHome')} >
-        <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Temporary button for restaurant</Text>
+      <Pressable style={styles.shadowProp} title="Signup"
+        onPress={() => navigation.navigate('Signup')} >
+        <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Sign Up</Text>
       </Pressable>
     </LinearGradient>
   );

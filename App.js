@@ -21,15 +21,17 @@ import Login from './pages/customer/login';
 import Orders from './pages/customer/orders';
 import Checkout from './pages/customer/checkout';
 import Account from './pages/customer/account';
+import Signup from './pages/customer/signup';
 import Nav from './comps/customer/Nav';
 import ThanksOverlay from './comps/customer/ThanksOverlay';
 
 
 //pages
-import RestaurantHome from './pages/restaurant/home';
+// import RestaurantHome from './pages/restaurant/home';
 
 
 //restuarant pages
+
 import RestaurantHome from './pages/restaurant/home';
 import RestaurantAccount from './pages/restaurant/account';
 import RestaurantNav from './comps/Restaurant/Nav';
@@ -75,26 +77,49 @@ function App () {
 
   const [showRestNav, setRestNav] = useState(false)
 
+  const [page, setPage] = useState("Home")
+
   return (
     <NavigationContainer onStateChange={(state)=>{
-    const CustomerPageNames = ["Home", "Orders", "Cart", "Account"];
-      if(CustomerPageNames.indexOf(state.routes[state.index].name) !== -1) {
-        setShowNav(true)
-      }
-      else {
-        setShowNav(false)
-      }
 
-    const RestaurantPageNames = ["RestaurantHome", "RestaurantAccount", "Menu"];
-      if(RestaurantPageNames.indexOf(state.routes[state.index].name) !== -1) {
-        setRestNav(true);
+      
+      const CustomerPageNames = ["Home", "Orders", "Cart", "Account"];
+
+      if(CustomerPageNames.indexOf(state.routes[state.index].name) == -1){
+        setPage(0)
       }
-      else {
-        setRestNav(false)
-      }
-    }}>
+      
+        if(CustomerPageNames.indexOf(state.routes[state.index].name) !== -1) {
+          setShowNav(true)
+          if(state.routes[state.index].name === "Home"){
+            setPage("Home")
+          }
+          if(state.routes[state.index].name === "Orders"){
+            setPage("Orders")
+          }
+          if(state.routes[state.index].name === "Cart"){
+            setPage("Cart")
+          }
+          if(state.routes[state.index].name === "Account"){
+            setPage("Account")
+          }
+        }
+        else {
+          setShowNav(false)
+        }
+  
+      const RestaurantPageNames = ["RestaurantHome", "RestaurantAccount", "Menu"];
+        if(RestaurantPageNames.indexOf(state.routes[state.index].name) !== -1) {
+          setRestNav(true);
+        }
+        else {
+          setRestNav(false)
+        }
+      }}>
+
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
-        <Stack.Screen name="Landing" component={Landing} />
+        <Stack.Screen  name="Landing" component={Landing} />
+        <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Orders" component={Orders} />
@@ -104,8 +129,9 @@ function App () {
         <Stack.Screen name="RestaurantHome" component={RestaurantHome}/>
         <Stack.Screen name="RestaurantAccount" component={RestaurantAccount}/>
       </Stack.Navigator>
-      {showNav && <Nav/>}
+      {showNav && <Nav page={page}/>}
       {showRestNav && <RestaurantNav/>}
+
     </NavigationContainer>
   );
 }
