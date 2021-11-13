@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, TouchableOpacity, Modal } from 'react-native';
 import {
   useFonts,
   Raleway_700Bold,
@@ -9,11 +9,14 @@ import {
 } from '@expo-google-fonts/quicksand';
 import styled from 'styled-components';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 
 
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import Search from '../SearchBar'
+import But from '../../global/Button';
 
 const Cont = styled.View`
   display:flex;
@@ -48,18 +51,51 @@ const AddItem = styled.TouchableOpacity`
   align-items: center;
 `;
 
+
+const AddListingModal = styled.View`
+ display: flex;
+ flex-direction: column;
+ justify-content: space-between;
+ width: 100%;
+ height: 579px;
+ padding-right: 5%;
+ padding-left: 5%;
+ padding-top: 40px;
+ padding-bottom: 37px;
+ background-color: #ffffff;
+ border-radius: 30px;
+ position: absolute;
+ bottom: 0px;
+`
+
+const CloseModal = styled.TouchableOpacity`
+  position: absolute;
+  top:10px;
+  right: 10px;
+  width: 13px;
+  height: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+`;
+
 const RestaurantNav = ({ 
   home="white",
-  orders="white",
-  cart="white",
   account="white",
-  onPress=()=>{},
 }) =>{
 
   const Stack = createNativeStackNavigator();
   const navigation = useNavigation();
 
   const [nav, setNav] = useState(0)
+
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const [addItemStep, setItemStep] = useState(1)
+
 
 onPressHome=()=>{
   setNav(0)
@@ -70,6 +106,8 @@ onPressAccount=()=>{
   setNav(1)
   navigation.navigate('RestaurantAccount')
 }
+
+
   
   return <Cont >
     <LinearGradient style={{width:'100%', display:'flex', flexDirection:'row', justifyContent:'space-evenly', alignItems:'center'}} start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['rgb(243,173,129)', 'rgba(243,173,129,0.5)', 'rgb(243,173,129)']}>
@@ -77,7 +115,7 @@ onPressAccount=()=>{
       <Feather name="home" size={24} color={home} />
     </IconCont>
 
-    <AddItem onPress={onPress}>
+    <AddItem onPress={()=>setModalVisible(!modalVisible)}>
     <Feather name="plus" size={30} color="#FE4265" />
     </AddItem>
     
@@ -86,9 +124,37 @@ onPressAccount=()=>{
     </IconCont>
 
   </LinearGradient>
+
+  {/* //modal stuff */}
+  <Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+  >
+  
+  <AddListingModal>
+    <CloseModal onPress={()=>setModalVisible(!modalVisible)}>
+      <AntDesign name="close" size={13} color="#C4C4C4" />
+    </CloseModal>
+
+    {addItemStep === 1 && <View>
+      <View>
+        <Search/>
+      </View>
+      <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)}></But>
+    </View>
+    }
+
+    {addItemStep === 2 && <View>
+      <View>
+      <But text="< Back" onPress={()=>setItemStep(1)}></But>
+      </View>
+    </View>
+    }
+  </AddListingModal>
+
+  </Modal>
   </Cont>
-  
-  
 }
 
 export default RestaurantNav;

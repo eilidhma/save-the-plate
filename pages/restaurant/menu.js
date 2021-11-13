@@ -89,11 +89,30 @@ const AddItemModal = styled.View`
 
 const CloseModal = styled.TouchableOpacity`
   position: absolute;
-  top:0px;
-  right: 0px;
+  top:10px;
+  right: 10px;
   width: 13px;
   height: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
 `;
+
+// const Tab = styled.TouchableOpacity`
+//   position: absolute;
+//   width: ;
+// `;
+
+const ModalRow = styled.View`
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+`
+
 
 export default function Menu({
   restaurant="Fratelli's Bistro",
@@ -118,6 +137,12 @@ export default function Menu({
           <AntDesign name="close" size={13} color="#C4C4C4" />
         </CloseModal>
         
+        <ModalRow>
+          <Text>
+            Image:
+          </Text>
+        </ModalRow>
+ 
       </AddItemModal>
       </Modal>
 
