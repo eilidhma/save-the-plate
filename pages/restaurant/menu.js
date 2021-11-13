@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
+import React, { useState }from 'react';
+import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, ScrollView, Modal, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   useFonts,
@@ -12,7 +12,7 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import styled from 'styled-components';
 
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import PlatesSaved from '../../comps/customer/PlatesSaved';
 import InfoCard from '../../comps/customer/InfoCard';
 import But from '../../comps/global/Button';
@@ -30,7 +30,7 @@ const TopCont = styled.Pressable`
 const IconCont = styled.Pressable`
   display:flex;
   border-radius:100px;
-  border:2px solid white;
+  border:2px solid #ffffff;
   width:100px;
   height:100px;
   justify-content:center;
@@ -48,7 +48,7 @@ const Cards = styled.View`
 
 const EditMenuCont = styled.View`
   width: 90%;
-  height: 170px;
+  height: 387px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -59,35 +59,100 @@ const EditMenuCont = styled.View`
   padding-right:20px;
   padding-left:20px;
   padding-top:10px;
-  padding-bottom:10px;
+  overflow: hidden;
 `;
 
-export default function RestarantAccount({
+const AddItemButton = styled.View`
+    width: 130%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0px;
+`
+
+const AddItemModal = styled.View`
+ display: flex;
+ flex-direction: column;
+ justify-content: space-between;
+ width: 100%;
+ height: 579px;
+ padding-right: 5%;
+ padding-left: 5%;
+ padding-top: 40px;
+ padding-bottom: 37px;
+ background-color: #ffffff;
+ border-radius: 30px;
+ position: absolute;
+ bottom: 0px;
+`
+
+const CloseModal = styled.TouchableOpacity`
+  position: absolute;
+  top:0px;
+  right: 0px;
+  width: 13px;
+  height: 13px;
+`;
+
+export default function Menu({
   restaurant="Fratelli's Bistro",
   navigation
 }) {
 
+  const [modalVisible, setModalVisible] = useState(false);
+
+
+
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
+
+      <Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+      >
+      
+      <AddItemModal>
+        <CloseModal onPress={()=>setModalVisible(!modalVisible)}>
+          <AntDesign name="close" size={13} color="#C4C4C4" />
+        </CloseModal>
+        
+      </AddItemModal>
+      </Modal>
+
+
       <TopCont>
         <IconCont >
-          <MaterialCommunityIcons name="account" size={60} color="white" />
+          <MaterialCommunityIcons name="account" size={60} color="#ffffff" />
         </IconCont>
-      <Text style={{fontSize:30, fontWeight:'400', color:'white', marginLeft:20}}>{restaurant}</Text>
+      <Text style={{fontSize:30, fontWeight:'400', color:'#ffffff', marginLeft:20}}>{restaurant}</Text>
       </TopCont>
-      <Cards>
-        <PlatesSaved/>
-        <InfoCard title="Contact Information" sectiontitle1="Phone number:" sectiontitle2="Address:" phone="604-456-1234" addressline1="3278 W 10th Avenue" addressline2="V6J 2G9 Vancouver, BC" edit="Edit Contact Information"/>
 
+      <Cards>
         <EditMenuCont>
         <Text style={{color: "#FE4265", fontSize: 18, fontWeight: 'bold', alignSelf: 'flex-start'}} >Menu</Text>
-        <But width="100%" height="40px" text="View Menu" onPress={()=>navigation.navigate('Menu')}/>
-        <But width="100%" height="40px" text="Edit Menu" onPress={()=>navigation.navigate('Menu')}/>
+
+        <View style={{width: '100%'}}>
+            <ScrollView contentContainerStyle={{width: '100%', alignItems:'center'}}>
+                <But width="100%" height="50px" text="Fettucini Alfredo" margintop="10px"/>
+                <But width="100%" height="50px" text="Spaghetti Bolognese" margintop="10px"/>
+                <But width="100%" height="50px" text="Lasagna" margintop="10px"/>
+                <But width="100%" height="50px" text="Meatballs" margintop="10px"/>
+                <But width="100%" height="50px" text="Ravioli" margintop="10px"/>
+                <But width="100%" height="50px" text="Roasted Vegetables" margintop="10px"/>
+                <But width="100%" height="50px" text="Gnochi" margintop="10px"/>
+            </ScrollView>
+        </View>
+        <AddItemButton onPress={()=>setModalVisible(!modalVisible)}>
+            <But width="100%" height="40px" text="New Item" bgColor="#F3Ad81" borderRadius="0px"/>
+        </AddItemButton>
         </EditMenuCont>
 
         <But text="Save Changes" margintop="10px" bgColor="#F3AD81"/>
         <But text="< Back" margintop="10px" txtColor="#FE4265" bgColor="#ffffff" onPress={()=>navigation.goBack()}/>
       </Cards>
+      
     </LinearGradient>
   );
 }
@@ -117,7 +182,7 @@ const styles = StyleSheet.create({
     shadowOffset: {width: -2, height: 4},
     shadowOpacity: 0.2,
     shadowRadius: 3,
-    backgroundColor:'white',
+    backgroundColor:'#ffffff',
     width:200,
     display: 'flex',
     justifyContent: 'center',

@@ -32,7 +32,7 @@ export default class Search extends React.Component {
         round={15}
         inputStyle={{backgroundColor:'white'}}
         inputContainerStyle={{width:"100%", height:"100%", backgroundColor:'white', }}
-        containerStyle={{width:"100%", height:50, backgroundColor:'white', borderRadius: 15, borderTopColor:'transparent', borderBottomColor:'transparent' }}
+        containerStyle={{width:"90%", height:50, backgroundColor:'white', borderRadius: 15, borderTopColor:'transparent', borderBottomColor:'transparent' }}
       />
     );
   }

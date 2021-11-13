@@ -12,9 +12,6 @@ import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
 
-
-//pages
-
 // customer pages
 import Home from './pages/customer/home';
 import Login from './pages/customer/login';
@@ -26,6 +23,7 @@ import Nav from './comps/customer/Nav';
 import ThanksOverlay from './comps/customer/ThanksOverlay';
 
 
+
 //pages
 // import RestaurantHome from './pages/restaurant/home';
 
@@ -34,6 +32,7 @@ import ThanksOverlay from './comps/customer/ThanksOverlay';
 
 import RestaurantHome from './pages/restaurant/home';
 import RestaurantAccount from './pages/restaurant/account';
+import Menu from './pages/restaurant/menu'
 import RestaurantNav from './comps/Restaurant/Nav';
 
 
@@ -65,11 +64,6 @@ function Landing({ navigation }) {
   );
   }
 }
-
-// Eilidh's section - customer UI
-
-
-//
 
 
 function App () {
@@ -128,6 +122,7 @@ function App () {
 
         <Stack.Screen name="RestaurantHome" component={RestaurantHome}/>
         <Stack.Screen name="RestaurantAccount" component={RestaurantAccount}/>
+        <Stack.Screen name="Menu" component={Menu}/>
       </Stack.Navigator>
       {showNav && <Nav page={page}/>}
       {showRestNav && <RestaurantNav/>}
