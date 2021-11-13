@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, ScrollView } from 'react-native';
+import React, { useState }from 'react';
+import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, ScrollView, Modal, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   useFonts,
@@ -12,7 +12,7 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import styled from 'styled-components';
 
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import PlatesSaved from '../../comps/customer/PlatesSaved';
 import InfoCard from '../../comps/customer/InfoCard';
 import But from '../../comps/global/Button';
@@ -30,7 +30,7 @@ const TopCont = styled.Pressable`
 const IconCont = styled.Pressable`
   display:flex;
   border-radius:100px;
-  border:2px solid white;
+  border:2px solid #ffffff;
   width:100px;
   height:100px;
   justify-content:center;
@@ -62,7 +62,7 @@ const EditMenuCont = styled.View`
   overflow: hidden;
 `;
 
-const AddItemCont = styled.View`
+const AddItemButton = styled.View`
     width: 130%;
     display: flex;
     justify-content: center;
@@ -71,20 +71,63 @@ const AddItemCont = styled.View`
     bottom: 0px;
 `
 
+const AddItemModal = styled.View`
+ display: flex;
+ flex-direction: column;
+ justify-content: space-between;
+ width: 100%;
+ height: 579px;
+ padding-right: 5%;
+ padding-left: 5%;
+ padding-top: 40px;
+ padding-bottom: 37px;
+ background-color: #ffffff;
+ border-radius: 30px;
+ position: absolute;
+ bottom: 0px;
+`
+
+const CloseModal = styled.TouchableOpacity`
+  position: absolute;
+  top:0px;
+  right: 0px;
+  width: 13px;
+  height: 13px;
+`;
+
 export default function Menu({
   restaurant="Fratelli's Bistro",
   navigation
 }) {
 
+  const [modalVisible, setModalVisible] = useState(false);
+
+
+
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
+
+      <Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+      >
+      
+      <AddItemModal>
+        <CloseModal onPress={()=>setModalVisible(!modalVisible)}>
+          <AntDesign name="close" size={13} color="#C4C4C4" />
+        </CloseModal>
+        
+      </AddItemModal>
+      </Modal>
+
+
       <TopCont>
         <IconCont >
-          <MaterialCommunityIcons name="account" size={60} color="white" />
+          <MaterialCommunityIcons name="account" size={60} color="#ffffff" />
         </IconCont>
-      <Text style={{fontSize:30, fontWeight:'400', color:'white', marginLeft:20}}>{restaurant}</Text>
+      <Text style={{fontSize:30, fontWeight:'400', color:'#ffffff', marginLeft:20}}>{restaurant}</Text>
       </TopCont>
-
 
       <Cards>
         <EditMenuCont>
@@ -101,10 +144,9 @@ export default function Menu({
                 <But width="100%" height="50px" text="Gnochi" margintop="10px"/>
             </ScrollView>
         </View>
-
-        <AddItemCont>
+        <AddItemButton onPress={()=>setModalVisible(!modalVisible)}>
             <But width="100%" height="40px" text="New Item" bgColor="#F3Ad81" borderRadius="0px"/>
-        </AddItemCont>
+        </AddItemButton>
         </EditMenuCont>
 
         <But text="Save Changes" margintop="10px" bgColor="#F3AD81"/>
@@ -140,7 +182,7 @@ const styles = StyleSheet.create({
     shadowOffset: {width: -2, height: 4},
     shadowOpacity: 0.2,
     shadowRadius: 3,
-    backgroundColor:'white',
+    backgroundColor:'#ffffff',
     width:200,
     display: 'flex',
     justifyContent: 'center',
