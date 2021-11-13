@@ -8,13 +8,13 @@ const Vegetarian = ({
     return (
       <Image 
         style={styles.iconDisabled} 
-        source={require('../../assets/icon-vegetarian.png')} />
+        source={require('../../../assets/icon-vegetarian.png')} />
     );
    };
   return (
     <Image 
       style={styles.icon} 
-      source={require('../../assets/icon-vegetarian.png')} />
+      source={require('../../../assets/icon-vegetarian.png')} />
   );
  };
 
@@ -25,13 +25,13 @@ const Vegetarian = ({
     return (
       <Image 
         style={styles.iconDisabled} 
-        source={require('../../assets/icon-dairyfree.png')} />
+        source={require('../../../assets/icon-dairyfree.png')} />
     );
    };
   return (
     <Image 
       style={styles.icon} 
-      source={require('../../assets/icon-dairyfree.png')} />
+      source={require('../../../assets/icon-dairyfree.png')} />
   );
  };
 
@@ -42,13 +42,13 @@ const Vegetarian = ({
     return (
       <Image 
         style={styles.iconDisabled} 
-        source={require('../../assets/icon-glutenfree.png')} />
+        source={require('../../../assets/icon-glutenfree.png')} />
     );
    };
   return (
     <Image 
       style={styles.icon} 
-      source={require('../../assets/icon-glutenfree.png')} />
+      source={require('../../../assets/icon-glutenfree.png')} />
   );
  };
 
@@ -59,13 +59,13 @@ const Vegetarian = ({
   return (
     <Image 
       style={styles.iconDisabled}
-      source={require('../../assets/icon-nutfree.png')} />
+      source={require('../../../assets/icon-nutfree.png')} />
     );
   };
   return (
     <Image 
       style={styles.icon}
-      source={require('../../assets/icon-nutfree.png')} />
+      source={require('../../../assets/icon-nutfree.png')} />
   );
  };
 

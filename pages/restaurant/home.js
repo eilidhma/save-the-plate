@@ -70,7 +70,7 @@ export default function RestaurantHome ({  navigation }) {
         </View>}
       
         {mealtab === false && <View style={{marginHorizontal: 0,
-            width:'100%',
+            width:"100%",
             position:'absolute',
             top:170,
             bottom:0,
