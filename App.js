@@ -129,7 +129,7 @@ function App () {
         <Stack.Screen name="RestaurantHome" component={RestaurantHome}/>
         <Stack.Screen name="RestaurantAccount" component={RestaurantAccount}/>
       </Stack.Navigator>
-      {showNav && <Nav/>}
+      {showNav && <Nav page={page}/>}
       {showRestNav && <RestaurantNav/>}
 
     </NavigationContainer>
