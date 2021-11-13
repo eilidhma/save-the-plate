@@ -134,7 +134,7 @@ export default function Menu({
         <Text style={{color: "#FE4265", fontSize: 18, fontWeight: 'bold', alignSelf: 'flex-start'}} >Menu</Text>
 
         <View style={{width: '100%'}}>
-            <ScrollView contentContainerStyle={{width: '100%', alignItems:'center'}}>
+            <ScrollView contentContainerStyle={{width: '100%', alignItems:'center', paddingBottom: 70}}>
                 <But width="100%" height="50px" text="Fettucini Alfredo" margintop="10px"/>
                 <But width="100%" height="50px" text="Spaghetti Bolognese" margintop="10px"/>
                 <But width="100%" height="50px" text="Lasagna" margintop="10px"/>
@@ -144,8 +144,8 @@ export default function Menu({
                 <But width="100%" height="50px" text="Gnochi" margintop="10px"/>
             </ScrollView>
         </View>
-        <AddItemButton onPress={()=>setModalVisible(!modalVisible)}>
-            <But width="100%" height="40px" text="New Item" bgColor="#F3Ad81" borderRadius="0px"/>
+        <AddItemButton>
+            <But width="100%" height="40px" text="New Item" bgColor="#F3Ad81" borderRadius="0px" onPress={()=>setModalVisible(!modalVisible)}/>
         </AddItemButton>
         </EditMenuCont>
 
