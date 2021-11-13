@@ -102,10 +102,10 @@ export default function Signup({ navigation }) {
           </View>
           <View style={{display:'flex', flexDirection:'row', justifyContent:'space-between', width:200}}>
              <View style={styles.left}>
-              <TextInput autoCompleteType={'address'} style={styles.smallInput} placeholder={'city'} textAlign={'center'} textContentType={'addressCity'}/>
+              <TextInput autoCompleteType={'street-address'} style={styles.smallInput} placeholder={'city'} textAlign={'center'} textContentType={'addressCity'}/>
             </View>
             <View style={styles.left}>
-              <TextInput autoCompleteType={'address'} style={styles.smallInput} placeholder={'province'} textAlign={'center'} textContentType={'addressState'}/>
+              <TextInput autoCompleteType={'street-address'} style={styles.smallInput} placeholder={'province'} textAlign={'center'} textContentType={'addressState'}/>
             </View>
           </View>
         </View>

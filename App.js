@@ -76,17 +76,46 @@ function App () {
 
   const [showRestNav, setRestNav] = useState(true)
 
+  const [page, setPage] = useState("Home")
+
   return (
     <NavigationContainer onStateChange={(state)=>{
-      // console.log(state);
-      if(state.index >= 3){
-        setShowNav(true)
-      } else {
-        setShowNav(false)
+      
+      const CustomerPageNames = ["Home", "Orders", "Cart", "Account"];
+
+      if(CustomerPageNames.indexOf(state.routes[state.index].name) == -1){
+        setPage(0)
       }
-    }}>
+      
+        if(CustomerPageNames.indexOf(state.routes[state.index].name) !== -1) {
+          setShowNav(true)
+          if(state.routes[state.index].name === "Home"){
+            setPage("Home")
+          }
+          if(state.routes[state.index].name === "Orders"){
+            setPage("Orders")
+          }
+          if(state.routes[state.index].name === "Cart"){
+            setPage("Cart")
+          }
+          if(state.routes[state.index].name === "Account"){
+            setPage("Account")
+          }
+        }
+        else {
+          setShowNav(false)
+        }
+  
+      const RestaurantPageNames = ["RestaurantHome", "RestaurantAccount", "Menu"];
+        if(RestaurantPageNames.indexOf(state.routes[state.index].name) !== -1) {
+          setRestNav(true);
+        }
+        else {
+          setRestNav(false)
+        }
+      }}>
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
-        <Stack.Screen name="Landing" component={Landing} />
+        <Stack.Screen  name="Landing" component={Landing} />
         <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={Home} />
@@ -96,7 +125,7 @@ function App () {
         {/* <Stack.Screen name="RestaurantHome" component={RestaurantHome}/>
         <Stack.Screen name="RestaurantAccount" component={RestaurantAccount}/> */}
       </Stack.Navigator>
-      {showNav && <Nav />}
+      {showNav && <Nav page={page}/>}
       {/* {showRestNav && <RestaurantNav/>} */}
     </NavigationContainer>
   );
