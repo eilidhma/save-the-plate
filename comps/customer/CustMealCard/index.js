@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
 import styled from 'styled-components';
 import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
+import Diets from '../../global/Diets';
+import DietSelect from '../../global/DietSelect';
 
 
 const CardCont = styled.View`
@@ -127,8 +129,8 @@ const CustMealCard = ({
       <Left>
         <Image style={{width:115, height:105, borderRadius:15}} source={src}/>
         <Text style={{marginTop:30, fontSize:16}}>Description:</Text>
-        <Text style={{marginTop:30, fontSize:16}}>Restaurant's Rating:</Text>
-        <Text style={{marginTop:15, fontSize:16}}>Dietary Information:</Text>
+        {/* <Text style={{marginTop:30, fontSize:16}}>Restaurant's Rating:</Text> */}
+        <Text style={{marginTop:60, fontSize:16}}>Dietary Information:</Text>
       </Left>
       <Right>
         <Text style={{fontSize:20}}>{meal}</Text>
@@ -146,13 +148,16 @@ const CustMealCard = ({
         </DetailsCont>
         
         <Text style={{marginTop:10, fontSize:12}}>{description}</Text>
-        <StarsCont>
+        {/* <StarsCont>
           <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
           <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
           <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
           <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
           <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
-        </StarsCont>
+        </StarsCont> */}
+        <View style={{marginTop:20}}>
+          <Diets showVege={true} showNut={true}/>
+        </View>
       </Right>
     </Content>
   </CardCont>
