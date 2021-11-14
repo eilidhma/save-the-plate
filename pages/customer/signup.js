@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, Scrollable } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
@@ -11,6 +11,7 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
+import { auth } from '../../firebase';
 
 var logo = require ('../../assets/logo1.png');
 const Stack = createNativeStackNavigator();
@@ -28,6 +29,39 @@ const Left = styled.View`
 `
 
 export default function Signup({ navigation }) {
+
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [phone, setPhone] = useState("")
+  const [addLine1, setAddLine1] = useState("")
+  const [addLine2, setAddLine2] = useState("")
+  const [postalCode, setPostalCode] = useState("")
+  const [city, setCity] = useState("")
+  const [province, setProvince] = useState("")
+  const [cardNumber, setCardNumber] = useState("")
+  const [cardName, setCardName] = useState("")
+  const [expiry, setExpiry] = useState("")
+  const [cvc, setCvc] = useState("")
+
+  useEffect(() => {
+    auth.onAuthStateChanged(user => {
+      if(user) {
+        navigation.navigate('Home')
+      } 
+    })
+  }, [])
+
+  const handleSignUp = () => {
+    auth
+    .createUserWithEmailAndPassword(email, password)
+    .then(userCredendtials => {
+      const user = userCredendtials.user;
+      console.log('Registered with:', user.email);
+    })
+    .catch(error => alert(error.message))
+  }
+
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
       <View style={{width:'100%', position:'absolute', top:80, display:'flex', justifyContent:'center', alignItems:'center'}}>
@@ -54,7 +88,7 @@ export default function Signup({ navigation }) {
             <Text style={{fontWeight:'500', fontSize:16}}>Email</Text>
           </View>
           <View style={styles.left}>
-            <TextInput autoCompleteType={'email'} style={styles.username} placeholder={'email'} textAlign={'center'} textContentType={'emailAddress'}/>
+            <TextInput value={email} onChangeText={text=>setEmail(text)} autoCompleteType={'email'} style={styles.username} placeholder={'email'} textAlign={'center'} textContentType={'emailAddress'}/>
           </View>
         </View>
         <View style={styles.itemCont}> 
@@ -62,7 +96,7 @@ export default function Signup({ navigation }) {
             <Text style={{fontWeight:'500', fontSize:16}}>Password</Text>
           </View>
           <View style={styles.left}>
-            <TextInput autoCompleteType={'password'} style={styles.username} placeholder={'password'} textAlign={'center'} textContentType={'password'}/>
+            <TextInput value={password} onChangeText={text=>setPassword(text)} autoCompleteType={'password'} style={styles.username} placeholder={'password'} textAlign={'center'} textContentType={'password'}/>
           </View>
         </View>
         <View style={styles.itemCont}> 
@@ -70,7 +104,7 @@ export default function Signup({ navigation }) {
             <Text style={{fontWeight:'500', fontSize:16}}>Phone</Text>
           </View>
           <View style={styles.left}>
-            <TextInput autoCompleteType={'tel'} style={styles.username} placeholder={'phone'} textAlign={'center'} textContentType={'telephoneNumber'}/>
+            <TextInput value={phone} onChangeText={text=>setPhone(text)} autoCompleteType={'tel'} style={styles.username} placeholder={'phone'} textAlign={'center'} textContentType={'telephoneNumber'}/>
           </View>
         </View>
         <View style={styles.itemCont}> 
@@ -79,7 +113,7 @@ export default function Signup({ navigation }) {
           </View>
           <View style={{display:'flex', flexDirection:'column'}}>
              <View style={styles.left}>
-              <TextInput autoCompleteType={'street-address'} style={styles.username} placeholder={'street address'} textAlign={'center'} textContentType={'streetAddressLine1'}/>
+              <TextInput value={addLine1} onChangeText={text=>setAddLine1(text)} autoCompleteType={'street-address'} style={styles.username} placeholder={'street address'} textAlign={'center'} textContentType={'streetAddressLine1'}/>
             </View>
           </View>
         </View>
@@ -89,10 +123,10 @@ export default function Signup({ navigation }) {
           </View>
           <View style={{display:'flex', flexDirection:'row', justifyContent:'space-between', width:200}}>
              <View style={styles.left}>
-              <TextInput autoCompleteType={'off'} style={styles.smallInput} placeholder={'apt #'} textAlign={'center'} textContentType={'streetAddressLine2'}/>
+              <TextInput value={addLine2} onChangeText={text=>setAddLine2(text)} autoCompleteType={'off'} style={styles.smallInput} placeholder={'apt #'} textAlign={'center'} textContentType={'streetAddressLine2'}/>
             </View>
             <View style={styles.left}>
-              <TextInput autoCompleteType={'postal-code'} style={styles.smallInput} placeholder={'postal code'} textAlign={'center'} textContentType={'postalCode'}/>
+              <TextInput value={postalCode} onChangeText={text=>setPostalCode(text)} autoCompleteType={'postal-code'} style={styles.smallInput} placeholder={'postal code'} textAlign={'center'} textContentType={'postalCode'}/>
             </View>
           </View>
         </View>
@@ -102,10 +136,10 @@ export default function Signup({ navigation }) {
           </View>
           <View style={{display:'flex', flexDirection:'row', justifyContent:'space-between', width:200}}>
              <View style={styles.left}>
-              <TextInput autoCompleteType={'street-address'} style={styles.smallInput} placeholder={'city'} textAlign={'center'} textContentType={'addressCity'}/>
+              <TextInput value={city} onChangeText={text=>setCity(text)} autoCompleteType={'street-address'} style={styles.smallInput} placeholder={'city'} textAlign={'center'} textContentType={'addressCity'}/>
             </View>
             <View style={styles.left}>
-              <TextInput autoCompleteType={'street-address'} style={styles.smallInput} placeholder={'province'} textAlign={'center'} textContentType={'addressState'}/>
+              <TextInput value={province} onChangeText={text=>setProvince(text)} autoCompleteType={'street-address'} style={styles.smallInput} placeholder={'province'} textAlign={'center'} textContentType={'addressState'}/>
             </View>
           </View>
         </View>
@@ -115,7 +149,7 @@ export default function Signup({ navigation }) {
           </View>
           <View style={{display:'flex', flexDirection:'column'}}>
              <View style={styles.left}>
-              <TextInput autoCompleteType={'cc-number'} style={styles.username} placeholder={'card number'} textAlign={'center'} textContentType={'creditCardNumber'}/>
+              <TextInput value={cardNumber} onChangeText={text=>setCardNumber(text)} autoCompleteType={'cc-number'} style={styles.username} placeholder={'card number'} textAlign={'center'} textContentType={'creditCardNumber'}/>
             </View>
           </View>
         </View>
@@ -125,7 +159,7 @@ export default function Signup({ navigation }) {
           </View>
           <View style={{display:'flex', flexDirection:'row', justifyContent:'space-between', width:200}}>
              <View style={styles.left}>
-              <TextInput autoCompleteType={'name'} style={styles.username} placeholder={'name on card'} textAlign={'center'} textContentType={'name'}/>
+              <TextInput value={cardName} onChangeText={text=>setCardName(text)} autoCompleteType={'name'} style={styles.username} placeholder={'name on card'} textAlign={'center'} textContentType={'name'}/>
             </View>
           </View>
         </View>
@@ -135,15 +169,15 @@ export default function Signup({ navigation }) {
           </View>
           <View style={{display:'flex', flexDirection:'row', justifyContent:'space-between', width:200}}>
              <View style={styles.left}>
-              <TextInput autoCompleteType={'cc-exp'} style={styles.smallInput} placeholder={'expiry'} textAlign={'center'} textContentType={'none'}/>
+              <TextInput value={expiry} onChangeText={text=>setExpiry(text)} autoCompleteType={'cc-exp'} style={styles.smallInput} placeholder={'expiry'} textAlign={'center'} textContentType={'none'}/>
             </View>
             <View style={styles.left}>
-              <TextInput autoCompleteType={'cc-csc'} style={styles.smallInput} placeholder={'CVC'} textAlign={'center'} textContentType={'none'}/>
+              <TextInput value={cvc} onChangeText={text=>setCvc(text)} autoCompleteType={'cc-csc'} style={styles.smallInput} placeholder={'CVC'} textAlign={'center'} textContentType={'none'}/>
             </View>
           </View>
         </View>
         <Pressable style={styles.shadowProp} title="Signup"
-        onPress={() => navigation.navigate('Login')} >
+        onPress={handleSignUp} >
         <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Sign Up</Text>
       </Pressable>
       </View> 
