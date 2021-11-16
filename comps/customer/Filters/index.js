@@ -18,7 +18,7 @@ const FiltersCont = styled.View`
   backgroundColor:white;
   width:90%;
   flexDirection:column;
-  borderRadius:15px;
+  borderRadius:20px;
   overflow:hidden;
   height:${props=>props.height};
   
@@ -70,7 +70,7 @@ const Filters = ({
     const [filters, setFilters] = useState(false)
 
     if(filters === false){
-        height="50px"
+        height="40px"
         iconName="filter-outline" 
     }
     else {
@@ -363,14 +363,14 @@ const Filters = ({
 
     return <FiltersCont height={height}>
       <Top>
-        <Left style={{zIndex:1,}}>
+        <Left style={{zIndex:1,height:40}}>
             <SearchCont>
                 <Search/>
             </SearchCont>
         </Left>
 
         <Right style={{zIndex:1,}}>
-            <Pressable onPress={HandleFilters}><MaterialCommunityIcons style={{margin:10}} name={iconName} size={30} color="#FE4265" /></Pressable>
+            <Pressable onPress={HandleFilters}><MaterialCommunityIcons style={{marginTop:5, marginLeft:10}} name={iconName} size={30} color="#FE4265" /></Pressable>
         </Right>
       </Top>
         <Bottom>

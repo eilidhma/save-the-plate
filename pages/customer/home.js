@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, Button, Pressable, TextInput,  SafeAreaView, Modal } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, SimpleLineIcons, AntDesign } from '@expo/vector-icons';
@@ -8,16 +8,18 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
 import CustMealCard from '../../comps/customer/CustMealCard';
 import Tabs from '../../comps/customer/Tabs';
-import Location from '../../comps/customer/Location';
+import UserLocation from '../../comps/customer/UserLocation';
 
 import MapView from 'react-native-maps';
+import { Marker } from 'react-native-maps';
 import Filters from '../../comps/customer/Filters';
 import CustCurrentOrder from '../../comps/customer/CustCurrentOrder';
 import SimpleOrderCard from '../../comps/customer/SimpleOrderCard';
 import Nav from '../../comps/customer/Nav';
+import * as Location from 'expo-location'; 
 
 
-var map = require ('../../assets/map.png');
+var mapIcon = require ('../../assets/mapicon.png');
 
 export default function Home({
   navigation,
@@ -48,6 +50,73 @@ export default function Home({
     setModalVisible(false)
   }
 
+
+
+
+
+
+  
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [mapRegion, setMapRegion] = useState(null);
+  const [restaurants] = useState([
+    {
+      key: 1,
+      title: "Fratelli's Bistro",
+      description: "Italian comfort food",
+      location: {
+        longitude: -123.101025,
+        latitude: 49.248911
+      }
+    },
+    {
+      key: 2,
+      title: "Keg Steakhouse",
+      description: "Upscale steakhouse",
+      location: {
+        longitude: -123.095022,
+        latitude: 49.236414
+      }
+    },
+    {
+      key: 3,
+      title: "Chewie's",
+      description: "Seafood restaurant",
+      location: {
+        longitude: -123.026504,
+        latitude: 49.249887
+      }
+    },
+  ])
+
+  useEffect(() => {
+
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setMapRegion({
+        longitude: location.coords.longitude,
+        latitude: location.coords.latitude,
+        longitudeDelta: 0.922,
+        latitudeDelta: 0.421
+      })
+    
+    })();
+  }, []);
+
+ 
+
+
+
+
+
+
+  
+
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
 
@@ -58,7 +127,7 @@ export default function Home({
           alignItems={mealtab ? 'flex-start' : 'flex-end'}
           />
           <View style={{width:'90%'}}>
-            <Location />
+            <UserLocation />
           </View>
       </View>
        
@@ -102,8 +171,11 @@ export default function Home({
             </View>
           </View>
         </Modal>
+        {mealtab === true && <View style={{display:'flex', justifyContent:'center', alignItems:'center', marginBottom:20}}>
+          <Filters/>
+        </View>}
+        <View style={{width:'100%', alignItems:'center', backgroundColor:'white', paddingBottom:105}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
-            <Filters/>
             <CustMealCard addToCart={() => setModalVisible(true)}/>
             <CustMealCard />
             <CustMealCard />
@@ -117,6 +189,7 @@ export default function Home({
             <CustMealCard />
             <CustMealCard />
         </ScrollView>
+        </View>
         </View>}
         {maptab === true && <View style={{marginHorizontal: 0,
             width:'100%',
@@ -125,7 +198,28 @@ export default function Home({
             flex:1,
             justifyContent:'center',
             alignItems:'center'}}>
-            <MapView style={{width:'100%', height:600}}/>
+            <MapView 
+            initialRegion={mapRegion}
+            showsUserLocation 
+            style={{width:'100%', height:600}}
+            >
+              {/* <Marker coordinate={mapRegion} title="Me" description="My Location"/> */}
+
+              {restaurants ? restaurants.map((restaurant) => (
+                <Marker 
+                key={restaurant.key}
+                coordinate={restaurant.location}
+                title={restaurant.title}
+                description={restaurant.description}
+                >
+                  <View style={styles.marker}>
+                    <Image style={{width:30, height:30}} source={mapIcon}/>
+                  </View>
+                  {/* <MaterialIcons name="food-bank" size={36} color="#E94168" /> */}
+                </Marker>
+              ))
+              : null}
+            </MapView>
           </View>}
     </LinearGradient>
   ); 
@@ -237,5 +331,20 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center"
+  },
+  marker: {
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+    width:30,
+    height:30,
+    resizeMode : 'contain',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   }
 });

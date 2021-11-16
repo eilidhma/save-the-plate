@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, LayoutAnimation, Platform, UIManager } from 'react-native';
 import styled from 'styled-components';
 import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
 import Diets from '../../global/Diets';
@@ -7,19 +7,13 @@ import DietSelect from '../../global/DietSelect';
 
 
 const CardCont = styled.View`
-  display:flex;
-  backgroundColor:white;
-  width:90%;
-  flexDirection:column;
-  borderRadius:15px;
-  overflow:hidden;
   height:${props=>props.height};
-  margin-top:10px;
+  background-color:white;
 `;
 
 const Content = styled.View`
   display:flex;
-  width:100%;
+  width:90%;
   flexDirection:row;
 `
 
@@ -44,17 +38,9 @@ const DetailsCont = styled.Pressable`
   align-items:center;
 `;
 
-const StarsCont = styled.View`
-  display:flex;
-  width:100%;
-  flexDirection:row;
-  align-items:center;
-  margin-top:10px;
-`;
 
 const Left = styled.View`
   display:flex;
-  backgroundColor:white;
   margin:15px;
   flexDirection:column;
   flex:1;
@@ -105,23 +91,34 @@ const CustMealCard = ({
   description="fettuccine pasta tossed with Parmesan cheese and butter and served with garlic toast on the side",
   newprice="$5.00",
   oldprice="$21.00",
-  height="170px",
+  // height="170px",
   addToCart=()=>{}
 }) =>{
 
-  const [card, setCard] = useState(false)
-
-  if(card === false) {
-    height="170px"
-  } else {
-    height="330px"
-  }
+  
+  
+  // if(card === false) {
+    //   height="170px"
+    // } else {
+      //   height="330px"
+      // }
+      
+      // const HandleCard = () => {
+        //   setCard(!card)
+        // }
+        
+  const [card, setCard] = useState("170px")
+  const [rotation, setRotation] = useState(0)
 
   const HandleCard = () => {
-    setCard(!card)
-  }
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setCard(card === "170px" ? "330px" : "170px");
+    setRotation(rotation === 0 ? 180 : 0);
+  };
 
-  return <CardCont height={height}>
+  return <View style={styles.content}>
+
+  <CardCont style={styles.container} height={card}>
     <Cart>
       <AddToCart onPress={addToCart} >+ Add to cart</AddToCart>
     </Cart>
@@ -144,7 +141,7 @@ const CustMealCard = ({
         </PriceCont>
         <DetailsCont onPress={HandleCard}>
           <Pressable onPress={HandleCard}><Text style={{marginTop:5, fontSize:18, fontWeight:'600', color:'#FE4265'}}>More Details</Text></Pressable>
-          <MaterialIcons style={{marginTop:5}} name="arrow-drop-down" size={33} color="#FE4265" />
+          <MaterialIcons style={{marginTop:5, transform: [{ rotate: rotation+"deg" }]}} name="arrow-drop-down" size={33} color="#FE4265" />
         </DetailsCont>
         
         <Text style={{marginTop:10, fontSize:12}}>{description}</Text>
@@ -161,8 +158,34 @@ const CustMealCard = ({
       </Right>
     </Content>
   </CardCont>
+  </View>
 }
 
 export default CustMealCard;
 
+const styles = StyleSheet.create({
+  container: {
+    display:'flex',
+    backgroundColor : "#0000",
+    width:'100%',
+    flexDirection:'column',
+    borderRadius:15,
+    overflow:'hidden',
+    margin:10,
+    backgroundColor:'white',
+  },
+  content: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    elevation:3,
+    borderRadius:15,
+    width:'100%'
+  }
+
+});
 
