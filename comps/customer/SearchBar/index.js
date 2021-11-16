@@ -30,9 +30,10 @@ export default class Search extends React.Component {
         onChangeText={this.updateSearch}
         value={search}
         round={15}
-        inputStyle={{backgroundColor:'white'}}
-        inputContainerStyle={{width:"100%", height:"100%", backgroundColor:'white', }}
-        containerStyle={{width:"100%", height:50, backgroundColor:'white', borderRadius: 15, borderTopColor:'transparent', borderBottomColor:'transparent' }}
+        inputStyle={{backgroundColor:'white', height:40}}
+        inputContainerStyle={{width:"100%", height:40, backgroundColor:'white', top:-8}}
+        containerStyle={{width:"100%", height:40, backgroundColor:'white', borderRadius: 30, borderTopColor:'transparent', borderBottomColor:'transparent' }}
+        // borderTopColor:'transparent', borderBottomColor:'transparent' 
       />
     );
   }

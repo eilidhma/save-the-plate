@@ -20,7 +20,7 @@ const Cont = styled.View`
   margin-bottom:15px;
 `
 
-const Location = ({
+const UserLocation = ({
   address="V6J 2G9, Vancouver"
 }) =>{
 
@@ -32,4 +32,4 @@ const Location = ({
   
 }
 
-export default Location;
+export default UserLocation;
