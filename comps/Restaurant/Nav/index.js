@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, TouchableOpacity, Modal } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, TouchableOpacity, Modal, ScrollView } from 'react-native';
 import {
   useFonts,
   Raleway_700Bold,
@@ -81,6 +81,43 @@ const CloseModal = styled.TouchableOpacity`
   height: 40px;
 `;
 
+const TitleCont = styled.View`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+`;
+
+const CounterCont = styled.View`
+  width: 120px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+`;
+
+const Counter = styled.TouchableOpacity`
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  border: 2px solid #000000;
+`
+
+const DescriptionCont = styled.View`
+  width: 100%;
+  padding: 14px;
+  height: 100px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border-radius: 20px;
+  border: 1px solid #FE4265;
+`;
+
 const RestaurantNav = ({ 
   home="white",
   account="white",
@@ -96,15 +133,29 @@ const RestaurantNav = ({
 
   const [addItemStep, setItemStep] = useState(1)
 
+  onPressHome=()=>{
+    setNav(0)
+    navigation.navigate('RestaurantHome')
+  }
+  
+  onPressAccount=()=>{
+    setNav(1)
+    navigation.navigate('RestaurantAccount')
+  }
 
-onPressHome=()=>{
-  setNav(0)
-  navigation.navigate('RestaurantHome')
+
+  const [count, setCount] = useState(1)
+  
+  function CountUp(){
+  setCount(count+1)
 }
 
-onPressAccount=()=>{
-  setNav(1)
-  navigation.navigate('RestaurantAccount')
+function CountDown(){
+  if (count == 1) {
+    setCount(1)
+  } else {
+    setCount(count-1)
+  }
 }
 
 
@@ -133,7 +184,10 @@ onPressAccount=()=>{
   >
   
   <AddListingModal>
-    <CloseModal onPress={()=>setModalVisible(!modalVisible)}>
+    <CloseModal onPress={()=>{
+      setModalVisible(!modalVisible)
+      setItemStep(1)
+      }}>
       <AntDesign name="close" size={13} color="#C4C4C4" />
     </CloseModal>
 
@@ -141,13 +195,64 @@ onPressAccount=()=>{
       <View>
         <Search/>
       </View>
-      <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)}></But>
+      <View style={{width: '100%'}}>
+        <ScrollView contentContainerStyle={{width: '100%', alignItems:'center'}}>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+        </ScrollView>
+      </View>
     </View>
     }
 
     {addItemStep === 2 && <View>
       <View>
-      <But text="< Back" onPress={()=>setItemStep(1)}></But>
+        <But text="< Back" onPress={()=>setItemStep(1)} width="145px"/>
+
+        <TitleCont>
+          <Text>
+            Fettucini Alfredo
+          </Text>
+
+          <CounterCont>
+            <Counter onPress={CountDown}>
+              <AntDesign name="minus" size={15} color="black" />
+            </Counter>
+
+            <Text>
+              {count}
+            </Text>
+
+            <Counter onPress={CountUp}>
+              <AntDesign name="plus" size={15} color="black" />
+            </Counter>
+          </CounterCont>
+        </TitleCont>
+        <DescriptionCont>
+          <TextInput editable placeholder="add description"/>
+        </DescriptionCont>
+
+            {/* Alicia and Maharlika work here  */}
+
+            {/* needs "Available in:" */}
+
+            {/* as well as the 4 toggleable buttons */}
+
+            {/* it should be set up so you can only click one at a time */}
+
+
+        
+        <TitleCont>
+          <But width="182px" height="50px" text="List Item"/>
+          <But width="182px" height="50px" text="Cancel" bgColor="#F3AD81"/>
+        </TitleCont>
       </View>
     </View>
     }
