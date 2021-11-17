@@ -19,12 +19,24 @@ import Nav from '../../comps/customer/Nav';
 import * as Location from 'expo-location'; 
 
 
+
 var mapIcon = require ('../../assets/mapicon.png');
 
 export default function Home({
   navigation,
   total="$5.00"
 }) {
+
+
+  // function userData(user, score) {
+  //   if (user != null) {
+  //     const database = getDatabase();
+  //     set(ref(db, 'users/' + user.uid), {
+  //       highscore: score,
+  //     });
+  //   }
+  // }
+
 
   const [mealtab, setMealTab] = useState(true)
   const [maptab, setMapTab] = useState(false)
@@ -54,8 +66,8 @@ export default function Home({
   const [location, setLocation] = useState({
     longitude: -123.1207,
     latitude: 49.2827,
-    longitudeDelta: 0.922,
-    latitudeDelta: 0.421});
+    latitudeDelta: 0.086,
+    longitudeDelta: 0.136});
   const [restaurants] = useState([
     {
       key: 1,
@@ -105,8 +117,8 @@ export default function Home({
          setLocation({
           longitude: location.coords.longitude,
           latitude: location.coords.latitude,
-          longitudeDelta: 0.922,
-          latitudeDelta: 0.421
+          latitudeDelta: 0.0043,
+          longitudeDelta: 0.0034
         })
       }
     
@@ -118,7 +130,13 @@ export default function Home({
 
   }, []);
 
-
+  let text = 'Waiting..';
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+    console.log(text)
+  }
 
 
 
