@@ -71,6 +71,29 @@ const AddItemButton = styled.View`
     bottom: 0px;
 `
 
+const SingleLineInput = styled.View`
+  width: 78%;
+  height: 40px;
+  border-radius:15px;
+  border: 1px solid #FE4265;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 10px
+`;
+
+const DescriptionCont = styled.View`
+  width: 78%;
+  height: 100px;
+  border-radius:15px;
+  border: 1px solid #FE4265;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 10px;
+`
+
 const AddItemModal = styled.View`
  display: flex;
  flex-direction: column;
@@ -100,10 +123,13 @@ const CloseModal = styled.TouchableOpacity`
   height: 40px;
 `;
 
-// const Tab = styled.TouchableOpacity`
-//   position: absolute;
-//   width: ;
-// `;
+const TextCont = styled.View`
+  width: 33%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+`
 
 const ModalRow = styled.View`
   width: 90%;
@@ -111,6 +137,13 @@ const ModalRow = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
+`
+
+const ButtonCont = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
 `
 
 
@@ -137,11 +170,51 @@ export default function Menu({
           <AntDesign name="close" size={13} color="#C4C4C4" />
         </CloseModal>
         
+        {/* image row */}
         <ModalRow>
-          <Text>
-            Image:
-          </Text>
+          <TextCont>
+            <Text style={{fontWeight: 'bold'}}>Image:</Text>
+          </TextCont>
+          <Image style={{width:206, height:122, borderRadius:10}} source={require('../../assets/meal.png')}></Image>
         </ModalRow>
+
+        {/* Name row */}
+        <ModalRow>
+          <TextCont>
+            <Text style={{fontWeight: 'bold'}}>Name:</Text>
+          </TextCont>
+
+          <SingleLineInput>
+            <TextInput placeholder="Name" placeholderTextColor="#aaaaaa"></TextInput>
+          </SingleLineInput>
+        </ModalRow>
+
+        {/* Description */}
+        <ModalRow>
+          <TextCont>
+            <Text style={{fontWeight: 'bold'}}>Description:</Text>
+          </TextCont>
+
+        <DescriptionCont>
+          <TextInput placeholder="Description" placeholderTextColor="#aaaaaa"></TextInput>
+        </DescriptionCont>
+        </ModalRow>
+
+        {/* price row */}
+        <ModalRow>
+          <TextCont>
+            <Text style={{fontWeight: 'bold'}}>Price:</Text>
+          </TextCont>
+
+          <SingleLineInput>
+            <TextInput placeholder="Price" placeholderTextColor="#aaaaaa"></TextInput>
+          </SingleLineInput>
+        </ModalRow>
+
+        <ButtonCont>
+          <But width="45%" text="Add Item"/>
+          <But width="45%" text="Cancel" bgColor="#F3AD81" onPress={()=>setModalVisible(!modalVisible)}/>
+        </ButtonCont>
  
       </AddItemModal>
       </Modal>
