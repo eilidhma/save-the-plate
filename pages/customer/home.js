@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, Button, Pressable, TextInput,  SafeAreaView, Modal } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, Button, Pressable, TextInput,  SafeAreaView, Modal, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, SimpleLineIcons, AntDesign } from '@expo/vector-icons';
 
@@ -50,14 +50,12 @@ export default function Home({
     setModalVisible(false)
   }
 
-
-
-
-
-
-  
   const [errorMsg, setErrorMsg] = useState(null);
-  const [mapRegion, setMapRegion] = useState(null);
+  const [location, setLocation] = useState({
+    longitude: -123.1207,
+    latitude: 49.2827,
+    longitudeDelta: 0.922,
+    latitudeDelta: 0.421});
   const [restaurants] = useState([
     {
       key: 1,
@@ -88,8 +86,11 @@ export default function Home({
     },
   ])
 
+
   useEffect(() => {
 
+    let isUnmount = false;
+    
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
@@ -97,18 +98,26 @@ export default function Home({
         return;
       }
 
+
+
       let location = await Location.getCurrentPositionAsync({});
-      setMapRegion({
-        longitude: location.coords.longitude,
-        latitude: location.coords.latitude,
-        longitudeDelta: 0.922,
-        latitudeDelta: 0.421
-      })
+      if(!isUnmount){
+         setLocation({
+          longitude: location.coords.longitude,
+          latitude: location.coords.latitude,
+          longitudeDelta: 0.922,
+          latitudeDelta: 0.421
+        })
+      }
     
     })();
+
+    return () => {
+      isUnmount = true;
+    }
+
   }, []);
 
- 
 
 
 
@@ -199,8 +208,8 @@ export default function Home({
             justifyContent:'center',
             alignItems:'center'}}>
             <MapView 
-            initialRegion={mapRegion}
-            showsUserLocation 
+            initialRegion={location}
+            showsUserLocation
             style={{width:'100%', height:600}}
             >
               {/* <Marker coordinate={mapRegion} title="Me" description="My Location"/> */}
