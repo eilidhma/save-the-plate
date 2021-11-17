@@ -22,6 +22,7 @@ const CardCont = styled.View`
   background-color: white;
   border-radius: 15px;
   overflow: hidden;
+  margin-top: 10px;
 `
 
 const FirstLayer = styled.View`
@@ -34,7 +35,7 @@ const FirstLayer = styled.View`
 
 const Details = styled.View`
   padding: 11px;
-  height: 111;
+  height: 111px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -151,7 +152,7 @@ const RestaurantCard = ({
           </Order>
 
       </Details>
-      <But width="100%" radius="0px" height="30" text="Confirm Pickup"/>
+      <But width="100%" radius="0px" height="30px" text="Confirm Pickup"/>
     </CardCont>
 }
 

@@ -18,12 +18,16 @@ import Login from './pages/customer/login';
 import Orders from './pages/customer/orders';
 import Checkout from './pages/customer/checkout';
 import Account from './pages/customer/account';
+import Signup from './pages/customer/signup';
 import Nav from './comps/customer/Nav';
+import ThanksOverlay from './comps/customer/ThanksOverlay';
 
-//restaurant pages
 import RestaurantHome from './pages/Restaurant/home';
 import RestaurantAccount from './pages/Restaurant/account';
+import Menu from './pages/Restaurant/menu';
 import RestaurantNav from './comps/Restaurant/Nav';
+
+
 
 var logo = require ('./assets/logo1.png');
 
@@ -53,44 +57,68 @@ function Landing({ navigation }) {
   }
 }
 
-// Eilidh's section - customer UI
-
-
-//
-
 
 function App () {
   const [showNav, setShowNav] = useState(false);
 
   const [showRestNav, setRestNav] = useState(false)
 
+  const [page, setPage] = useState("Home")
+
   return (
     <NavigationContainer onStateChange={(state)=>{
-     console.log(state.index);
-      if(state.index >= 2 && state.index < 6){
-        setShowNav(true)
-        setRestNav(false)
-      } else if (state.index >= 6) {
-        setShowNav(false)
-        setRestNav(true)
+
+      
+      const CustomerPageNames = ["Home", "Orders", "Cart", "Account"];
+
+      if(CustomerPageNames.indexOf(state.routes[state.index].name) == -1){
+        setPage(0)
       }
-      else {
-        setShowNav(false)
-        setRestNav(false)
-      }
-    }}>
-      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="RestaurantAccount" style={{display:'none'}}>
-        <Stack.Screen name="Landing" component={Landing} />
+      
+        if(CustomerPageNames.indexOf(state.routes[state.index].name) !== -1) {
+          setShowNav(true)
+          if(state.routes[state.index].name === "Home"){
+            setPage("Home")
+          }
+          if(state.routes[state.index].name === "Orders"){
+            setPage("Orders")
+          }
+          if(state.routes[state.index].name === "Cart"){
+            setPage("Cart")
+          }
+          if(state.routes[state.index].name === "Account"){
+            setPage("Account")
+          }
+        }
+        else {
+          setShowNav(false)
+        }
+  
+      const RestaurantPageNames = ["RestaurantHome", "RestaurantAccount", "Menu"];
+        if(RestaurantPageNames.indexOf(state.routes[state.index].name) !== -1) {
+          setRestNav(true);
+        }
+        else {
+          setRestNav(false)
+        }
+      }}>
+
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
+        <Stack.Screen  name="Landing" component={Landing} />
+        <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Orders" component={Orders} />
         <Stack.Screen name="Cart" component={Checkout} />
         <Stack.Screen name="Account" component={Account} />
+
         <Stack.Screen name="RestaurantHome" component={RestaurantHome}/>
         <Stack.Screen name="RestaurantAccount" component={RestaurantAccount}/>
+        <Stack.Screen name="Menu" component={Menu}/>
       </Stack.Navigator>
-      {showNav && <Nav />}
+      {showNav && <Nav page={page}/>}
       {showRestNav && <RestaurantNav/>}
+
     </NavigationContainer>
   );
 }
@@ -143,3 +171,4 @@ const homeStyles = StyleSheet.create({
 });
 
 export default App
+

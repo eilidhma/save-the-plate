@@ -1,18 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
 import styled from 'styled-components';
-import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
+import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, SimpleLineIcons, AntDesign } from '@expo/vector-icons';
 
 
 const CardCont = styled.View`
-  display:flex;
-  backgroundColor:white;
-  width:90%;
-  flexDirection:column;
-  borderRadius:15px;
-  overflow:hidden;
-  height:${props=>props.height};
-  margin-top:10px;
+border:1px solid #C5C5C5;
 `;
 
 const Content = styled.View`
@@ -35,20 +28,6 @@ const PriceCont = styled.View`
   justify-content:space-between;
 `;
 
-const DetailsCont = styled.Pressable`
-  display:flex;
-  width:55%;
-  flexDirection:row;
-  align-items:center;
-`;
-
-const StarsCont = styled.View`
-  display:flex;
-  width:100%;
-  flexDirection:row;
-  align-items:center;
-  margin-top:10px;
-`;
 
 const Left = styled.View`
   display:flex;
@@ -63,15 +42,9 @@ const Right = styled.View`
   margin:15px;
   flexDirection:column;
   flex:2;
+  justify-content:center;
 `
 
-const Plates = styled.View`
-  display:flex;
-  flexDirection:column;
-  width:30px;
-  justifyContent:center;
-  alignItems:center;
-`
 
 const QuantityCont = styled.View`
   display:flex;
@@ -82,7 +55,7 @@ const QuantityCont = styled.View`
   width:40px;
   border:1px solid #FE4265;
   position:absolute;
-  top:25px;
+  top:10px;
   right:10px;
 `
 
@@ -111,13 +84,11 @@ const Timer = styled.Text`
 `
 
 
-const CustCurrentOrder = ({
+const SimpleOrderCard = ({
   src=require("../../../assets/meal.png"),
   plateImg=require("../../../assets/plate.png"),
   restaurant="Fratelli's Bistro", 
   meal="Fettuccine Alfredo",
-  plates="217",
-  description="fettuccine pasta tossed with Parmesan cheese and butter and served with garlic toast on the side",
   newprice="$5.00",
   oldprice="$21.00",
   height="170px",
@@ -137,16 +108,10 @@ const CustCurrentOrder = ({
    
   }
 
-  return <CardCont height={height}>
-    <TimerCont>
-      <Timer>Available in: 1:32:11</Timer>
-    </TimerCont>
+  return <CardCont style={styles.container}>
     <Content>
       <Left>
         <Image style={{width:115, height:105, borderRadius:15}} source={src}/>
-        <Text style={{marginTop:30, fontSize:16}}>Description:</Text>
-        <Text style={{marginTop:30, fontSize:16}}>Restaurant's Rating:</Text>
-        <Text style={{marginTop:15, fontSize:16}}>Dietary Information:</Text>
       </Left>
       <Right>
         <Text style={{fontSize:20}}>{meal}</Text>
@@ -160,24 +125,31 @@ const CustCurrentOrder = ({
           <Text style={{marginTop:8, fontSize:16, color:'#FE4265', fontWeight:'700'}}>{newprice}</Text>
           <Text style={{marginTop:10, fontSize:12, textDecorationLine:'line-through'}}>{oldprice}</Text>
         </PriceCont>
-        <DetailsCont onPress={HandleDetails}>
-          <Pressable onPress={HandleDetails}><Text style={{marginTop:5, fontSize:18, fontWeight:'500', color:'#FE4265'}}>Directions</Text></Pressable>
-          <MaterialIcons style={{marginTop:5}} name="arrow-right" size={33} color="#FE4265" />
-        </DetailsCont>
-        
-        <Text style={{marginTop:10, fontSize:12}}>{description}</Text>
-        <StarsCont>
-          <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
-          <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
-          <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
-          <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
-          <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
-        </StarsCont>
+
       </Right>
     </Content>
   </CardCont>
 }
 
-export default CustCurrentOrder;
+export default SimpleOrderCard;
 
-
+const styles = StyleSheet.create({
+  container: {
+    display:'flex',
+    backgroundColor:'white',
+    width:'90%',
+    flexDirection:'column',
+    borderRadius:15,
+    overflow:'hidden',
+    height:140,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+  },
+});

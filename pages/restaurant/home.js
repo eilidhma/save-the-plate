@@ -19,6 +19,8 @@ import AddedItemOverlay from "../../comps/customer/AddedItemOverlay";
 
 import Tabs from '../../comps/global/Tabs'
 
+import Search from "../../comps/Restaurant/SearchBar";
+
 
 
 
@@ -60,28 +62,30 @@ export default function RestaurantHome ({  navigation }) {
             bottom:0,
             flex:1}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
+          <Search/>
           <OrderCard/>
           <OrderCard/>
           <OrderCard/>
           <OrderCard/>
-
-          {/* fix  */}
+          <OrderCard/>
+          <OrderCard/>
         </ScrollView>
         </View>}
       
         {mealtab === false && <View style={{marginHorizontal: 0,
-            width:'100%',
+            width:"100%",
             position:'absolute',
             top:170,
             bottom:0,
             flex:1}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
+          <Search/>
           <ListingCard/>
           <ListingCard/>
           <ListingCard/>
           <ListingCard/>
-
-          {/* fix 100% error */}
+          <ListingCard/>
+          <ListingCard/>
         </ScrollView>
         </View>}
         

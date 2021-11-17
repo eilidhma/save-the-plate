@@ -14,6 +14,7 @@ import styled from 'styled-components';
 import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import PlatesSaved from '../../comps/customer/PlatesSaved';
 import InfoCard from '../../comps/customer/InfoCard';
+import { auth } from '../../firebase';
 
 
 var logo = require ('../../assets/logo1.png');
@@ -49,6 +50,7 @@ const Cards = styled.View`
 `
 
 export default function Checkout({
+  navigation,
   user="John Smith"
 }) {
 
@@ -60,13 +62,23 @@ export default function Checkout({
     
   }
 
+  const handleSignOut = () => {
+    auth
+    .signOut()
+    .then(()=> {
+      navigation.replace('Login')
+      console.log('Logged out');
+    })
+    .catch(error => alert(error.message))
+  }
+
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
       <TopCont>
         <IconCont >
           <MaterialCommunityIcons name="account" size={60} color="white" />
         </IconCont>
-      <Text style={{fontSize:30, fontWeight:'400', color:'white', marginLeft:20}}>{user}</Text>
+      <Text style={{fontSize:30, fontWeight:'400', color:'white', marginLeft:20}}>{auth.currentUser?.email}</Text>
       </TopCont>
       <Cards>
         <PlatesSaved/>
@@ -75,8 +87,8 @@ export default function Checkout({
         <Pressable style={styles.shadowProp} title="Save Changes" onPress={() => navigation.navigate('Home')} >
           <Text style={{fontSize:18, color:'white'}}>Save Changes</Text>
         </Pressable>
-        <Pressable style={styles.whiteButton} title="< Back" onPress={() => navigation.navigate('Home')} >
-          <Text style={{fontSize:18, color:'#E94168'}}>Back</Text>
+        <Pressable style={styles.whiteButton} title="< Back" onPress={handleSignOut} >
+          <Text style={{fontSize:18, color:'#E94168'}}>Sign Out</Text>
         </Pressable>
       </Cards>
     </LinearGradient>
