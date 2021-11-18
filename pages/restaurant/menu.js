@@ -72,7 +72,7 @@ const AddItemButton = styled.View`
 `
 
 const SingleLineInput = styled.View`
-  width: 78%;
+  width: 67%;
   height: 40px;
   border-radius:15px;
   border: 1px solid #FE4265;
@@ -83,7 +83,7 @@ const SingleLineInput = styled.View`
 `;
 
 const DescriptionCont = styled.View`
-  width: 78%;
+  width: 67%;
   height: 100px;
   border-radius:15px;
   border: 1px solid #FE4265;
@@ -99,7 +99,7 @@ const AddItemModal = styled.View`
  flex-direction: column;
  justify-content: space-between;
  width: 100%;
- height: 579px;
+ height: 679px;
  padding-right: 5%;
  padding-left: 5%;
  padding-top: 40px;
@@ -126,17 +126,19 @@ const CloseModal = styled.TouchableOpacity`
 const TextCont = styled.View`
   width: 33%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: baseline;
+  position: relative;
+  top: 10px;
 `
 
 const ModalRow = styled.View`
-  width: 90%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: flex-start;
 `
 
 const ButtonCont = styled.View`
@@ -144,6 +146,14 @@ const ButtonCont = styled.View`
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+`
+
+const ImageButtons = styled.View `
+  width: 67%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  align-items: flex-start;
 `
 
 
@@ -172,10 +182,16 @@ export default function Menu({
         
         {/* image row */}
         <ModalRow>
-          <TextCont>
-            <Text style={{fontWeight: 'bold'}}>Image:</Text>
+        <TextCont>
+        <Text style={{fontWeight: 'bold'}}>Image:</Text>
           </TextCont>
-          <Image style={{width:206, height:122, borderRadius:10}} source={require('../../assets/meal.png')}></Image>
+
+          <ImageButtons>
+            <Image style={{width:206, height:122, borderRadius:10}} source={require('../../assets/meal.png')}></Image>
+            <ButtonCont>
+              
+            </ButtonCont>
+          </ImageButtons>
         </ModalRow>
 
         {/* Name row */}
