@@ -1,4 +1,4 @@
-import React, { useState }from 'react';
+import React, { useState, useEffect }from 'react';
 import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, ScrollView, Modal, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
@@ -12,10 +12,14 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import styled from 'styled-components';
 
-import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
+
+
+import { MaterialCommunityIcons, AntDesign, MaterialIcons } from '@expo/vector-icons';
 import PlatesSaved from '../../comps/customer/PlatesSaved';
 import InfoCard from '../../comps/customer/InfoCard';
 import But from '../../comps/global/Button';
+import DietSelect from '../../comps/global/DietSelect';
 
 const TopCont = styled.Pressable`
   display:flex;
@@ -149,11 +153,28 @@ const ButtonCont = styled.View`
 `
 
 const ImageButtons = styled.View `
-  width: 67%;
+  width: 206px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   /* justify-content: space-between; */
   align-items: flex-start;
+`
+
+const CameraButtonCont = styled.View`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 122px;
+`
+
+const CameraButton = styled.TouchableOpacity`
+width: 50px;
+height: 50px;
+border-radius: 10px;
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: #FE4265;
 `
 
 
@@ -163,6 +184,55 @@ export default function Menu({
 }) {
 
   const [modalVisible, setModalVisible] = useState(false);
+
+  // state to set image
+  const [image, setImage] = useState(null);
+
+
+  // get permissions
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== 'web') {
+        var { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        var { status } = await ImagePicker.requestCameraPermissionsAsync();
+        if (status !== 'granted') {
+          alert('Sorry, we need camera roll permissions to make this work!');
+        }
+      }
+    })();
+  }, []);
+
+  // get image from gallery
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
+  const takePicture = async () => {
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
 
 
 
@@ -181,16 +251,29 @@ export default function Menu({
         </CloseModal>
         
         {/* image row */}
-        <ModalRow>
+        <ModalRow style={{justifyContent:'flex-start'}}>
         <TextCont>
-        <Text style={{fontWeight: 'bold'}}>Image:</Text>
-          </TextCont>
+          <Text style={{fontWeight: 'bold'}}>Image:</Text>
+        </TextCont>
 
           <ImageButtons>
-            <Image style={{width:206, height:122, borderRadius:10}} source={require('../../assets/meal.png')}></Image>
-            <ButtonCont>
-              
-            </ButtonCont>
+            {image === null 
+              ? <View style={{width:206, height:122, borderRadius:10, justifyContent: 'center', alignItems: 'center', backgroundColor: '#AAAAAA'}}>
+                <Text>Click on icons to add an image</Text>
+              </View>
+              : <Image style={{width:206, height:122, borderRadius:10}} source={{uri:image}}/>
+            }
+
+            <CameraButtonCont >
+
+              <CameraButton onPress={takePicture}>
+                <MaterialIcons name="add-a-photo" size={24} color="white" />
+              </CameraButton>
+
+              <CameraButton onPress={pickImage}>
+                <MaterialIcons name="add-photo-alternate" size={24} color="white" />
+              </CameraButton>
+            </CameraButtonCont>
           </ImageButtons>
         </ModalRow>
 
@@ -226,10 +309,23 @@ export default function Menu({
             <TextInput placeholder="Price" placeholderTextColor="#aaaaaa"></TextInput>
           </SingleLineInput>
         </ModalRow>
+        
+        {/* dietary options */}
+        <ModalRow>
+          <TextCont>
+            <Text style={{fontWeight: 'bold'}}>Dietary restrictions:</Text>
+          </TextCont>
 
+          <View style={{width:"67%"}}>
+            <DietSelect/>
+          </View>
+        </ModalRow>
         <ButtonCont>
           <But width="45%" text="Add Item"/>
-          <But width="45%" text="Cancel" bgColor="#F3AD81" onPress={()=>setModalVisible(!modalVisible)}/>
+          <But width="45%" text="Cancel" bgColor="#F3AD81" onPress={()=>{
+            setModalVisible(!modalVisible)
+            setImage(null)
+            }}/>
         </ButtonCont>
  
       </AddItemModal>
@@ -290,35 +386,5 @@ const styles = StyleSheet.create({
     marginTop:20,
     padding:5,
     borderRadius:20,
-  },
-  whiteButton: {
-    shadowColor: '#171717',
-    shadowOffset: {width: -2, height: 4},
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    backgroundColor:'#ffffff',
-    width:200,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop:20,
-    padding:5,
-    borderRadius:20,
-  },
-  username: {
-    shadowColor: '#171717',
-    shadowOffset: {width: -2, height: 4},
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    backgroundColor:'#FFF',
-    width:200,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop:20,
-    padding:5,
-    borderRadius:20,
-    fontFamily:'Quicksand_300Light', 
-    fontSize:16
   }
 });
