@@ -22,9 +22,9 @@ import Signup from './pages/customer/signup';
 import Nav from './comps/customer/Nav';
 import ThanksOverlay from './comps/customer/ThanksOverlay';
 
-import RestaurantHome from './pages/Restaurant/home';
-import RestaurantAccount from './pages/Restaurant/account';
-import Menu from './pages/Restaurant/menu';
+import RestaurantHome from './pages/restaurant/home';
+import RestaurantAccount from './pages/restaurant/account';
+import Menu from './pages/restaurant/menu';
 import RestaurantNav from './comps/Restaurant/Nav';
 
 

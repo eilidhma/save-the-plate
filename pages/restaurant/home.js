@@ -90,10 +90,7 @@ export default function RestaurantHome ({  navigation }) {
         </View>}
         
         
-        
-        {/* <AddedItem/>
-        <ListingCard/>
-        <AddedItemOverlay/> */}        
+          
     </LinearGradient>
     )
   }
