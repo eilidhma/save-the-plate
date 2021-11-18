@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, Button, Pressable, TextInput,  SafeAreaView, Modal } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, Button, Pressable, TextInput,  SafeAreaView, Modal, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, SimpleLineIcons, AntDesign } from '@expo/vector-icons';
 
@@ -19,12 +19,24 @@ import Nav from '../../comps/customer/Nav';
 import * as Location from 'expo-location'; 
 
 
+
 var mapIcon = require ('../../assets/mapicon.png');
 
 export default function Home({
   navigation,
   total="$5.00"
 }) {
+
+
+  // function userData(user, score) {
+  //   if (user != null) {
+  //     const database = getDatabase();
+  //     set(ref(db, 'users/' + user.uid), {
+  //       highscore: score,
+  //     });
+  //   }
+  // }
+
 
   const [mealtab, setMealTab] = useState(true)
   const [maptab, setMapTab] = useState(false)
@@ -50,14 +62,12 @@ export default function Home({
     setModalVisible(false)
   }
 
-
-
-
-
-
-  
   const [errorMsg, setErrorMsg] = useState(null);
-  const [mapRegion, setMapRegion] = useState(null);
+  const [location, setLocation] = useState({
+    longitude: -123.1207,
+    latitude: 49.2827,
+    latitudeDelta: 0.086,
+    longitudeDelta: 0.136});
   const [restaurants] = useState([
     {
       key: 1,
@@ -88,8 +98,11 @@ export default function Home({
     },
   ])
 
+
   useEffect(() => {
 
+    let isUnmount = false;
+    
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
@@ -97,19 +110,33 @@ export default function Home({
         return;
       }
 
+
+
       let location = await Location.getCurrentPositionAsync({});
-      setMapRegion({
-        longitude: location.coords.longitude,
-        latitude: location.coords.latitude,
-        longitudeDelta: 0.922,
-        latitudeDelta: 0.421
-      })
+      if(!isUnmount){
+         setLocation({
+          longitude: location.coords.longitude,
+          latitude: location.coords.latitude,
+          latitudeDelta: 0.0043,
+          longitudeDelta: 0.0034
+        })
+      }
     
     })();
+
+    return () => {
+      isUnmount = true;
+    }
+
   }, []);
 
- 
-
+  let text = 'Waiting..';
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+    console.log(text)
+  }
 
 
 
@@ -199,8 +226,8 @@ export default function Home({
             justifyContent:'center',
             alignItems:'center'}}>
             <MapView 
-            initialRegion={mapRegion}
-            showsUserLocation 
+            initialRegion={location}
+            showsUserLocation
             style={{width:'100%', height:600}}
             >
               {/* <Marker coordinate={mapRegion} title="Me" description="My Location"/> */}

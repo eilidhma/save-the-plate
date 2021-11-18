@@ -132,6 +132,8 @@ const styles = StyleSheet.create({
  },
  iconContainer: {
   flexDirection: "row",
+  justifyContent: "space-between",
+  width: "100%"
  },
  icon: {
   width: 50,
