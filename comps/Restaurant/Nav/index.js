@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, TouchableOpacity, Modal, ScrollView } from 'react-native';
 import {
   useFonts,
@@ -57,7 +57,7 @@ const AddListingModal = styled.View`
  flex-direction: column;
  justify-content: space-between;
  width: 100%;
- height: 579px;
+ height: 490px;
  padding-right: 5%;
  padding-left: 5%;
  padding-top: 40px;
@@ -118,6 +118,28 @@ const DescriptionCont = styled.View`
   border: 1px solid #FE4265;
 `;
 
+const SelectedTime = styled.View`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FE4265;
+  border-radius: 16px;
+  width: 182px;
+  height: 40px;
+`
+
+const DeselectedTime = styled.TouchableOpacity`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #FE4265;
+  background-color: #ffffff;
+  border-radius: 16px;
+  width: 182px;
+  height: 40px;
+`
+
+
 const RestaurantNav = ({ 
   home="white",
   account="white",
@@ -128,9 +150,8 @@ const RestaurantNav = ({
 
   const [nav, setNav] = useState(0)
 
-
+  // modal stuff
   const [modalVisible, setModalVisible] = useState(false);
-
   const [addItemStep, setItemStep] = useState(1)
 
   onPressHome=()=>{
@@ -158,9 +179,51 @@ function CountDown(){
   }
 }
 
+//for timers
+
+const [thirty, setThirty] = useState(false)
+const [fourtyfive, setFourty] = useState(false)
+const [onehour, setOne] = useState(false)
+const [twohours, setTwo] = useState(false)
+
+function ThirtyPress () {
+  setThirty(true);
+  setFourty(false);
+  setOne(false);
+  setTwo(false);
+}
+
+function FourtyPress () {
+  setThirty(false);
+  setFourty(true);
+  setOne(false);
+  setTwo(false);
+}
+
+function OnePress () {
+  setThirty(false);
+  setFourty(false);
+  setOne(true);
+  setTwo(false);
+}
+
+function TwoPress () {
+  setThirty(false);
+  setFourty(false);
+  setOne(false);
+  setTwo(true);
+}
+
+function Reset () {
+  setThirty(false);
+  setFourty(false);
+  setOne(false);
+  setTwo(false);
+}
+
 
   
-  return <Cont >
+  return <Cont>
     <LinearGradient style={{width:'100%', display:'flex', flexDirection:'row', justifyContent:'space-evenly', alignItems:'center'}} start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['rgb(243,173,129)', 'rgba(243,173,129,0.5)', 'rgb(243,173,129)']}>
     <IconCont onPress={onPressHome} backgroundColor={nav === 0 ? "rgba(250,250,250,0.3)" : "rgba(250,250,250,0)"}>
       <Feather name="home" size={24} color={home} />
@@ -187,6 +250,8 @@ function CountDown(){
     <CloseModal onPress={()=>{
       setModalVisible(!modalVisible)
       setItemStep(1)
+      setCount(1)
+      Reset()
       }}>
       <AntDesign name="close" size={13} color="#C4C4C4" />
     </CloseModal>
@@ -212,11 +277,19 @@ function CountDown(){
     </View>
     }
 
-    {addItemStep === 2 && <View>
-      <View>
-        <But text="< Back" onPress={()=>setItemStep(1)} width="145px"/>
+    {addItemStep === 2 && <View style={{flex: 1,flexDirection: "column", justifyContent: "space-between", height: "100%"}}>
+      <View style={{position: "relative"}}>
+        <But
+          text="< Back"
+          onPress={()=>{
+            setItemStep(1)
+            Reset()
+          }}
+          width="125px"
+          height="40px"/>
+      </View>
 
-        <TitleCont>
+        <TitleCont style={{paddingBottom: 15, paddingTop: 15}}>
           <Text>
             Fettucini Alfredo
           </Text>
@@ -238,22 +311,60 @@ function CountDown(){
         <DescriptionCont>
           <TextInput editable placeholder="add description"/>
         </DescriptionCont>
+        
+        <View style={{flex: 1, flexDirection: "column", justifyContent: "space-between", paddingBottom: 20, paddingTop: 20, height: 30}}>
+          <Text>Available in:</Text>
+          <TitleCont>
+            {thirty === true 
+              ? <SelectedTime>
+                  <Text style={{color:"white"}}>30 minutes</Text>
+                </SelectedTime>
+              : <DeselectedTime onPress={ThirtyPress}>
+                  <Text style={{color: "#FE4265"}}>30 minutes</Text>
+                </DeselectedTime>
+            }
 
-            {/* Alicia and Maharlika work here  */}
+            {fourtyfive === true 
+              ? <SelectedTime>
+                  <Text style={{color:"white"}}>45 minutes</Text>
+                </SelectedTime>
+              : <DeselectedTime onPress={FourtyPress}>
+                  <Text style={{color: "#FE4265"}}>45 minutes</Text>
+                </DeselectedTime>
+            }
+          </TitleCont>
 
-            {/* needs "Available in:" */}
+          <TitleCont>
+            {onehour === true 
+              ? <SelectedTime>
+                  <Text style={{color:"white"}}>1 hour</Text>
+                </SelectedTime>
+              : <DeselectedTime onPress={OnePress}>
+                  <Text style={{color: "#FE4265"}}>1 hour</Text>
+                </DeselectedTime> 
+            }
 
-            {/* as well as the 4 toggleable buttons */}
-
-            {/* it should be set up so you can only click one at a time */}
-
-
+            {twohours === true 
+              ? <SelectedTime>
+                  <Text style={{color:"white"}}>2 hours</Text>
+                </SelectedTime>
+              : <DeselectedTime onPress={TwoPress}>
+                  <Text style={{color: "#FE4265"}}>2 hours</Text>
+                </DeselectedTime>
+            }
+          </TitleCont>
+        </View>
         
         <TitleCont>
           <But width="182px" height="50px" text="List Item"/>
-          <But width="182px" height="50px" text="Cancel" bgColor="#F3AD81"/>
+          <But width="182px" height="50px" text="Cancel" bgColor="#F3AD81"
+          onPress={()=>{
+            setModalVisible(!modalVisible)
+            setItemStep(1)
+            setCount(1)
+            Reset()
+            }}/>
         </TitleCont>
-      </View>
     </View>
     }
   </AddListingModal>
