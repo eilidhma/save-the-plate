@@ -1,37 +1,50 @@
-import { flexbox } from '@mui/system';
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import {Card, ListItem, Icon, Button} from 'react-native-elements';
 
 
 const BubbleCust = ({
-    onPress=()=>{},
+    onPress1=()=>{},
+    onPress2=()=>{},
     heading="",
+    subheading="",
+    opacity="",
     back="",
     next="",
     show=true,
     src=require("../../../assets/meal.png"),
 }) => {
 
+    if(show === false){
+        return <></>
+    }
+
     if(show === true){
     return (
-        <View style={{}}>
-        <View style={styles.container}>
-            <View style={styles.textCont}>
-                <Text style={styles.heading}>{heading}</Text>
+        <View>
+            <View style={styles.container}>
+                <View style={styles.textCont}>
+                    <Text style={styles.heading}>{heading}</Text>
+                </View>
+                <View style={styles.imgCont}>
+                    <Image style={{width:280, height:350, borderRadius:20}} source={src}/>
+                </View>
+                <View style={styles.textCont}>
+                    <Text style={styles.heading}>{subheading}</Text>
+                </View>
+                <View style={styles.bttnCont}>
+                    <View opacity={opacity}>
+                        <TouchableOpacity style={styles.buttonLeft} onPress={onPress2}>
+                            <Text style={styles.backBttn}>{back}</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View >
+                        <TouchableOpacity style={styles.buttonRight} onPress={onPress1}>
+                            <Text style={styles.nextBttn}>{next}</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
             </View>
-            <View style={styles.imgCont}>
-                <Image style={{width:280, height:350, borderRadius:20}} source={src}/>
-            </View>
-            <View style={styles.bttnCont}>
-                <TouchableOpacity style={styles.buttonRight} onPress={onPress}>
-                    <Text style={styles.nextBttn}>{next}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.buttonLeft} onPress={onPress}>
-                    <Text style={styles.backBttn}>{back}</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
         </View>
     );
     }
@@ -46,6 +59,7 @@ const styles = StyleSheet.create({
       zIndex: 5,
       width: 350,
       borderRadius: 20,
+      padding:15,
 
       backgroundColor: 'white',
       shadowColor: '#000',
@@ -56,37 +70,43 @@ const styles = StyleSheet.create({
 
     textCont: {
         alignItems:'center',
-        marginTop:20,
-        marginBottom:15,
+        marginTop:5,
+        marginBottom:10,
     },
     imgCont: {
         alignItems:'center',
-        margin:5,
+        margin:10,
     },
     bttnCont: {
-        flexDirection:'row',
-        alignItems:'center',
-        justifyContent:'center',
-        marginTop:15,
-        marginBottom:20,
+        marginTop:5,
+        marginBottom:40,
     },
 
     
     heading: {
         color: 'black',
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: '500',
         textAlign: 'center',
-        width:250,
+        width:260,
+    },
+    subheading: {
+        color: 'black',
+        fontSize: 18,
+        fontWeight: '500',
+        textAlign: 'center',
+        width:260,
     },
     
     buttonLeft: {
         position: 'absolute',
-        left: 20,
+        left: 10,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#fff',
-        width: 130,
+        borderColor: '#ff1a44',
+        borderWidth:1,
+        width: 140,
         height: 30,
         borderRadius: 20,
 
@@ -97,11 +117,13 @@ const styles = StyleSheet.create({
     },
     buttonRight: {
         position: 'absolute',
-        right: 20,
+        right: 10,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#aaa',
-        width: 130,
+        backgroundColor: '#ff1a44',
+        borderColor: '#ff1a44',
+        borderWidth:1,
+        width: 140,
         height: 30,
         borderRadius: 20,
 
@@ -111,13 +133,13 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
     },
     backBttn: {
-        color: 'black',
-        fontSize: 16,
+        color: '#ff1a44',
+        fontSize: 14,
         fontWeight: '500',
     },
     nextBttn: {
-        color: 'black',
-        fontSize: 16,
+        color: 'white',
+        fontSize: 14,
         fontWeight: '500',
     }
 
