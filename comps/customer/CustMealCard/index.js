@@ -7,7 +7,6 @@ import DietSelect from '../../global/DietSelect';
 
 import app from '../../../firebase';
 import { fireDB } from '../../../firebase';
-import { collection, doc, setDoc, getDocs } from "firebase/firestore";
 
 
 
@@ -141,7 +140,6 @@ const CustMealCard = ({
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setCard(card === "170px" ? "330px" : "170px");
     setRotation(rotation === 0 ? 180 : 0);
-    console.log(firestore)
   };
 
   return <View style={styles.content}>
