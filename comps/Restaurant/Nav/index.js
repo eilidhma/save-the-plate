@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, TouchableOpacity, Modal, ScrollView } from 'react-native';
 import {
   useFonts,
   Raleway_700Bold,
@@ -9,11 +9,14 @@ import {
 } from '@expo-google-fonts/quicksand';
 import styled from 'styled-components';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 
 
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import Search from '../SearchBar'
+import But from '../../global/Button';
 
 const Cont = styled.View`
   display:flex;
@@ -48,12 +51,98 @@ const AddItem = styled.TouchableOpacity`
   align-items: center;
 `;
 
+
+const AddListingModal = styled.View`
+ display: flex;
+ flex-direction: column;
+ justify-content: space-between;
+ width: 100%;
+ height: 490px;
+ padding-right: 5%;
+ padding-left: 5%;
+ padding-top: 40px;
+ padding-bottom: 37px;
+ background-color: #ffffff;
+ border-radius: 30px;
+ position: absolute;
+ bottom: 0px;
+`
+
+const CloseModal = styled.TouchableOpacity`
+  position: absolute;
+  top:10px;
+  right: 10px;
+  width: 13px;
+  height: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+`;
+
+const TitleCont = styled.View`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+`;
+
+const CounterCont = styled.View`
+  width: 120px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+`;
+
+const Counter = styled.TouchableOpacity`
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  border: 2px solid #000000;
+`
+
+const DescriptionCont = styled.View`
+  width: 100%;
+  padding: 14px;
+  height: 100px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border-radius: 20px;
+  border: 1px solid #FE4265;
+`;
+
+const SelectedTime = styled.View`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FE4265;
+  border-radius: 16px;
+  width: 182px;
+  height: 40px;
+`
+
+const DeselectedTime = styled.TouchableOpacity`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #FE4265;
+  background-color: #ffffff;
+  border-radius: 16px;
+  width: 182px;
+  height: 40px;
+`
+
+
 const RestaurantNav = ({ 
   home="white",
-  orders="white",
-  cart="white",
   account="white",
-  onPress=()=>{},
 }) =>{
 
   const Stack = createNativeStackNavigator();
@@ -61,23 +150,86 @@ const RestaurantNav = ({
 
   const [nav, setNav] = useState(0)
 
-onPressHome=()=>{
-  setNav(0)
-  navigation.navigate('RestaurantHome')
+  // modal stuff
+  const [modalVisible, setModalVisible] = useState(false);
+  const [addItemStep, setItemStep] = useState(1)
+
+  onPressHome=()=>{
+    setNav(0)
+    navigation.navigate('RestaurantHome')
+  }
+  
+  onPressAccount=()=>{
+    setNav(1)
+    navigation.navigate('RestaurantAccount')
+  }
+
+
+  const [count, setCount] = useState(1)
+  
+  function CountUp(){
+  setCount(count+1)
 }
 
-onPressAccount=()=>{
-  setNav(1)
-  navigation.navigate('RestaurantAccount')
+function CountDown(){
+  if (count == 1) {
+    setCount(1)
+  } else {
+    setCount(count-1)
+  }
 }
+
+//for timers
+
+const [thirty, setThirty] = useState(false)
+const [fourtyfive, setFourty] = useState(false)
+const [onehour, setOne] = useState(false)
+const [twohours, setTwo] = useState(false)
+
+function ThirtyPress () {
+  setThirty(true);
+  setFourty(false);
+  setOne(false);
+  setTwo(false);
+}
+
+function FourtyPress () {
+  setThirty(false);
+  setFourty(true);
+  setOne(false);
+  setTwo(false);
+}
+
+function OnePress () {
+  setThirty(false);
+  setFourty(false);
+  setOne(true);
+  setTwo(false);
+}
+
+function TwoPress () {
+  setThirty(false);
+  setFourty(false);
+  setOne(false);
+  setTwo(true);
+}
+
+function Reset () {
+  setThirty(false);
+  setFourty(false);
+  setOne(false);
+  setTwo(false);
+}
+
+
   
-  return <Cont >
+  return <Cont>
     <LinearGradient style={{width:'100%', display:'flex', flexDirection:'row', justifyContent:'space-evenly', alignItems:'center'}} start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['rgb(243,173,129)', 'rgba(243,173,129,0.5)', 'rgb(243,173,129)']}>
     <IconCont onPress={onPressHome} backgroundColor={nav === 0 ? "rgba(250,250,250,0.3)" : "rgba(250,250,250,0)"}>
       <Feather name="home" size={24} color={home} />
     </IconCont>
 
-    <AddItem onPress={onPress}>
+    <AddItem onPress={()=>setModalVisible(!modalVisible)}>
     <Feather name="plus" size={30} color="#FE4265" />
     </AddItem>
     
@@ -86,9 +238,139 @@ onPressAccount=()=>{
     </IconCont>
 
   </LinearGradient>
+
+  {/* //modal stuff */}
+  <Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+  >
+  
+  <AddListingModal>
+    <CloseModal onPress={()=>{
+      setModalVisible(!modalVisible)
+      setItemStep(1)
+      setCount(1)
+      Reset()
+      }}>
+      <AntDesign name="close" size={13} color="#C4C4C4" />
+    </CloseModal>
+
+    {addItemStep === 1 && <View>
+      <View>
+        <Search/>
+      </View>
+      <View style={{width: '100%'}}>
+        <ScrollView contentContainerStyle={{width: '100%', alignItems:'center'}}>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+        </ScrollView>
+      </View>
+    </View>
+    }
+
+    {addItemStep === 2 && <View style={{flex: 1,flexDirection: "column", justifyContent: "space-between", height: "100%"}}>
+      <View style={{position: "relative"}}>
+        <But
+          text="< Back"
+          onPress={()=>{
+            setItemStep(1)
+            Reset()
+          }}
+          width="125px"
+          height="40px"/>
+      </View>
+
+        <TitleCont style={{paddingBottom: 15, paddingTop: 15}}>
+          <Text>
+            Fettucini Alfredo
+          </Text>
+
+          <CounterCont>
+            <Counter onPress={CountDown}>
+              <AntDesign name="minus" size={15} color="black" />
+            </Counter>
+
+            <Text>
+              {count}
+            </Text>
+
+            <Counter onPress={CountUp}>
+              <AntDesign name="plus" size={15} color="black" />
+            </Counter>
+          </CounterCont>
+        </TitleCont>
+        <DescriptionCont>
+          <TextInput editable placeholder="add description"/>
+        </DescriptionCont>
+        
+        <View style={{flex: 1, flexDirection: "column", justifyContent: "space-between", paddingBottom: 20, paddingTop: 20, height: 30}}>
+          <Text>Available in:</Text>
+          <TitleCont>
+            {thirty === true 
+              ? <SelectedTime>
+                  <Text style={{color:"white"}}>30 minutes</Text>
+                </SelectedTime>
+              : <DeselectedTime onPress={ThirtyPress}>
+                  <Text style={{color: "#FE4265"}}>30 minutes</Text>
+                </DeselectedTime>
+            }
+
+            {fourtyfive === true 
+              ? <SelectedTime>
+                  <Text style={{color:"white"}}>45 minutes</Text>
+                </SelectedTime>
+              : <DeselectedTime onPress={FourtyPress}>
+                  <Text style={{color: "#FE4265"}}>45 minutes</Text>
+                </DeselectedTime>
+            }
+          </TitleCont>
+
+          <TitleCont>
+            {onehour === true 
+              ? <SelectedTime>
+                  <Text style={{color:"white"}}>1 hour</Text>
+                </SelectedTime>
+              : <DeselectedTime onPress={OnePress}>
+                  <Text style={{color: "#FE4265"}}>1 hour</Text>
+                </DeselectedTime> 
+            }
+
+            {twohours === true 
+              ? <SelectedTime>
+                  <Text style={{color:"white"}}>2 hours</Text>
+                </SelectedTime>
+              : <DeselectedTime onPress={TwoPress}>
+                  <Text style={{color: "#FE4265"}}>2 hours</Text>
+                </DeselectedTime>
+            }
+          </TitleCont>
+        </View>
+        
+        <TitleCont>
+          <But width="182px" height="50px" text="List Item"/>
+          <But width="182px" height="50px" text="Cancel" bgColor="#F3AD81"
+          onPress={()=>{
+            setModalVisible(!modalVisible)
+            setItemStep(1)
+            setCount(1)
+            Reset()
+            }}/>
+        </TitleCont>
+    </View>
+    }
+  </AddListingModal>
+
+  </Modal>
   </Cont>
-  
-  
 }
 
 export default RestaurantNav;

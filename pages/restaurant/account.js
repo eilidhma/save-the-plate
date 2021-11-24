@@ -14,7 +14,7 @@ import styled from 'styled-components';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import PlatesSaved from '../../comps/customer/PlatesSaved';
-import InfoCard from '../../comps/customer/InfoCard';
+import InfoCard from '../../comps/Restaurant/InfoCard';
 import But from '../../comps/global/Button';
 
 const TopCont = styled.Pressable`

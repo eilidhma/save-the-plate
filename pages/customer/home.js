@@ -17,8 +17,11 @@ import CustCurrentOrder from '../../comps/customer/CustCurrentOrder';
 import SimpleOrderCard from '../../comps/customer/SimpleOrderCard';
 import Nav from '../../comps/customer/Nav';
 import * as Location from 'expo-location'; 
+
 import PlatesSaved from '../../comps/customer/PlatesSaved';
 import axios from 'axios';
+
+import BubbleCust from '../../comps/customer/BubbleCust';
 
 
 
@@ -55,9 +58,74 @@ export default function Home({
     setModalVisible(false)
   }
 
+
   const markerPress = () => {
     setRestModalVisible(true)
   }
+
+
+
+  // !--------- Tutorial ----------!
+  const [card, setCard] = useState(0)
+  const [bubble, setBubble] = useState(true)
+  const [heading, setHeading] = useState("Here's your Home page. \n Let's break it down!")
+  const [subheading, setSubheading] = useState("")
+  const [img, setImg] = useState("../../../assets/meal.png")
+  const [back, setBack] = useState("< Back")
+  const [next, setNext] = useState("Next >")
+  const [visibility, setVisibility] = useState(false)
+
+  const HandleBubbleNext = () => {
+    if(card === 0){
+      setCard(1)
+      setVisibility(true)
+      setHeading("The 'Meals' tab allows you to see the meals ready for pickup")
+      setSubheading("The 'Map' tab allows you to see restaurants around you that have meals ready for pickup")
+    }
+    if(card === 1){
+      setCard(2)
+      setHeading("This icon will open the 'Filters' window, to narrow down your research")
+      setSubheading("")
+    }
+    if(card === 2){
+      setCard(3)
+      setHeading("The 1st icon will lead you back to the 'Home' page. \n The 2nd icon will lead you to the 'Orders' page")
+      setSubheading("The 3rd icon will lead you to the 'Card' page. \n The 4th icon will lead you to your 'Account' page")
+      setNext("Done")
+    }
+    if(card === 3){
+      setCard(0)
+      setVisibility(false)
+      setHeading("Here's your Home page. \n Let's break it down!")
+      setSubheading("")
+      setBubble(false)
+      setNext("Next >")
+    }
+  }
+  const HandleBubbleBack = () => {
+    if(card === 1){
+      setCard(0)
+      setVisibility(false)
+      setHeading("Here's your Home page. \n Let's break it down!")
+      setSubheading("")
+    }
+    if(card === 2){
+      setCard(1)
+      setHeading("The 'Meals' tab allows you to see the meals ready for pickup")
+      setSubheading("The 'Map' tab allows you to see restaurants around you that have meals ready for pickup")
+    }
+    if(card === 3){
+      setCard(2)
+      setHeading("This icon will open the 'Filters' window, to narrow down your research")
+      setSubheading("")
+      setNext("Next >")
+    }
+  }
+  // NEED TO INCLUDE FOLLOWING LINE FOR TUTORIAL CUSTOMER
+  // <BubbleCust show={bubble} heading={heading} subheading={subheading} img={img} back={back} next={next} onPress1={HandleBubbleNext} onPress2={HandleBubbleBack} opacity={visibility}/>
+
+  // !--------- End Of Tutorial ----------!
+
 
   const [errorMsg, setErrorMsg] = useState(null);
   const [location, setLocation] = useState({
