@@ -184,6 +184,7 @@ export default function Menu({
 }) {
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [EditItem, setEditItem] = useState(false);
 
   // state to set image
   const [image, setImage] = useState(null);
@@ -238,7 +239,7 @@ export default function Menu({
 
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
-
+      {/* new item modal */}
       <Modal
       animationType="slide"
       transparent={true}
@@ -249,6 +250,10 @@ export default function Menu({
         <CloseModal onPress={()=>setModalVisible(!modalVisible)}>
           <AntDesign name="close" size={13} color="#C4C4C4" />
         </CloseModal>
+
+        <Text style={{alignSelf: 'center', fontSize: 25, color: "#C4C4C4"}}>
+          Add New Item
+        </Text>
         
         {/* image row */}
         <ModalRow style={{justifyContent:'flex-start'}}>
@@ -331,6 +336,104 @@ export default function Menu({
       </AddItemModal>
       </Modal>
 
+      {/* edit item modal */}
+      <Modal
+      animationType="slide"
+      transparent={true}
+      visible={EditItem}
+      >
+      
+      <AddItemModal>
+        <CloseModal onPress={()=>setEditItem(!EditItem)}>
+          <AntDesign name="close" size={13} color="#C4C4C4" />
+        </CloseModal>
+
+        <Text style={{alignSelf: 'center', fontSize: 25, color: "#C4C4C4"}}>
+            Edit Existing Item
+        </Text>
+        
+        {/* image row */}
+        <ModalRow style={{justifyContent:'flex-start'}}>
+        <TextCont>
+          <Text style={{fontWeight: 'bold'}}>Image:</Text>
+        </TextCont>
+
+          <ImageButtons>
+            {image === null 
+              ? <View style={{width:206, height:122, borderRadius:10, justifyContent: 'center', alignItems: 'center', backgroundColor: '#AAAAAA'}}>
+                <Text>Click on icons to add an image</Text>
+              </View>
+              : <Image style={{width:206, height:122, borderRadius:10}} source={{uri:image}}/>
+            }
+
+            <CameraButtonCont >
+
+              <CameraButton onPress={takePicture}>
+                <MaterialIcons name="add-a-photo" size={24} color="white" />
+              </CameraButton>
+
+              <CameraButton onPress={pickImage}>
+                <MaterialIcons name="add-photo-alternate" size={24} color="white" />
+              </CameraButton>
+            </CameraButtonCont>
+          </ImageButtons>
+        </ModalRow>
+
+        {/* Name row */}
+        <ModalRow>
+          <TextCont>
+            <Text style={{fontWeight: 'bold'}}>Name:</Text>
+          </TextCont>
+
+          <SingleLineInput>
+            <TextInput placeholder="Name" placeholderTextColor="#aaaaaa"></TextInput>
+          </SingleLineInput>
+        </ModalRow>
+
+        {/* Description */}
+        <ModalRow>
+          <TextCont>
+            <Text style={{fontWeight: 'bold'}}>Description:</Text>
+          </TextCont>
+
+        <DescriptionCont>
+          <TextInput placeholder="Description" placeholderTextColor="#aaaaaa"></TextInput>
+        </DescriptionCont>
+        </ModalRow>
+
+        {/* price row */}
+        <ModalRow>
+          <TextCont>
+            <Text style={{fontWeight: 'bold'}}>Price:</Text>
+          </TextCont>
+
+          <SingleLineInput>
+            <TextInput placeholder="Price" placeholderTextColor="#aaaaaa"></TextInput>
+          </SingleLineInput>
+        </ModalRow>
+        
+        {/* dietary options */}
+        <ModalRow>
+          <TextCont>
+            <Text style={{fontWeight: 'bold'}}>Dietary restrictions:</Text>
+          </TextCont>
+
+          <View style={{width:"67%"}}>
+            <DietSelect/>
+          </View>
+        </ModalRow>
+        <ButtonCont>
+          <But width="45%" text="Add Item"/>
+          <But width="45%" text="Cancel" bgColor="#F3AD81" onPress={()=>{
+            setEditItem(!EditItem)
+            setImage(null)
+            }}/>
+        </ButtonCont>
+ 
+      </AddItemModal>
+      </Modal>
+      
+
 
       <TopCont>
         <IconCont >
@@ -345,7 +448,7 @@ export default function Menu({
 
         <View style={{width: '100%'}}>
             <ScrollView contentContainerStyle={{width: '100%', alignItems:'center', paddingBottom: 70}}>
-                <But width="100%" height="50px" text="Fettucini Alfredo" margintop="10px"/>
+                <But width="100%" height="50px" text="Fettucini Alfredo" margintop="10px" onPress={()=>setEditItem(!modalVisible)}/>
                 <But width="100%" height="50px" text="Spaghetti Bolognese" margintop="10px"/>
                 <But width="100%" height="50px" text="Lasagna" margintop="10px"/>
                 <But width="100%" height="50px" text="Meatballs" margintop="10px"/>
