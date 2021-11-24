@@ -18,6 +18,8 @@ import SimpleOrderCard from '../../comps/customer/SimpleOrderCard';
 import Nav from '../../comps/customer/Nav';
 import * as Location from 'expo-location'; 
 import PlatesSaved from '../../comps/customer/PlatesSaved';
+import axios from 'axios';
+
 
 
 
@@ -27,17 +29,6 @@ export default function Home({
   navigation,
   total="$5.00"
 }) {
-
-
-  // function userData(user, score) {
-  //   if (user != null) {
-  //     const database = getDatabase();
-  //     set(ref(db, 'users/' + user.uid), {
-  //       highscore: score,
-  //     });
-  //   }
-  // }
-
 
   const [mealtab, setMealTab] = useState(true)
   const [maptab, setMapTab] = useState(false)
@@ -114,6 +105,12 @@ export default function Home({
     
   ])
 
+  const GetData = async ()=>{
+    const result = await axios.get('/users.php');
+    console.log(result, result.data);
+  }
+  
+
 
   useEffect(() => {
 
@@ -151,7 +148,6 @@ export default function Home({
     text = errorMsg;
   } else if (location) {
     text = JSON.stringify(location);
-    console.log(text)
   }
 
 
@@ -216,8 +212,11 @@ export default function Home({
         </Modal>
         {mealtab === true && <View style={{display:'flex', justifyContent:'center', alignItems:'center', marginBottom:20}}>
           <Filters/>
+          <Pressable onPress={GetData}>
+                    <AntDesign name="close" size={50} color="black" />
+          </Pressable>
         </View>}
-        <View style={{width:'100%', alignItems:'center', backgroundColor:'white', paddingBottom:105}}>
+        <View style={{width:'100%', alignItems:'center', paddingBottom:105}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
             <CustMealCard addToCart={() => setModalVisible(true)}/>
             <CustMealCard />
