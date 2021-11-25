@@ -64,6 +64,16 @@ export default function Signup({ navigation }) {
   }
 
   const PostUser = async () => {
+
+    auth
+    .createUserWithEmailAndPassword(email, password)
+    .then(userCredendtials => {
+      var user = userCredendtials.user;
+      setFuid(user.uid);
+      console.log('Registered with:', user.email);
+    })
+    .catch(error => alert(error.message));
+
     const result = await axios.post('/users.php', {
       full_name:name,
       fuid:fuid,
@@ -79,21 +89,7 @@ export default function Signup({ navigation }) {
       restaurant:isRestaurant,
       cuisine:isCuisine
     });
-    console.log(result, result.data);
-  }
-
-
-  const handleSignUp = () => {
-    
-    auth
-    .createUserWithEmailAndPassword(email, password)
-    .then(userCredendtials => {
-      const user = userCredendtials.user;
-      setFuid(user.uid);
-      console.log('Registered with:', user.email);
-    })
-    .catch(error => alert(error.message));
-    PostUser();
+    //console.log(result, result.data);
   }
 
   return (
@@ -103,12 +99,6 @@ export default function Signup({ navigation }) {
       </View>
       <View style={{width:'90%', backgroundColor:'white', height:2, position:'absolute', top:118}}></View> 
       <View style={styles.gradient}>
-        {/* <View style={styles.itemCont}>
-          <Pressable style={styles.back} title="Signup"
-            onPress={() => navigation.navigate('Login')} >
-            <Text style={{color:'white', fontSize:18, fontWeight:'600'}}>Back</Text>
-          </Pressable>
-        </View> */}
         <View style={styles.itemCont}> 
           <View style={styles.left}>
             <Text style={{fontWeight:'500', fontSize:16}}>Name</Text>
@@ -211,7 +201,7 @@ export default function Signup({ navigation }) {
           </View>
         </View>
         <Pressable style={styles.shadowProp} title="Signup"
-        onPress={handleSignUp} >
+        onPress={PostUser} >
         <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Sign Up</Text>
       </Pressable>
       </View> 

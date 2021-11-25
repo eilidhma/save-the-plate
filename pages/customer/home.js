@@ -19,6 +19,7 @@ import Nav from '../../comps/customer/Nav';
 import * as Location from 'expo-location'; 
 import PlatesSaved from '../../comps/customer/PlatesSaved';
 import axios from 'axios';
+import Geocode from "react-geocode";
 
 
 
@@ -29,6 +30,8 @@ export default function Home({
   navigation,
   total="$5.00"
 }) {
+
+
 
   const [mealtab, setMealTab] = useState(true)
   const [maptab, setMapTab] = useState(false)
@@ -58,6 +61,7 @@ export default function Home({
   const markerPress = () => {
     setRestModalVisible(true)
   }
+
 
   const [errorMsg, setErrorMsg] = useState(null);
   const [location, setLocation] = useState({
@@ -105,10 +109,48 @@ export default function Home({
     
   ])
 
-  const GetData = async ()=>{
-    const result = await axios.get('/users.php');
-    console.log(result, result.data);
+  const GetLatLong = () => {
+    Geocode.setApiKey("AIzaSyDA6WZ_rlulhSrphE3Z9ue1WJJSnHr2jy8");
+
+    Geocode.setLanguage("en");
+
+    Geocode.fromAddress("3700 Willingdon Ave Burnaby BC").then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        console.log(lat, lng);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
+
+  const [usersData, setUsersData] = useState(null);
+  const [locationsData, setLocationsData] = useState(null);
+
+  // const GetData = async ()=>{
+  //   const result = await axios.get('/users.php');
+  //   setUsersData(result.data);
+  // }
+
+  useEffect(() => {
+
+    let isUnmount = false;
+    
+    (async () => {
+     
+      const result = await axios.get('/users.php');
+      if(!isUnmount){
+        setUsersData(result.data);
+      }
+    
+    })();
+
+    return () => {
+      isUnmount = true;
+    }
+
+  }, []);
   
 
 
@@ -212,24 +254,20 @@ export default function Home({
         </Modal>
         {mealtab === true && <View style={{display:'flex', justifyContent:'center', alignItems:'center', marginBottom:20}}>
           <Filters/>
-          <Pressable onPress={GetData}>
-                    <AntDesign name="close" size={50} color="black" />
-          </Pressable>
+
         </View>}
         <View style={{width:'100%', alignItems:'center', paddingBottom:105}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
-            <CustMealCard addToCart={() => setModalVisible(true)}/>
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
+            {usersData ? usersData.map((user) => (
+              <CustMealCard
+               addToCart={() => setModalVisible(true)}
+               key={user.id}
+               restaurant={user.full_name}
+               />
+
+            )) : null}
+            
+            
         </ScrollView>
         </View>
         </View>}
