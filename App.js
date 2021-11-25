@@ -11,6 +11,7 @@ import {
 import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
+import LottieView from 'lottie-react-native';
 
 // customer pages
 import Home from './pages/customer/home';
@@ -25,17 +26,9 @@ import axios from 'axios';
 
 axios.defaults.baseURL = "http://8a7e-174-7-125-0.ngrok.io/save-the-plate/api/"
 
-
-
-//pages
-// import RestaurantHome from './pages/restaurant/home';
-
-
-//restuarant pages
-
 import RestaurantHome from './pages/restaurant/home';
 import RestaurantAccount from './pages/restaurant/account';
-import Menu from './pages/restaurant/menu'
+import Menu from './pages/restaurant/menu';
 import RestaurantNav from './comps/Restaurant/Nav';
 
 
@@ -51,7 +44,7 @@ function Landing({ navigation }) {
 
   setTimeout(() => { 
     navigation.navigate('Login')
-  }, 4000)
+  }, 3010)
 
   if (!fontsLoaded) {
     return <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
@@ -61,7 +54,18 @@ function Landing({ navigation }) {
 
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
       <Text style={{color:'white', fontFamily:'Raleway_700Bold', fontSize:32}}>SaveThePlate</Text>
-      <Image style={{width:100, height:100, marginTop:20}} source={logo}/>
+      <LottieView
+          ref={(ref) => {
+            anim = ref;
+          }}
+          style={{
+            width:'100%',
+            alignItems:'center'
+          }}
+          source={require('./assets/logo.json')}
+          autoPlay={true}
+          loop={false}
+        />
     </LinearGradient>
   );
   }
