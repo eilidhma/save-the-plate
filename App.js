@@ -22,12 +22,14 @@ import Account from './pages/customer/account';
 import Signup from './pages/customer/signup';
 import Nav from './comps/customer/Nav';
 import ThanksOverlay from './comps/customer/ThanksOverlay';
+import axios from 'axios';
+
+axios.defaults.baseURL = "http://6c98-142-232-219-219.ngrok.io/save-the-plate/api/"
 
 import RestaurantHome from './pages/restaurant/home';
 import RestaurantAccount from './pages/restaurant/account';
 import Menu from './pages/restaurant/menu';
 import RestaurantNav from './comps/Restaurant/Nav';
-
 
 
 var logo = require ('./assets/logo1.png');

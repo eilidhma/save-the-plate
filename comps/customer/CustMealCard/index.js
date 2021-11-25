@@ -6,11 +6,6 @@ import Diets from '../../global/Diets';
 import DietSelect from '../../global/DietSelect';
 
 import app from '../../../firebase';
-import { fireDB } from '../../../firebase';
-import { collection, doc, setDoc, getDocs } from "firebase/firestore";
-
-
-
 
 
 const CardCont = styled.View`
@@ -101,38 +96,6 @@ const CustMealCard = ({
   // height="170px",
   addToCart=()=>{}
 }) =>{
-
-  /* START OF FIREBASE STUFF */
-  
-    const [restaurants, setRestaurants] = useState([]);
-    const restaurantsCollectionRef = fireDB.collection("restaurants")
-
-// this works :D
-    restaurantsCollectionRef.doc("test3").set({
-      name: "hellooo",
-      city: "van" 
-    });
-    restaurantsCollectionRef.doc("test4").set({
-      name: "hello",
-      city: "white rock" 
-    });
-
-  
-    
-    var restRef = restaurantsCollectionRef.doc("test4");
-
-    restRef.get().then((doc) => {
-        if (doc.exists) {
-            console.log("Document data:", doc.data());
-        } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-        }
-    }).catch((error) => {
-        console.log("Error getting document:", error);
-    });
-
-/* END OF FIREBASE STUFF */
         
   const [card, setCard] = useState("170px")
   const [rotation, setRotation] = useState(0)
@@ -141,7 +104,6 @@ const CustMealCard = ({
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setCard(card === "170px" ? "330px" : "170px");
     setRotation(rotation === 0 ? 180 : 0);
-    console.log(firestore)
   };
 
   return <View style={styles.content}>

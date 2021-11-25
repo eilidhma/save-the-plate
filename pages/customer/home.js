@@ -10,14 +10,19 @@ import CustMealCard from '../../comps/customer/CustMealCard';
 import Tabs from '../../comps/customer/Tabs';
 import UserLocation from '../../comps/customer/UserLocation';
 
-import MapView from 'react-native-maps';
+import MapView, { Callout } from 'react-native-maps';
 import { Marker } from 'react-native-maps';
 import Filters from '../../comps/customer/Filters';
 import CustCurrentOrder from '../../comps/customer/CustCurrentOrder';
 import SimpleOrderCard from '../../comps/customer/SimpleOrderCard';
 import Nav from '../../comps/customer/Nav';
 import * as Location from 'expo-location'; 
+
+import PlatesSaved from '../../comps/customer/PlatesSaved';
+import axios from 'axios';
+
 import BubbleCust from '../../comps/customer/BubbleCust';
+
 
 
 
@@ -27,17 +32,6 @@ export default function Home({
   navigation,
   total="$5.00"
 }) {
-
-
-  // function userData(user, score) {
-  //   if (user != null) {
-  //     const database = getDatabase();
-  //     set(ref(db, 'users/' + user.uid), {
-  //       highscore: score,
-  //     });
-  //   }
-  // }
-
 
   const [mealtab, setMealTab] = useState(true)
   const [maptab, setMapTab] = useState(false)
@@ -57,11 +51,18 @@ export default function Home({
   }
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [restModalVisible, setRestModalVisible] = useState(false);
 
   const CheckOut = () => {
     navigation.navigate('Cart')
     setModalVisible(false)
   }
+
+
+  const markerPress = () => {
+    setRestModalVisible(true)
+  }
+
 
 
   // !--------- Tutorial ----------!
@@ -126,8 +127,6 @@ export default function Home({
   // !--------- End Of Tutorial ----------!
 
 
-
-  
   const [errorMsg, setErrorMsg] = useState(null);
   const [location, setLocation] = useState({
     longitude: -123.1207,
@@ -142,7 +141,10 @@ export default function Home({
       location: {
         longitude: -123.101025,
         latitude: 49.248911
-      }
+      },
+      plates_saved: "50",
+      distance:'400m',
+      mealQuantity:3
     },
     {
       key: 2,
@@ -151,7 +153,10 @@ export default function Home({
       location: {
         longitude: -123.095022,
         latitude: 49.236414
-      }
+      },
+      plates_saved: "120",
+      distance:'1.2km',
+      mealQuantity:2
     },
     {
       key: 3,
@@ -160,9 +165,19 @@ export default function Home({
       location: {
         longitude: -123.026504,
         latitude: 49.249887
-      }
+      },
+      plates_saved: "290",
+      distance:'1.5km',
+      mealQuantity:4
     },
+    
   ])
+
+  const GetData = async ()=>{
+    const result = await axios.get('/users.php');
+    console.log(result, result.data);
+  }
+  
 
 
   useEffect(() => {
@@ -201,7 +216,6 @@ export default function Home({
     text = errorMsg;
   } else if (location) {
     text = JSON.stringify(location);
-    console.log(text)
   }
 
 
@@ -266,8 +280,11 @@ export default function Home({
         </Modal>
         {mealtab === true && <View style={{display:'flex', justifyContent:'center', alignItems:'center', marginBottom:20}}>
           <Filters/>
+          <Pressable onPress={GetData}>
+                    <AntDesign name="close" size={50} color="black" />
+          </Pressable>
         </View>}
-        <View style={{width:'100%', alignItems:'center', backgroundColor:'white', paddingBottom:105}}>
+        <View style={{width:'100%', alignItems:'center', paddingBottom:105}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
             <CustMealCard addToCart={() => setModalVisible(true)}/>
             <CustMealCard />
@@ -295,8 +312,9 @@ export default function Home({
             initialRegion={location}
             showsUserLocation
             style={{width:'100%', height:600}}
+            provider="google"
             >
-              {/* <Marker coordinate={mapRegion} title="Me" description="My Location"/> */}
+              
 
               {restaurants ? restaurants.map((restaurant) => (
                 <Marker 
@@ -308,12 +326,49 @@ export default function Home({
                   <View style={styles.marker}>
                     <Image style={{width:30, height:30}} source={mapIcon}/>
                   </View>
-                  {/* <MaterialIcons name="food-bank" size={36} color="#E94168" /> */}
+                  <Callout style={{borderRadius:20}} onPress={markerPress}>
+                    <View style={styles.callout}>
+                      <Text style={{fontSize:24, fontWeight:'500', color:'black', marginBottom:10}}>{restaurant.title}</Text>
+                      <Text style={{marginBottom:10}}>{restaurant.distance} away</Text>
+                      <View style={{display:'flex', flexDirection:'row'}}>
+                        <Text style={{fontWeight:'800', color:'#F3AE81', fontSize:18}}>{restaurant.mealQuantity}</Text>
+                        <Text style={{fontWeight:'300', fontSize:18}}> meals available!</Text>
+                      </View>
+                      <Pressable style={styles.shadowPropDark} title="Checkout" >
+                        <Text style={{color:'white', fontSize:18}}>View meals</Text>
+                      </Pressable>
+                      <View/>
+                    </View>
+                  </Callout>
                 </Marker>
               ))
               : null}
             </MapView>
           </View>}
+          <View>
+            <Modal
+            animationType="slide"
+            transparent={true}
+            visible={restModalVisible}
+            >
+              <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+
+                <View style={{display:'flex', width:'90%', justifyContent:'center', alignItems:'flex-end', height:40}}>
+                  <View style={{width:70, height:2, backgroundColor:'#C3C3C3', position:'absolute', top:10, alignSelf:'center'}}></View>
+                  <Pressable onPress={()=>setRestModalVisible(!restModalVisible)}>
+                    <AntDesign name="close" size={24} color="black" />
+                  </Pressable>
+                </View>
+                <View>
+                  <CustMealCard/>
+                  <CustMealCard/>
+                  <CustMealCard/>
+                </View>
+              </View>
+            </View>
+          </Modal>
+          </View>
     </LinearGradient>
   ); 
 }
@@ -410,12 +465,6 @@ const styles = StyleSheet.create({
     padding: 10,
     elevation: 2
   },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-  },
   textStyle: {
     color: "white",
     fontWeight: "bold",
@@ -439,5 +488,20 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
+  },
+  callout: {
+    display:'flex',
+    width:250,
+    backgroundColor:'white',
+    padding:20,
+    justifyContent:'center',
+    alignItems:'center',
+    borderRadius:20
+  },
+  calloutInner: {
+    display:'flex',
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'flex-start'
   }
 });
