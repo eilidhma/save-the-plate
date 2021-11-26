@@ -13,7 +13,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
 import LottieView from 'lottie-react-native';
 import { auth } from './firebase';
-
 // customer pages
 import Home from './pages/customer/home';
 import Login from './pages/customer/login';
@@ -54,6 +53,8 @@ function Landing({ navigation }) {
         navigation.navigate('Login')
       }
     });
+
+
   }, 3010)
 
   const checkIfRestaurant = async (uid) => {
@@ -64,13 +65,11 @@ function Landing({ navigation }) {
      if (page === '0')
      {
        navigation.navigate('Home')
-       console.log(page)
      }
 
      else if (page === '1')
      {
        navigation.navigate('RestaurantHome')
-       console.log(page)
      } 
   }
 

@@ -14,12 +14,13 @@ import styled from 'styled-components';
 
 import * as ImagePicker from 'expo-image-picker';
 
-
 import { MaterialCommunityIcons, AntDesign, MaterialIcons } from '@expo/vector-icons';
 import PlatesSaved from '../../comps/customer/PlatesSaved';
 import InfoCard from '../../comps/customer/InfoCard';
 import But from '../../comps/global/Button';
 import DietSelect from '../../comps/global/DietSelect';
+import firebase from 'firebase/app';
+import "firebase/storage";
 
 const TopCont = styled.Pressable`
   display:flex;
@@ -186,8 +187,12 @@ export default function Menu({
   const [modalVisible, setModalVisible] = useState(false);
   const [EditItem, setEditItem] = useState(false);
 
+
   // state to set image
   const [image, setImage] = useState(null);
+
+  // state for image name
+  const [imgName, setImgName] = useState()
 
 
   // get permissions
@@ -212,27 +217,61 @@ export default function Menu({
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.cancelled) {
       setImage(result.uri);
     }
   };
+
+
 
   const takePicture = async () => {
     let result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 0.2,
     });
 
-    console.log(result);
 
     if (!result.cancelled) {
       setImage(result.uri);
     }
   };
+
+
+  const Upload = async(file_uri)=>{
+
+    /* console.log(file_uri, "file") */
+    const file = await fetch(file_uri);
+    const blob =  await file.blob();
+
+    const storageRef = firebase.storage().ref();
+    const imgRef = storageRef.child("hello.jpeg");
+
+
+    imgRef.put(blob).then((snapshot) => {
+      console.log("uploaded bitch");
+    });
+  }
+
+
+  /* const Upload =async(file_uri)=>{
+
+
+  const file = await fetch(file_uri);
+
+  const blob =  await file.blob();
+
+  //file blob
+  const storage = getStorage();
+  const storageRef = ref(storage, 'test_mobile.jpg');
+
+
+
+  // 'file' comes from the Blob or File API
+  const snapshot = await uploadBytes(storageRef, blob)
+  console.log('Uploaded!');
+  } */
 
 
 
