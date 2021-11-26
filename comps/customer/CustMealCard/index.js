@@ -93,6 +93,7 @@ const CustMealCard = ({
   description="fettuccine pasta tossed with Parmesan cheese and butter and served with garlic toast on the side",
   newprice="$5.00",
   oldprice="$21.00",
+  modifications="added extra parmesan cheese",
   // height="170px",
   addToCart=()=>{}
 }) =>{
@@ -102,7 +103,7 @@ const CustMealCard = ({
 
   const HandleCard = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setCard(card === "170px" ? "330px" : "170px");
+    setCard(card === "170px" ? "360px" : "170px");
     setRotation(rotation === 0 ? 180 : 0);
   };
 
@@ -117,7 +118,8 @@ const CustMealCard = ({
         <Image style={{width:115, height:105, borderRadius:15}} source={src}/>
         <Text style={{marginTop:30, fontSize:16}}>Description:</Text>
         {/* <Text style={{marginTop:30, fontSize:16}}>Restaurant's Rating:</Text> */}
-        <Text style={{marginTop:60, fontSize:16}}>Dietary Information:</Text>
+        <Text style={{marginTop:30, fontSize:16}}>Modifications:</Text>
+        <Text style={{marginTop:50, fontSize:16}}>Dietary Information:</Text>
       </Left>
       <Right>
         <Text style={{fontSize:20}}>{meal}</Text>
@@ -134,7 +136,8 @@ const CustMealCard = ({
           <MaterialIcons style={{marginTop:5, transform: [{ rotate: rotation+"deg" }]}} name="arrow-drop-down" size={33} color="#FE4265" />
         </DetailsCont>
         
-        <Text style={{marginTop:10, fontSize:12}}>{description}</Text>
+        <Text style={{marginTop:18, fontSize:12}}>{description}</Text>
+        <Text style={{marginTop: 14, fontSize:12}}>{modifications}</Text>
         {/* <StarsCont>
           <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
           <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
