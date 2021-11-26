@@ -75,13 +75,11 @@ export default function Login({ navigation }) {
       if (page === '0')
       {
         navigation.navigate('Home')
-        console.log(page)
       }
 
       else if (page === '1')
       {
         navigation.navigate('RestaurantHome')
-        console.log(page)
       }
     }
 
