@@ -75,24 +75,18 @@ export default function Signup({ navigation }) {
     
      var page = result.data[0].restaurant;
 
-    
-    hello(page)
- 
-    }
+     if (page === '0')
+     {
+       navigation.navigate('Home')
+       console.log(page)
+     }
 
-    function hello (page) {
-      if (page === '0')
-      {
-        navigation.navigate('Home')
-        console.log(page)
-      }
-
-      else if (page === '1')
-      {
-        navigation.navigate('RestaurantHome')
-        console.log(page)
-      }
-    }
+     else if (page === '1')
+     {
+       navigation.navigate('RestaurantHome')
+       console.log(page)
+     } 
+  }
 
 
   const UserData = async (fuid) => {
@@ -345,7 +339,7 @@ export default function Signup({ navigation }) {
         <Text style={{fontWeight:'500', fontSize:16}}>
           Select your Cuisine
         </Text>
-        <CuisineSelect/>
+        <CuisineSelect onSelect={(c)=>setIsCuisine(c)}/>
 
         <Pressable style={styles.shadowProp} title="Signup"
         onPress={PostUser} >
