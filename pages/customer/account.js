@@ -72,10 +72,11 @@ export default function Checkout({
     .catch(error => alert(error.message))
   }
 
+
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
       <TopCont>
-        <IconCont >
+        <IconCont>
           <MaterialCommunityIcons name="account" size={60} color="white" />
         </IconCont>
       <Text style={{fontSize:30, fontWeight:'400', color:'white', marginLeft:20}}>{auth.currentUser?.email}</Text>
