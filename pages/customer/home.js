@@ -195,6 +195,7 @@ export default function Home({
   const [usersData, setUsersData] = useState(null);
   const [locationsData, setLocationsData] = useState(null);
   
+  const [listedData, setListedData] = useState(null);
   const [mealsData, setMealsData] = useState(null);
   
   useEffect(() => {
@@ -203,9 +204,12 @@ export default function Home({
     
     (async () => {
      
-      const result = await axios.get('/meals.php');
+      const result = await axios.get('/listed.php');
+      const mealResult = await axios.get('/meals.php');
+
       if(!isUnmount){
-        setMealsData(result.data);
+        setListedData(result.data);
+        setMealsData(mealResult.data)
       }
     
     })();
@@ -216,7 +220,6 @@ export default function Home({
 
   }, []);
   
-
 
   useEffect(() => {
 
@@ -257,10 +260,11 @@ export default function Home({
   }
 
 
+  const [meal, setMeal] = useState()
+  const [rest, setRestaurant] = useState()
+  const [oldPrice, setOldPrice] = useState()
+  const [newPrice, setNewPrice] = useState()
 
-
-
-  
 
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
@@ -298,7 +302,13 @@ export default function Home({
                 </Pressable>
               </View>
               <View>
-                <SimpleOrderCard />
+
+                <SimpleOrderCard 
+                restaurant={rest} 
+                meal={meal}
+                newprice={newPrice}
+                oldprice={oldPrice} 
+                />
               </View>
               <View style={{display:'flex', flexDirection:'row', width:'90%', justifyContent:'flex-end', marginTop:20}}>
                 <Text style={{fontSize:24, fontWeight:'500'}}>Total: {total}</Text>
@@ -320,18 +330,26 @@ export default function Home({
         </View>}
         <View style={{width:'100%', alignItems:'center', paddingBottom:105}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
-            {mealsData ? mealsData.map((meal) => (
+            {listedData ? listedData.map((listed) => (
               <CustMealCard
-               addToCart={() => setModalVisible(true)}
-               key={meal.id}
-               restaurant={meal.restaurant}
-               meal={meal.m_name}
-               oldprice={meal.old_price}
-               newprice={meal.new_price}
-               showNut={meal.nf}
-               showGluten={meal.gf}
-               showDairy={meal.df}
-               showVege={meal.v}
+               key={listed.id}
+               meal={listed.m_name}
+               modifications={listed.modifications}
+               restaurant={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.restaurant): null}
+               oldprice={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.old_price): null}
+               newprice={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.new_price): null}
+               description={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.description): null}
+               showNut={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.nf): null}
+               showGluten={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.gf): null}
+               showDairy={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.df): null}
+               showVege={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.v): null}
+               addToCart={() => {
+                setModalVisible(true)
+                setMeal(listed.m_name)
+                // setRestaurant(x.restaurant)
+                // setOldPrice(x.old_price)
+                // setNewPrice(new_price) // henry.... 
+              }}
                />
 
             )) : null}
@@ -353,8 +371,6 @@ export default function Home({
             style={{width:'100%', height:600}}
             provider="google"
             >
-              
-
               {restaurants ? restaurants.map((restaurant) => (
                 <Marker 
                 key={restaurant.key}
