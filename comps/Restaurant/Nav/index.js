@@ -10,6 +10,7 @@ import {
 import styled from 'styled-components';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
+import axios from 'axios';
 
 
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
@@ -17,6 +18,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Search from '../SearchBar'
 import But from '../../global/Button';
+import { auth } from '../../../firebase';
 
 const Cont = styled.View`
   display:flex;
@@ -154,12 +156,12 @@ const RestaurantNav = ({
   const [modalVisible, setModalVisible] = useState(false);
   const [addItemStep, setItemStep] = useState(1)
 
-  onPressHome=()=>{
+  const onPressHome=()=>{
     setNav(0)
     navigation.navigate('RestaurantHome')
   }
   
-  onPressAccount=()=>{
+  const onPressAccount=()=>{
     setNav(1)
     navigation.navigate('RestaurantAccount')
   }
@@ -221,6 +223,28 @@ function Reset () {
   setTwo(false);
 }
 
+const [mealsData, setMealsData] = useState();
+
+useEffect(() => {
+
+  let isUnmount = false;
+  
+  (async () => {
+   
+    const result = await axios.get('/meals.php');
+    if(!isUnmount){
+      console.log(auth.currentUser.uid)
+      setMealsData(result.data);
+    }
+  
+  })();
+
+  return () => {
+    isUnmount = true;
+  }
+
+}, []);
+
 
   
   return <Cont>
@@ -262,16 +286,20 @@ function Reset () {
       </View>
       <View style={{width: '100%'}}>
         <ScrollView contentContainerStyle={{width: '100%', alignItems:'center'}}>
-          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
-          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
-          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
-          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
-          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
-          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
-          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
-          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
-          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
-          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          {mealsData ? mealsData.filter((x) => {return x.fuid === auth.currentUser.uid}).map((meals) => (
+            <But 
+            key={meals.id} 
+            text={meals.m_name} 
+            onPress={()=>setItemStep(2)} 
+            margintop="10px"/>
+          )) : null}
+          {/* {mealsData ? mealsData.map((meal) => (
+            <But 
+            key={meal.id} 
+            text={meal.m_name} 
+            onPress={()=>setItemStep(2)} 
+            margintop="10px"/>
+          )) : null} */}
         </ScrollView>
       </View>
     </View>

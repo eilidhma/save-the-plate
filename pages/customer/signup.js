@@ -63,17 +63,8 @@ export default function Signup({ navigation }) {
     console.log(result, result.data);
   }
 
-  const PostUser = async () => {
-
-    auth
-    .createUserWithEmailAndPassword(email, password)
-    .then(userCredendtials => {
-      var user = userCredendtials.user;
-      setFuid(user.uid);
-      console.log('Registered with:', user.email);
-    })
-    .catch(error => alert(error.message));
-
+  const UserData = async (fuid) => {
+    
     const result = await axios.post('/users.php', {
       full_name:name,
       fuid:fuid,
@@ -90,6 +81,19 @@ export default function Signup({ navigation }) {
       cuisine:isCuisine
     });
     //console.log(result, result.data);
+  }
+
+  const PostUser = async () => {
+
+    auth
+    .createUserWithEmailAndPassword(email, password)
+    .then(userCredendtials => {
+      const user = userCredendtials.user;
+      setFuid(user.uid);
+      UserData(user.uid)
+      console.log('Registered with:', user.email);
+    })
+    .catch(error => alert(error.message));
   }
 
   return (

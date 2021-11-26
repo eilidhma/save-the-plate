@@ -194,21 +194,18 @@ export default function Home({
 
   const [usersData, setUsersData] = useState(null);
   const [locationsData, setLocationsData] = useState(null);
-
-  // const GetData = async ()=>{
-  //   const result = await axios.get('/users.php');
-  //   setUsersData(result.data);
-  // }
-
+  
+  const [mealsData, setMealsData] = useState(null);
+  
   useEffect(() => {
 
     let isUnmount = false;
     
     (async () => {
      
-      const result = await axios.get('/users.php');
+      const result = await axios.get('/meals.php');
       if(!isUnmount){
-        setUsersData(result.data);
+        setMealsData(result.data);
       }
     
     })();
@@ -286,8 +283,6 @@ export default function Home({
             bottom:0,
             flex:1}}>
         
-        
-        
         <Modal
           animationType="slide"
           transparent={true}
@@ -325,11 +320,18 @@ export default function Home({
         </View>}
         <View style={{width:'100%', alignItems:'center', paddingBottom:105}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
-            {usersData ? usersData.map((user) => (
+            {mealsData ? mealsData.map((meal) => (
               <CustMealCard
                addToCart={() => setModalVisible(true)}
-               key={user.id}
-               restaurant={user.full_name}
+               key={meal.id}
+               restaurant={meal.restaurant}
+               meal={meal.m_name}
+               oldprice={meal.old_price}
+               newprice={meal.new_price}
+               showNut={meal.nf}
+               showGluten={meal.gf}
+               showDairy={meal.df}
+               showVege={meal.v}
                />
 
             )) : null}

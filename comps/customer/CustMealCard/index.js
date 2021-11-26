@@ -94,6 +94,10 @@ const CustMealCard = ({
   newprice="$5.00",
   oldprice="$21.00",
   // height="170px",
+  showDairy=false,
+  showGluten=false,
+  showNut=false,
+  showVege=false,
   addToCart=()=>{}
 }) =>{
         
@@ -143,7 +147,7 @@ const CustMealCard = ({
           <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
         </StarsCont> */}
         <View style={{marginTop:20}}>
-          <Diets showVege={true} showNut={true}/>
+          <Diets showDairy={showDairy} showGluten={showGluten} showVege={showVege} showNut={showNut}/>
         </View>
       </Right>
     </Content>
