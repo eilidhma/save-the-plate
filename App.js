@@ -12,6 +12,7 @@ import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
 import LottieView from 'lottie-react-native';
+import { auth } from './firebase';
 
 // customer pages
 import Home from './pages/customer/home';
@@ -24,7 +25,7 @@ import Nav from './comps/customer/Nav';
 import ThanksOverlay from './comps/customer/ThanksOverlay';
 import axios from 'axios';
 
-axios.defaults.baseURL = "http://0fcd-142-232-219-218.ngrok.io/save-the-plate/api/"
+axios.defaults.baseURL = "http://268f-142-232-219-218.ngrok.io/save-the-plate/api/"
 
 import RestaurantHome from './pages/restaurant/home';
 import RestaurantAccount from './pages/restaurant/account';
@@ -43,8 +44,34 @@ function Landing({ navigation }) {
   });
 
   setTimeout(() => { 
-    navigation.navigate('Login')
+    auth.onAuthStateChanged(user => {
+      if(user) {
+        var userID = auth.currentUser?.uid;
+        checkIfRestaurant(userID);
+      }
+      else {
+        navigation.navigate('Login')
+      }
+    });
   }, 3010)
+
+  const checkIfRestaurant = async (uid) => {
+    const result = await axios.get('/users.php?fuid=' + uid)
+    
+     var page = result.data[0].restaurant;
+
+     if (page === '0')
+     {
+       navigation.navigate('Home')
+       console.log(page)
+     }
+
+     else if (page === '1')
+     {
+       navigation.navigate('RestaurantHome')
+       console.log(page)
+     } 
+  }
 
   if (!fontsLoaded) {
     return <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
