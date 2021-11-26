@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {Text, TouchableOpacity, View, Image, Button} from 'react-native'
 import styled from 'styled-components';
 import { MaterialIcons } from '@expo/vector-icons'
+import But from '../../global/Button';
 
 import {
   useFonts,
@@ -33,11 +34,12 @@ const FirstLayer = styled.View`
 `;
 
 const Details = styled.View`
-  padding: 0px 11px 11px 11px;
-  height: 46px;
+  padding: 0px 11px 0px 11px;
+  height: 85px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const DetailsText = styled.View`
@@ -57,13 +59,6 @@ const TextCont = styled.View`
   width: 100%;
 `;
 
-const TimerAndQuant = styled.View`
-  width: 217px;
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  /* flex-direction: row; */
-`
 
 const TimerCont = styled.View`
   width: 160px;
@@ -76,22 +71,15 @@ const TimerCont = styled.View`
   font-family:'Quicksand_400Regular';
 `;
 
-const Quant = styled.View`
-  width: 34px;
-  height: 34px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 17px;
-  background-color: #FE4265;
-`;
-
 const ExpandCont = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
   align-items: center;
 `;
 
+const EditItem = styled.Pressable`
+  position: relative;
+`
 
 
 
@@ -99,7 +87,6 @@ const ListingCard = ({
   img="https://placekitten.com/200/200",
   foodname="Fettucini Cat",
   timer="00:14:28",
-  quant="1"
 }) =>{
 
   const [isexpanded, setExpand] = useState(false)
@@ -111,7 +98,7 @@ const ListingCard = ({
   function Expand () {
     if (isexpanded == false)
     {
-      setCardHeight("185px")
+      setCardHeight("220px")
       setArrow("arrow-drop-up")
       setExpand(!isexpanded)
     }
@@ -130,15 +117,10 @@ const ListingCard = ({
         <TextCont>
           <Text style={{fontSize:20, fontFamily:'Raleway_700Bold', fontWeight: 'bold'}}>{foodname}</Text>
           
-          <TimerAndQuant>
             <TimerCont>
               <Text style={{color: '#FE4265'}}>Available in: <Text style={{fontWeight: 'bold'}}>{timer}</Text></Text>
             </TimerCont>
 
-            <Quant>
-              <Text style={{fontSize: 20, fontWeight: 'bold', color: 'white'}}>{quant}</Text>
-            </Quant>
-          </TimerAndQuant>
 
           <ExpandCont onPress={Expand}>
             <Text style={{color: '#FE4265', fontWeight:'bold'}}>More details</Text>
@@ -153,6 +135,8 @@ const ListingCard = ({
         <DetailsText>
             <Text style={{fontSize:14, fontFamily:'Quicksand_400Regular'}}>Added parmesan cheese</Text>
         </DetailsText>
+
+      <But width="120%" height="40px" text="Edit Listing"/>
       </Details>
     </CardCont>
 }

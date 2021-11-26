@@ -17,6 +17,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Search from '../SearchBar'
 import But from '../../global/Button';
+import DietSelect from '../../global/DietSelect';
 
 const Cont = styled.View`
   display:flex;
@@ -57,7 +58,7 @@ const AddListingModal = styled.View`
  flex-direction: column;
  justify-content: space-between;
  width: 100%;
- height: 490px;
+ height: 600px;
  padding-right: 5%;
  padding-left: 5%;
  padding-top: 40px;
@@ -312,48 +313,54 @@ function Reset () {
           <TextInput editable placeholder="add description"/>
         </DescriptionCont>
         
-        <View style={{flex: 1, flexDirection: "column", justifyContent: "space-between", paddingBottom: 20, paddingTop: 20, height: 30}}>
+        <View style={{flex: 1, flexDirection: "column", justifyContent: "space-between", paddingBottom: 20, paddingTop: 20, height: 10}}>
           <Text>Available in:</Text>
-          <TitleCont>
-            {thirty === true 
-              ? <SelectedTime>
-                  <Text style={{color:"white"}}>30 minutes</Text>
-                </SelectedTime>
-              : <DeselectedTime onPress={ThirtyPress}>
-                  <Text style={{color: "#FE4265"}}>30 minutes</Text>
-                </DeselectedTime>
-            }
+            <TitleCont>
+              {thirty === true 
+                ? <SelectedTime>
+                    <Text style={{color:"white"}}>30 minutes</Text>
+                  </SelectedTime>
+                : <DeselectedTime onPress={ThirtyPress}>
+                    <Text style={{color: "#FE4265"}}>30 minutes</Text>
+                  </DeselectedTime>
+              }
 
-            {fourtyfive === true 
-              ? <SelectedTime>
-                  <Text style={{color:"white"}}>45 minutes</Text>
-                </SelectedTime>
-              : <DeselectedTime onPress={FourtyPress}>
-                  <Text style={{color: "#FE4265"}}>45 minutes</Text>
-                </DeselectedTime>
-            }
-          </TitleCont>
+              {fourtyfive === true 
+                ? <SelectedTime>
+                    <Text style={{color:"white"}}>45 minutes</Text>
+                  </SelectedTime>
+                : <DeselectedTime onPress={FourtyPress}>
+                    <Text style={{color: "#FE4265"}}>45 minutes</Text>
+                  </DeselectedTime>
+              }
+            </TitleCont>
 
-          <TitleCont>
-            {onehour === true 
-              ? <SelectedTime>
-                  <Text style={{color:"white"}}>1 hour</Text>
-                </SelectedTime>
-              : <DeselectedTime onPress={OnePress}>
-                  <Text style={{color: "#FE4265"}}>1 hour</Text>
-                </DeselectedTime> 
-            }
+            <TitleCont>
+              {onehour === true 
+                ? <SelectedTime>
+                    <Text style={{color:"white"}}>1 hour</Text>
+                  </SelectedTime>
+                : <DeselectedTime onPress={OnePress}>
+                    <Text style={{color: "#FE4265"}}>1 hour</Text>
+                  </DeselectedTime> 
+              }
 
-            {twohours === true 
-              ? <SelectedTime>
-                  <Text style={{color:"white"}}>2 hours</Text>
-                </SelectedTime>
-              : <DeselectedTime onPress={TwoPress}>
-                  <Text style={{color: "#FE4265"}}>2 hours</Text>
-                </DeselectedTime>
-            }
-          </TitleCont>
+              {twohours === true 
+                ? <SelectedTime>
+                    <Text style={{color:"white"}}>2 hours</Text>
+                  </SelectedTime>
+                : <DeselectedTime onPress={TwoPress}>
+                    <Text style={{color: "#FE4265"}}>2 hours</Text>
+                  </DeselectedTime>
+              }
+            </TitleCont>
         </View>
+        
+        <View style={{flex:1 , justifyContent:'space-evenly', flexDirection:'column'}}>
+        <Text>Edit Dietary Restriction:</Text>
+        <DietSelect/>
+        </View>
+
         
         <TitleCont>
           <But width="182px" height="50px" text="List Item"/>

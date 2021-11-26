@@ -24,7 +24,7 @@ import Nav from './comps/customer/Nav';
 import ThanksOverlay from './comps/customer/ThanksOverlay';
 import axios from 'axios';
 
-axios.defaults.baseURL = "http://6c98-142-232-219-219.ngrok.io/save-the-plate/api/"
+axios.defaults.baseURL = "http://0fcd-142-232-219-218.ngrok.io/save-the-plate/api/"
 
 import RestaurantHome from './pages/restaurant/home';
 import RestaurantAccount from './pages/restaurant/account';
@@ -117,7 +117,7 @@ function App () {
         }
       }}>
 
-      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
+      <Stack.Navigator screenOptions={{headerShown: false, animation:'none'}} initialRouteName="Landing" style={{display:'none'}}>
         <Stack.Screen  name="Landing" component={Landing} />
         <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="Login" component={Login} />

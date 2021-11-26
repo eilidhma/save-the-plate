@@ -59,6 +59,10 @@ export default function Login({ navigation }) {
     })
   }, [])
 
+  // add routing functions to this shit
+
+
+
   const handleLogin = () => {
     auth
     .signInWithEmailAndPassword(email,password)
