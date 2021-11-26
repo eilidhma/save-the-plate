@@ -86,7 +86,6 @@ export default function Signup({ navigation }) {
      } 
   }
 
-
   const UserData = async (fuid) => {
     const result = await axios.post('/users.php', {
       full_name:name,
@@ -103,12 +102,10 @@ export default function Signup({ navigation }) {
       restaurant:isRestaurant,
       cuisine:isCuisine
     });
-    console.log(result, result.data);
+    //console.log(result, result.data);
   }
 
-
-  const PostUser = () => {
-    
+  const PostUser = async () => {
     auth
     .createUserWithEmailAndPassword(email, password)
     .then(userCredendtials => {

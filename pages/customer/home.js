@@ -20,6 +20,7 @@ import * as Location from 'expo-location';
 
 import PlatesSaved from '../../comps/customer/PlatesSaved';
 import axios from 'axios';
+import Geocode from "react-geocode";
 
 import BubbleCust from '../../comps/customer/BubbleCust';
 
@@ -32,6 +33,8 @@ export default function Home({
   navigation,
   total="$5.00"
 }) {
+
+
 
   const [mealtab, setMealTab] = useState(true)
   const [maptab, setMapTab] = useState(false)
@@ -173,12 +176,50 @@ export default function Home({
     
   ])
 
-  const GetData = async ()=>{
-    const result = await axios.get('/users.php');
-    console.log(result, result.data);
-  }
-  
+  const GetLatLong = () => {
+    Geocode.setApiKey("AIzaSyDA6WZ_rlulhSrphE3Z9ue1WJJSnHr2jy8");
 
+    Geocode.setLanguage("en");
+
+    Geocode.fromAddress("3700 Willingdon Ave Burnaby BC").then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        console.log(lat, lng);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
+  const [usersData, setUsersData] = useState(null);
+  const [locationsData, setLocationsData] = useState(null);
+  
+  const [listedData, setListedData] = useState(null);
+  const [mealsData, setMealsData] = useState(null);
+  
+  useEffect(() => {
+
+    let isUnmount = false;
+    
+    (async () => {
+     
+      const result = await axios.get('/listed.php');
+      const mealResult = await axios.get('/meals.php');
+
+      if(!isUnmount){
+        setListedData(result.data);
+        setMealsData(mealResult.data)
+      }
+    
+    })();
+
+    return () => {
+      isUnmount = true;
+    }
+
+  }, []);
+  
 
   useEffect(() => {
 
@@ -219,10 +260,11 @@ export default function Home({
   }
 
 
+  const [meal, setMeal] = useState()
+  const [rest, setRestaurant] = useState()
+  const [oldPrice, setOldPrice] = useState()
+  const [newPrice, setNewPrice] = useState()
 
-
-
-  
 
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
@@ -245,8 +287,6 @@ export default function Home({
             bottom:0,
             flex:1}}>
         
-        
-        
         <Modal
           animationType="slide"
           transparent={true}
@@ -262,7 +302,13 @@ export default function Home({
                 </Pressable>
               </View>
               <View>
-                <SimpleOrderCard />
+
+                <SimpleOrderCard 
+                restaurant={rest} 
+                meal={meal}
+                newprice={newPrice}
+                oldprice={oldPrice} 
+                />
               </View>
               <View style={{display:'flex', flexDirection:'row', width:'90%', justifyContent:'flex-end', marginTop:20}}>
                 <Text style={{fontSize:24, fontWeight:'500'}}>Total: {total}</Text>
@@ -280,24 +326,35 @@ export default function Home({
         </Modal>
         {mealtab === true && <View style={{display:'flex', justifyContent:'center', alignItems:'center', marginBottom:20}}>
           <Filters/>
-          <Pressable onPress={GetData}>
-                    <AntDesign name="close" size={50} color="black" />
-          </Pressable>
+
         </View>}
         <View style={{width:'100%', alignItems:'center', paddingBottom:105}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
-            <CustMealCard addToCart={() => setModalVisible(true)}/>
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
+            {listedData ? listedData.map((listed) => (
+              <CustMealCard
+               key={listed.id}
+               meal={listed.m_name}
+               modifications={listed.modifications}
+               restaurant={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.restaurant): null}
+               oldprice={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.old_price): null}
+               newprice={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.new_price): null}
+               description={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.description): null}
+               showNut={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.nf): null}
+               showGluten={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.gf): null}
+               showDairy={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.df): null}
+               showVege={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.v): null}
+               addToCart={() => {
+                setModalVisible(true)
+                setMeal(listed.m_name)
+                // setRestaurant(x.restaurant)
+                // setOldPrice(x.old_price)
+                // setNewPrice(new_price) // henry.... 
+              }}
+               />
+
+            )) : null}
+            
+            
         </ScrollView>
         </View>
         </View>}
@@ -314,8 +371,6 @@ export default function Home({
             style={{width:'100%', height:600}}
             provider="google"
             >
-              
-
               {restaurants ? restaurants.map((restaurant) => (
                 <Marker 
                 key={restaurant.key}
