@@ -93,6 +93,7 @@ const CustMealCard = ({
   description="fettuccine pasta tossed with Parmesan cheese and butter and served with garlic toast on the side",
   newprice="$5.00",
   oldprice="$21.00",
+
   modifications="mods",
   showDairy=false,
   showGluten=false,
@@ -106,7 +107,7 @@ const CustMealCard = ({
 
   const HandleCard = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setCard(card === "170px" ? "330px" : "170px");
+    setCard(card === "170px" ? "360px" : "170px");
     setRotation(rotation === 0 ? 180 : 0);
   };
 
@@ -138,6 +139,7 @@ const CustMealCard = ({
           <MaterialIcons style={{marginTop:5, transform: [{ rotate: rotation+"deg" }]}} name="arrow-drop-down" size={33} color="#FE4265" />
         </DetailsCont>
         
+
         <Text style={{marginTop:10, fontSize:12}}>{description}</Text>
         <Text style={{marginTop:10, fontSize:12}}>{modifications}</Text>
         <View style={{marginTop:20}}>

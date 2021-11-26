@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
@@ -11,11 +11,13 @@ import {
 
 import { NavigationContainer } from '@react-navigation/native';
 import styled from 'styled-components';
+import { auth } from '../../firebase';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import PlatesSaved from '../../comps/customer/PlatesSaved';
 import InfoCard from '../../comps/Restaurant/InfoCard';
 import But from '../../comps/global/Button';
+import axios from 'axios';
 
 const TopCont = styled.Pressable`
   display:flex;
@@ -63,9 +65,32 @@ const EditMenuCont = styled.View`
 `;
 
 export default function RestarantAccount({
-  restaurant="Fratelli's Bistro",
   navigation
 }) {
+  const [data, setData] = useState()
+  console.log(data)
+
+  useEffect(()=>{
+    var userid = auth.currentUser?.uid
+    UserData(userid);
+  }, []);
+
+  const handleSignOut = () => {
+    auth
+    .signOut()
+    .then(()=> {
+      navigation.replace('Login')
+      console.log('Logged out');
+    })
+    .catch(error => alert(error.message))
+  }
+
+  const UserData = async (uid) => {
+    const result = await axios.get('/users.php?fuid=' + uid)
+    setData(result.data[0])
+  }
+
+
 
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
@@ -73,7 +98,7 @@ export default function RestarantAccount({
         <IconCont >
           <MaterialCommunityIcons name="account" size={60} color="white" />
         </IconCont>
-      <Text style={{fontSize:30, fontWeight:'400', color:'white', marginLeft:20}}>{restaurant}</Text>
+      <Text style={{fontSize:30, fontWeight:'400', color:'white', marginLeft:20}}>{auth.currentUser?.email}</Text>
       </TopCont>
       <Cards>
         <PlatesSaved/>
@@ -86,7 +111,7 @@ export default function RestarantAccount({
         </EditMenuCont>
 
         <But text="Save Changes" margintop="10px" bgColor="#F3AD81"/>
-        <But text="< Back" margintop="10px" txtColor="#FE4265" bgColor="#ffffff" onPress={()=>navigation.goBack()}/>
+        <But text="Sign Out" margintop="10px" txtColor="#FE4265" bgColor="#ffffff" onPress={handleSignOut}/>
       </Cards>
     </LinearGradient>
   );

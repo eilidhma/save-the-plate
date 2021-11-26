@@ -14,6 +14,7 @@ import styled from 'styled-components';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { auth } from '../../firebase';
+import axios from 'axios'
 
 var logo = require ('../../assets/logo1.png');
 const Stack = createNativeStackNavigator();
@@ -54,10 +55,37 @@ export default function Login({ navigation }) {
   useEffect(() => {
     auth.onAuthStateChanged(user => {
       if(user) {
-        navigation.navigate('Home')
+        var userID = auth.currentUser?.uid;
+        checkIfRestaurant(userID);
       } 
     })
   }, [])
+
+  const checkIfRestaurant = async (uid) => {
+    const result = await axios.get('/users.php?fuid=' + uid)
+    
+     var page = result.data[0].restaurant;
+
+    console.log(page)
+    hello(page)
+ 
+    }
+
+    function hello (page) {
+      if (page === '0')
+      {
+        navigation.navigate('Home')
+        console.log(page)
+      }
+
+      else if (page === '1')
+      {
+        navigation.navigate('RestaurantHome')
+        console.log(page)
+      }
+    }
+
+
 
   const handleLogin = () => {
     auth
@@ -82,10 +110,6 @@ export default function Login({ navigation }) {
       <Pressable style={styles.shadowProp} title="Signup"
         onPress={() => navigation.navigate('Signup')} >
         <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Sign Up</Text>
-      </Pressable>
-      <Pressable style={styles.shadowProp} title="RestaurantUI"
-        onPress={() => navigation.navigate('RestaurantHome')} >
-        <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Restaurant UI --{'>'} </Text>
       </Pressable>
     </LinearGradient>
   );

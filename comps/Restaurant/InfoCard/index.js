@@ -11,6 +11,7 @@ import styled from 'styled-components';
 import { AntDesign } from '@expo/vector-icons';
 
 import But from '../../global/Button';
+import CuisineSelect from '../CuisineSelect';
 
 const CardCont = styled.View`
   
@@ -133,6 +134,7 @@ const InfoCard = ({
 }) =>{
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [cuisine, setCuisine] = useState()
 
   return <CardCont style={styles.shadowProp}>
     <Edit onPress={()=>setModalVisible(!modalVisible)}>
@@ -157,7 +159,9 @@ const InfoCard = ({
     transparent={true}
     visible={modalVisible}>
       <AddItemModal>
-        <CloseModal onPress={()=>setModalVisible(!modalVisible)}>
+        <CloseModal onPress={()=>{setModalVisible(!modalVisible)
+        console.log(cuisine)
+        }}>
           <AntDesign name="close" size={13} color="#C4C4C4" />
         </CloseModal>
 
@@ -211,11 +215,16 @@ const InfoCard = ({
           </SingleLineInput>
         </ModalRow>
 
+        <Text style={{alignSelf:'center'}}>Select Cuisine</Text>
+
+        <CuisineSelect onSelect={(c)=>setCuisine(c)} />
+
         <ButCont>
-          <But width="45%" text="Update Info"/>
+          <But width="45%" text="Update Info" onPress={()=>console.log(cuisine)}/>
           <But width="45%" bgColor="#F3AD81" text="Cancel"
           onPress={()=>setModalVisible(!modalVisible)}/>
         </ButCont>
+
 
 
 
