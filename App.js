@@ -13,7 +13,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
 import LottieView from 'lottie-react-native';
 import { auth } from './firebase';
-
 // customer pages
 import Home from './pages/customer/home';
 import Login from './pages/customer/login';
@@ -25,7 +24,7 @@ import Nav from './comps/customer/Nav';
 import ThanksOverlay from './comps/customer/ThanksOverlay';
 import axios from 'axios';
 
-axios.defaults.baseURL = "http://268f-142-232-219-218.ngrok.io/save-the-plate/api/"
+axios.defaults.baseURL = "https://8d45-142-232-219-218.ngrok.io/save-the-plate/api/"
 
 import RestaurantHome from './pages/restaurant/home';
 import RestaurantAccount from './pages/restaurant/account';
@@ -53,6 +52,8 @@ function Landing({ navigation }) {
         navigation.navigate('Login')
       }
     });
+
+
   }, 3010)
 
   const checkIfRestaurant = async (uid) => {
@@ -63,13 +64,11 @@ function Landing({ navigation }) {
      if (page === '0')
      {
        navigation.navigate('Home')
-       console.log(page)
      }
 
      else if (page === '1')
      {
        navigation.navigate('RestaurantHome')
-       console.log(page)
      } 
   }
 
