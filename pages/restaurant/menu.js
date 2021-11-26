@@ -19,8 +19,11 @@ import PlatesSaved from '../../comps/customer/PlatesSaved';
 import InfoCard from '../../comps/customer/InfoCard';
 import But from '../../comps/global/Button';
 import DietSelect from '../../comps/global/DietSelect';
-import firebase from 'firebase/app';
+
+import { storage, auth } from '../../firebase';
 import "firebase/storage";
+import axios from 'axios';
+import { Upload } from '@mui/icons-material';
 
 const TopCont = styled.Pressable`
   display:flex;
@@ -187,13 +190,21 @@ export default function Menu({
   const [modalVisible, setModalVisible] = useState(false);
   const [EditItem, setEditItem] = useState(false);
 
+  // values to post to database
+  const [mealName, setMealName] = useState();
+  const [description, setDescription] = useState()
+  const [price, setPrice] = useState()
+  const [nF, setnF] = useState()
+  const [gF, setGF] = useState()
+  const [dF, setDF] = useState()
+  const [v, setV] = useState()
+  const [fuid, set] = useState()
 
   // state to set image
   const [image, setImage] = useState(null);
 
   // state for image name
   const [imgName, setImgName] = useState()
-
 
   // get permissions
   useEffect(() => {
@@ -239,39 +250,44 @@ export default function Menu({
   };
 
 
-  const Upload = async(file_uri)=>{
+  const AddMeal = async () => {
+    const restaurantId = await axios.get('/users.php?fuid=' + auth.currentUser?.uid)
+
+    
+    const newMeal = await axios.post('/meals.php', {
+      m_name:mealName,
+      new_price:price,
+      description:description,
+      nf:nF,
+      gf:gF,
+      df:dF,
+      v:v,
+      fuid:auth.currentUser?.uid,
+      restaurant:restaurantId.data[0].full_name,
+      cuisine:restaurantId.data[0].cuisine
+    });
+
+    setImgName(String(newMeal.data[0].id))
+
+    UploadIMG(image, imgName)
+  }
+
+
+  const UploadIMG = async(file_uri, img_name)=>{
 
     /* console.log(file_uri, "file") */
     const file = await fetch(file_uri);
     const blob =  await file.blob();
 
-    const storageRef = firebase.storage().ref();
-    const imgRef = storageRef.child("hello.jpeg");
+    const storageRef = storage.ref();
+    const imgRef = storageRef.child(img_name);
 
 
     imgRef.put(blob).then((snapshot) => {
-      console.log("uploaded bitch");
+      /* console.log("uploaded bitch"); */
     });
   }
 
-
-  /* const Upload =async(file_uri)=>{
-
-
-  const file = await fetch(file_uri);
-
-  const blob =  await file.blob();
-
-  //file blob
-  const storage = getStorage();
-  const storageRef = ref(storage, 'test_mobile.jpg');
-
-
-
-  // 'file' comes from the Blob or File API
-  const snapshot = await uploadBytes(storageRef, blob)
-  console.log('Uploaded!');
-  } */
 
 
 
@@ -282,8 +298,7 @@ export default function Menu({
       <Modal
       animationType="slide"
       transparent={true}
-      visible={modalVisible}
-      >
+      visible={modalVisible}>
       
       <AddItemModal>
         <CloseModal onPress={()=>setModalVisible(!modalVisible)}>
@@ -328,7 +343,7 @@ export default function Menu({
           </TextCont>
 
           <SingleLineInput>
-            <TextInput placeholder="Name" placeholderTextColor="#aaaaaa"></TextInput>
+            <TextInput placeholder="Name" placeholderTextColor="#aaaaaa" onChangeText={text=>setMealName(text)}></TextInput>
           </SingleLineInput>
         </ModalRow>
 
@@ -339,7 +354,7 @@ export default function Menu({
           </TextCont>
 
         <DescriptionCont>
-          <TextInput placeholder="Description" placeholderTextColor="#aaaaaa"></TextInput>
+          <TextInput placeholder="Description" placeholderTextColor="#aaaaaa" onChangeText={text=>setDescription(text)}></TextInput>
         </DescriptionCont>
         </ModalRow>
 
@@ -350,7 +365,7 @@ export default function Menu({
           </TextCont>
 
           <SingleLineInput>
-            <TextInput placeholder="Price" placeholderTextColor="#aaaaaa"></TextInput>
+            <TextInput placeholder="Price" placeholderTextColor="#aaaaaa" onChangeText={text=>setPrice(text)}></TextInput>
           </SingleLineInput>
         </ModalRow>
         
@@ -361,11 +376,16 @@ export default function Menu({
           </TextCont>
 
           <View style={{width:"67%"}}>
-            <DietSelect/>
+            {/* dietary options should return some function */}
+            <DietSelect
+              onNut={n=>setnF(n)}
+              onGluten={g=>setGF(g)}
+              onDairy={d=>setDF(d)}
+              onVegeterian={v=>setV(v)}/>
           </View>
         </ModalRow>
         <ButtonCont>
-          <But width="45%" text="Add Item"/>
+          <But width="45%" text="Add Item" onPress={AddMeal}/>
           <But width="45%" text="Cancel" bgColor="#F3AD81" onPress={()=>{
             setModalVisible(!modalVisible)
             setImage(null)
@@ -462,7 +482,7 @@ export default function Menu({
           </View>
         </ModalRow>
         <ButtonCont>
-          <But width="45%" text="Add Item"/>
+          <But width="45%" text="Confirm Changes"/>
           <But width="45%" text="Cancel" bgColor="#F3AD81" onPress={()=>{
             setEditItem(!EditItem)
             setImage(null)
@@ -472,7 +492,6 @@ export default function Menu({
       </AddItemModal>
       </Modal>
       
-
 
       <TopCont>
         <IconCont >

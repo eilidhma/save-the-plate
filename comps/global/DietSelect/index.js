@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 
 const Vegetarian = ({
@@ -70,29 +70,45 @@ const Vegetarian = ({
  };
 
 const DietSelect = ({
-  
- }) => {
+  onNut=()=>{},
+  onGluten=()=>{},
+  onDairy=()=>{},
+  onVegeterian=()=>{},
+}) => {
+   const [V, showV] = useState(false);
+   const [G, showG] = useState(false);
+   const [D, showD] = useState(false);
+   const [N, showN] = useState(false);
+   
+  useEffect(()=>{onNut(N) 
+    console.log("nut ", N)
+  },[N])
 
-  const [V, showV] = useState(false);
+  useEffect(()=>{onGluten(G)
+    console.log("gluten ", G)
+  },[G])
+
+  useEffect(()=>{onDairy(D)
+    console.log("Dairy ",D)
+  },[D])
+
+  useEffect(()=>{onVegeterian(V)
+    console.log("Vegetarian ", V)
+  },[V])
+
 
   function ShowVegetarian() {
     showV(!V)
   }
 
-  const [D, showD] = useState(false);
-
   function ShowDairyFree() {
     showD(!D)
   }
  
-  const [G, showG] = useState(false);
-
   function ShowGlutenFree() {
     showG(!G)
   }
  
-  const [N, showN] = useState(false);
-
   function ShowNutFree() {
     showN(!N)
   }
