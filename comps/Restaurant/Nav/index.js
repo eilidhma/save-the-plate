@@ -19,6 +19,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Search from '../SearchBar'
 import But from '../../global/Button';
 import { auth } from '../../../firebase';
+import { GetAuth, onAuthStateChanged } from 'firebase/auth';
 
 const Cont = styled.View`
   display:flex;
@@ -193,6 +194,7 @@ function ThirtyPress () {
   setFourty(false);
   setOne(false);
   setTwo(false);
+  setMealTime('00:30:00');
 }
 
 function FourtyPress () {
@@ -200,6 +202,7 @@ function FourtyPress () {
   setFourty(true);
   setOne(false);
   setTwo(false);
+  setMealTime('00:45:00')
 }
 
 function OnePress () {
@@ -207,6 +210,7 @@ function OnePress () {
   setFourty(false);
   setOne(true);
   setTwo(false);
+  setMealTime('01:00:00');
 }
 
 function TwoPress () {
@@ -214,6 +218,7 @@ function TwoPress () {
   setFourty(false);
   setOne(false);
   setTwo(true);
+  setMealTime('02:00:00');
 }
 
 function Reset () {
@@ -225,6 +230,13 @@ function Reset () {
 
 const [mealsData, setMealsData] = useState();
 
+const [mealTitle, setMealTitle] = useState()
+const [mealMods, setMealMods] = useState()
+const [mealTime, setMealTime] = useState()
+const [mealQuant, setMealQuant] = useState()
+
+const [user, setUser] = useState();
+
 useEffect(() => {
 
   let isUnmount = false;
@@ -233,7 +245,6 @@ useEffect(() => {
    
     const result = await axios.get('/meals.php');
     if(!isUnmount){
-      console.log(auth.currentUser.uid)
       setMealsData(result.data);
     }
   
@@ -244,6 +255,25 @@ useEffect(() => {
   }
 
 }, []);
+
+// const findCurrentFuid = () => {
+//   auth.onAuthStateChanged(user => {
+//     if(user){
+//       var UserID = auth.currentUser?.uid
+//     }
+//   } )
+// }
+
+
+const PostListedItem = async (fuid) => {
+
+  fuid = auth.currentUser?.uid
+  const result = await axios.post('/listed.php', {
+    modifications:mealMods,
+    time_avail:mealTime,
+    fuid:fuid
+  });
+}
 
 
   
@@ -290,16 +320,11 @@ useEffect(() => {
             <But 
             key={meals.id} 
             text={meals.m_name} 
-            onPress={()=>setItemStep(2)} 
+            onPress={()=> {
+              setItemStep(2)
+              setMealTitle(meals.m_name)}} 
             margintop="10px"/>
           )) : null}
-          {/* {mealsData ? mealsData.map((meal) => (
-            <But 
-            key={meal.id} 
-            text={meal.m_name} 
-            onPress={()=>setItemStep(2)} 
-            margintop="10px"/>
-          )) : null} */}
         </ScrollView>
       </View>
     </View>
@@ -310,16 +335,15 @@ useEffect(() => {
         <But
           text="< Back"
           onPress={()=>{
-            setItemStep(1)
-            Reset()
-          }}
+            setItemStep(1);
+            Reset();}}
           width="125px"
           height="40px"/>
       </View>
 
         <TitleCont style={{paddingBottom: 15, paddingTop: 15}}>
           <Text>
-            Fettucini Alfredo
+            {mealTitle}
           </Text>
 
           <CounterCont>
@@ -337,7 +361,7 @@ useEffect(() => {
           </CounterCont>
         </TitleCont>
         <DescriptionCont>
-          <TextInput editable placeholder="add description"/>
+          <TextInput onChangeText={(text)=>setMealMods(text)} editable placeholder="Add modifications"/>
         </DescriptionCont>
         
         <View style={{flex: 1, flexDirection: "column", justifyContent: "space-between", paddingBottom: 20, paddingTop: 20, height: 30}}>
@@ -384,7 +408,7 @@ useEffect(() => {
         </View>
         
         <TitleCont>
-          <But width="182px" height="50px" text="List Item"/>
+          <But onPress={PostListedItem} width="182px" height="50px" text="List Item"/>
           <But width="182px" height="50px" text="Cancel" bgColor="#F3AD81"
           onPress={()=>{
             setModalVisible(!modalVisible)
