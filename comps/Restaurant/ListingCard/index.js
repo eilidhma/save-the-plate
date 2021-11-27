@@ -87,6 +87,7 @@ const ListingCard = ({
   img="https://placekitten.com/200/200",
   foodname="Fettucini Cat",
   timer="00:14:28",
+  modifications="Added parm"
 }) =>{
 
   const [isexpanded, setExpand] = useState(false)
@@ -133,7 +134,7 @@ const ListingCard = ({
 
       <Details>
         <DetailsText>
-            <Text style={{fontSize:14, fontFamily:'Quicksand_400Regular'}}>Added parmesan cheese</Text>
+            <Text style={{fontSize:14, fontFamily:'Quicksand_400Regular'}}>{modifications}</Text>
         </DetailsText>
 
       <But width="120%" height="40px" text="Edit Listing"/>
