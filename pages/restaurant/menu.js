@@ -269,7 +269,6 @@ export default function Menu({
       fuid:auth.currentUser?.uid
     });
 
-    /* setImgName(String()) */
 
     console.log(newMeal.data)
     UploadIMG(newMeal.data)

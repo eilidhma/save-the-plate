@@ -24,7 +24,7 @@ import Nav from './comps/customer/Nav';
 import ThanksOverlay from './comps/customer/ThanksOverlay';
 import axios from 'axios';
 
-axios.defaults.baseURL = "http://57dd-142-232-219-218.ngrok.io/save-the-plate/api/"
+axios.defaults.baseURL = "http://895d-2001-569-7f79-ff00-d815-9e82-1a35-a7a1.ngrok.io/save-the-plate/api/"
 
 import RestaurantHome from './pages/restaurant/home';
 import RestaurantAccount from './pages/restaurant/account';
@@ -44,6 +44,7 @@ function Landing({ navigation }) {
 
   setTimeout(() => { 
     auth.onAuthStateChanged(user => {
+      // console.log(auth.currentUser?.uid)
       if(user) {
         var userID = auth.currentUser?.uid;
         checkIfRestaurant(userID);
@@ -57,8 +58,8 @@ function Landing({ navigation }) {
   const checkIfRestaurant = async (uid) => {
     const result = await axios.get('/users.php?fuid=' + uid)
     
+
      var page = result.data[0].restaurant;
-     
 
      if (page === '0')
      {
