@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, StatusBar } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   useFonts,
@@ -12,7 +12,7 @@ import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
 import LottieView from 'lottie-react-native';
-import { auth } from './firebase';
+
 // customer pages
 import Home from './pages/customer/home';
 import Login from './pages/customer/login';
@@ -24,8 +24,7 @@ import Nav from './comps/customer/Nav';
 import ThanksOverlay from './comps/customer/ThanksOverlay';
 import axios from 'axios';
 
-axios.defaults.baseURL = "http://1cad-142-232-219-69.ngrok.io/save-the-plate/api/"
-
+axios.defaults.baseURL = "http://4867-142-232-219-69.ngrok.io/save-the-plate/api/"
 
 import RestaurantHome from './pages/restaurant/home';
 import RestaurantAccount from './pages/restaurant/account';
@@ -44,34 +43,8 @@ function Landing({ navigation }) {
   });
 
   setTimeout(() => { 
-    auth.onAuthStateChanged(user => {
-      if(user) {
-        var userID = auth.currentUser?.uid;
-        checkIfRestaurant(userID);
-      }
-      else {
-        navigation.navigate('Login')
-      }
-    });
-
-
+    navigation.navigate('Login')
   }, 3010)
-
-  const checkIfRestaurant = async (uid) => {
-    const result = await axios.get('/users.php?fuid=' + uid)
-    
-     var page = result.data[0].restaurant;
-
-     if (page === '0')
-     {
-       navigation.navigate('Home')
-     }
-
-     else if (page === '1')
-     {
-       navigation.navigate('RestaurantHome')
-     } 
-  }
 
   if (!fontsLoaded) {
     return <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
@@ -143,8 +116,8 @@ function App () {
           setRestNav(false)
         }
       }}>
-
-      <Stack.Navigator screenOptions={{headerShown: false, animation:'none'}} initialRouteName="Landing" style={{display:'none'}}>
+        <StatusBar barStyle='light-content'/>
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
         <Stack.Screen  name="Landing" component={Landing} />
         <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="Login" component={Login} />
@@ -212,4 +185,3 @@ const homeStyles = StyleSheet.create({
 });
 
 export default App
-

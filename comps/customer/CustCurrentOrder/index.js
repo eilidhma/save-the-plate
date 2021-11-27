@@ -122,16 +122,10 @@ const CustCurrentOrder = ({
   oldprice="$21.00",
   height="170px",
   quantity="1",
+  timeAvail="2021-11-26 06:00:00"
 
 }) =>{
 
-  // const [card, setCard] = useState(false)
-
-  // if(card === false) {
-  //   height="170px"
-  // } else {
-  //   height="330px"
-  // }
 
   const HandleDetails = () => {
    
@@ -139,7 +133,7 @@ const CustCurrentOrder = ({
 
   return <CardCont height={height}>
     <TimerCont>
-      <Timer>Available in: 1:32:11</Timer>
+      <Timer>Available at: {timeAvail}</Timer>
     </TimerCont>
     <Content>
       <Left>

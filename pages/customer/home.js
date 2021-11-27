@@ -56,10 +56,6 @@ export default function Home({
   const [modalVisible, setModalVisible] = useState(false);
   const [restModalVisible, setRestModalVisible] = useState(false);
 
-  const CheckOut = () => {
-    navigation.navigate('Cart')
-    setModalVisible(false)
-  }
 
 
   const markerPress = () => {
@@ -205,11 +201,8 @@ export default function Home({
     (async () => {
      
       const result = await axios.get('/listed.php');
-      const mealResult = await axios.get('/meals.php');
-
       if(!isUnmount){
         setListedData(result.data);
-        setMealsData(mealResult.data)
       }
     
     })();
@@ -264,6 +257,7 @@ export default function Home({
   const [rest, setRestaurant] = useState()
   const [oldPrice, setOldPrice] = useState()
   const [newPrice, setNewPrice] = useState()
+  const [cartItems, setCartItems] = useState([])
 
 
   return (
@@ -311,10 +305,14 @@ export default function Home({
                 />
               </View>
               <View style={{display:'flex', flexDirection:'row', width:'90%', justifyContent:'flex-end', marginTop:20}}>
-                <Text style={{fontSize:24, fontWeight:'500'}}>Total: {total}</Text>
+                <Text style={{fontSize:24, fontWeight:'500'}}>Total: {newPrice}</Text>
               </View>
               <View style={{display:'flex', flexDirection:'row', width:'90%', justifyContent:'space-between'}}>
-                <Pressable style={styles.shadowPropDark} title="Checkout" onPress={CheckOut} >
+                <Pressable style={styles.shadowPropDark} title="Checkout" onPress={()=>{
+                  navigation.navigate('Cart', {cartItems} );
+                  setModalVisible(false);
+                 
+                }} >
                   <Text style={{color:'white', fontSize:18}}>Checkout</Text>
                 </Pressable>
                 <Pressable style={styles.shadowPropLight} title="Add more" onPress={() => setModalVisible(!modalVisible)} >
@@ -335,20 +333,24 @@ export default function Home({
                key={listed.id}
                meal={listed.m_name}
                modifications={listed.modifications}
-               restaurant={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.restaurant): null}
-               oldprice={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.old_price): null}
-               newprice={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.new_price): null}
-               description={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.description): null}
-               showNut={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.nf): null}
-               showGluten={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.gf): null}
-               showDairy={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.df): null}
-               showVege={mealsData ? mealsData.filter((x)=>{return x.m_name === listed.m_name}).map((x)=>x.v): null}
+               restaurant={listed.restaurant}
+               oldprice={listed.old_price}
+               newprice={listed.new_price}
+               description={listed.description}
+               showNut={listed.nf}
+               showGluten={listed.gf}
+               showDairy={listed.df}
+               showVege={listed.v}
                addToCart={() => {
                 setModalVisible(true)
                 setMeal(listed.m_name)
-                // setRestaurant(x.restaurant)
-                // setOldPrice(x.old_price)
-                // setNewPrice(new_price) // henry.... 
+                setRestaurant(listed.restaurant)
+                setOldPrice(listed.old_price)
+                setNewPrice(listed.new_price)
+                setCartItems([
+                  ...cartItems, 
+                  listed
+                ])
               }}
                />
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, ScrollView, Modal } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NavigationContainer } from '@react-navigation/native';
@@ -9,6 +9,8 @@ import CustMealCard from '../../comps/customer/CustMealCard';
 import PastOrder from '../../comps/customer/PastOrder';
 import StarRating from 'react-native-star-rating';
 import { SimpleLineIcons } from '@expo/vector-icons';
+import axios from 'axios';
+import { auth } from '../../firebase';
 
 
 var cardtype = require ('../../assets/visa.png');
@@ -52,9 +54,14 @@ export default function Checkout({
   price="$5.00",
   navigation,
   src=require("../../assets/plate.png"),
+  route
 }) {
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [orderData, setOrderData] = useState([]);
+
+  const {cartItems} = route.params;
+  console.log(cartItems[0].id)
 
   const ViewOrder = () => {
     navigation.navigate('Orders')
@@ -66,7 +73,18 @@ export default function Checkout({
     setModalVisible(false)
   }
 
-  
+  const PostOrder = async () => {
+    const fuid = auth.currentUser.uid;
+    const status = 'active';
+    const result = await axios.post('/orders.php', {
+      status:status,
+      l_id:cartItems[0].id,
+      fuid:fuid
+    });
+  }
+
+
+ 
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
       <View style={{width:'100%', position:'absolute', top:80, display:'flex', justifyContent:'center', alignItems:'center'}}>
@@ -76,14 +94,6 @@ export default function Checkout({
       <Cont>
         <TitleCont>
           <Text style={{fontSize:30}}>{restaurant}</Text>
-          <StarRating
-            disabled={false}
-            maxStars={5}
-            starSize="30"
-            // rating={state.starCount}
-            // selectedStar={(rating) => this.onStarRatingPress(rating)}
-            // fullStarColor = 
-          />
         </TitleCont>
         <Distance>
           <SimpleLineIcons style={{marginRight:5}} name="location-pin" size={18} color="black" />
@@ -97,7 +107,17 @@ export default function Checkout({
             alignItems:'center'}}>
               <Image style={{width:'90%', height:150}} source={map}></Image>
             </View>
-            <CustCurrentOrder />
+            {cartItems ? cartItems.map((order)=>(  
+              <CustCurrentOrder
+                key={order.id}
+                meal={order.m_name}
+                restaurant={order.restaurant}
+                newprice={order.new_price}
+                oldprice={order.old_price}
+                quantity={1}
+              />
+            )) : null}
+ 
             <View style={{width:'100%', display:'flex', justifyContent:'space-between', alignItems:'center', paddingLeft:20, paddingRight:20, marginTop:30, flexDirection:'row'}}>
               <View style={{width:120, display:'flex', flexDirection:'row'}}>
                 <Image style={{width:50, height:15}} source={cardtype}></Image>
@@ -105,7 +125,11 @@ export default function Checkout({
               </View>
               <Text style={{fontSize:22, fontWeight:'500'}}>Total: {price}</Text>
             </View>
-            <Pressable style={styles.shadowProp} title="Confirm" onPress={() => setModalVisible(!modalVisible)} >
+            <Pressable style={styles.shadowProp} title="Confirm" onPress={() => {
+              setModalVisible(!modalVisible);
+              PostOrder();
+            } 
+              } >
             <Text style={{color:'white', fontSize:22}}>Confirm Order</Text>
           </Pressable>
           </ScrollView>
