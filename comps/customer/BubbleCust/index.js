@@ -16,6 +16,7 @@ const BubbleCust = ({
     heightCont="",
     heightImg="",
     heightPng="",
+    wide="90%",
 }) => {
 
     if(show === false){
@@ -36,6 +37,7 @@ const BubbleCust = ({
                         borderWidth:5}} 
                         source={src}
                         height={heightPng}
+                        width={wide}
                     />
                 </View>
                 <View style={styles.textCont}>
