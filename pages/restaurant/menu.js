@@ -257,7 +257,7 @@ export default function Menu({
   const AddMeal = async () => {
     //const restaurantId = await axios.get('/users.php?fuid=' + auth.currentUser?.uid)
 
-    
+    console.log(mealName, price, description, nF, gF, dF, v)
     const newMeal = await axios.post('/meals.php', {
       m_name:mealName,
       new_price:price,
@@ -265,8 +265,7 @@ export default function Menu({
       nf:nF,
       gf:gF,
       df:dF,
-      v:v,
-      fuid:auth.currentUser?.uid
+      v:v
     });
 
 

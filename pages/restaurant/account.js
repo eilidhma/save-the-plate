@@ -68,7 +68,8 @@ export default function RestarantAccount({
   navigation
 }) {
   const [data, setData] = useState()
-  console.log(data)
+  // console.log(data)
+  //USE THIS TO MAP OUT USER DATA
 
   useEffect(()=>{
     var userid = auth.currentUser?.uid
