@@ -18,10 +18,16 @@ import SimpleOrderCard from '../../comps/customer/SimpleOrderCard';
 import Nav from '../../comps/customer/Nav';
 import * as Location from 'expo-location'; 
 import BubbleCust from '../../comps/customer/BubbleCust';
+import { width } from '@mui/system';
 
 
 
 var mapIcon = require ('../../assets/mapicon.png');
+
+const image1 = require("../../assets/homepage.png")
+const image2 = require("../../assets/tabs.gif")
+const image3 = require("../../assets/filters.gif")
+const image4 = require("../../assets/customer_menu.png")
 
 export default function Home({
   navigation,
@@ -69,10 +75,13 @@ export default function Home({
   const [bubble, setBubble] = useState(true)
   const [heading, setHeading] = useState("Here's your Home page. \n Let's break it down!")
   const [subheading, setSubheading] = useState("")
-  const [img, setImg] = useState("../../../assets/meal.png")
+  const [img, setImg] = useState(image1)
   const [back, setBack] = useState("< Back")
   const [next, setNext] = useState("Next >")
   const [visibility, setVisibility] = useState(false)
+  const [contheight, setContHeight] = useState(350)
+  const [imgheight, setImgHeight] = useState(250)
+  const [pngheight, setPngHeight] = useState(100)
 
   const HandleBubbleNext = () => {
     if(card === 0){
@@ -80,17 +89,29 @@ export default function Home({
       setVisibility(true)
       setHeading("The 'Meals' tab allows you to see the meals ready for pickup")
       setSubheading("The 'Map' tab allows you to see restaurants around you that have meals ready for pickup")
+      setImg(image2)
+      setContHeight(350)
+      setImgHeight(125)
+      setPngHeight(250)
     }
     if(card === 1){
       setCard(2)
       setHeading("This icon will open the 'Filters' window, to narrow down your research")
       setSubheading("")
+      setImg(image3)
+      setContHeight(550)
+      setImgHeight(360)
+      setPngHeight(1000)
     }
     if(card === 2){
       setCard(3)
       setHeading("The 1st icon will lead you back to the 'Home' page. \n The 2nd icon will lead you to the 'Orders' page")
       setSubheading("The 3rd icon will lead you to the 'Card' page. \n The 4th icon will lead you to your 'Account' page")
       setNext("Done")
+      setImg(image4)
+      setContHeight(350)
+      setImgHeight(200)
+      setPngHeight('100%')
     }
     if(card === 3){
       setCard(0)
@@ -99,6 +120,10 @@ export default function Home({
       setSubheading("")
       setBubble(false)
       setNext("Next >")
+      setImg(image1)
+      setContHeight(550)
+      setImgHeight(360)
+      setPngHeight(250)
     }
   }
   const HandleBubbleBack = () => {
@@ -107,21 +132,32 @@ export default function Home({
       setVisibility(false)
       setHeading("Here's your Home page. \n Let's break it down!")
       setSubheading("")
+      setImg(image1)
+      setContHeight(550)
+      setImgHeight(360)
     }
     if(card === 2){
       setCard(1)
       setHeading("The 'Meals' tab allows you to see the meals ready for pickup")
       setSubheading("The 'Map' tab allows you to see restaurants around you that have meals ready for pickup")
+      setImg(image2)
+      setContHeight(350)
+      setImgHeight(125)
+      setPngHeight(250)
     }
     if(card === 3){
       setCard(2)
       setHeading("This icon will open the 'Filters' window, to narrow down your research")
       setSubheading("")
       setNext("Next >")
+      setImg(image3)
+      setContHeight(550)
+      setImgHeight(360)
+      setPngHeight(1000)
     }
   }
   // NEED TO INCLUDE FOLLOWING LINE FOR TUTORIAL CUSTOMER
-  // <BubbleCust show={bubble} heading={heading} subheading={subheading} img={img} back={back} next={next} onPress1={HandleBubbleNext} onPress2={HandleBubbleBack} opacity={visibility}/>
+  // <BubbleCust show={bubble} heading={heading} subheading={subheading} src={img} back={back} next={next} heightImg={imgheight} heightCont={contheight} heightPng={pngheight} onPress1={HandleBubbleNext} onPress2={HandleBubbleBack} opacity={visibility}/>
 
   // !--------- End Of Tutorial ----------!
 
@@ -201,7 +237,7 @@ export default function Home({
     text = errorMsg;
   } else if (location) {
     text = JSON.stringify(location);
-    console.log(text)
+    //console.log(text)
   }
 
 
@@ -267,7 +303,7 @@ export default function Home({
         {mealtab === true && <View style={{display:'flex', justifyContent:'center', alignItems:'center', marginBottom:20}}>
           <Filters/>
         </View>}
-        <View style={{width:'100%', alignItems:'center', backgroundColor:'white', paddingBottom:105}}>
+        <View style={{width:'100%', alignItems:'center', paddingBottom:105}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
             <CustMealCard addToCart={() => setModalVisible(true)}/>
             <CustMealCard />

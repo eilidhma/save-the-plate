@@ -39,11 +39,13 @@ function Landing({ navigation }) {
   let [fontsLoaded] = useFonts({
     Raleway_700Bold, Quicksand_300Light, Quicksand_400Regular
   });
-
+  
   setTimeout(() => { 
     navigation.navigate('Login')
   }, 3010)
-
+  
+  var anim = useRef();
+  
   if (!fontsLoaded) {
     return <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
   </LinearGradient>;
