@@ -14,7 +14,6 @@ import styled from 'styled-components';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { auth } from '../../firebase';
-import axios from 'axios'
 
 var logo = require ('../../assets/logo1.png');
 const Stack = createNativeStackNavigator();
@@ -22,32 +21,6 @@ const Stack = createNativeStackNavigator();
 
 export default function Login({ navigation }) {
 
-  // const Upload = async(e)=> {
-  //   console.log(e.target.files[0]);
-  //   if(e.target.files.length <=0){
-  //     alert("No files were selected")
-  //     return false;
-  //   }
-  //   const file = e.target.files[0];
-  //   const storage = getStorage();
-  //   const storageRef = ref(storage, 'test.jpg');
-
-  //   // 'file' comes from the Blob or File API
-  //   const snapshot = await uploadBytes(storageRef, file)
-  //     console.log('Uploaded!');    
-  // }
-
-  // const FBCreateUser = async()=>{
-  //   const auth = getAuth();
-  //   const result = await createUserWithEmailAndPassword(auth, em, ps)
-  //   alert("created!")
-  // }
-
-  // const FBSignIn = async()=>{
-  //   const auth = getAuth();
-  //   const result = await signInWithEmailAndPassword(auth, em, ps)
-  //   alert("Signed in!")
-  // }
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -55,35 +28,10 @@ export default function Login({ navigation }) {
   useEffect(() => {
     auth.onAuthStateChanged(user => {
       if(user) {
-        var userID = auth.currentUser?.uid;
-        checkIfRestaurant(userID);
+        navigation.navigate('Home')
       } 
     })
   }, [])
-
-  const checkIfRestaurant = async (uid) => {
-    const result = await axios.get('/users.php?fuid=' + uid)
-    
-     var page = result.data[0].restaurant;
-
-    console.log(page)
-    hello(page)
- 
-    }
-
-    function hello (page) {
-      if (page === '0')
-      {
-        navigation.navigate('Home')
-      }
-
-      else if (page === '1')
-      {
-        navigation.navigate('RestaurantHome')
-      }
-    }
-
-
 
   const handleLogin = () => {
     auth
@@ -108,6 +56,10 @@ export default function Login({ navigation }) {
       <Pressable style={styles.shadowProp} title="Signup"
         onPress={() => navigation.navigate('Signup')} >
         <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Sign Up</Text>
+      </Pressable>
+      <Pressable style={styles.shadowProp} title="RestaurantUI"
+        onPress={() => navigation.navigate('RestaurantHome')} >
+        <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Restaurant UI --{'>'} </Text>
       </Pressable>
     </LinearGradient>
   );

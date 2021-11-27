@@ -93,8 +93,12 @@ const CustMealCard = ({
   description="fettuccine pasta tossed with Parmesan cheese and butter and served with garlic toast on the side",
   newprice="$5.00",
   oldprice="$21.00",
-  modifications="added extra parmesan cheese",
-  // height="170px",
+
+  modifications="mods",
+  showDairy=false,
+  showGluten=false,
+  showNut=false,
+  showVege=false,
   addToCart=()=>{}
 }) =>{
         
@@ -117,12 +121,11 @@ const CustMealCard = ({
       <Left>
         <Image style={{width:115, height:105, borderRadius:15}} source={src}/>
         <Text style={{marginTop:30, fontSize:16}}>Description:</Text>
-        {/* <Text style={{marginTop:30, fontSize:16}}>Restaurant's Rating:</Text> */}
-        <Text style={{marginTop:30, fontSize:16}}>Modifications:</Text>
-        <Text style={{marginTop:50, fontSize:16}}>Dietary Information:</Text>
+        <Text style={{marginTop:35, fontSize:16}}>Modification:</Text>
+        <Text style={{marginTop:30, fontSize:16}}>Dietary Information:</Text>
       </Left>
       <Right>
-        <Text style={{fontSize:20}}>{meal}</Text>
+        <Text style={{fontSize:20, width:'100%'}}>{meal}</Text>
         <RestCont>
           <Text style={{marginTop:8, fontSize:14}}>{restaurant}</Text>
           <Text style={{marginTop:10, fontSize:12}}>{distance}</Text>
@@ -136,17 +139,11 @@ const CustMealCard = ({
           <MaterialIcons style={{marginTop:5, transform: [{ rotate: rotation+"deg" }]}} name="arrow-drop-down" size={33} color="#FE4265" />
         </DetailsCont>
         
-        <Text style={{marginTop:18, fontSize:12}}>{description}</Text>
-        <Text style={{marginTop: 14, fontSize:12}}>{modifications}</Text>
-        {/* <StarsCont>
-          <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
-          <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
-          <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
-          <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
-          <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
-        </StarsCont> */}
+
+        <Text style={{marginTop:10, fontSize:12}}>{description}</Text>
+        <Text style={{marginTop:10, fontSize:12}}>{modifications}</Text>
         <View style={{marginTop:20}}>
-          <Diets showVege={true} showNut={true}/>
+          <Diets showDairy={showDairy} showGluten={showGluten} showVege={showVege} showNut={showNut}/>
         </View>
       </Right>
     </Content>

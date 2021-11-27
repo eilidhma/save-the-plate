@@ -1,6 +1,6 @@
 // Adrian's's section - restaurant UI
-import React, { useState } from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, ScrollView, Text } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 
 import {
@@ -22,10 +22,37 @@ import Tabs from '../../comps/global/Tabs'
 import Search from "../../comps/Restaurant/SearchBar";
 
 import BubbleRest from "../../comps/Restaurant/BubbleRest";
+import axios from 'axios';
 
 
 
 export default function RestaurantHome ({  navigation }) {
+
+  const [listedData, setListedData] = useState(null);
+  const [ordersData, setOrdersData] = useState(null);
+
+  useEffect(() => {
+
+    let isUnmount = false;
+    
+    (async () => {
+      const result = await axios.get('/listed.php');
+      const orderResult = await axios.get('/orders.php');
+      if(!isUnmount){
+        setListedData(result.data);
+        setOrdersData(orderResult.data)
+        //console.log(result.data)
+      }
+    
+    })();
+
+    return () => {
+      isUnmount = true;
+    }
+
+  }, []);
+
+
 
   const [mealtab, setMealTab] = useState(true)
   const [maptab, setMapTab] = useState(false)
@@ -147,12 +174,17 @@ export default function RestaurantHome ({  navigation }) {
             bottom:0,
             flex:1}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
-          <OrderCard/>
-          <OrderCard/>
-          <OrderCard/>
-          <OrderCard/>
-          <OrderCard/>
-          <OrderCard/>
+          {ordersData ? ordersData.map((order)=>(
+            <OrderCard 
+              key={order.oid}
+              ordernum={order.oid}
+              ordername={order.m_name} 
+              timer={order.time_avail}
+              phonenum={order.phone} 
+              name={order.full_name} 
+            />
+          )) : <Text>No current orders</Text>}
+      
         </ScrollView>
         </View>}
       
@@ -163,12 +195,14 @@ export default function RestaurantHome ({  navigation }) {
             bottom:0,
             flex:1}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
-          <ListingCard/>
-          <ListingCard/>
-          <ListingCard/>
-          <ListingCard/>
-          <ListingCard/>
-          <ListingCard/>
+          {listedData ? listedData.map((listed)=>(
+            <ListingCard
+              key={listed.id}
+              foodname={listed.m_name}
+              timer={listed.time_avail}
+              modifications={listed.modifications}
+            />
+          )): <Text>No current listings!</Text>}
         </ScrollView>
         </View>}
         

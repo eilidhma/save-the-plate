@@ -20,6 +20,7 @@ import * as Location from 'expo-location';
 
 import PlatesSaved from '../../comps/customer/PlatesSaved';
 import axios from 'axios';
+import Geocode from "react-geocode";
 
 import BubbleCust from '../../comps/customer/BubbleCust';
 
@@ -32,6 +33,8 @@ export default function Home({
   navigation,
   total="$5.00"
 }) {
+
+
 
   const [mealtab, setMealTab] = useState(true)
   const [maptab, setMapTab] = useState(false)
@@ -53,10 +56,6 @@ export default function Home({
   const [modalVisible, setModalVisible] = useState(false);
   const [restModalVisible, setRestModalVisible] = useState(false);
 
-  const CheckOut = () => {
-    navigation.navigate('Cart')
-    setModalVisible(false)
-  }
 
 
   const markerPress = () => {
@@ -173,12 +172,48 @@ export default function Home({
     
   ])
 
-  const GetData = async ()=>{
-    const result = await axios.get('/users.php');
-    console.log(result, result.data);
-  }
-  
+  const GetLatLong = () => {
+    Geocode.setApiKey("AIzaSyDA6WZ_rlulhSrphE3Z9ue1WJJSnHr2jy8");
 
+    Geocode.setLanguage("en");
+
+    Geocode.fromAddress("3700 Willingdon Ave Burnaby BC").then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        console.log(lat, lng);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
+  const [usersData, setUsersData] = useState(null);
+  const [locationsData, setLocationsData] = useState(null);
+  
+  const [listedData, setListedData] = useState(null);
+  const [mealsData, setMealsData] = useState(null);
+  
+  useEffect(() => {
+
+    let isUnmount = false;
+    
+    (async () => {
+     
+      const result = await axios.get('/listed.php');
+      if(!isUnmount){
+        setListedData(result.data);
+        console.log(result.data)
+      }
+    
+    })();
+
+    return () => {
+      isUnmount = true;
+    }
+
+  }, []);
+  
 
   useEffect(() => {
 
@@ -219,10 +254,12 @@ export default function Home({
   }
 
 
+  const [meal, setMeal] = useState()
+  const [rest, setRestaurant] = useState()
+  const [oldPrice, setOldPrice] = useState()
+  const [newPrice, setNewPrice] = useState()
+  const [cartItems, setCartItems] = useState([])
 
-
-
-  
 
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
@@ -245,8 +282,6 @@ export default function Home({
             bottom:0,
             flex:1}}>
         
-        
-        
         <Modal
           animationType="slide"
           transparent={true}
@@ -262,13 +297,23 @@ export default function Home({
                 </Pressable>
               </View>
               <View>
-                <SimpleOrderCard />
+
+                <SimpleOrderCard 
+                restaurant={rest} 
+                meal={meal}
+                newprice={newPrice}
+                oldprice={oldPrice} 
+                />
               </View>
               <View style={{display:'flex', flexDirection:'row', width:'90%', justifyContent:'flex-end', marginTop:20}}>
-                <Text style={{fontSize:24, fontWeight:'500'}}>Total: {total}</Text>
+                <Text style={{fontSize:24, fontWeight:'500'}}>Total: {newPrice}</Text>
               </View>
               <View style={{display:'flex', flexDirection:'row', width:'90%', justifyContent:'space-between'}}>
-                <Pressable style={styles.shadowPropDark} title="Checkout" onPress={CheckOut} >
+                <Pressable style={styles.shadowPropDark} title="Checkout" onPress={()=>{
+                  navigation.navigate('Cart', {cartItems} );
+                  setModalVisible(false);
+                 
+                }} >
                   <Text style={{color:'white', fontSize:18}}>Checkout</Text>
                 </Pressable>
                 <Pressable style={styles.shadowPropLight} title="Add more" onPress={() => setModalVisible(!modalVisible)} >
@@ -280,24 +325,39 @@ export default function Home({
         </Modal>
         {mealtab === true && <View style={{display:'flex', justifyContent:'center', alignItems:'center', marginBottom:20}}>
           <Filters/>
-          <Pressable onPress={GetData}>
-                    <AntDesign name="close" size={50} color="black" />
-          </Pressable>
+
         </View>}
         <View style={{width:'100%', alignItems:'center', paddingBottom:105}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
-            <CustMealCard addToCart={() => setModalVisible(true)}/>
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
-            <CustMealCard />
+            {listedData ? listedData.map((listed) => (
+              <CustMealCard
+               key={listed.id}
+               meal={listed.m_name}
+               modifications={listed.modifications}
+               restaurant={listed.restaurant}
+               oldprice={listed.old_price}
+               newprice={listed.new_price}
+               description={listed.description}
+               showNut={listed.nf}
+               showGluten={listed.gf}
+               showDairy={listed.df}
+               showVege={listed.v}
+               addToCart={() => {
+                setModalVisible(true)
+                setMeal(listed.m_name)
+                setRestaurant(listed.restaurant)
+                setOldPrice(listed.old_price)
+                setNewPrice(listed.new_price)
+                setCartItems([
+                  ...cartItems, 
+                  listed
+                ])
+              }}
+               />
+
+            )) : null}
+            
+            
         </ScrollView>
         </View>
         </View>}
@@ -314,8 +374,6 @@ export default function Home({
             style={{width:'100%', height:600}}
             provider="google"
             >
-              
-
               {restaurants ? restaurants.map((restaurant) => (
                 <Marker 
                 key={restaurant.key}

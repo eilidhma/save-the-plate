@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, StatusBar } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   useFonts,
@@ -12,7 +12,7 @@ import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
 import LottieView from 'lottie-react-native';
-import { auth } from './firebase';
+
 // customer pages
 import Home from './pages/customer/home';
 import Login from './pages/customer/login';
@@ -24,7 +24,8 @@ import Nav from './comps/customer/Nav';
 import ThanksOverlay from './comps/customer/ThanksOverlay';
 import axios from 'axios';
 
-axios.defaults.baseURL = "http://1787-2001-569-7f79-ff00-e5e0-945-e013-4a9.ngrok.io/save-the-plate/api/"
+
+axios.defaults.baseURL = "http://cee2-174-7-125-0.ngrok.io/save-the-plate/api/"
 
 import RestaurantHome from './pages/restaurant/home';
 import RestaurantAccount from './pages/restaurant/account';
@@ -142,8 +143,8 @@ function App () {
           setRestNav(false)
         }
       }}>
-
-      <Stack.Navigator screenOptions={{headerShown: false, animation:'none'}} initialRouteName="Landing" style={{display:'none'}}>
+        <StatusBar barStyle='light-content'/>
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
         <Stack.Screen  name="Landing" component={Landing} />
         <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="Login" component={Login} />
@@ -211,4 +212,3 @@ const homeStyles = StyleSheet.create({
 });
 
 export default App
-
