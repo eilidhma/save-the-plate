@@ -23,7 +23,8 @@ import DietSelect from '../../comps/global/DietSelect';
 import { storage, auth } from '../../firebase';
 import "firebase/storage";
 import axios from 'axios';
-import { Upload } from '@mui/icons-material';
+
+// add a modal that says image uploaded
 
 const TopCont = styled.Pressable`
   display:flex;
@@ -216,6 +217,9 @@ export default function Menu({
           alert('Sorry, we need camera roll permissions to make this work!');
         }
       }
+
+      const url = await storage.ref().child('menu/item66.jpg').getDownloadURL()
+      console.log("url",url)
     })();
   }, []);
 
@@ -251,7 +255,7 @@ export default function Menu({
 
 
   const AddMeal = async () => {
-    const restaurantId = await axios.get('/users.php?fuid=' + auth.currentUser?.uid)
+    //const restaurantId = await axios.get('/users.php?fuid=' + auth.currentUser?.uid)
 
     
     const newMeal = await axios.post('/meals.php', {
@@ -262,34 +266,28 @@ export default function Menu({
       gf:gF,
       df:dF,
       v:v,
-      fuid:auth.currentUser?.uid,
-      restaurant:restaurantId.data[0].full_name,
-      cuisine:restaurantId.data[0].cuisine
+      fuid:auth.currentUser?.uid
     });
 
-    setImgName(String(newMeal.data[0].id))
+    /* setImgName(String()) */
 
-    UploadIMG(image, imgName)
+    console.log(newMeal.data)
+    UploadIMG(newMeal.data)
   }
 
 
-  const UploadIMG = async(file_uri, img_name)=>{
+  const UploadIMG = async(img_name)=>{
 
     /* console.log(file_uri, "file") */
-    const file = await fetch(file_uri);
+    const file = await fetch(image);
     const blob =  await file.blob();
 
     const storageRef = storage.ref();
-    const imgRef = storageRef.child(img_name);
-
+    const imgRef = storageRef.child(`menu/item${img_name}.jpg`);
 
     imgRef.put(blob).then((snapshot) => {
-      /* console.log("uploaded bitch"); */
     });
   }
-
-
-
 
 
   return (
@@ -385,7 +383,11 @@ export default function Menu({
           </View>
         </ModalRow>
         <ButtonCont>
-          <But width="45%" text="Add Item" onPress={AddMeal}/>
+          <But width="45%" text="Add Item" onPress={()=>{
+            AddMeal()
+            setModalVisible(!modalVisible)
+            setImage(null)
+          }}/>
           <But width="45%" text="Cancel" bgColor="#F3AD81" onPress={()=>{
             setModalVisible(!modalVisible)
             setImage(null)
@@ -506,6 +508,18 @@ export default function Menu({
 
         <View style={{width: '100%'}}>
             <ScrollView contentContainerStyle={{width: '100%', alignItems:'center', paddingBottom: 70}}>
+                {
+                  //getting all the image
+                  /* items.map((o,i)=>{
+                    const url = storage.ref().child(`menu/item${o.id}.jpg`);
+
+                    return <>
+                      <Image src={{uri:url}} />\
+                      <Text>{o.m_name}</Text>
+                    </>
+                  }) */
+                }
+                
                 <But width="100%" height="50px" text="Fettucini Alfredo" margintop="10px" onPress={()=>setEditItem(!modalVisible)}/>
                 <But width="100%" height="50px" text="Spaghetti Bolognese" margintop="10px"/>
                 <But width="100%" height="50px" text="Lasagna" margintop="10px"/>

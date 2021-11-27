@@ -81,19 +81,15 @@ const DietSelect = ({
    const [N, showN] = useState(false);
    
   useEffect(()=>{onNut(N) 
-    console.log("nut ", N)
   },[N])
 
   useEffect(()=>{onGluten(G)
-    console.log("gluten ", G)
   },[G])
 
   useEffect(()=>{onDairy(D)
-    console.log("Dairy ",D)
   },[D])
 
   useEffect(()=>{onVegeterian(V)
-    console.log("Vegetarian ", V)
   },[V])
 
 

@@ -24,7 +24,7 @@ import Nav from './comps/customer/Nav';
 import ThanksOverlay from './comps/customer/ThanksOverlay';
 import axios from 'axios';
 
-axios.defaults.baseURL = "http://ca64-142-232-219-218.ngrok.io/save-the-plate/api/"
+axios.defaults.baseURL = "http://57dd-142-232-219-218.ngrok.io/save-the-plate/api/"
 
 import RestaurantHome from './pages/restaurant/home';
 import RestaurantAccount from './pages/restaurant/account';
@@ -52,14 +52,13 @@ function Landing({ navigation }) {
         navigation.navigate('Login')
       }
     });
-
-
   }, 3010)
 
   const checkIfRestaurant = async (uid) => {
     const result = await axios.get('/users.php?fuid=' + uid)
     
      var page = result.data[0].restaurant;
+     
 
      if (page === '0')
      {
