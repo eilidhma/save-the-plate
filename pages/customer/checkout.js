@@ -73,6 +73,8 @@ export default function Checkout({
     setModalVisible(false)
   }
 
+  const [orderItems, setOrderItems] = useState([])
+
   const PostOrder = async () => {
     const fuid = auth.currentUser.uid;
     const status = 'active';
@@ -81,6 +83,10 @@ export default function Checkout({
       l_id:cartItems[0].id,
       fuid:fuid
     });
+    console.log()
+    // const remove = await axios.delete('/listed.php', {
+    //   l_id:cartItems[0].id,
+    // });
   }
 
 
@@ -125,13 +131,18 @@ export default function Checkout({
               </View>
               <Text style={{fontSize:22, fontWeight:'500'}}>Total: {price}</Text>
             </View>
+            {cartItems ? cartItems.map((order)=>(  
             <Pressable style={styles.shadowProp} title="Confirm" onPress={() => {
               setModalVisible(!modalVisible);
               PostOrder();
+              setOrderItems([
+                ...orderItems, 
+                order
+              ])
             } 
               } >
             <Text style={{color:'white', fontSize:22}}>Confirm Order</Text>
-          </Pressable>
+          </Pressable> )) : null }
           </ScrollView>
 
         </View>
@@ -149,7 +160,11 @@ export default function Checkout({
             <View style={{display:'flex', flexDirection:'column', width:'90%', justifyContent:'center', alignItems:'center'}}>
               <Text>Thank you for your order!</Text>
               {/* <Image source={src} style={{width:100, height:100}}/> */}
-              <Pressable style={styles.shadowPropDark} title="Checkout" onPress={ViewOrder} >
+              <Pressable style={styles.shadowPropDark} title="Checkout" onPress={()=>{
+                navigation.navigate('Orders', {orderItems} );
+                setModalVisible(false)
+
+              }} >
                 <Text style={{color:'white', fontSize:18}}>View Order</Text>
               </Pressable>
               <Pressable style={styles.shadowPropLight} title="Add more" onPress={GoHome} >

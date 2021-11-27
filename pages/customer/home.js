@@ -203,6 +203,7 @@ export default function Home({
       const result = await axios.get('/listed.php');
       if(!isUnmount){
         setListedData(result.data);
+        console.log(result.data)
       }
     
     })();

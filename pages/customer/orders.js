@@ -18,7 +18,11 @@ import PastOrder from '../../comps/customer/PastOrder';
 var logo = require ('../../assets/logo1.png');
 const Stack = createNativeStackNavigator();
 
-export default function Orders({ navigation }) {
+export default function Orders({ navigation, route }) {
+
+const {orderItems} = route.params;
+console.log(orderItems[0].id)
+
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
       <View style={{width:'100%', position:'absolute', top:80, display:'flex', justifyContent:'center', alignItems:'center'}}>
@@ -26,7 +30,16 @@ export default function Orders({ navigation }) {
       </View>
       <ScrollView style={styles.scrollViewSmall}>
         <View style={{display:'flex', justifyContent:'center', alignItems:'center', overflow:'hidden'}}>
-          <CustCurrentOrder HandleDetails={()=>{}}/> 
+          {orderItems ? orderItems.map((order) => (
+            <CustCurrentOrder 
+              key={order.id}
+              meal={order.m_name}
+              restaurant={order.restaurant}
+              newprice={order.new_price}
+              oldprice={order.old_price}
+              quantity={1}
+            /> 
+          )) : null}
         </View>
       </ScrollView>
       <View style={{width:'90%', backgroundColor:'white', height:2, position:'absolute', top:320}}></View> 
