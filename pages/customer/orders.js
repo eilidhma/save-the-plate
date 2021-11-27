@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
@@ -14,6 +14,7 @@ import styled from 'styled-components';
 import CustCurrentOrder from '../../comps/customer/CustCurrentOrder';
 import CustMealCard from '../../comps/customer/CustMealCard';
 import PastOrder from '../../comps/customer/PastOrder';
+import axios from 'axios';
 
 var logo = require ('../../assets/logo1.png');
 const Stack = createNativeStackNavigator();
@@ -21,7 +22,31 @@ const Stack = createNativeStackNavigator();
 export default function Orders({ navigation, route }) {
 
 const {orderItems} = route.params;
-console.log(orderItems[0].id)
+console.log(orderItems[0].id);
+
+const [pastOrders, setPastOrders] = useState()
+
+useEffect(() => {
+
+  let isUnmount = false;
+  
+  (async () => {
+    const result = await axios.get('/orders.php');
+    if(!isUnmount){
+      setPastOrders(result.data);
+      console.log(pastOrders)
+    }
+  
+  })();
+
+  return () => {
+    isUnmount = true;
+  }
+
+}, []);
+
+
+
 
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
@@ -39,7 +64,7 @@ console.log(orderItems[0].id)
               oldprice={order.old_price}
               quantity={1}
             /> 
-          )) : null}
+          )) : <Text>No current order</Text>}
         </View>
       </ScrollView>
       <View style={{width:'90%', backgroundColor:'white', height:2, position:'absolute', top:320}}></View> 
@@ -48,14 +73,13 @@ console.log(orderItems[0].id)
       </View> 
       <View style={styles.scrollView}>
       <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
-      
-        <PastOrder />
-        <PastOrder />
-        <PastOrder />
-        <PastOrder />
-        <PastOrder />
-        <PastOrder />
-        <PastOrder />
+      {pastOrders ? pastOrders.filter((x)=> {return x.status === 'complete'}).map((past) => (
+        <PastOrder 
+        key={past.oid}
+        meal={past.m_name}
+        restaurant={past.full_name}
+        />
+      )) : null}
 
       </ScrollView>
       </View>

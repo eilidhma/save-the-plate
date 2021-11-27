@@ -30,6 +30,8 @@ export default function RestaurantHome ({  navigation }) {
 
   const [listedData, setListedData] = useState(null);
   const [ordersData, setOrdersData] = useState(null);
+  const [oid, setOid] = useState();
+  const [status, setStatus] = useState("complete");
 
   useEffect(() => {
 
@@ -41,7 +43,7 @@ export default function RestaurantHome ({  navigation }) {
       if(!isUnmount){
         setListedData(result.data);
         setOrdersData(orderResult.data)
-        //console.log(result.data)
+        console.log(orderResult.data)
       }
     
     })();
@@ -52,6 +54,11 @@ export default function RestaurantHome ({  navigation }) {
 
   }, []);
 
+  const ConfirmPickup = async () =>{
+    const patch = await axios.patch('/orders.php', {
+      id:oid,
+      status:status
+    })}
 
 
   const [mealtab, setMealTab] = useState(true)
@@ -174,7 +181,7 @@ export default function RestaurantHome ({  navigation }) {
             bottom:0,
             flex:1}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
-          {ordersData ? ordersData.map((order)=>(
+          {ordersData ? ordersData.filter((x)=> {return x.status === 'active'}).map((order)=>(
             <OrderCard 
               key={order.oid}
               ordernum={order.oid}
@@ -182,6 +189,12 @@ export default function RestaurantHome ({  navigation }) {
               timer={order.time_avail}
               phonenum={order.phone} 
               name={order.full_name} 
+              ConfirmPickup={ async()=>{
+                const patch = await axios.patch('/orders.php', {
+                  id:order.oid,
+                  status:status
+                }) 
+              }}
             />
           )) : <Text>No current orders</Text>}
       
