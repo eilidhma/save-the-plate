@@ -13,6 +13,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
 import LottieView from 'lottie-react-native';
 import { auth } from './firebase';
+
+
 // customer pages
 import Home from './pages/customer/home';
 import Login from './pages/customer/login';
@@ -26,6 +28,7 @@ import axios from 'axios';
 
 
 axios.defaults.baseURL = "http://3303-207-23-210-128.ngrok.io/save-the-plate/api/"
+
 
 import RestaurantHome from './pages/restaurant/home';
 import RestaurantAccount from './pages/restaurant/account';
@@ -59,7 +62,6 @@ function Landing({ navigation }) {
   const checkIfRestaurant = async (uid) => {
     const result = await axios.get('/users.php?fuid=' + uid)
     
-
      var page = result.data[0].restaurant;
 
      if (page === '0')
