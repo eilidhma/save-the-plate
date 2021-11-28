@@ -26,7 +26,9 @@ import Nav from './comps/customer/Nav';
 import ThanksOverlay from './comps/customer/ThanksOverlay';
 import axios from 'axios';
 
+
 axios.defaults.baseURL = "https://5cc2-174-7-125-0.ngrok.io/save-the-plate/api/"
+
 
 
 import RestaurantHome from './pages/restaurant/home';
