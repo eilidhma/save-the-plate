@@ -331,7 +331,7 @@ export default function Home({
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
             {listedData ? listedData.map((listed) => (
               <CustMealCard
-               key={listed.id}
+               key={listed.lid}
                meal={listed.m_name}
                modifications={listed.modifications}
                restaurant={listed.restaurant}

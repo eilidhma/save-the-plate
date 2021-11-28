@@ -238,6 +238,7 @@ const [mealMods, setMealMods] = useState()
 const [mealTime, setMealTime] = useState()
 const [mealQuant, setMealQuant] = useState()
 const [mealName, setMealName] = useState()
+const [mid, setMid] = useState()
 
 const [user, setUser] = useState();
 
@@ -304,10 +305,11 @@ useEffect(() => {
 
           {mealsData ? mealsData.filter((x) => {return x.fuid === auth.currentUser.uid}).map((meals) => (
             <But 
-            key={meals.id} 
+            key={meals.mid} 
             text={meals.m_name} 
             onPress={()=> {
               setItemStep(2)
+              setMid(meals.mid)
               setMealName(meals.m_name)}} 
             margintop="10px"/>
           )) : null}
@@ -413,6 +415,7 @@ useEffect(() => {
                 time_avail:mealTime,
                 fuid:fuid,
                 m_name:mealName,
+                m_id:mid
               });
           }} width="182px" height="50px" text="List Item"/>
           <But width="182px" height="50px" text="Cancel" bgColor="#F3AD81"

@@ -83,10 +83,10 @@ export default function Checkout({
       l_id:cartItems[0].id,
       fuid:fuid
     });
-    console.log()
-    // const remove = await axios.delete('/listed.php', {
-    //   l_id:cartItems[0].id,
-    // });
+    
+    const remove = await axios.delete('/listed.php?id='+cartItems[0].id, {
+      l_id:cartItems[0].id,
+    });
   }
 
 
@@ -132,7 +132,7 @@ export default function Checkout({
               <Text style={{fontSize:22, fontWeight:'500'}}>Total: {price}</Text>
             </View>
             {cartItems ? cartItems.map((order)=>(  
-            <Pressable style={styles.shadowProp} title="Confirm" onPress={() => {
+            <Pressable key={order.id} style={styles.shadowProp} title="Confirm" onPress={() => {
               setModalVisible(!modalVisible);
               PostOrder();
               setOrderItems([
