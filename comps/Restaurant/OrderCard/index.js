@@ -91,7 +91,8 @@ const RestaurantCard = ({
   timer="00:14:28",
   phonenum="604-456-67890",
   ordername="Fettucini Alfredo",
-  orderquant="1"
+  orderquant="1",
+  ConfirmPickup=()=>{}
 }) =>{
 
   const [isexpanded, setExpand] = useState(false)
@@ -113,9 +114,6 @@ const RestaurantCard = ({
       setExpand(!isexpanded)
     }
   }
-
-
-
 
 
     return <CardCont height={cardheight}>
@@ -152,7 +150,7 @@ const RestaurantCard = ({
           </Order>
 
       </Details>
-      <But width="100%" radius="0px" height="30px" text="Confirm Pickup"/>
+      <But onPress={ConfirmPickup} width="100%" radius="0px" height="30px" text="Confirm Pickup"/>
     </CardCont>
 }
 
