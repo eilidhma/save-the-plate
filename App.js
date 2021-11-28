@@ -14,6 +14,7 @@ import styled from 'styled-components';
 import LottieView from 'lottie-react-native';
 import { auth } from './firebase';
 
+
 // customer pages
 import Home from './pages/customer/home';
 import Login from './pages/customer/login';
@@ -26,7 +27,8 @@ import ThanksOverlay from './comps/customer/ThanksOverlay';
 import axios from 'axios';
 
 
-axios.defaults.baseURL = "http://ee1e-174-7-125-0.ngrok.io/save-the-plate/api/"
+axios.defaults.baseURL = "http://3303-207-23-210-128.ngrok.io/save-the-plate/api/"
+
 
 import RestaurantHome from './pages/restaurant/home';
 import RestaurantAccount from './pages/restaurant/account';
