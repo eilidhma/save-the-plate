@@ -22,7 +22,7 @@ const Stack = createNativeStackNavigator();
 export default function Orders({ navigation, route }) {
 
 const {orderItems} = route.params;
-console.log(orderItems[0].id);
+//console.log(orderItems[0].id);
 
 const [pastOrders, setPastOrders] = useState()
 

@@ -11,6 +11,7 @@ import StarRating from 'react-native-star-rating';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { auth } from '../../firebase';
+import Name from '../../comps/customer/Name';
 
 
 var cardtype = require ('../../assets/visa.png');
@@ -57,12 +58,32 @@ export default function Checkout({
   route
 }) {
 
+  const [listedData, setListedData] = useState();
+
+  useEffect(() => {
+
+    let isUnmount = false;
+    var userID = auth.currentUser?.uid;
+    
+    (async () => {
+      const result = await axios.get('/users.php?fuid='+userID);
+      if(!isUnmount){
+        setListedData(result.data);
+      }
+    
+    })();
+    
+    return () => {
+      isUnmount = true;
+    }
+
+  }, []);
+
   const [modalVisible, setModalVisible] = useState(false);
   const [orderData, setOrderData] = useState([]);
 
   const {cartItems} = route.params;
-  console.log(cartItems[0].id)
-
+  console.log(cartItems)
   const ViewOrder = () => {
     navigation.navigate('Orders')
     setModalVisible(false)
@@ -82,13 +103,10 @@ export default function Checkout({
       status:status,
       l_id:cartItems[0].id,
       fuid:fuid
-    });
-    
-    const remove = await axios.delete('/listed.php?id='+cartItems[0].id, {
-      l_id:cartItems[0].id,
-    });
+    }); 
   }
 
+  
 
  
   return (
@@ -98,8 +116,11 @@ export default function Checkout({
       </View>
       <View style={{width:'90%', backgroundColor:'white', height:2, position:'absolute', top:118}}></View> 
       <Cont>
-        <TitleCont>
-          <Text style={{fontSize:30}}>{restaurant}</Text>
+        <TitleCont> 
+          {listedData ? listedData.map((listed) => (
+
+            <Name key={1} name={listed.full_name}/>
+          )):null}
         </TitleCont>
         <Distance>
           <SimpleLineIcons style={{marginRight:5}} name="location-pin" size={18} color="black" />
@@ -138,7 +159,7 @@ export default function Checkout({
               setOrderItems([
                 ...orderItems, 
                 order
-              ])
+              ]);
             } 
               } >
             <Text style={{color:'white', fontSize:22}}>Confirm Order</Text>

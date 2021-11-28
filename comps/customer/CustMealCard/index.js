@@ -13,7 +13,12 @@ const CardCont = styled.View`
   background-color:white;
 `;
 
-const Content = styled.View`
+const TopContent = styled.View`
+  display:flex;
+  width:90%;
+  flexDirection:row;
+`
+const BottomContent = styled.View`
   display:flex;
   width:90%;
   flexDirection:row;
@@ -24,35 +29,56 @@ const RestCont = styled.View`
   width:100%;
   flexDirection:row;
   justify-content:space-between;
+  align-items:center;
+  height:40px;
 `;
 
 const PriceCont = styled.View`
   display:flex;
-  width:50%;
+  width:60%;
   flexDirection:row;
-  justify-content:space-between;
+  justify-content:flex-start;
+  align-items:center;
 `;
 
 const DetailsCont = styled.Pressable`
   display:flex;
-  width:55%;
+  width:40%;
   flexDirection:row;
+  justify-content:flex-end;
   align-items:center;
 `;
 
 
-const Left = styled.View`
+const TopLeft = styled.View`
   display:flex;
   margin:15px;
   flexDirection:column;
   flex:1;
 `
 
-const Right = styled.View`
+const TopRight = styled.View`
   display:flex;
   margin:15px;
   flexDirection:column;
   flex:2;
+`
+
+const BottomLeft = styled.View`
+  display:flex;
+  margin:15px;
+  flexDirection:column;
+  flex:1;
+  justify-content:space-between;
+  height:100px;
+`
+
+const BottomRight = styled.View`
+  display:flex;
+  margin:15px;
+  flexDirection:column;
+  flex:2;
+  justify-content:space-between;
 `
 
 const Plates = styled.View`
@@ -61,6 +87,14 @@ const Plates = styled.View`
   width:30px;
   justifyContent:center;
   alignItems:center;
+`
+
+const TextCont = styled.View`
+  display:flex;
+  flexDirection:column;
+  justifyContent:center;
+  alignItems:flex-start;
+  height:50px;
 `
 
 const Cart = styled.Pressable`
@@ -117,36 +151,54 @@ const CustMealCard = ({
     <Cart>
       <AddToCart onPress={addToCart} >+ Add to cart</AddToCart>
     </Cart>
-    <Content>
-      <Left>
+    <TopContent>
+      <TopLeft>
         <Image style={{width:115, height:105, borderRadius:15}} source={src}/>
-        <Text style={{marginTop:30, fontSize:16}}>Description:</Text>
-        <Text style={{marginTop:35, fontSize:16}}>Modification:</Text>
-        <Text style={{marginTop:30, fontSize:16}}>Dietary Information:</Text>
-      </Left>
-      <Right>
-        <Text style={{fontSize:20, width:'100%'}}>{meal}</Text>
-        <RestCont>
-          <Text style={{marginTop:8, fontSize:14}}>{restaurant}</Text>
-          <Text style={{marginTop:10, fontSize:12}}>{distance}</Text>
-        </RestCont>
-        <PriceCont>
-          <Text style={{marginTop:8, fontSize:16, color:'#FE4265', fontWeight:'700'}}>{newprice}</Text>
-          <Text style={{marginTop:10, fontSize:12, textDecorationLine:'line-through'}}>{oldprice}</Text>
-        </PriceCont>
-        <DetailsCont onPress={HandleCard}>
-          <Pressable onPress={HandleCard}><Text style={{marginTop:5, fontSize:18, fontWeight:'600', color:'#FE4265'}}>More Details</Text></Pressable>
-          <MaterialIcons style={{marginTop:5, transform: [{ rotate: rotation+"deg" }]}} name="arrow-drop-down" size={33} color="#FE4265" />
-        </DetailsCont>
-        
-
-        <Text style={{marginTop:10, fontSize:12}}>{description}</Text>
-        <Text style={{marginTop:10, fontSize:12}}>{modifications}</Text>
-        <View style={{marginTop:20}}>
-          <Diets showDairy={showDairy} showGluten={showGluten} showVege={showVege} showNut={showNut}/>
+      </TopLeft>
+      <TopRight>
+        <View style={{display:'flex', justifyContent:"flex-start", alignContent:'flex-start'}}>
+        <Text style={{fontSize:18, fontWeight:'bold', width:'100%'}}>{meal}</Text>
         </View>
-      </Right>
-    </Content>
+        <RestCont>
+          <Text style={{fontSize:14}}>{restaurant}</Text>
+          <Text style={{fontSize:12}}>{distance}</Text>
+        </RestCont>
+        <View style={{width:'100%', height:40, display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+          <PriceCont>
+            <Text style={{fontSize:16, color:'#FE4265', fontWeight:'700'}}>{newprice}</Text>
+            <Text style={{fontSize:12, marginLeft:5, textDecorationLine:'line-through'}}>{oldprice}</Text>
+          </PriceCont>
+          <DetailsCont onPress={HandleCard}>
+            <Pressable onPress={HandleCard}><Text style={{fontSize:18, fontWeight:'600', color:'#FE4265'}}>Details</Text></Pressable>
+            <MaterialIcons style={{marginTop:-5, transform: [{ rotate: rotation+"deg" }]}} name="arrow-drop-down" size={33} color="#FE4265" />
+          </DetailsCont>
+        </View>
+      </TopRight>
+    </TopContent>
+    <BottomContent>
+      <BottomLeft>
+        <TextCont>
+          <Text style={{fontSize:16}}>Description:</Text>
+        </TextCont>
+        <TextCont>
+          <Text style={{fontSize:16}}>Modification:</Text>
+        </TextCont>
+        <TextCont>
+          <Text style={{fontSize:16}}>Dietary Information:</Text>
+        </TextCont>
+      </BottomLeft>
+      <BottomRight>
+        <TextCont>
+          <Text style={{fontSize:12}}>{description}</Text>
+        </TextCont>
+        <TextCont>
+          <Text style={{fontSize:12}}>{modifications}</Text>
+        </TextCont>
+        <TextCont>
+          <Diets showDairy={showDairy} showGluten={showGluten} showVege={showVege} showNut={showNut}/>
+        </TextCont>
+      </BottomRight>
+    </BottomContent>
   </CardCont>
   </View>
 }
