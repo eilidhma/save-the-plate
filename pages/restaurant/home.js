@@ -43,7 +43,7 @@ export default function RestaurantHome ({  navigation }) {
       if(!isUnmount){
         setListedData(result.data);
         setOrdersData(orderResult.data)
-        console.log(orderResult.data)
+        //console.log(orderResult.data)
       }
     
     })();
