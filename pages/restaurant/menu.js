@@ -264,7 +264,7 @@ export default function Menu({
       gf:gF,
       df:dF,
       v:v,
-      fuid:auth.currentUser?.uid
+      u_id:auth.currentUser?.uid
     });
 
 

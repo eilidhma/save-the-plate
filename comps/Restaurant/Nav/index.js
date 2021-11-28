@@ -301,7 +301,8 @@ useEffect(() => {
       </View>
       <View style={{width: '100%'}}>
         <ScrollView contentContainerStyle={{width: '100%', alignItems:'center'}}>
-          {mealsData ? mealsData.filter((x) => {return x.fuid === auth.currentUser.uid}).map((meals) => (
+
+          {mealsData ? mealsData.filter((x) => {return x.fuid === auth.currentUser?.uid}).map((meals) => (
             <But 
             key={meals.id} 
             text={meals.m_name} 
@@ -310,6 +311,7 @@ useEffect(() => {
               setMealName(meals.m_name)}} 
             margintop="10px"/>
           )) : null}
+          
         </ScrollView>
       </View>
     </View>
