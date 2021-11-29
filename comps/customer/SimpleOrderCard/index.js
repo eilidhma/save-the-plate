@@ -93,7 +93,6 @@ const SimpleOrderCard = ({
   oldprice="$21.00",
   height="170px",
   quantity="1",
-  total="$5.00"
 
 }) =>{
 

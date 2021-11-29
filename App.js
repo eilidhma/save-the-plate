@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   useFonts,
@@ -24,17 +24,21 @@ import Account from './pages/customer/account';
 import Signup from './pages/customer/signup';
 import Nav from './comps/customer/Nav';
 import ThanksOverlay from './comps/customer/ThanksOverlay';
+
 import axios from 'axios';
+
 
 // INSERT NEW LINK FROM ME HERE
 
 axios.defaults.baseURL = "https://save-the-plate.herokuapp.com/api/"
 
 
+
 import RestaurantHome from './pages/restaurant/home';
 import RestaurantAccount from './pages/restaurant/account';
 import Menu from './pages/restaurant/menu';
 import RestaurantNav from './comps/Restaurant/Nav';
+
 
 
 var logo = require ('./assets/logo1.png');
@@ -46,7 +50,7 @@ function Landing({ navigation }) {
   let [fontsLoaded] = useFonts({
     Raleway_700Bold, Quicksand_300Light, Quicksand_400Regular
   });
-
+  
   setTimeout(() => { 
     auth.onAuthStateChanged(user => {
       // console.log(auth.currentUser?.uid)
@@ -59,6 +63,8 @@ function Landing({ navigation }) {
       }
     });
   }, 3010)
+
+  var anim = useRef();
 
   const checkIfRestaurant = async (uid) => {
     const result = await axios.get('/users.php?fuid=' + uid)
@@ -146,7 +152,7 @@ function App () {
           setRestNav(false)
         }
       }}>
-        <StatusBar barStyle='light-content'/>
+
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Landing" style={{display:'none'}}>
         <Stack.Screen  name="Landing" component={Landing} />
         <Stack.Screen name="Signup" component={Signup} />
@@ -215,3 +221,4 @@ const homeStyles = StyleSheet.create({
 });
 
 export default App
+

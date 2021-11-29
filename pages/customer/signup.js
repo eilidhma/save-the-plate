@@ -12,7 +12,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
 import { auth } from '../../firebase';
-import axios from 'axios';
 
 var logo = require ('../../assets/logo1.png');
 const Stack = createNativeStackNavigator();
@@ -31,24 +30,19 @@ const Left = styled.View`
 
 export default function Signup({ navigation }) {
 
-  const [name, setName] = useState()
-  const [fuid, setFuid] = useState('')
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
-  const [plates_saved, setPlatesSaved] = useState()
-  const [phone, setPhone] = useState()
-  const [addLine1, setAddLine1] = useState()
-  const [addLine2, setAddLine2] = useState()
-  const [postalCode, setPostalCode] = useState()
-  const [city, setCity] = useState()
-  const [province, setProvince] = useState()
-  const [cardNumber, setCardNumber] = useState()
-  const [cardName, setCardName] = useState()
-  const [expiry, setExpiry] = useState()
-  const [cvc, setCvc] = useState()
-
-  const [isRestaurant, setIsRestaurant] = useState(false)
-  const [isCuisine, setIsCuisine] = useState(false)
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [phone, setPhone] = useState("")
+  const [addLine1, setAddLine1] = useState("")
+  const [addLine2, setAddLine2] = useState("")
+  const [postalCode, setPostalCode] = useState("")
+  const [city, setCity] = useState("")
+  const [province, setProvince] = useState("")
+  const [cardNumber, setCardNumber] = useState("")
+  const [cardName, setCardName] = useState("")
+  const [expiry, setExpiry] = useState("")
+  const [cvc, setCvc] = useState("")
 
   useEffect(() => {
     auth.onAuthStateChanged(user => {
@@ -57,6 +51,7 @@ export default function Signup({ navigation }) {
       } 
     })
   }, [])
+
 
   const GetUsers = async ()=>{
     const result = await axios.get('/users.php');
@@ -86,15 +81,14 @@ export default function Signup({ navigation }) {
 
   const PostUser = async () => {
 
+
     auth
     .createUserWithEmailAndPassword(email, password)
     .then(userCredendtials => {
       const user = userCredendtials.user;
-      setFuid(user.uid);
-      UserData(user.uid)
       console.log('Registered with:', user.email);
     })
-    .catch(error => alert(error.message));
+    .catch(error => alert(error.message))
   }
 
   return (
@@ -104,12 +98,18 @@ export default function Signup({ navigation }) {
       </View>
       <View style={{width:'90%', backgroundColor:'white', height:2, position:'absolute', top:118}}></View> 
       <View style={styles.gradient}>
+        {/* <View style={styles.itemCont}>
+          <Pressable style={styles.back} title="Signup"
+            onPress={() => navigation.navigate('Login')} >
+            <Text style={{color:'white', fontSize:18, fontWeight:'600'}}>Back</Text>
+          </Pressable>
+        </View> */}
         <View style={styles.itemCont}> 
           <View style={styles.left}>
             <Text style={{fontWeight:'500', fontSize:16}}>Name</Text>
           </View>
           <View style={styles.left}>
-            <TextInput autoCompleteType={'name'} onChangeText={text=>setName(text)} style={styles.username} placeholder={'name'} textAlign={'center'} textContentType={'name'}/>
+            <TextInput autoCompleteType={'name'} style={styles.username} placeholder={'name'} textAlign={'center'} textContentType={'name'}/>
           </View>
         </View>
         <View style={styles.itemCont}> 
@@ -125,7 +125,7 @@ export default function Signup({ navigation }) {
             <Text style={{fontWeight:'500', fontSize:16}}>Password</Text>
           </View>
           <View style={styles.left}>
-            <TextInput secureTextEntry value={password} onChangeText={text=>setPassword(text)} autoCompleteType={'password'} style={styles.username} placeholder={'password'} textAlign={'center'} textContentType={'password'}/>
+            <TextInput value={password} onChangeText={text=>setPassword(text)} autoCompleteType={'password'} style={styles.username} placeholder={'password'} textAlign={'center'} textContentType={'password'}/>
           </View>
         </View>
         <View style={styles.itemCont}> 
@@ -206,7 +206,7 @@ export default function Signup({ navigation }) {
           </View>
         </View>
         <Pressable style={styles.shadowProp} title="Signup"
-        onPress={PostUser} >
+        onPress={handleSignUp} >
         <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Sign Up</Text>
       </Pressable>
       </View> 

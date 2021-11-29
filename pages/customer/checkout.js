@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, ScrollView, Modal } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NavigationContainer } from '@react-navigation/native';
@@ -12,6 +12,7 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { auth } from '../../firebase';
 import Name from '../../comps/customer/Name';
+
 
 
 var cardtype = require ('../../assets/visa.png');
@@ -55,7 +56,6 @@ export default function Checkout({
   price="$5.00",
   navigation,
   src=require("../../assets/plate.png"),
-  route
 }) {
 
   
@@ -83,12 +83,14 @@ export default function Checkout({
   }, []);
 
   const [modalVisible, setModalVisible] = useState(false);
+
   const [orderData, setOrderData] = useState([]);
 
   // var cartItems = null;
   // if(route.params !== null){
   //   cartItems = route.params;
   // }
+
 
 
   var cartItems = null;
@@ -108,6 +110,7 @@ export default function Checkout({
     navigation.navigate('Home')
     setModalVisible(false)
   }
+
 
   const [orderItems, setOrderItems] = useState([])
 
@@ -133,12 +136,28 @@ export default function Checkout({
   
 
  
+
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
       <View style={{width:'100%', position:'absolute', top:80, display:'flex', justifyContent:'center', alignItems:'center'}}>
         <Text style={styles.heading}>Checkout</Text>
       </View>
       <View style={{width:'90%', backgroundColor:'white', height:2, position:'absolute', top:118}}></View> 
+
+      <Cont>
+        <TitleCont>
+          <Text style={{fontSize:30}}>{restaurant}</Text>
+          <StarRating
+            disabled={false}
+            maxStars={5}
+            starSize="30"
+            // rating={state.starCount}
+            // selectedStar={(rating) => this.onStarRatingPress(rating)}
+            // fullStarColor = 
+          />
+        </TitleCont>
+        <Distance>
+
       <Cont> 
       {cartItems ? <TitleCont> 
           {listedData ? listedData.map((listed) => (
@@ -147,6 +166,7 @@ export default function Checkout({
           )):null} 
         </TitleCont> : null}
         {cartItems ? <Distance>
+
           <SimpleLineIcons style={{marginRight:5}} name="location-pin" size={18} color="black" />
           <Text style={{fontSize:16, color:'black'}}>{distance}<Text> away</Text></Text>
         </Distance>: 
@@ -160,6 +180,10 @@ export default function Checkout({
             justifyContent:'center',
             alignItems:'center'}}>
               <Image style={{width:'90%', height:150}} source={map}></Image>
+
+            </View>
+            <CustCurrentOrder />
+            <View style={{width:'100%', display:'flex', justifyContent:'space-between', alignItems:'center', paddingLeft:20, paddingRight:20, marginTop:30, flexDirection:'row'}}>
             </View>: null}
             {cartItems ? cartItems.map((order)=>(  
               <CustCurrentOrder
@@ -173,11 +197,16 @@ export default function Checkout({
             )) : null}
  
  {cartItems ? <View style={{width:'100%', display:'flex', justifyContent:'space-between', alignItems:'center', paddingLeft:20, paddingRight:20, marginTop:30, flexDirection:'row'}}>
+
               <View style={{width:120, display:'flex', flexDirection:'row'}}>
                 <Image style={{width:50, height:15}} source={cardtype}></Image>
                 <Text style={{marginLeft:5}}>***7896</Text>
               </View>
               <Text style={{fontSize:22, fontWeight:'500'}}>Total: {price}</Text>
+
+            </View>
+            <Pressable style={styles.shadowProp} title="Confirm" onPress={() => setModalVisible(!modalVisible)} >
+
             </View> : null}
             {cartItems ? cartItems.map((order)=>(  
             <Pressable key={order.id} style={styles.shadowProp} title="Confirm" onPress={() => {
@@ -190,8 +219,9 @@ export default function Checkout({
               ]);
             } 
               } >
+
             <Text style={{color:'white', fontSize:22}}>Confirm Order</Text>
-          </Pressable> )) : null }
+          </Pressable>
           </ScrollView>
 
         </View>
@@ -209,11 +239,7 @@ export default function Checkout({
             <View style={{display:'flex', flexDirection:'column', width:'90%', justifyContent:'center', alignItems:'center'}}>
               <Text>Thank you for your order!</Text>
               {/* <Image source={src} style={{width:100, height:100}}/> */}
-              <Pressable style={styles.shadowPropDark} title="Checkout" onPress={()=>{
-                navigation.navigate('Orders', {orderItems} );
-                setModalVisible(false)
-
-              }} >
+              <Pressable style={styles.shadowPropDark} title="Checkout" onPress={ViewOrder} >
                 <Text style={{color:'white', fontSize:18}}>View Order</Text>
               </Pressable>
               <Pressable style={styles.shadowPropLight} title="Add more" onPress={GoHome} >

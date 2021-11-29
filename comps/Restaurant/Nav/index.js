@@ -10,7 +10,6 @@ import {
 import styled from 'styled-components';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
-import axios from 'axios';
 
 
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
@@ -18,12 +17,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Search from '../SearchBar'
 import But from '../../global/Button';
-
-import { auth } from '../../../firebase';
-import { GetAuth, onAuthStateChanged } from 'firebase/auth';
-
-import DietSelect from '../../global/DietSelect';
-
 
 const Cont = styled.View`
   display:flex;
@@ -64,7 +57,7 @@ const AddListingModal = styled.View`
  flex-direction: column;
  justify-content: space-between;
  width: 100%;
- height: 600px;
+ height: 490px;
  padding-right: 5%;
  padding-left: 5%;
  padding-top: 40px;
@@ -161,12 +154,12 @@ const RestaurantNav = ({
   const [modalVisible, setModalVisible] = useState(false);
   const [addItemStep, setItemStep] = useState(1)
 
-  const onPressHome=()=>{
+  onPressHome=()=>{
     setNav(0)
     navigation.navigate('RestaurantHome')
   }
   
-  const onPressAccount=()=>{
+  onPressAccount=()=>{
     setNav(1)
     navigation.navigate('RestaurantAccount')
   }
@@ -198,7 +191,6 @@ function ThirtyPress () {
   setFourty(false);
   setOne(false);
   setTwo(false);
-  setMealTime('00:30:00');
 }
 
 function FourtyPress () {
@@ -206,7 +198,6 @@ function FourtyPress () {
   setFourty(true);
   setOne(false);
   setTwo(false);
-  setMealTime('00:45:00')
 }
 
 function OnePress () {
@@ -214,7 +205,6 @@ function OnePress () {
   setFourty(false);
   setOne(true);
   setTwo(false);
-  setMealTime('01:00:00');
 }
 
 function TwoPress () {
@@ -222,7 +212,6 @@ function TwoPress () {
   setFourty(false);
   setOne(false);
   setTwo(true);
-  setMealTime('02:00:00');
 }
 
 function Reset () {
@@ -247,11 +236,10 @@ useEffect(() => {
   let isUnmount = false;
   
   (async () => {
+   
+    const result = await axios.get('/meals.php');
     if(!isUnmount){
-      var uid = auth.currentUser?.uid;
-      const result = await axios.get('/meals.php')
       setMealsData(result.data);
-      console.log(result.data)
     }
   
   })();
@@ -303,6 +291,16 @@ useEffect(() => {
       </View>
       <View style={{width: '100%'}}>
         <ScrollView contentContainerStyle={{width: '100%', alignItems:'center'}}>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
           {mealsData ? mealsData.filter((x)=> {return x.fuid === auth.currentUser?.uid}).map((meals) => (
             <But 
             key={meals.mid} 
@@ -323,15 +321,16 @@ useEffect(() => {
         <But
           text="< Back"
           onPress={()=>{
-            setItemStep(1);
-            Reset();}}
+            setItemStep(1)
+            Reset()
+          }}
           width="125px"
           height="40px"/>
       </View>
 
         <TitleCont style={{paddingBottom: 15, paddingTop: 15}}>
           <Text>
-            {mealName}
+            Fettucini Alfredo
           </Text>
 
           <CounterCont>
@@ -349,59 +348,55 @@ useEffect(() => {
           </CounterCont>
         </TitleCont>
         <DescriptionCont>
-          <TextInput onChangeText={(text)=>setMealMods(text)} editable placeholder="Add modifications"/>
+          <TextInput editable placeholder="add description"/>
         </DescriptionCont>
         
-        <View style={{flex: 1, flexDirection: "column", justifyContent: "space-between", paddingBottom: 20, paddingTop: 20, height: 10}}>
+        <View style={{flex: 1, flexDirection: "column", justifyContent: "space-between", paddingBottom: 20, paddingTop: 20, height: 30}}>
           <Text>Available in:</Text>
-            <TitleCont>
-              {thirty === true 
-                ? <SelectedTime>
-                    <Text style={{color:"white"}}>30 minutes</Text>
-                  </SelectedTime>
-                : <DeselectedTime onPress={ThirtyPress}>
-                    <Text style={{color: "#FE4265"}}>30 minutes</Text>
-                  </DeselectedTime>
-              }
+          <TitleCont>
+            {thirty === true 
+              ? <SelectedTime>
+                  <Text style={{color:"white"}}>30 minutes</Text>
+                </SelectedTime>
+              : <DeselectedTime onPress={ThirtyPress}>
+                  <Text style={{color: "#FE4265"}}>30 minutes</Text>
+                </DeselectedTime>
+            }
 
-              {fourtyfive === true 
-                ? <SelectedTime>
-                    <Text style={{color:"white"}}>45 minutes</Text>
-                  </SelectedTime>
-                : <DeselectedTime onPress={FourtyPress}>
-                    <Text style={{color: "#FE4265"}}>45 minutes</Text>
-                  </DeselectedTime>
-              }
-            </TitleCont>
+            {fourtyfive === true 
+              ? <SelectedTime>
+                  <Text style={{color:"white"}}>45 minutes</Text>
+                </SelectedTime>
+              : <DeselectedTime onPress={FourtyPress}>
+                  <Text style={{color: "#FE4265"}}>45 minutes</Text>
+                </DeselectedTime>
+            }
+          </TitleCont>
 
-            <TitleCont>
-              {onehour === true 
-                ? <SelectedTime>
-                    <Text style={{color:"white"}}>1 hour</Text>
-                  </SelectedTime>
-                : <DeselectedTime onPress={OnePress}>
-                    <Text style={{color: "#FE4265"}}>1 hour</Text>
-                  </DeselectedTime> 
-              }
+          <TitleCont>
+            {onehour === true 
+              ? <SelectedTime>
+                  <Text style={{color:"white"}}>1 hour</Text>
+                </SelectedTime>
+              : <DeselectedTime onPress={OnePress}>
+                  <Text style={{color: "#FE4265"}}>1 hour</Text>
+                </DeselectedTime> 
+            }
 
-              {twohours === true 
-                ? <SelectedTime>
-                    <Text style={{color:"white"}}>2 hours</Text>
-                  </SelectedTime>
-                : <DeselectedTime onPress={TwoPress}>
-                    <Text style={{color: "#FE4265"}}>2 hours</Text>
-                  </DeselectedTime>
-              }
-            </TitleCont>
+            {twohours === true 
+              ? <SelectedTime>
+                  <Text style={{color:"white"}}>2 hours</Text>
+                </SelectedTime>
+              : <DeselectedTime onPress={TwoPress}>
+                  <Text style={{color: "#FE4265"}}>2 hours</Text>
+                </DeselectedTime>
+            }
+          </TitleCont>
         </View>
-        
-        <View style={{flex:1 , justifyContent:'space-evenly', flexDirection:'column'}}>
-        <Text>Edit Dietary Restriction:</Text>
-        <DietSelect/>
-        </View>
-
         
         <TitleCont>
+
+          <But width="182px" height="50px" text="List Item"/>
           <But onPress={
             async (fuid) => {
 
@@ -418,6 +413,7 @@ useEffect(() => {
                 status:"active"
               });
           }} width="182px" height="50px" text="List Item"/>
+
           <But width="182px" height="50px" text="Cancel" bgColor="#F3AD81"
           onPress={()=>{
             setModalVisible(!modalVisible)

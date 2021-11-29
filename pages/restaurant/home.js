@@ -1,6 +1,6 @@
 // Adrian's's section - restaurant UI
-import React, { useState, useEffect } from "react";
-import { StyleSheet, View, ScrollView, Text } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, ScrollView } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 
 import {
@@ -22,12 +22,15 @@ import Tabs from '../../comps/global/Tabs'
 import Search from "../../comps/Restaurant/SearchBar";
 
 import BubbleRest from "../../comps/Restaurant/BubbleRest";
+
 import axios from 'axios';
 import { auth } from "../../firebase";
 
 
 
+
 export default function RestaurantHome ({  navigation }) {
+
 
   const [listedData, setListedData] = useState(null);
   const [ordersData, setOrdersData] = useState(null);
@@ -63,6 +66,7 @@ export default function RestaurantHome ({  navigation }) {
       id:oid,
       status:status
     })}
+
 
 
   const [mealtab, setMealTab] = useState(true)
@@ -185,7 +189,9 @@ export default function RestaurantHome ({  navigation }) {
             bottom:0,
             flex:1}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
+
           {ordersData ? ordersData.filter((x)=> {return x.ostatus === 'active'}).map((order)=>(
+
             <OrderCard 
               key={order.oid}
               ordernum={order.oid}
@@ -202,6 +208,7 @@ export default function RestaurantHome ({  navigation }) {
             />
           )) : <Text>No current orders</Text>}
       
+
         </ScrollView>
         </View>}
       
@@ -212,6 +219,7 @@ export default function RestaurantHome ({  navigation }) {
             bottom:0,
             flex:1}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
+
           {listedData ? listedData.filter((x)=> {return x.status === 'active'}).map((listed)=>(
             <ListingCard
               key={listed.lid}
@@ -220,6 +228,7 @@ export default function RestaurantHome ({  navigation }) {
               modifications={listed.modifications}
             />
           )): <Text>No current listings!</Text>}
+
         </ScrollView>
         </View>}
         
