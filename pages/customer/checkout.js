@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, ScrollView, Modal } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
 import CustCurrentOrder from '../../comps/customer/CustCurrentOrder';
@@ -61,26 +61,36 @@ export default function Checkout({
   
   const [listedData, setListedData] = useState();
 
-  useEffect(() => {
-
-
-
-    let isUnmount = false;
-    var userID = auth.currentUser?.uid;
-    
-    (async () => {
-      const result = await axios.get('/users.php?fuid='+userID);
-      if(!isUnmount){
+  useFocusEffect(
+    React.useCallback(()=>{
+      var userID = auth.currentUser?.uid;
+      (async () => {
+        const result = await axios.get('/users.php?fuid='+userID);
         setListedData(result.data);
-      }
-    
-    })();
-    
-    return () => {
-      isUnmount = true;
-    }
+      })();
+    },[])
+  )
 
-  }, []);
+  // useEffect(() => {
+
+
+
+  //   let isUnmount = false;
+  //   var userID = auth.currentUser?.uid;
+    
+  //   (async () => {
+  //     const result = await axios.get('/users.php?fuid='+userID);
+  //     if(!isUnmount){
+  //       setListedData(result.data);
+  //     }
+    
+  //   })();
+    
+  //   return () => {
+  //     isUnmount = true;
+  //   }
+
+  // }, []);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [orderData, setOrderData] = useState([]);

@@ -8,7 +8,7 @@ import {
 import {
   Quicksand_300, Quicksand_300Light
 } from '@expo-google-fonts/quicksand';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
 import CustCurrentOrder from '../../comps/customer/CustCurrentOrder';
@@ -36,26 +36,36 @@ const [status, setStatus] = useState("complete")
 
 var userId = auth.currentUser?.uid
 
-useEffect(() => {
+// useEffect(() => {
 
-  let isUnmount = false;
+//   let isUnmount = false;
   
-  (async () => {
-    //const result = await axios.get('/orders.php?fuid='+userId);
-    //const result = await axios.get('/orders.php?status=complete');
+//   (async () => {
+//     //const result = await axios.get('/orders.php?fuid='+userId);
+//     //const result = await axios.get('/orders.php?status=complete');
     
-    if(!isUnmount){
+//     if(!isUnmount){
+//       const result = await axios.get('/orders.php?u_id='+userId);
+//       setPastOrders(result.data);
+//     }
+  
+//   })();
+
+//   return () => {
+//     isUnmount = true;
+//   }
+
+// }, []);
+
+useFocusEffect(
+  React.useCallback(()=>{
+    
+    (async () => {
       const result = await axios.get('/orders.php?u_id='+userId);
       setPastOrders(result.data);
-    }
-  
-  })();
-
-  return () => {
-    isUnmount = true;
-  }
-
-}, []);
+    })();
+  },[])
+)
 
 
 
