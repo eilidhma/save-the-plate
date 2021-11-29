@@ -72,11 +72,10 @@ export default function Checkout({
     .catch(error => alert(error.message))
   }
 
-
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
       <TopCont>
-        <IconCont>
+        <IconCont >
           <MaterialCommunityIcons name="account" size={60} color="white" />
         </IconCont>
       <Text style={{fontSize:30, fontWeight:'400', color:'white', marginLeft:20}}>{auth.currentUser?.email}</Text>
@@ -85,6 +84,9 @@ export default function Checkout({
         <PlatesSaved/>
         <InfoCard onPress={EditContact} title="Contact Information" sectiontitle1="Phone number:" sectiontitle2="Address:" phone="604-315-3122" addressline1="1798 Granville Street" addressline2="V6J 3F2" edit="Edit Contact Information"/>
         <InfoCard onPress={EditCard} title="Payment Information" sectiontitle1="Card Number:" sectiontitle2="Expiration Date:" cvc="CVC" phone="**** **** **** 8954" addressline1="**/**" addressline2="***" edit="Edit Credit Card Information"/>
+        <Pressable style={styles.shadowProp} title="Save Changes" onPress={() => navigation.navigate('Home')} >
+          <Text style={{fontSize:18, color:'white'}}>Save Changes</Text>
+        </Pressable>
         <Pressable style={styles.whiteButton} title="< Back" onPress={handleSignOut} >
           <Text style={{fontSize:18, color:'#E94168'}}>Sign Out</Text>
         </Pressable>

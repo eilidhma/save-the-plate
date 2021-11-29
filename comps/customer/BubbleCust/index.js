@@ -12,7 +12,11 @@ const BubbleCust = ({
     back="",
     next="",
     show=true,
-    src=require("../../../assets/meal.png"),
+    src=require("../../../assets/tabs.gif"),
+    heightCont="",
+    heightImg="",
+    heightPng="",
+    wide="90%",
 }) => {
 
     if(show === false){
@@ -21,13 +25,20 @@ const BubbleCust = ({
 
     if(show === true){
     return (
-        <View>
-            <View style={styles.container}>
+        <View >  
+            <View height={heightCont} style={styles.container}>
                 <View style={styles.textCont}>
                     <Text style={styles.heading}>{heading}</Text>
                 </View>
-                <View style={styles.imgCont}>
-                    <Image style={{width:280, height:350, borderRadius:20}} source={src}/>
+                <View style={styles.imgCont} height={heightImg}>
+                    <Image style={{transform:[{scale:0.35}],
+                        borderRadius:50,
+                        borderColor:'black',
+                        borderWidth:5}} 
+                        source={src}
+                        height={heightPng}
+                        width={wide}
+                    />
                 </View>
                 <View style={styles.textCont}>
                     <Text style={styles.heading}>{subheading}</Text>
@@ -66,6 +77,8 @@ const styles = StyleSheet.create({
       shadowOffset: {width: 0, height: 4},
       shadowOpacity: 0.25,
       shadowRadius: 4,
+
+      justifyContent:'center',
     },
 
     textCont: {
@@ -74,8 +87,9 @@ const styles = StyleSheet.create({
         marginBottom:10,
     },
     imgCont: {
+        width:'100%',
+        justifyContent:'center',
         alignItems:'center',
-        margin:10,
     },
     bttnCont: {
         marginTop:5,

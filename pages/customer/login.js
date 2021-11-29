@@ -21,6 +21,32 @@ const Stack = createNativeStackNavigator();
 
 export default function Login({ navigation }) {
 
+  // const Upload = async(e)=> {
+  //   console.log(e.target.files[0]);
+  //   if(e.target.files.length <=0){
+  //     alert("No files were selected")
+  //     return false;
+  //   }
+  //   const file = e.target.files[0];
+  //   const storage = getStorage();
+  //   const storageRef = ref(storage, 'test.jpg');
+
+  //   // 'file' comes from the Blob or File API
+  //   const snapshot = await uploadBytes(storageRef, file)
+  //     console.log('Uploaded!');    
+  // }
+
+  // const FBCreateUser = async()=>{
+  //   const auth = getAuth();
+  //   const result = await createUserWithEmailAndPassword(auth, em, ps)
+  //   alert("created!")
+  // }
+
+  // const FBSignIn = async()=>{
+  //   const auth = getAuth();
+  //   const result = await signInWithEmailAndPassword(auth, em, ps)
+  //   alert("Signed in!")
+  // }
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")

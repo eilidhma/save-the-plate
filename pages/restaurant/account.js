@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
@@ -11,13 +11,11 @@ import {
 
 import { NavigationContainer } from '@react-navigation/native';
 import styled from 'styled-components';
-import { auth } from '../../firebase';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import PlatesSaved from '../../comps/customer/PlatesSaved';
-import InfoCard from '../../comps/Restaurant/InfoCard';
+import InfoCard from '../../comps/customer/InfoCard';
 import But from '../../comps/global/Button';
-import axios from 'axios';
 
 const TopCont = styled.Pressable`
   display:flex;
@@ -65,8 +63,10 @@ const EditMenuCont = styled.View`
 `;
 
 export default function RestarantAccount({
+  restaurant="Fratelli's Bistro",
   navigation
 }) {
+
   const [data, setData] = useState()
   // console.log(data)
   //USE THIS TO MAP OUT USER DATA
@@ -99,7 +99,7 @@ export default function RestarantAccount({
         <IconCont >
           <MaterialCommunityIcons name="account" size={60} color="white" />
         </IconCont>
-      <Text style={{fontSize:30, fontWeight:'400', color:'white', marginLeft:20}}>{auth.currentUser?.email}</Text>
+      <Text style={{fontSize:30, fontWeight:'400', color:'white', marginLeft:20}}>{restaurant}</Text>
       </TopCont>
       <Cards>
         <PlatesSaved/>
@@ -112,7 +112,7 @@ export default function RestarantAccount({
         </EditMenuCont>
 
         <But text="Save Changes" margintop="10px" bgColor="#F3AD81"/>
-        <But text="Sign Out" margintop="10px" txtColor="#FE4265" bgColor="#ffffff" onPress={handleSignOut}/>
+        <But text="< Back" margintop="10px" txtColor="#FE4265" bgColor="#ffffff" onPress={()=>navigation.goBack()}/>
       </Cards>
     </LinearGradient>
   );
