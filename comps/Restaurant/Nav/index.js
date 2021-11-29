@@ -247,11 +247,10 @@ useEffect(() => {
   let isUnmount = false;
   
   (async () => {
+   
+    const result = await axios.get('/meals.php');
     if(!isUnmount){
-      var uid = auth.currentUser?.uid;
-      const result = await axios.get('/meals.php')
       setMealsData(result.data);
-      console.log(result.data)
     }
   
   })();
@@ -313,6 +312,7 @@ useEffect(() => {
               setMealName(meals.m_name)}} 
             margintop="10px"/>
           )) : null}
+
         </ScrollView>
       </View>
     </View>

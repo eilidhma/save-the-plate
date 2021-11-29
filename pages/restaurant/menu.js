@@ -218,8 +218,6 @@ export default function Menu({
         }
       }
 
-      const url = await storage.ref().child('menu/item66.jpg').getDownloadURL()
-      console.log("url",url)
     })();
   }, []);
 
@@ -255,7 +253,10 @@ export default function Menu({
 
 
   const AddMeal = async () => {
-    //const restaurantId = await axios.get('/users.php?fuid=' + auth.currentUser?.uid)
+    const restaurantId = await axios.get('/users.php?fuid=' + auth.currentUser?.uid)
+
+    console.log(restaurantId.data[0].id)
+
     const newMeal = await axios.post('/meals.php', {
       m_name:mealName,
       new_price:price,
@@ -264,7 +265,7 @@ export default function Menu({
       gf:gF,
       df:dF,
       v:v,
-      u_id:auth.currentUser?.uid
+      u_id:restaurantId.data[0].id
     });
 
 
