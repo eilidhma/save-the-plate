@@ -52,7 +52,36 @@ export default function Signup({ navigation }) {
     })
   }, [])
 
-  const handleSignUp = () => {
+
+  const GetUsers = async ()=>{
+    const result = await axios.get('/users.php');
+    console.log(result, result.data);
+  }
+
+  const UserData = async (fuid) => {
+    
+    const result = await axios.post('/users.php', {
+      full_name:name,
+      fuid:fuid,
+      email:email,
+      password:password,
+      plates_saved:plates_saved,
+      phone:phone,
+      add1:addLine1,
+      add2:addLine2,
+      postal_code:postalCode,
+      city:city,
+      province:province,
+      restaurant:isRestaurant,
+      cuisine:isCuisine,
+      u_id:fuid
+    });
+    //console.log(result, result.data);
+  }
+
+  const PostUser = async () => {
+
+
     auth
     .createUserWithEmailAndPassword(email, password)
     .then(userCredendtials => {

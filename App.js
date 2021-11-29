@@ -28,7 +28,9 @@ import ThanksOverlay from './comps/customer/ThanksOverlay';
 import axios from 'axios';
 
 
-axios.defaults.baseURL = "https://5cc2-174-7-125-0.ngrok.io/save-the-plate/api/"
+// INSERT NEW LINK FROM ME HERE
+
+axios.defaults.baseURL = "https://save-the-plate.herokuapp.com/api/"
 
 
 

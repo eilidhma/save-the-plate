@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, ScrollView, Image, Button, Pressable, TextInput
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, SimpleLineIcons, AntDesign } from '@expo/vector-icons';
 
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useFocusEffect} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
 import CustMealCard from '../../comps/customer/CustMealCard';
@@ -31,7 +31,8 @@ const image4 = require("../../assets/customer_menu.png")
 
 export default function Home({
   navigation,
-  total="$5.00"
+  total="$5.00",
+  route
 }) {
 
 
@@ -163,7 +164,50 @@ export default function Home({
 
 
 
+  const [restaurantData, setRestaurantData] = useState()
   
+
+
+  useFocusEffect(
+    React.useCallback(()=>{
+      (async () => {
+        const american = await axios.get('/listed.php?cuisine=american');
+        const italian = await axios.get('/listed.php?cuisine=italian');
+        const mexican = await axios.get('/listed.php?cuisine=mexican');
+        const vietnamese = await axios.get('/listed.php?cuisine=vietnamese');
+        const result = await axios.get('/listed.php');
+        //console.log(result)
+        
+          setListedData(result.data);
+          //console.log(american.data)
+          setAllFood(result.data);
+          setAmericanFood(american.data);
+          setItalianFood(italian.data);
+          setMexicanFood(mexican.data);
+          setVietnameseFood(vietnamese.data)
+        
+      })();
+    },[])
+  )
+
+  useFocusEffect(
+    React.useCallback(()=>{
+      (async () => {
+          console.log("run home route")
+          let restaurants = await axios.get('/users.php?restaurant=1')
+          //console.log(restaurants.data)
+          setRestaurantData(restaurants.data)
+          //console.log(restaurantData)
+      })();
+    },[])
+  )
+
+  const getRestaurants = async()=> {
+    let restaurants = await axios.get('/users.php?restaurant=1')
+    console.log(restaurants.data)
+  }
+
+
   const [errorMsg, setErrorMsg] = useState(null);
   const [location, setLocation] = useState({
     longitude: -123.1207,
@@ -173,30 +217,76 @@ export default function Home({
   const [restaurants] = useState([
     {
       key: 1,
-      title: "Fratelli's Bistro",
-      description: "Italian comfort food",
+      title: "Habitat Pub",
+      description: "Delicious on-campus pub fare",
       location: {
-        longitude: -123.101025,
-        latitude: 49.248911
-      }
+
+        longitude: -123.001550,
+        latitude: 49.253300
+      },
+      plates_saved: "50",
+      distance:'400m',
+      mealQuantity:3
+
     },
     {
       key: 2,
-      title: "Keg Steakhouse",
-      description: "Upscale steakhouse",
+      title: "Agra Tandoori",
+      description: "Delicious Indian cuisine",
       location: {
-        longitude: -123.095022,
-        latitude: 49.236414
-      }
+
+        longitude: -123.020660,
+        latitude: 49.254430
+      },
+      plates_saved: "120",
+      distance:'1.2km',
+      mealQuantity:2
+
     },
     {
       key: 3,
-      title: "Chewie's",
+      title: "Acqua",
       description: "Seafood restaurant",
       location: {
-        longitude: -123.026504,
+        longitude: -123.010650,
+        latitude: 49.267530
+      },
+      plates_saved: "290",
+      distance:'1.5km',
+      mealQuantity:4
+    },
+    {
+      key: 4,
+      title: "Yasser's Restaurant",
+      description: "Afghan cuisine",
+      location: {
+        longitude: -123.018930,
         latitude: 49.249887
       }
+    },
+    {
+      key: 5,
+      title: "Atlas Steakhouse",
+      description: "Amazing steak!",
+      location: {
+        longitude: -123.007278,
+        latitude: 49.256741
+      },
+      plates_saved: "290",
+      distance:'1.5km',
+      mealQuantity:4
+    },
+    {
+      key: 6,
+      title: "Earl's kitchen and bar",
+      description: "a family owned premium casual dining chain",
+      location: {
+        longitude: -123.019590,
+        latitude: 49.265350
+      },
+      plates_saved: "290",
+      distance:'1.5km',
+      mealQuantity:4
     },
   ])
 
@@ -229,34 +319,6 @@ export default function Home({
   const [mexicanFood, setMexicanFood] = useState(null)
   const [americanFood, setAmericanFood] = useState(null)
   const [vietnameseFood, setVietnameseFood] = useState(null)
-  
-  useEffect(() => {
-
-    let isUnmount = false;
-    
-    (async () => {
-      const american = await axios.get('/listed.php?cuisine=american');
-      const italian = await axios.get('/listed.php?cuisine=italian');
-      const mexican = await axios.get('/listed.php?cuisine=mexican');
-      const vietnamese = await axios.get('/listed.php?cuisine=vietnamese');
-      const result = await axios.get('/listed.php');
-      if(!isUnmount){
-        setListedData(result.data);
-        //console.log(american.data)
-        setAllFood(result.data);
-        setAmericanFood(american.data);
-        setItalianFood(italian.data);
-        setMexicanFood(mexican.data);
-        setVietnameseFood(vietnamese.data)
-      }
-    
-    })();
-
-    return () => {
-      isUnmount = true;
-    }
-
-  }, []);
   
 
 
@@ -783,6 +845,31 @@ export default function Home({
               : null}
             </MapView>
           </View>}
+
+          <View>
+            <Modal
+            animationType="slide"
+            transparent={true}
+            visible={restModalVisible}
+            >
+              <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+
+                <View style={{display:'flex', width:'90%', justifyContent:'center', alignItems:'flex-end', height:40}}>
+                  <View style={{width:70, height:2, backgroundColor:'#C3C3C3', position:'absolute', top:10, alignSelf:'center'}}></View>
+                  <Pressable onPress={()=>setRestModalVisible(!restModalVisible)}>
+                    <AntDesign name="close" size={24} color="black" />
+                  </Pressable>
+                </View>
+                <View>
+                  <CustMealCard/>
+                  
+                </View>
+              </View>
+            </View>
+          </Modal>
+          </View>
+
     </LinearGradient>
   ); 
 }
