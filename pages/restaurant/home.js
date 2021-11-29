@@ -23,9 +23,48 @@ import Search from "../../comps/Restaurant/SearchBar";
 
 import BubbleRest from "../../comps/Restaurant/BubbleRest";
 
+import axios from 'axios';
+import { auth } from "../../firebase";
+
+
 
 
 export default function RestaurantHome ({  navigation }) {
+
+
+  const [listedData, setListedData] = useState(null);
+  const [ordersData, setOrdersData] = useState(null);
+  const [oid, setOid] = useState();
+  const [status, setStatus] = useState("complete");
+
+  useEffect(() => {
+
+    let isUnmount = false;
+    
+    (async () => {
+      const result = await axios.get('/listed.php');
+      const orderResult = await axios.get('/orders.php');
+      if(!isUnmount){
+        setListedData(result.data);
+        setOrdersData(orderResult.data)
+        //console.log(orderResult.data)
+      }
+    
+    })();
+
+    return () => {
+      isUnmount = true;
+    }
+
+  }, []);
+
+  const ConfirmPickup = async () =>{
+    const patch = await axios.patch('/orders.php', {
+      id:oid,
+      status:status
+    })}
+
+
 
   const [mealtab, setMealTab] = useState(true)
   const [maptab, setMapTab] = useState(false)
@@ -147,12 +186,25 @@ export default function RestaurantHome ({  navigation }) {
             bottom:0,
             flex:1}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
-          <OrderCard/>
-          <OrderCard/>
-          <OrderCard/>
-          <OrderCard/>
-          <OrderCard/>
-          <OrderCard/>
+
+          {ordersData ? ordersData.filter((x)=> {return x.status === 'active' && x.fuid === auth.currentUser?.uid}).map((order)=>(
+            <OrderCard 
+              key={order.oid}
+              ordernum={order.oid}
+              ordername={order.m_name} 
+              timer={order.time_avail}
+              phonenum={order.phone} 
+              name={order.full_name} 
+              ConfirmPickup={ async()=>{
+                const patch = await axios.patch('/orders.php', {
+                  id:order.oid,
+                  status:status
+                }) 
+              }}
+            />
+          )) : <Text>No current orders</Text>}
+      
+
         </ScrollView>
         </View>}
       
@@ -163,12 +215,16 @@ export default function RestaurantHome ({  navigation }) {
             bottom:0,
             flex:1}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
-          <ListingCard/>
-          <ListingCard/>
-          <ListingCard/>
-          <ListingCard/>
-          <ListingCard/>
-          <ListingCard/>
+
+          {listedData ? listedData.filter((x)=> {return x.status === 'active'}).map((listed)=>(
+            <ListingCard
+              key={listed.lid}
+              foodname={listed.m_name}
+              timer={listed.time_avail}
+              modifications={listed.modifications}
+            />
+          )): <Text>No current listings!</Text>}
+
         </ScrollView>
         </View>}
         

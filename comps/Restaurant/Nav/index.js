@@ -221,6 +221,35 @@ function Reset () {
   setTwo(false);
 }
 
+const [mealsData, setMealsData] = useState();
+
+const [mealMods, setMealMods] = useState()
+const [mealTime, setMealTime] = useState()
+const [mealQuant, setMealQuant] = useState()
+const [mealName, setMealName] = useState()
+const [mid, setMid] = useState()
+
+const [user, setUser] = useState();
+
+useEffect(() => {
+
+  let isUnmount = false;
+  
+  (async () => {
+   
+    const result = await axios.get('/meals.php');
+    if(!isUnmount){
+      setMealsData(result.data);
+    }
+  
+  })();
+
+  return () => {
+    isUnmount = true;
+  }
+
+}, []);
+
 
   
   return <Cont>
@@ -272,6 +301,16 @@ function Reset () {
           <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
           <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
           <But text="Fettucini Alfredo" onPress={()=>setItemStep(2)} margintop="10px"/>
+          {mealsData ? mealsData.filter((x)=> {return x.fuid === auth.currentUser?.uid}).map((meals) => (
+            <But 
+            key={meals.mid} 
+            text={meals.m_name} 
+            onPress={()=> {
+              setItemStep(2)
+              setMid(meals.mid)
+              setMealName(meals.m_name)}} 
+            margintop="10px"/>
+          )) : null}
         </ScrollView>
       </View>
     </View>
@@ -356,7 +395,25 @@ function Reset () {
         </View>
         
         <TitleCont>
+
           <But width="182px" height="50px" text="List Item"/>
+          <But onPress={
+            async (fuid) => {
+
+              setItemStep(1);
+              setModalVisible(!modalVisible);
+            
+              fuid = auth.currentUser?.uid
+              const result = await axios.post('/listed.php', {
+                modifications:mealMods,
+                time_avail:mealTime,
+                fuid:fuid,
+                m_name:mealName,
+                m_id:mid,
+                status:"active"
+              });
+          }} width="182px" height="50px" text="List Item"/>
+
           <But width="182px" height="50px" text="Cancel" bgColor="#F3AD81"
           onPress={()=>{
             setModalVisible(!modalVisible)

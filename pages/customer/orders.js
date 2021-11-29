@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
@@ -14,11 +14,54 @@ import styled from 'styled-components';
 import CustCurrentOrder from '../../comps/customer/CustCurrentOrder';
 import CustMealCard from '../../comps/customer/CustMealCard';
 import PastOrder from '../../comps/customer/PastOrder';
+import axios from 'axios';
+import { auth } from '../../firebase';
 
 var logo = require ('../../assets/logo1.png');
 const Stack = createNativeStackNavigator();
 
-export default function Orders({ navigation }) {
+
+export default function Orders({ navigation, route }) {
+
+//const {orderItems} = route.params;
+//console.log(orderItems[0].id);
+
+var orderItems = null;
+if(route.params && route.params.orderItems){
+  orderItems = route.params.orderItems;
+}
+
+const [pastOrders, setPastOrders] = useState()
+const [status, setStatus] = useState("complete")
+
+var userId = auth.currentUser.uid
+
+useEffect(() => {
+
+  let isUnmount = false;
+
+  
+  
+  (async () => {
+    //const result = await axios.get('/orders.php?fuid='+userId);
+    const result = await axios.get('/orders.php');
+    console.log(result.data)
+    if(!isUnmount){
+      setPastOrders(result.data);
+    }
+  
+  })();
+
+  return () => {
+    isUnmount = true;
+  }
+
+}, []);
+
+
+
+
+
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
       <View style={{width:'100%', position:'absolute', top:80, display:'flex', justifyContent:'center', alignItems:'center'}}>
@@ -26,7 +69,21 @@ export default function Orders({ navigation }) {
       </View>
       <ScrollView style={styles.scrollViewSmall}>
         <View style={{display:'flex', justifyContent:'center', alignItems:'center', overflow:'hidden'}}>
-          <CustCurrentOrder HandleDetails={()=>{}}/> 
+
+          {orderItems ? orderItems.map((order) => (
+            <CustCurrentOrder 
+              key={order.id}
+              meal={order.m_name}
+              restaurant={order.restaurant}
+              newprice={order.new_price}
+              oldprice={order.old_price}
+              quantity={1}
+            /> 
+          )) : <View>
+            <Text>No current order</Text>
+            </View>}
+            
+
         </View>
       </ScrollView>
       <View style={{width:'90%', backgroundColor:'white', height:2, position:'absolute', top:320}}></View> 
@@ -35,14 +92,13 @@ export default function Orders({ navigation }) {
       </View> 
       <View style={styles.scrollView}>
       <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
-      
-        <PastOrder />
-        <PastOrder />
-        <PastOrder />
-        <PastOrder />
-        <PastOrder />
-        <PastOrder />
-        <PastOrder />
+      {pastOrders ? pastOrders.filter((x)=> {return x.status === 'complete'}).map((past) => (
+        <PastOrder 
+        key={past.oid}
+        meal={past.m_name}
+        restaurant={past.full_name}
+        />
+      )) : null}
 
       </ScrollView>
       </View>

@@ -67,6 +67,32 @@ export default function RestarantAccount({
   navigation
 }) {
 
+  const [data, setData] = useState()
+  // console.log(data)
+  //USE THIS TO MAP OUT USER DATA
+
+  useEffect(()=>{
+    var userid = auth.currentUser?.uid
+    UserData(userid);
+  }, []);
+
+  const handleSignOut = () => {
+    auth
+    .signOut()
+    .then(()=> {
+      navigation.replace('Login')
+      console.log('Logged out');
+    })
+    .catch(error => alert(error.message))
+  }
+
+  const UserData = async (uid) => {
+    const result = await axios.get('/users.php?fuid=' + uid)
+    setData(result.data[0])
+  }
+
+
+
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
       <TopCont>

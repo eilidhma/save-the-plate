@@ -30,9 +30,10 @@ const RestCont = styled.View`
 
 const PriceCont = styled.View`
   display:flex;
-  width:50%;
+  width:60%;
   flexDirection:row;
-  justify-content:space-between;
+  justify-content:flex-start;
+  align-items:center;
 `;
 
 const DetailsCont = styled.Pressable`
@@ -60,18 +61,13 @@ const Left = styled.View`
 
 const Right = styled.View`
   display:flex;
-  margin:15px;
+  margin-top:15px;
+  margin-right:15px;
+  margin-left:15px;
   flexDirection:column;
   flex:2;
 `
 
-const Plates = styled.View`
-  display:flex;
-  flexDirection:column;
-  width:30px;
-  justifyContent:center;
-  alignItems:center;
-`
 
 const QuantityCont = styled.View`
   display:flex;
@@ -123,6 +119,9 @@ const CustCurrentOrder = ({
   height="170px",
   quantity="1",
 
+  timeAvail="6:00:00"
+
+
 }) =>{
 
   // const [card, setCard] = useState(false)
@@ -157,22 +156,13 @@ const CustCurrentOrder = ({
           </QuantityCont>
         </RestCont>
         <PriceCont>
-          <Text style={{marginTop:8, fontSize:16, color:'#FE4265', fontWeight:'700'}}>{newprice}</Text>
-          <Text style={{marginTop:10, fontSize:12, textDecorationLine:'line-through'}}>{oldprice}</Text>
+          <Text style={{fontSize:16, color:'#FE4265', fontWeight:'700'}}>{newprice}</Text>
+          <Text style={{marginLeft:5, fontSize:12, textDecorationLine:'line-through'}}>{oldprice}</Text>
         </PriceCont>
         <DetailsCont onPress={HandleDetails}>
           <Pressable onPress={HandleDetails}><Text style={{marginTop:5, fontSize:18, fontWeight:'500', color:'#FE4265'}}>Directions</Text></Pressable>
           <MaterialIcons style={{marginTop:5}} name="arrow-right" size={33} color="#FE4265" />
         </DetailsCont>
-        
-        <Text style={{marginTop:10, fontSize:12}}>{description}</Text>
-        <StarsCont>
-          <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
-          <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
-          <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
-          <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
-          <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
-        </StarsCont>
       </Right>
     </Content>
   </CardCont>
