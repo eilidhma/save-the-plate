@@ -15,26 +15,38 @@ import CustCurrentOrder from '../../comps/customer/CustCurrentOrder';
 import CustMealCard from '../../comps/customer/CustMealCard';
 import PastOrder from '../../comps/customer/PastOrder';
 import axios from 'axios';
+import { auth } from '../../firebase';
 
 var logo = require ('../../assets/logo1.png');
 const Stack = createNativeStackNavigator();
 
 export default function Orders({ navigation, route }) {
 
-const {orderItems} = route.params;
-console.log(orderItems[0].id);
+//const {orderItems} = route.params;
+//console.log(orderItems[0].id);
+
+var orderItems = null;
+if(route.params && route.params.orderItems){
+  orderItems = route.params.orderItems;
+}
 
 const [pastOrders, setPastOrders] = useState()
+const [status, setStatus] = useState("complete")
+
+var userId = auth.currentUser.uid
 
 useEffect(() => {
 
   let isUnmount = false;
+
+  
   
   (async () => {
+    //const result = await axios.get('/orders.php?fuid='+userId);
     const result = await axios.get('/orders.php');
+    console.log(result.data)
     if(!isUnmount){
       setPastOrders(result.data);
-      console.log(pastOrders)
     }
   
   })();
@@ -64,7 +76,10 @@ useEffect(() => {
               oldprice={order.old_price}
               quantity={1}
             /> 
-          )) : <Text>No current order</Text>}
+          )) : <View>
+            <Text>No current order</Text>
+            </View>}
+            
         </View>
       </ScrollView>
       <View style={{width:'90%', backgroundColor:'white', height:2, position:'absolute', top:320}}></View> 
