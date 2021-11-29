@@ -6,11 +6,6 @@ import Diets from '../../global/Diets';
 import DietSelect from '../../global/DietSelect';
 
 import app from '../../../firebase';
-import { fireDB } from '../../../firebase';
-import { collection, doc, setDoc, getDocs } from "firebase/firestore";
-
-
-
 
 
 const CardCont = styled.View`
@@ -132,50 +127,22 @@ const CustMealCard = ({
   description="fettuccine pasta tossed with Parmesan cheese and butter and served with garlic toast on the side",
   newprice="$5.00",
   oldprice="$21.00",
-  // height="170px",
+
+  modifications="mods",
+  showDairy=false,
+  showGluten=false,
+  showNut=false,
+  showVege=false,
   addToCart=()=>{}
 }) =>{
-
-  /* START OF FIREBASE STUFF */
-  
-    const [restaurants, setRestaurants] = useState([]);
-    const restaurantsCollectionRef = fireDB.collection("restaurants")
-
-// this works :D
-    restaurantsCollectionRef.doc("test3").set({
-      name: "hellooo",
-      city: "van" 
-    });
-    restaurantsCollectionRef.doc("test4").set({
-      name: "hello",
-      city: "white rock" 
-    });
-
-  
-    
-    var restRef = restaurantsCollectionRef.doc("test4");
-
-    restRef.get().then((doc) => {
-        if (doc.exists) {
-            console.log("Document data:", doc.data());
-        } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-        }
-    }).catch((error) => {
-        console.log("Error getting document:", error);
-    });
-
-/* END OF FIREBASE STUFF */
         
   const [card, setCard] = useState("170px")
   const [rotation, setRotation] = useState(0)
 
   const HandleCard = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setCard(card === "170px" ? "330px" : "170px");
+    setCard(card === "170px" ? "360px" : "170px");
     setRotation(rotation === 0 ? 180 : 0);
-    console.log(firestore)
   };
 
   return <View style={styles.content}>
@@ -187,45 +154,15 @@ const CustMealCard = ({
     <TopContent>
       <TopLeft>
         <Image style={{width:115, height:105, borderRadius:15}} source={src}/>
-
-        <Text style={{marginTop:30, fontSize:16}}>Description:</Text>
-        {/* <Text style={{marginTop:30, fontSize:16}}>Restaurant's Rating:</Text> */}
-        <Text style={{marginTop:60, fontSize:16}}>Dietary Information:</Text>
-      </Left>
-      <Right>
-        <Text style={{fontSize:20}}>{meal}</Text>
-
       </TopLeft>
       <TopRight>
         <View style={{display:'flex', justifyContent:"flex-start", alignContent:'flex-start'}}>
         <Text style={{fontSize:18, fontWeight:'bold', width:'100%'}}>{meal}</Text>
         </View>
-
         <RestCont>
           <Text style={{fontSize:14}}>{restaurant}</Text>
           <Text style={{fontSize:12}}>{distance}</Text>
         </RestCont>
-
-        <PriceCont>
-          <Text style={{marginTop:8, fontSize:16, color:'#FE4265', fontWeight:'700'}}>{newprice}</Text>
-          <Text style={{marginTop:10, fontSize:12, textDecorationLine:'line-through'}}>{oldprice}</Text>
-        </PriceCont>
-        <DetailsCont onPress={HandleCard}>
-          <Pressable onPress={HandleCard}><Text style={{marginTop:5, fontSize:18, fontWeight:'600', color:'#FE4265'}}>More Details</Text></Pressable>
-          <MaterialIcons style={{marginTop:5, transform: [{ rotate: rotation+"deg" }]}} name="arrow-drop-down" size={33} color="#FE4265" />
-        </DetailsCont>
-        
-        <Text style={{marginTop:10, fontSize:12}}>{description}</Text>
-        {/* <StarsCont>
-          <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
-          <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
-          <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
-          <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
-          <SimpleLineIcons style={{marginRight:7}} name="star" size={24} color="#FE4265" />
-        </StarsCont> */}
-        <View style={{marginTop:20}}>
-          <Diets showVege={true} showNut={true}/>
-
         <View style={{width:'100%', height:40, display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
           <PriceCont>
             <Text style={{fontSize:16, color:'#FE4265', fontWeight:'700'}}>{newprice}</Text>
@@ -235,7 +172,6 @@ const CustMealCard = ({
             <Pressable onPress={HandleCard}><Text style={{fontSize:18, fontWeight:'600', color:'#FE4265'}}>Details</Text></Pressable>
             <MaterialIcons style={{marginTop:-5, transform: [{ rotate: rotation+"deg" }]}} name="arrow-drop-down" size={33} color="#FE4265" />
           </DetailsCont>
-
         </View>
       </TopRight>
     </TopContent>

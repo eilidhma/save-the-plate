@@ -20,7 +20,6 @@ import { auth } from '../../firebase';
 var logo = require ('../../assets/logo1.png');
 const Stack = createNativeStackNavigator();
 
-
 export default function Orders({ navigation, route }) {
 
 //const {orderItems} = route.params;
@@ -71,7 +70,6 @@ useFocusEffect(
 
 
 
-
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
       <View style={{width:'100%', position:'absolute', top:80, display:'flex', justifyContent:'center', alignItems:'center'}}>
@@ -79,7 +77,6 @@ useFocusEffect(
       </View>
       <ScrollView style={styles.scrollViewSmall}>
         <View style={{display:'flex', justifyContent:'center', alignItems:'center', overflow:'hidden'}}>
-
           {orderItems ? orderItems.map((order) => (
             <CustCurrentOrder 
               key={1}
@@ -93,7 +90,6 @@ useFocusEffect(
             <Text>No current order</Text>
             </View>}
             
-
         </View>
       </ScrollView>
       <View style={{width:'90%', backgroundColor:'white', height:2, position:'absolute', top:320}}></View> 
