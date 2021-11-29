@@ -58,9 +58,12 @@ export default function Checkout({
   route
 }) {
 
+  
   const [listedData, setListedData] = useState();
 
   useEffect(() => {
+
+
 
     let isUnmount = false;
     var userID = auth.currentUser?.uid;
@@ -82,7 +85,19 @@ export default function Checkout({
   const [modalVisible, setModalVisible] = useState(false);
   const [orderData, setOrderData] = useState([]);
 
-  const {cartItems} = route.params;
+  // var cartItems = null;
+  // if(route.params !== null){
+  //   cartItems = route.params;
+  // }
+
+
+  var cartItems = null;
+  if(route.params && route.params.cartItems){
+    cartItems = route.params.cartItems;
+  }
+  
+  
+  //const {cartItems} = route.params;
   console.log(cartItems)
   const ViewOrder = () => {
     navigation.navigate('Orders')
@@ -101,8 +116,17 @@ export default function Checkout({
     const status = 'active';
     const result = await axios.post('/orders.php', {
       status:status,
-      l_id:cartItems[0].id,
+      l_id:cartItems[0].lid,
       fuid:fuid
+    }); 
+  }
+
+  const PatchListing = async () => {
+    const fuid = auth.currentUser.uid;
+    const status = 'complete';
+    const result = await axios.patch('/listed.php', {
+      id:cartItems[0].lid,
+      status:status,
     }); 
   }
 
@@ -115,28 +139,31 @@ export default function Checkout({
         <Text style={styles.heading}>Checkout</Text>
       </View>
       <View style={{width:'90%', backgroundColor:'white', height:2, position:'absolute', top:118}}></View> 
-      <Cont>
-        <TitleCont> 
+      <Cont> 
+      {cartItems ? <TitleCont> 
           {listedData ? listedData.map((listed) => (
 
-            <Name key={1} name={listed.full_name}/>
-          )):null}
-        </TitleCont>
-        <Distance>
+            <Name key={listed.id} name={listed.full_name}/>
+          )):null} 
+        </TitleCont> : null}
+        {cartItems ? <Distance>
           <SimpleLineIcons style={{marginRight:5}} name="location-pin" size={18} color="black" />
           <Text style={{fontSize:16, color:'black'}}>{distance}<Text> away</Text></Text>
-        </Distance>
+        </Distance>: 
+      <View>
+        <Text>You have nothing in your cart!</Text>
+      </View>}
         <View style={styles.scrollView}>
            <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:300}}>
-            <View style={{
+           {cartItems ? <View style={{
             width:'100%',
             justifyContent:'center',
             alignItems:'center'}}>
               <Image style={{width:'90%', height:150}} source={map}></Image>
-            </View>
+            </View>: null}
             {cartItems ? cartItems.map((order)=>(  
               <CustCurrentOrder
-                key={order.id}
+                key={order.lid}
                 meal={order.m_name}
                 restaurant={order.restaurant}
                 newprice={order.new_price}
@@ -145,17 +172,18 @@ export default function Checkout({
               />
             )) : null}
  
-            <View style={{width:'100%', display:'flex', justifyContent:'space-between', alignItems:'center', paddingLeft:20, paddingRight:20, marginTop:30, flexDirection:'row'}}>
+ {cartItems ? <View style={{width:'100%', display:'flex', justifyContent:'space-between', alignItems:'center', paddingLeft:20, paddingRight:20, marginTop:30, flexDirection:'row'}}>
               <View style={{width:120, display:'flex', flexDirection:'row'}}>
                 <Image style={{width:50, height:15}} source={cardtype}></Image>
                 <Text style={{marginLeft:5}}>***7896</Text>
               </View>
               <Text style={{fontSize:22, fontWeight:'500'}}>Total: {price}</Text>
-            </View>
+            </View> : null}
             {cartItems ? cartItems.map((order)=>(  
             <Pressable key={order.id} style={styles.shadowProp} title="Confirm" onPress={() => {
               setModalVisible(!modalVisible);
               PostOrder();
+              PatchListing();
               setOrderItems([
                 ...orderItems, 
                 order
@@ -169,7 +197,7 @@ export default function Checkout({
         </View>
         
         
-      </Cont>
+      </Cont> 
       
       <Modal
         animationType="fade"

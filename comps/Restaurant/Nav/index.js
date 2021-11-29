@@ -414,7 +414,8 @@ useEffect(() => {
                 time_avail:mealTime,
                 fuid:fuid,
                 m_name:mealName,
-                m_id:mid
+                m_id:mid,
+                status:"active"
               });
           }} width="182px" height="50px" text="List Item"/>
           <But width="182px" height="50px" text="Cancel" bgColor="#F3AD81"

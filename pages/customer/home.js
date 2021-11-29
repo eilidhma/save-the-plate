@@ -193,16 +193,32 @@ export default function Home({
   
   const [listedData, setListedData] = useState(null);
   const [mealsData, setMealsData] = useState(null);
+
+  const [allFood, setAllFood] = useState(null)
+
+  const [italianFood, setItalianFood] = useState(null)
+  const [mexicanFood, setMexicanFood] = useState(null)
+  const [americanFood, setAmericanFood] = useState(null)
+  const [vietnameseFood, setVietnameseFood] = useState(null)
   
   useEffect(() => {
 
     let isUnmount = false;
     
     (async () => {
-     
+      const american = await axios.get('/listed.php?cuisine=american');
+      const italian = await axios.get('/listed.php?cuisine=italian');
+      const mexican = await axios.get('/listed.php?cuisine=mexican');
+      const vietnamese = await axios.get('/listed.php?cuisine=vietnamese');
       const result = await axios.get('/listed.php');
       if(!isUnmount){
         setListedData(result.data);
+        //console.log(american.data)
+        setAllFood(result.data);
+        setAmericanFood(american.data);
+        setItalianFood(italian.data);
+        setMexicanFood(mexican.data);
+        setVietnameseFood(vietnamese.data)
       }
     
     })();
@@ -275,9 +291,11 @@ export default function Home({
       if(c1Selected === false){
         setC1Color("#ff1a44")
         setC1TextColor("white")
+        setListedData(italianFood)
       } else {
         setC1Color("white")
         setC1TextColor("#ff1a44")
+        setListedData(allFood)
       }
     }
     // MEXICAN
@@ -290,9 +308,11 @@ export default function Home({
       if(c2Selected === false){
         setC2Color("#ff1a44")
         setC2TextColor("white")
+        setListedData(mexicanFood)
       } else {
         setC2Color("white")
         setC2TextColor("#ff1a44")
+        setListedData(allFood)
       }
     }
     // VIETNAMESE
@@ -305,9 +325,11 @@ export default function Home({
       if(c3Selected === false){
         setC3Color("#ff1a44")
         setC3TextColor("white")
+        setListedData(vietnameseFood)
       } else {
         setC3Color("white")
         setC3TextColor("#ff1a44")
+        setListedData(allFood)
       }
     }
     // AMERICAN
@@ -320,9 +342,11 @@ export default function Home({
       if(c4Selected === false){
         setC4Color("#ff1a44")
         setC4TextColor("white")
+        setListedData(americanFood)
       } else {
         setC4Color("white")
         setC4TextColor("#ff1a44")
+        setListedData(allFood)
       }
     }
 
@@ -533,7 +557,7 @@ export default function Home({
     const [time5Selected, setTime5Selected] = useState(false)
     const SelectTime5 = async() => {
       setTime5Selected(!time5Selected)
-      const timeresult = await axios.get('/listed.php');
+      
         setListedData(timeresult.data);
       if(time5Selected === false){
         setTime5Color("#ff1a44")
@@ -670,7 +694,7 @@ export default function Home({
         </View>}
         <View style={{width:'100%', alignItems:'center', paddingBottom:105}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
-            {listedData ? listedData.map((listed) => (
+            {listedData ? listedData.filter((x)=> {return x.status === "active"}).map((listed) => (
               <CustMealCard
                key={listed.lid}
                meal={listed.m_name}

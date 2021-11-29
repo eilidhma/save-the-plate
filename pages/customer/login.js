@@ -48,7 +48,7 @@ export default function Login({ navigation }) {
       <Text style={{color:'white', fontFamily:'Raleway_700Bold', fontSize:32}}>SaveThePlate</Text>
       <Image style={{width:70, height:70, marginTop:5}} source={logo}/>
       <TextInput value={email} onChangeText={text=>setEmail(text)} autoCompleteType={'username'} style={styles.username} placeholder={'username'} textAlign={'center'} textContentType={'username'}/>
-      <TextInput value={password} onChangeText={text=>setPassword(text)} autoCompleteType={'password'} style={styles.username} placeholder={'password'} textAlign={'center'} textContentType={'password'}/>
+      <TextInput secureTextEntry value={password} onChangeText={text=>setPassword(text)} autoCompleteType={'password'} style={styles.username} placeholder={'password'} textAlign={'center'} textContentType={'password'}/>
       <Pressable style={styles.shadowProp} title="Login"
         onPress={handleLogin} >
         <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Login</Text>

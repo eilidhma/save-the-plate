@@ -23,6 +23,7 @@ import Search from "../../comps/Restaurant/SearchBar";
 
 import BubbleRest from "../../comps/Restaurant/BubbleRest";
 import axios from 'axios';
+import { auth } from "../../firebase";
 
 
 
@@ -181,7 +182,7 @@ export default function RestaurantHome ({  navigation }) {
             bottom:0,
             flex:1}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
-          {ordersData ? ordersData.filter((x)=> {return x.status === 'active'}).map((order)=>(
+          {ordersData ? ordersData.filter((x)=> {return x.status === 'active' && x.fuid === auth.currentUser?.uid}).map((order)=>(
             <OrderCard 
               key={order.oid}
               ordernum={order.oid}
@@ -208,9 +209,9 @@ export default function RestaurantHome ({  navigation }) {
             bottom:0,
             flex:1}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
-          {listedData ? listedData.map((listed)=>(
+          {listedData ? listedData.filter((x)=> {return x.status === 'active'}).map((listed)=>(
             <ListingCard
-              key={listed.id}
+              key={listed.lid}
               foodname={listed.m_name}
               timer={listed.time_avail}
               modifications={listed.modifications}
