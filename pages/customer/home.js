@@ -10,24 +10,24 @@ import CustMealCard from '../../comps/customer/CustMealCard';
 import Tabs from '../../comps/customer/Tabs';
 import UserLocation from '../../comps/customer/UserLocation';
 
-import MapView from 'react-native-maps';
+import MapView, { Callout } from 'react-native-maps';
 import { Marker } from 'react-native-maps';
 import Filters from '../../comps/customer/Filters';
 import CustCurrentOrder from '../../comps/customer/CustCurrentOrder';
 import SimpleOrderCard from '../../comps/customer/SimpleOrderCard';
 import Nav from '../../comps/customer/Nav';
 import * as Location from 'expo-location'; 
+
+import PlatesSaved from '../../comps/customer/PlatesSaved';
+import axios from 'axios';
+import Geocode from "react-geocode";
+
 import BubbleCust from '../../comps/customer/BubbleCust';
-import { width } from '@mui/system';
+
 
 
 
 var mapIcon = require ('../../assets/mapicon.png');
-
-const image1 = require("../../assets/homepage.png")
-const image2 = require("../../assets/tabs.gif")
-const image3 = require("../../assets/filters.gif")
-const image4 = require("../../assets/customer_menu.png")
 
 export default function Home({
   navigation,
@@ -35,15 +35,6 @@ export default function Home({
   route
 }) {
 
-
-  // function userData(user, score) {
-  //   if (user != null) {
-  //     const database = getDatabase();
-  //     set(ref(db, 'users/' + user.uid), {
-  //       highscore: score,
-  //     });
-  //   }
-  // }
 
 
   const [mealtab, setMealTab] = useState(true)
@@ -64,11 +55,14 @@ export default function Home({
   }
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [restModalVisible, setRestModalVisible] = useState(false);
 
-  const CheckOut = () => {
-    navigation.navigate('Cart')
-    setModalVisible(false)
+
+
+  const markerPress = () => {
+    setRestModalVisible(true)
   }
+
 
 
   // !--------- Tutorial ----------!
@@ -76,13 +70,10 @@ export default function Home({
   const [bubble, setBubble] = useState(true)
   const [heading, setHeading] = useState("Here's your Home page. \n Let's break it down!")
   const [subheading, setSubheading] = useState("")
-  const [img, setImg] = useState(image1)
+  const [img, setImg] = useState("../../../assets/meal.png")
   const [back, setBack] = useState("< Back")
   const [next, setNext] = useState("Next >")
   const [visibility, setVisibility] = useState(false)
-  const [contheight, setContHeight] = useState(350)
-  const [imgheight, setImgHeight] = useState(250)
-  const [pngheight, setPngHeight] = useState(100)
 
   const HandleBubbleNext = () => {
     if(card === 0){
@@ -90,29 +81,17 @@ export default function Home({
       setVisibility(true)
       setHeading("The 'Meals' tab allows you to see the meals ready for pickup")
       setSubheading("The 'Map' tab allows you to see restaurants around you that have meals ready for pickup")
-      setImg(image2)
-      setContHeight(350)
-      setImgHeight(125)
-      setPngHeight(250)
     }
     if(card === 1){
       setCard(2)
       setHeading("This icon will open the 'Filters' window, to narrow down your research")
       setSubheading("")
-      setImg(image3)
-      setContHeight(550)
-      setImgHeight(360)
-      setPngHeight(1000)
     }
     if(card === 2){
       setCard(3)
       setHeading("The 1st icon will lead you back to the 'Home' page. \n The 2nd icon will lead you to the 'Orders' page")
       setSubheading("The 3rd icon will lead you to the 'Card' page. \n The 4th icon will lead you to your 'Account' page")
       setNext("Done")
-      setImg(image4)
-      setContHeight(350)
-      setImgHeight(200)
-      setPngHeight('100%')
     }
     if(card === 3){
       setCard(0)
@@ -121,10 +100,6 @@ export default function Home({
       setSubheading("")
       setBubble(false)
       setNext("Next >")
-      setImg(image1)
-      setContHeight(550)
-      setImgHeight(360)
-      setPngHeight(250)
     }
   }
   const HandleBubbleBack = () => {
@@ -133,35 +108,23 @@ export default function Home({
       setVisibility(false)
       setHeading("Here's your Home page. \n Let's break it down!")
       setSubheading("")
-      setImg(image1)
-      setContHeight(550)
-      setImgHeight(360)
     }
     if(card === 2){
       setCard(1)
       setHeading("The 'Meals' tab allows you to see the meals ready for pickup")
       setSubheading("The 'Map' tab allows you to see restaurants around you that have meals ready for pickup")
-      setImg(image2)
-      setContHeight(350)
-      setImgHeight(125)
-      setPngHeight(250)
     }
     if(card === 3){
       setCard(2)
       setHeading("This icon will open the 'Filters' window, to narrow down your research")
       setSubheading("")
       setNext("Next >")
-      setImg(image3)
-      setContHeight(550)
-      setImgHeight(360)
-      setPngHeight(1000)
     }
   }
   // NEED TO INCLUDE FOLLOWING LINE FOR TUTORIAL CUSTOMER
-  // <BubbleCust show={bubble} heading={heading} subheading={subheading} src={img} back={back} next={next} heightImg={imgheight} heightCont={contheight} heightPng={pngheight} onPress1={HandleBubbleNext} onPress2={HandleBubbleBack} opacity={visibility}/>
+  // <BubbleCust show={bubble} heading={heading} subheading={subheading} img={img} back={back} next={next} onPress1={HandleBubbleNext} onPress2={HandleBubbleBack} opacity={visibility}/>
 
   // !--------- End Of Tutorial ----------!
-
 
 
   const [restaurantData, setRestaurantData] = useState()
@@ -207,7 +170,6 @@ export default function Home({
     console.log(restaurants.data)
   }
 
-
   const [errorMsg, setErrorMsg] = useState(null);
   const [location, setLocation] = useState({
     longitude: -123.1207,
@@ -220,28 +182,24 @@ export default function Home({
       title: "Habitat Pub",
       description: "Delicious on-campus pub fare",
       location: {
-
         longitude: -123.001550,
         latitude: 49.253300
       },
       plates_saved: "50",
       distance:'400m',
       mealQuantity:3
-
     },
     {
       key: 2,
       title: "Agra Tandoori",
       description: "Delicious Indian cuisine",
       location: {
-
         longitude: -123.020660,
         latitude: 49.254430
       },
       plates_saved: "120",
       distance:'1.2km',
       mealQuantity:2
-
     },
     {
       key: 3,
@@ -262,7 +220,10 @@ export default function Home({
       location: {
         longitude: -123.018930,
         latitude: 49.249887
-      }
+      },
+      plates_saved: "290",
+      distance:'1.5km',
+      mealQuantity:4
     },
     {
       key: 5,
@@ -288,8 +249,8 @@ export default function Home({
       distance:'1.5km',
       mealQuantity:4
     },
+    
   ])
-
 
   const GetLatLong = () => {
     Geocode.setApiKey("AIzaSyDA6WZ_rlulhSrphE3Z9ue1WJJSnHr2jy8");
@@ -320,7 +281,6 @@ export default function Home({
   const [americanFood, setAmericanFood] = useState(null)
   const [vietnameseFood, setVietnameseFood] = useState(null)
   
-
 
   useEffect(() => {
 
@@ -358,9 +318,7 @@ export default function Home({
     text = errorMsg;
   } else if (location) {
     text = JSON.stringify(location);
-    //console.log(text)
   }
-
 
 
   const [meal, setMeal] = useState()
@@ -665,7 +623,6 @@ export default function Home({
     // ----- FILTERS END ------
 
 
-
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
 
@@ -687,8 +644,6 @@ export default function Home({
             bottom:0,
             flex:1}}>
         
-        
-        
         <Modal
           animationType="slide"
           transparent={true}
@@ -704,13 +659,23 @@ export default function Home({
                 </Pressable>
               </View>
               <View>
-                <SimpleOrderCard />
+
+                <SimpleOrderCard 
+                restaurant={rest} 
+                meal={meal}
+                newprice={newPrice}
+                oldprice={oldPrice} 
+                />
               </View>
               <View style={{display:'flex', flexDirection:'row', width:'90%', justifyContent:'flex-end', marginTop:20}}>
-                <Text style={{fontSize:24, fontWeight:'500'}}>Total: {total}</Text>
+                <Text style={{fontSize:24, fontWeight:'500'}}>Total: {newPrice}</Text>
               </View>
               <View style={{display:'flex', flexDirection:'row', width:'90%', justifyContent:'space-between'}}>
-                <Pressable style={styles.shadowPropDark} title="Checkout" onPress={CheckOut} >
+                <Pressable style={styles.shadowPropDark} title="Checkout" onPress={()=>{
+                  navigation.navigate('Cart', {cartItems} );
+                  setModalVisible(false);
+                 
+                }} >
                   <Text style={{color:'white', fontSize:18}}>Checkout</Text>
                 </Pressable>
                 <Pressable style={styles.shadowPropLight} title="Add more" onPress={() => setModalVisible(!modalVisible)} >
@@ -721,7 +686,6 @@ export default function Home({
           </View>
         </Modal>
         {mealtab === true && <View style={{display:'flex', justifyContent:'center', alignItems:'center', marginBottom:20}}>
-
           <Filters
           SelectCuisine1={SelectCuisine1}
           SelectCuisine2={SelectCuisine2}
@@ -811,7 +775,7 @@ export default function Home({
 
             )) : null}
             
-
+            
         </ScrollView>
         </View>
         </View>}
@@ -826,9 +790,8 @@ export default function Home({
             initialRegion={location}
             showsUserLocation
             style={{width:'100%', height:600}}
+            provider="google"
             >
-              {/* <Marker coordinate={mapRegion} title="Me" description="My Location"/> */}
-
               {restaurants ? restaurants.map((restaurant) => (
                 <Marker 
                 key={restaurant.key}
@@ -839,13 +802,25 @@ export default function Home({
                   <View style={styles.marker}>
                     <Image style={{width:30, height:30}} source={mapIcon}/>
                   </View>
-                  {/* <MaterialIcons name="food-bank" size={36} color="#E94168" /> */}
+                  <Callout style={{borderRadius:20}} onPress={markerPress}>
+                    <View style={styles.callout}>
+                      <Text style={{fontSize:24, fontWeight:'500', color:'black', marginBottom:10}}>{restaurant.title}</Text>
+                      <Text style={{marginBottom:10}}>{restaurant.distance} away</Text>
+                      <View style={{display:'flex', flexDirection:'row'}}>
+                        <Text style={{fontWeight:'800', color:'#F3AE81', fontSize:18}}>{restaurant.mealQuantity}</Text>
+                        <Text style={{fontWeight:'300', fontSize:18}}> meals available!</Text>
+                      </View>
+                      <Pressable style={styles.shadowPropDark} title="Checkout" >
+                        <Text style={{color:'white', fontSize:18}}>View meals</Text>
+                      </Pressable>
+                      <View/>
+                    </View>
+                  </Callout>
                 </Marker>
               ))
               : null}
             </MapView>
           </View>}
-
           <View>
             <Modal
             animationType="slide"
@@ -869,7 +844,6 @@ export default function Home({
             </View>
           </Modal>
           </View>
-
     </LinearGradient>
   ); 
 }
@@ -966,12 +940,6 @@ const styles = StyleSheet.create({
     padding: 10,
     elevation: 2
   },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-  },
   textStyle: {
     color: "white",
     fontWeight: "bold",
@@ -995,5 +963,20 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
+  },
+  callout: {
+    display:'flex',
+    width:250,
+    backgroundColor:'white',
+    padding:20,
+    justifyContent:'center',
+    alignItems:'center',
+    borderRadius:20
+  },
+  calloutInner: {
+    display:'flex',
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'flex-start'
   }
 });

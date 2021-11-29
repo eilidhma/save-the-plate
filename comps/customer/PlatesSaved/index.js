@@ -3,13 +3,14 @@ import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'rea
 import styled from 'styled-components';
 import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
 
+
 var plate = require('../../../assets/plate.png')
 
 const CardCont = styled.View`
   display:flex;
   backgroundColor:white;
   width:90%;
-  flexDirection:row;
+  flexDirection:${props=>props.flexDirection};
   borderRadius:15px;
   overflow:hidden;
   height:60px;
@@ -29,14 +30,14 @@ const PlateCont = styled.View`
 
 const Quantity = styled.Text`
   marginBottom:0;
-  fontSize:20px;
+  fontSize:${props=>props.fontSize};
   color:#FE4265;
   text-align:center;
   font-weight:700;
 `
 
 const Plates = styled.Text`
-  fontSize:20px;
+  fontSize:${props=>props.fontSize};
   color:#FE4265;
   text-align:center;
   font-weight:700;
@@ -48,14 +49,18 @@ const Plates = styled.Text`
 
 const PlatesSaved = ({
   quantity="178",
+  flexDirection="row",
+  fontSize="20px",
+  width=60,
+  height=15
 }) =>{
 
-  return <CardCont>
+  return <CardCont flexDirection={flexDirection}>
     <PlateCont>
-      <Quantity>{quantity}</Quantity>
-      <Image style={{width:60, height:15}} source={plate}></Image>
+      <Quantity fontSize={fontSize}>{quantity}</Quantity>
+      <Image style={{width:width, height:height}} source={plate}></Image>
     </PlateCont>
-    <Plates>plates saved!</Plates>
+    <Plates fontSize={fontSize}>plates saved!</Plates>
   </CardCont>
 }
 

@@ -14,7 +14,6 @@ import styled from 'styled-components';
 
 import * as ImagePicker from 'expo-image-picker';
 
-
 import { MaterialCommunityIcons, AntDesign, MaterialIcons } from '@expo/vector-icons';
 import PlatesSaved from '../../comps/customer/PlatesSaved';
 import InfoCard from '../../comps/customer/InfoCard';
@@ -26,7 +25,6 @@ import "firebase/storage";
 import axios from 'axios';
 
 // add a modal that says image uploaded
-
 
 const TopCont = styled.Pressable`
   display:flex;
@@ -191,7 +189,6 @@ export default function Menu({
 }) {
 
   const [modalVisible, setModalVisible] = useState(false);
-
   const [EditItem, setEditItem] = useState(false);
 
   // values to post to database
@@ -204,14 +201,11 @@ export default function Menu({
   const [v, setV] = useState()
   const [fuid, set] = useState()
 
-
   // state to set image
   const [image, setImage] = useState(null);
 
-
   // state for image name
   const [imgName, setImgName] = useState()
-
 
   // get permissions
   useEffect(() => {
@@ -224,6 +218,8 @@ export default function Menu({
         }
       }
 
+      const url = await storage.ref().child('menu/item66.jpg').getDownloadURL()
+      console.log("url",url)
     })();
   }, []);
 
@@ -236,22 +232,21 @@ export default function Menu({
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.cancelled) {
       setImage(result.uri);
     }
   };
+
+
 
   const takePicture = async () => {
     let result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 0.2,
     });
 
-    console.log(result);
 
     if (!result.cancelled) {
       setImage(result.uri);
@@ -259,12 +254,8 @@ export default function Menu({
   };
 
 
-
   const AddMeal = async () => {
-    const restaurantId = await axios.get('/users.php?fuid=' + auth.currentUser?.uid)
-
-    console.log(restaurantId.data[0].id)
-
+    //const restaurantId = await axios.get('/users.php?fuid=' + auth.currentUser?.uid)
     const newMeal = await axios.post('/meals.php', {
       m_name:mealName,
       new_price:price,
@@ -273,7 +264,7 @@ export default function Menu({
       gf:gF,
       df:dF,
       v:v,
-      u_id:restaurantId.data[0].id
+      u_id:auth.currentUser?.uid
     });
 
 
@@ -296,10 +287,9 @@ export default function Menu({
   }
 
 
-
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
-
+      {/* new item modal */}
       <Modal
       animationType="slide"
       transparent={true}
@@ -309,6 +299,10 @@ export default function Menu({
         <CloseModal onPress={()=>setModalVisible(!modalVisible)}>
           <AntDesign name="close" size={13} color="#C4C4C4" />
         </CloseModal>
+
+        <Text style={{alignSelf: 'center', fontSize: 25, color: "#C4C4C4"}}>
+          Add New Item
+        </Text>
         
         {/* image row */}
         <ModalRow style={{justifyContent:'flex-start'}}>
@@ -399,7 +393,6 @@ export default function Menu({
  
       </AddItemModal>
       </Modal>
-
 
       {/* edit item modal */}
       <Modal
@@ -499,7 +492,6 @@ export default function Menu({
       </Modal>
       
 
-
       <TopCont>
         <IconCont >
           <MaterialCommunityIcons name="account" size={60} color="#ffffff" />
@@ -513,7 +505,6 @@ export default function Menu({
 
         <View style={{width: '100%'}}>
             <ScrollView contentContainerStyle={{width: '100%', alignItems:'center', paddingBottom: 70}}>
-
                 {
                   //getting all the image
                   /* items.map((o,i)=>{
@@ -527,7 +518,6 @@ export default function Menu({
                 }
                 
                 <But width="100%" height="50px" text="Fettucini Alfredo" margintop="10px" onPress={()=>setEditItem(!modalVisible)}/>
-
                 <But width="100%" height="50px" text="Spaghetti Bolognese" margintop="10px"/>
                 <But width="100%" height="50px" text="Lasagna" margintop="10px"/>
                 <But width="100%" height="50px" text="Meatballs" margintop="10px"/>
