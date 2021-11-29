@@ -126,6 +126,32 @@ export default function Home({
   // !--------- End Of Tutorial ----------!
 
 
+  const [restaurantData, setRestaurantData] = useState()
+  
+  useEffect(() => {
+
+    let isUnmount = false;
+    
+    (async () => {
+      if(!isUnmount){
+        let restaurants = await axios.get('/users.php?restaurant=1')
+        console.log(restaurants.data)
+        setRestaurantData(restaurants.data)
+        console.log(restaurantData)
+     }
+    })();
+
+    return () => {
+      isUnmount = true;
+    }
+
+  }, []);
+
+  const getRestaurants = async()=> {
+    let restaurants = await axios.get('/users.php?restaurant=1')
+    console.log(restaurants.data)
+  }
+
   const [errorMsg, setErrorMsg] = useState(null);
   const [location, setLocation] = useState({
     longitude: -123.1207,
@@ -135,11 +161,11 @@ export default function Home({
   const [restaurants] = useState([
     {
       key: 1,
-      title: "Fratelli's Bistro",
-      description: "Italian comfort food",
+      title: "Habitat Pub",
+      description: "Delicious on-campus pub fare",
       location: {
-        longitude: -123.101025,
-        latitude: 49.248911
+        longitude: -123.001550,
+        latitude: 49.253300
       },
       plates_saved: "50",
       distance:'400m',
@@ -147,11 +173,11 @@ export default function Home({
     },
     {
       key: 2,
-      title: "Keg Steakhouse",
-      description: "Upscale steakhouse",
+      title: "Agra Tandoori",
+      description: "Delicious Indian cuisine",
       location: {
-        longitude: -123.095022,
-        latitude: 49.236414
+        longitude: -123.020660,
+        latitude: 49.254430
       },
       plates_saved: "120",
       distance:'1.2km',
@@ -159,11 +185,47 @@ export default function Home({
     },
     {
       key: 3,
-      title: "Chewie's",
+      title: "Acqua",
       description: "Seafood restaurant",
       location: {
-        longitude: -123.026504,
+        longitude: -123.010650,
+        latitude: 49.267530
+      },
+      plates_saved: "290",
+      distance:'1.5km',
+      mealQuantity:4
+    },
+    {
+      key: 4,
+      title: "Yasser's Restaurant",
+      description: "Afghan cuisine",
+      location: {
+        longitude: -123.018930,
         latitude: 49.249887
+      },
+      plates_saved: "290",
+      distance:'1.5km',
+      mealQuantity:4
+    },
+    {
+      key: 5,
+      title: "Atlas Steakhouse",
+      description: "Amazing steak!",
+      location: {
+        longitude: -123.007278,
+        latitude: 49.256741
+      },
+      plates_saved: "290",
+      distance:'1.5km',
+      mealQuantity:4
+    },
+    {
+      key: 6,
+      title: "Earl's kitchen and bar",
+      description: "a family owned premium casual dining chain",
+      location: {
+        longitude: -123.019590,
+        latitude: 49.265350
       },
       plates_saved: "290",
       distance:'1.5km',
@@ -211,6 +273,7 @@ export default function Home({
       const mexican = await axios.get('/listed.php?cuisine=mexican');
       const vietnamese = await axios.get('/listed.php?cuisine=vietnamese');
       const result = await axios.get('/listed.php');
+      console.log(result)
       if(!isUnmount){
         setListedData(result.data);
         //console.log(american.data)
@@ -786,8 +849,7 @@ export default function Home({
                 </View>
                 <View>
                   <CustMealCard/>
-                  <CustMealCard/>
-                  <CustMealCard/>
+                  
                 </View>
               </View>
             </View>

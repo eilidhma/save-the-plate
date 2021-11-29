@@ -28,24 +28,24 @@ export default function Orders({ navigation, route }) {
 var orderItems = null;
 if(route.params && route.params.orderItems){
   orderItems = route.params.orderItems;
+  console.log(orderItems)
 }
-
+console.log(orderItems)
 const [pastOrders, setPastOrders] = useState()
 const [status, setStatus] = useState("complete")
 
-var userId = auth.currentUser.uid
+var userId = auth.currentUser?.uid
 
 useEffect(() => {
 
   let isUnmount = false;
-
-  
   
   (async () => {
     //const result = await axios.get('/orders.php?fuid='+userId);
-    const result = await axios.get('/orders.php');
-    console.log(result.data)
+    //const result = await axios.get('/orders.php?status=complete');
+    
     if(!isUnmount){
+      const result = await axios.get('/orders.php?u_id='+userId);
       setPastOrders(result.data);
     }
   
@@ -69,9 +69,9 @@ useEffect(() => {
         <View style={{display:'flex', justifyContent:'center', alignItems:'center', overflow:'hidden'}}>
           {orderItems ? orderItems.map((order) => (
             <CustCurrentOrder 
-              key={order.id}
+              key={1}
               meal={order.m_name}
-              restaurant={order.restaurant}
+              restaurant={order.full_name}
               newprice={order.new_price}
               oldprice={order.old_price}
               quantity={1}
@@ -88,6 +88,7 @@ useEffect(() => {
       </View> 
       <View style={styles.scrollView}>
       <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
+      {/* {pastOrders ? pastOrders.filter((x)=> {return x.status === 'complete'}).map((past) => ( */}
       {pastOrders ? pastOrders.filter((x)=> {return x.status === 'complete'}).map((past) => (
         <PastOrder 
         key={past.oid}

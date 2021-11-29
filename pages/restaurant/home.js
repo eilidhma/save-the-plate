@@ -33,15 +33,18 @@ export default function RestaurantHome ({  navigation }) {
   const [ordersData, setOrdersData] = useState(null);
   const [oid, setOid] = useState();
   const [status, setStatus] = useState("complete");
-
+  
+  var userID = auth.currentUser?.uid;
+  //console.log(userID)
   useEffect(() => {
 
     let isUnmount = false;
     
     (async () => {
-      const result = await axios.get('/listed.php');
-      const orderResult = await axios.get('/orders.php');
       if(!isUnmount){
+        const result = await axios.get('/listed.php');
+        const orderResult = await axios.get('/orders.php?fuid='+userID);
+        console.log(orderResult.data)
         setListedData(result.data);
         setOrdersData(orderResult.data)
         //console.log(orderResult.data)
@@ -182,14 +185,14 @@ export default function RestaurantHome ({  navigation }) {
             bottom:0,
             flex:1}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
-          {ordersData ? ordersData.filter((x)=> {return x.status === 'active' && x.fuid === auth.currentUser?.uid}).map((order)=>(
+          {ordersData ? ordersData.filter((x)=> {return x.ostatus === 'active'}).map((order)=>(
             <OrderCard 
               key={order.oid}
               ordernum={order.oid}
               ordername={order.m_name} 
               timer={order.time_avail}
               phonenum={order.phone} 
-              name={order.full_name} 
+              name={order.m_name} 
               ConfirmPickup={ async()=>{
                 const patch = await axios.patch('/orders.php', {
                   id:order.oid,

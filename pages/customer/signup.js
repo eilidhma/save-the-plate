@@ -78,7 +78,8 @@ export default function Signup({ navigation }) {
       city:city,
       province:province,
       restaurant:isRestaurant,
-      cuisine:isCuisine
+      cuisine:isCuisine,
+      u_id:fuid
     });
     //console.log(result, result.data);
   }
