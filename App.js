@@ -221,4 +221,3 @@ const homeStyles = StyleSheet.create({
 });
 
 export default App
-
