@@ -23,9 +23,11 @@ import axios from 'axios';
 import Geocode from "react-geocode";
 
 import BubbleCust from '../../comps/customer/BubbleCust';
+
 import Name from '../../comps/customer/Name';
 import Title from '../../comps/customer/Title';
 import SwipeUpDownModal from 'react-native-swipe-modal-up-down';
+import { auth, storage } from '../../firebase';
 
 
 
@@ -128,6 +130,16 @@ export default function Home({
   const [restaurantData, setRestaurantData] = useState()
   
 
+    let isUnmount = false;
+    
+    (async () => {
+      if(!isUnmount){
+        let restaurants = await axios.get('/users.php?restaurant=1')
+        // console.log(restaurants.data)
+        setRestaurantData(restaurants.data)
+        // console.log(restaurantData)
+     }
+    })();
 
   useFocusEffect(
     React.useCallback(()=>{
@@ -163,10 +175,6 @@ export default function Home({
     },[])
   )
 
-  const getRestaurants = async()=> {
-    let restaurants = await axios.get('/users.php?restaurant=1')
-    console.log(restaurants.data)
-  }
 
   const [errorMsg, setErrorMsg] = useState(null);
   const [location, setLocation] = useState({
@@ -258,10 +266,10 @@ export default function Home({
     Geocode.fromAddress("3700 Willingdon Ave Burnaby BC").then(
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
-        console.log(lat, lng);
+        // console.log(lat, lng);
       },
       (error) => {
-        console.error(error);
+        // console.error(error);
       }
     );
   }
@@ -278,6 +286,49 @@ export default function Home({
   const [mexicanFood, setMexicanFood] = useState(null)
   const [americanFood, setAmericanFood] = useState(null)
   const [vietnameseFood, setVietnameseFood] = useState(null)
+  
+  useEffect(() => {
+
+    let isUnmount = false;
+    
+    (async () => {
+      const american = await axios.get('/listed.php?cuisine=american');
+      const italian = await axios.get('/listed.php?cuisine=italian');
+      const mexican = await axios.get('/listed.php?cuisine=mexican');
+      const vietnamese = await axios.get('/listed.php?cuisine=vietnamese');
+      const result = await axios.get('/listed.php');
+      // console.log(result)
+      if(!isUnmount){
+
+        for (var i = 0; i<result.data.length; i++) {
+          try{
+            // console.log("getting")
+            const url = await storage.ref().child(`menu/item${result.data[i].m_id}.jpg`).getDownloadURL();
+            result.data[i].url = url
+            // console.log(url, "URL");
+
+           }catch (e){
+            result.data[i].url = null;
+            continue;
+          }
+        }
+
+        setListedData(result.data);
+        //console.log(american.data)
+        setAllFood(result.data);
+        setAmericanFood(american.data);
+        setItalianFood(italian.data);
+        setMexicanFood(mexican.data);
+        setVietnameseFood(vietnamese.data)
+      }
+    
+    })();
+
+    return () => {
+      isUnmount = true;
+    }
+
+  }, []);
   
 
   useEffect(() => {
@@ -506,7 +557,7 @@ export default function Home({
       } else {
         setDiet2Color("white")
         setDiet2TextColor("#ff1a44")
-        console.log(hello)
+        // console.log(hello)
       }
     }
     // Nut Free
@@ -814,6 +865,7 @@ export default function Home({
                showGluten={listed.gf}
                showDairy={listed.df}
                showVege={listed.v}
+               src={listed.url}
                addToCart={() => {
                 setShowModel(true)
                 //setModalVisible(true)

@@ -109,7 +109,7 @@ const ListingCard = ({
       setExpand(!isexpanded)
     }
   }
-
+  // console.log(img)
 
 
     return <CardCont height={cardheight}>

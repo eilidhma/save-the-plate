@@ -118,7 +118,7 @@ const AddToCart = styled.Text`
 // var mealImg = require('../../assets/meal.png');
 
 const CustMealCard = ({
-  src=require("../../../assets/meal.png"),
+  src="https://placekitten.com/200/200",
   plateImg=require("../../../assets/plate.png"),
   restaurant="Fratelli's Bistro", //fix this
   meal="Fettuccine Alfredo",
@@ -153,7 +153,7 @@ const CustMealCard = ({
     </Cart>
     <TopContent>
       <TopLeft>
-        <Image style={{width:115, height:105, borderRadius:15}} source={src}/>
+        <Image style={{width:115, height:105, borderRadius:15}} source={{uri:src}}/>
       </TopLeft>
       <TopRight>
         <View style={{display:'flex', justifyContent:"flex-start", alignContent:'flex-start'}}>
