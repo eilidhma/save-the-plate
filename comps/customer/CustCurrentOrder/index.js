@@ -108,7 +108,7 @@ const Timer = styled.Text`
 
 
 const CustCurrentOrder = ({
-  src=require("../../../assets/meal.png"),
+  src="https://placekitten.com/200/200",
   plateImg=require("../../../assets/plate.png"),
   restaurant="Fratelli's Bistro", 
   meal="Fettuccine Alfredo",
@@ -133,7 +133,7 @@ const CustCurrentOrder = ({
     </TimerCont>
     <Content>
       <Left>
-        <Image style={{width:115, height:105, borderRadius:15}} source={src}/>
+        <Image style={{width:115, height:105, borderRadius:15}} source={{uri:src}}/>
         <Text style={{marginTop:30, fontSize:16}}>Description:</Text>
         <Text style={{marginTop:30, fontSize:16}}>Restaurant's Rating:</Text>
         <Text style={{marginTop:15, fontSize:16}}>Dietary Information:</Text>
