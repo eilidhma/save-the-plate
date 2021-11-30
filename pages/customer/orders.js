@@ -15,7 +15,7 @@ import CustCurrentOrder from '../../comps/customer/CustCurrentOrder';
 import CustMealCard from '../../comps/customer/CustMealCard';
 import PastOrder from '../../comps/customer/PastOrder';
 import axios from 'axios';
-import { auth } from '../../firebase';
+import { auth, storage } from '../../firebase';
 
 var logo = require ('../../assets/logo1.png');
 const Stack = createNativeStackNavigator();
@@ -46,6 +46,20 @@ useEffect(() => {
     
     if(!isUnmount){
       const result = await axios.get('/orders.php?u_id='+userId);
+      
+      for (var i = 0; i<result.data.length; i++) {
+        try{
+          // console.log("getting")
+          const url = await storage.ref().child(`menu/item${result.data[i].m_id}.jpg`).getDownloadURL();
+          result.data[i].url = url
+          // console.log(url, "URL");
+
+         }catch (e){
+          result.data[i].url = null;
+          continue;
+        }
+      }
+
       setPastOrders(result.data);
     }
   
@@ -75,6 +89,7 @@ useEffect(() => {
               newprice={order.new_price}
               oldprice={order.old_price}
               quantity={1}
+              // src={order.url}
             /> 
           )) : <View>
             <Text>No current order</Text>
@@ -94,6 +109,7 @@ useEffect(() => {
         key={past.oid}
         meal={past.m_name}
         restaurant={past.full_name}
+        src={past.url}
         />
       )) : null}
 

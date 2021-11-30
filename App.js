@@ -26,7 +26,7 @@ import Nav from './comps/customer/Nav';
 import ThanksOverlay from './comps/customer/ThanksOverlay';
 import axios from 'axios';
 
-axios.defaults.baseURL = "http://9145-142-232-219-77.ngrok.io/save-the-plate/api/"
+axios.defaults.baseURL = "https://save-the-plate.herokuapp.com/api/"
 
 
 import RestaurantHome from './pages/restaurant/home';

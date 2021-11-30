@@ -48,7 +48,7 @@ const Right = styled.View`
 
 
 const PastOrder = ({
-  src=require("../../../assets/meal.png"),
+  src="https://placekitten.com/200/200",
   plateImg=require("../../../assets/plate.png"),
   restaurant="Fratelli's Bistro", 
   meal="Fettuccine Alfredo",
@@ -77,7 +77,7 @@ const PastOrder = ({
   return <CardCont height={height}>
     <Content>
       <Left>
-        <Image style={{width:115, height:70, borderRadius:15}} source={src}/>
+        <Image style={{width:115, height:70, borderRadius:15}} source={{uri:src}}/>
       </Left>
       <Right>
         <Text style={{fontSize:20}}>{meal}</Text>

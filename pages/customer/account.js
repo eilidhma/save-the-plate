@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
@@ -15,6 +15,7 @@ import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons } from '@expo/
 import PlatesSaved from '../../comps/customer/PlatesSaved';
 import InfoCard from '../../comps/customer/InfoCard';
 import { auth } from '../../firebase';
+import axios from 'axios'
 
 
 var logo = require ('../../assets/logo1.png');
@@ -54,13 +55,31 @@ export default function Checkout({
   user="John Smith"
 }) {
 
-  const EditContact = () => {
-
+  const [name, setName] = useState()
+  const [phone, setPhone] = useState()
+  const [platesSaved, setPlatesSaved] = useState()
+  const [address1, setAddress1] = useState()
+  const [address2, setAddress2] = useState()
+  const [postalCode, setPostalCode] = useState()
+  const [city, setCity] = useState()
+  const [province, setProvince] = useState()
+  
+  const UserData = async (uid) => {
+    const result = await axios.get('/users.php?fuid=' + uid)
+    setName(result.data[0].full_name)
+    setPhone(result.data[0].phone)
+    setPlatesSaved(result.data[0].plates_saved)
+    setAddress1(result.data[0].add1)
+    setAddress2(result.data[0].add2)
+    setPostalCode(result.data[0].postal_code)
+    setCity(result.data[0].city)
+    setProvince(result.data[0].province)
   }
 
-  const EditCard = () => {
-    
-  }
+  useEffect(()=>{
+    var userid = auth.currentUser?.uid
+    UserData(userid);
+  }, []);
 
   const handleSignOut = () => {
     auth
@@ -79,12 +98,12 @@ export default function Checkout({
         <IconCont>
           <MaterialCommunityIcons name="account" size={60} color="white" />
         </IconCont>
-      <Text style={{fontSize:30, fontWeight:'400', color:'white', marginLeft:20}}>{auth.currentUser?.email}</Text>
+      <Text style={{fontSize:30, fontWeight:'400', color:'white', marginLeft:20}}>{name}</Text>
       </TopCont>
       <Cards>
-        <PlatesSaved/>
-        <InfoCard onPress={EditContact} title="Contact Information" sectiontitle1="Phone number:" sectiontitle2="Address:" phone="604-315-3122" addressline1="1798 Granville Street" addressline2="V6J 3F2" edit="Edit Contact Information"/>
-        <InfoCard onPress={EditCard} title="Payment Information" sectiontitle1="Card Number:" sectiontitle2="Expiration Date:" cvc="CVC" phone="**** **** **** 8954" addressline1="**/**" addressline2="***" edit="Edit Credit Card Information"/>
+        <PlatesSaved quantity={platesSaved}/>
+        <InfoCard title="Contact Information" sectiontitle1="Phone number:" sectiontitle2="Address:" phone={phone} addressline1={address1 + " " + address2} addressline2={postalCode + " " + city + ", " + province} edit="Edit Contact Information"/>
+        <InfoCard title="Payment Information" sectiontitle1="Card Number:" sectiontitle2="Expiration Date:" cvc="CVC" phone="**** **** **** 8954" addressline1="**/**" addressline2="***" edit="Edit Credit Card Information"/>
         <Pressable style={styles.whiteButton} title="< Back" onPress={handleSignOut} >
           <Text style={{fontSize:18, color:'#E94168'}}>Sign Out</Text>
         </Pressable>
