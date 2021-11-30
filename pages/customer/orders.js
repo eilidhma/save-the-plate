@@ -36,26 +36,6 @@ const [status, setStatus] = useState("complete")
 
 var userId = auth.currentUser?.uid
 
-// useEffect(() => {
-
-//   let isUnmount = false;
-  
-//   (async () => {
-//     //const result = await axios.get('/orders.php?fuid='+userId);
-//     //const result = await axios.get('/orders.php?status=complete');
-    
-//     if(!isUnmount){
-//       const result = await axios.get('/orders.php?u_id='+userId);
-//       setPastOrders(result.data);
-//     }
-  
-//   })();
-
-//   return () => {
-//     isUnmount = true;
-//   }
-
-// }, []);
 
 useFocusEffect(
   React.useCallback(()=>{
