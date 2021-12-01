@@ -40,7 +40,7 @@ const Title = styled.Text`
 
 const Edit = styled.Pressable`
   display:flex;
-  background-color:#FE4265;
+  background-color:#F3AD81;
   position:absolute;
   bottom:0;
   width:100%;
