@@ -41,7 +41,7 @@ const IconCont = styled.Pressable`
 
 const Cards = styled.View`
   display:flex;
-  justify-content:flex-start;
+  justify-content:center;
   align-items:center;
   position:absolute;
   top:190px;
@@ -50,18 +50,14 @@ const Cards = styled.View`
 
 const EditMenuCont = styled.View`
   width: 90%;
-  height: 170px;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background-color: #ffffff;
   border-radius: 15px;
   margin-top: 10px;
-  padding-right:20px;
-  padding-left:20px;
-  padding-top:10px;
-  padding-bottom:10px;
+  margin-bottom: 10px;
+  padding: 20px;
 `;
 
 export default function RestarantAccount({
@@ -119,13 +115,11 @@ export default function RestarantAccount({
         <InfoCard title="Contact Information" sectiontitle1="Phone number:" sectiontitle2="Address:" phone={phone} addressline1={address1 + " " + address2} addressline2={postalCode + " " + city + ", " + province} edit="Edit Contact Information"/>
 
         <EditMenuCont>
-        <Text style={{color: "#FE4265", fontSize: 18, fontWeight: 'bold', alignSelf: 'flex-start'}} >Menu</Text>
-        <But width="100%" height="40px" text="View Menu" onPress={()=>navigation.navigate('Menu')}/>
-        <But width="100%" height="40px" text="Edit Menu" onPress={()=>navigation.navigate('Menu')}/>
+          <Text style={{color: "#FE4265", fontSize: 18, fontWeight: 'bold', alignSelf: 'flex-start', marginBottom:10}} >Menu</Text>
+          <But width="100%" height="40px" text="View Menu" onPress={()=>navigation.navigate('Menu')}/>
         </EditMenuCont>
 
-        <But text="Save Changes" margintop="10px" bgColor="#F3AD81"/>
-        <But text="Sign Out" margintop="10px" txtColor="#FE4265" bgColor="#ffffff" onPress={handleSignOut}/>
+        <But width="200px" height="40px" text="Sign Out" margintop="10px" txtColor="#FE4265" bgColor="#ffffff" onPress={handleSignOut}/>
       </Cards>
     </LinearGradient>
   );

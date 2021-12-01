@@ -63,10 +63,6 @@ setTimeout(() => {
 const checkIfRestaurant = async (uid) => {
   const result = await axios.get('/users.php?fuid=' + uid)
 
-  if(!result.data.restaurant){
-    navigation.navigate('Home')
-    return
-  }
   
   var page = result.data[0].restaurant;
 

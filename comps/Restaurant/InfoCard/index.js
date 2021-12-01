@@ -14,6 +14,7 @@ import But from '../../global/Button';
 import CuisineSelect from '../CuisineSelect';
 
 const CardCont = styled.View`
+  margin-bottom:10px;
 `;
 
 const Content = styled.View`
@@ -39,7 +40,7 @@ const Title = styled.Text`
 
 const Edit = styled.Pressable`
   display:flex;
-  background-color:#F3AD81;
+  background-color:#FE4265;
   position:absolute;
   bottom:0;
   width:100%;
