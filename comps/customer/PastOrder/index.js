@@ -115,13 +115,12 @@ const styles = StyleSheet.create({
     elevation:3,
     borderRadius:15,
     width:'100%',
-    height:180,
+    height:120,
     display:'flex',
     width:'100%',
     overflow:'hidden',
     justifyContent:'center',
-    alignItems:'center',
-    marginTop:10,
+    alignItems:'center'
   }
 
 });

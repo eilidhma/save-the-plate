@@ -34,6 +34,7 @@ const PriceCont = styled.View`
   flexDirection:row;
   justify-content:flex-start;
   align-items:center;
+  margin-top:5px;
 `;
 
 const DetailsCont = styled.Pressable`
@@ -78,7 +79,7 @@ const QuantityCont = styled.View`
   width:40px;
   border:1px solid #FE4265;
   position:absolute;
-  top:25px;
+  top:20px;
   right:10px;
 `
 
@@ -192,7 +193,7 @@ const styles = StyleSheet.create({
     overflow:'hidden',
     justifyContent:'center',
     alignItems:'center',
-    marginTop:10,
+    marginTop:0,
   }
 
 });
