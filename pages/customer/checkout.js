@@ -71,34 +71,9 @@ export default function Checkout({
     },[])
   )
 
-  // useEffect(() => {
-
-
-
-  //   let isUnmount = false;
-  //   var userID = auth.currentUser?.uid;
-    
-  //   (async () => {
-  //     const result = await axios.get('/users.php?fuid='+userID);
-  //     if(!isUnmount){
-  //       setListedData(result.data);
-  //     }
-    
-  //   })();
-    
-  //   return () => {
-  //     isUnmount = true;
-  //   }
-
-  // }, []);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [orderData, setOrderData] = useState([]);
-
-  // var cartItems = null;
-  // if(route.params !== null){
-  //   cartItems = route.params;
-  // }
 
 
   var cartItems = null;
