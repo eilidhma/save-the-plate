@@ -202,15 +202,12 @@ export default function RestaurantHome ({  navigation }) {
           fontWeightMap={maptab ? 400 : 200}
           alignItems={mealtab ? 'flex-start' : 'flex-end'}
           />
-          <View style={{width:'90%'}}>
-            <Search/>
-          </View>
       </View>
 
       {mealtab === true && <View style={{marginHorizontal: 0,
             width:'100%',
             position:'absolute',
-            top:170,
+            top:130,
             bottom:0,
             flex:1}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
@@ -238,7 +235,7 @@ export default function RestaurantHome ({  navigation }) {
         {mealtab === false && <View style={{marginHorizontal: 0,
             width:"100%",
             position:'absolute',
-            top:170,
+            top:130,
             bottom:0,
             flex:1}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
