@@ -63,9 +63,27 @@ const EditMenuCont = styled.View`
 export default function RestarantAccount({
   navigation
 }) {
-  const [data, setData] = useState()
-  // console.log(data)
-  //USE THIS TO MAP OUT USER DATA
+  const [name, setName] = useState()
+  const [phone, setPhone] = useState()
+  const [platesSaved, setPlatesSaved] = useState()
+  const [address1, setAddress1] = useState()
+  const [address2, setAddress2] = useState()
+  const [postalCode, setPostalCode] = useState()
+  const [city, setCity] = useState()
+  const [province, setProvince] = useState()
+
+  const UserData = async (uid) => {
+    const result = await axios.get('/users.php?fuid=' + uid)
+    setName(result.data[0].full_name)
+    setPhone(result.data[0].phone)
+    setPlatesSaved(result.data[0].plates_saved)
+    setAddress1(result.data[0].add1)
+    setAddress2(result.data[0].add2)
+    setPostalCode(result.data[0].postal_code)
+    setCity(result.data[0].city)
+    setProvince(result.data[0].province)
+  }
+
 
   useEffect(()=>{
     var userid = auth.currentUser?.uid
@@ -82,11 +100,6 @@ export default function RestarantAccount({
     .catch(error => alert(error.message))
   }
 
-  const UserData = async (uid) => {
-    const result = await axios.get('/users.php?fuid=' + uid)
-    setData(result.data[0])
-  }
-
 
 
   return (
@@ -96,12 +109,16 @@ export default function RestarantAccount({
         <IconCont >
           <MaterialCommunityIcons name="account" size={60} color="white" />
         </IconCont>
+<<<<<<< HEAD
         <Text style={{fontSize:30, fontWeight:'400', color:'white', marginLeft:20}}>{auth.currentUser?.email}</Text>
+=======
+      <Text style={{fontSize:30, fontWeight:'400', color:'white', marginLeft:20}}>{name}</Text>
+>>>>>>> d800939f785c50f0eb9d87f25350db8a064b875a
       </TopCont>
       
       <Cards>
-        <PlatesSaved/>
-        <InfoCard title="Contact Information" sectiontitle1="Phone number:" sectiontitle2="Address:" phone="604-456-1234" addressline1="3278 W 10th Avenue" addressline2="V6J 2G9 Vancouver, BC" edit="Edit Contact Information"/>
+        <PlatesSaved quantity={platesSaved}/>
+        <InfoCard title="Contact Information" sectiontitle1="Phone number:" sectiontitle2="Address:" phone={phone} addressline1={address1 + " " + address2} addressline2={postalCode + " " + city + ", " + province} edit="Edit Contact Information"/>
 
         <EditMenuCont>
           <Text style={{color: "#FE4265", fontSize: 18, fontWeight: 'bold', alignSelf: 'flex-start', paddingLeft:'5%'}} >Menu</Text>

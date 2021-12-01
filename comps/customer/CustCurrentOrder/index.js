@@ -108,7 +108,7 @@ const Timer = styled.Text`
 
 
 const CustCurrentOrder = ({
-  src=require("../../../assets/meal.png"),
+  src="https://placekitten.com/200/200",
   plateImg=require("../../../assets/plate.png"),
   restaurant="Fratelli's Bistro", 
   meal="Fettuccine Alfredo",
@@ -127,13 +127,14 @@ const CustCurrentOrder = ({
    
   }
 
-  return <CardCont height={height}>
+  return <View style={styles.content}>
+  <CardCont height={height}>
     <TimerCont>
       <Timer>Available at: {timeAvail}</Timer>
     </TimerCont>
     <Content>
       <Left>
-        <Image style={{width:115, height:105, borderRadius:15}} source={src}/>
+        <Image style={{width:115, height:105, borderRadius:15}} source={{uri:src}}/>
         <Text style={{marginTop:30, fontSize:16}}>Description:</Text>
         <Text style={{marginTop:30, fontSize:16}}>Restaurant's Rating:</Text>
         <Text style={{marginTop:15, fontSize:16}}>Dietary Information:</Text>
@@ -157,8 +158,44 @@ const CustCurrentOrder = ({
       </Right>
     </Content>
   </CardCont>
+  </View>
 }
 
 export default CustCurrentOrder;
+
+
+const styles = StyleSheet.create({
+  container: {
+    display:'flex',
+    backgroundColor : "#0000",
+    width:'100%',
+    flexDirection:'column',
+    borderRadius:15,
+    overflow:'hidden',
+    margin:10,
+    backgroundColor:'white',
+  },
+  content: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    elevation:3,
+    borderRadius:15,
+    width:'100%',
+    height:210,
+    display:'flex',
+    width:'100%',
+    overflow:'hidden',
+    justifyContent:'center',
+    alignItems:'center',
+    marginTop:10,
+  }
+
+});
+
 
 

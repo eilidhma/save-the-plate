@@ -23,7 +23,7 @@ import Search from "../../comps/Restaurant/SearchBar";
 
 import BubbleRest from "../../comps/Restaurant/BubbleRest";
 import axios from 'axios';
-import { auth } from "../../firebase";
+import { auth, storage } from "../../firebase";
 
 
 
@@ -41,10 +41,39 @@ export default function RestaurantHome ({  navigation }) {
     let isUnmount = false;
     
     (async () => {
+      const result = await axios.get('/listed.php');
+      const orderResult = await axios.get('/orders.php?fuid='+userID);
       if(!isUnmount){
-        const result = await axios.get('/listed.php');
-        const orderResult = await axios.get('/orders.php?fuid='+userID);
-        console.log(orderResult.data)
+
+        for (var i = 0; i<result.data.length; i++) {
+          try{
+            // console.log("getting")
+            const url = await storage.ref().child(`menu/item${result.data[i].m_id}.jpg`).getDownloadURL();
+            result.data[i].url = url
+            // console.log(url, "URL");
+
+           }catch (e){
+            result.data[i].url = null;
+            continue;
+          }
+        }
+
+        for (var i = 0; i<orderResult.data.length; i++) {
+          try{
+            // console.log("getting")
+            const url = await storage.ref().child(`menu/item${orderResult.data[i].m_id}.jpg`).getDownloadURL();
+            orderResult.data[i].url = url
+            // console.log(url, "URL");
+
+           }catch (e){
+            orderResult.data[i].url = null;
+            continue;
+          }
+        }
+
+
+
+        // console.log(orderResult.data)
         setListedData(result.data);
         setOrdersData(orderResult.data)
         //console.log(orderResult.data)
@@ -193,6 +222,7 @@ export default function RestaurantHome ({  navigation }) {
               timer={order.time_avail}
               phonenum={order.phone} 
               name={order.m_name} 
+              img={order.url}
               ConfirmPickup={ async()=>{
                 const patch = await axios.patch('/orders.php', {
                   id:order.oid,
@@ -212,17 +242,18 @@ export default function RestaurantHome ({  navigation }) {
             bottom:0,
             flex:1}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
+          
           {listedData ? listedData.filter((x)=> {return x.status === 'active'}).map((listed)=>(
             <ListingCard
               key={listed.lid}
               foodname={listed.m_name}
               timer={listed.time_avail}
               modifications={listed.modifications}
+              img={listed.url}
             />
           )): <Text>No current listings!</Text>}
         </ScrollView>
         </View>}
-        
         
           
     </LinearGradient>

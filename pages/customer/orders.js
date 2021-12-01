@@ -15,7 +15,7 @@ import CustCurrentOrder from '../../comps/customer/CustCurrentOrder';
 import CustMealCard from '../../comps/customer/CustMealCard';
 import PastOrder from '../../comps/customer/PastOrder';
 import axios from 'axios';
-import { auth } from '../../firebase';
+import { auth, storage } from '../../firebase';
 
 var logo = require ('../../assets/logo1.png');
 const Stack = createNativeStackNavigator();
@@ -36,33 +36,28 @@ const [status, setStatus] = useState("complete")
 
 var userId = auth.currentUser?.uid
 
-// useEffect(() => {
-
-//   let isUnmount = false;
-  
-//   (async () => {
-//     //const result = await axios.get('/orders.php?fuid='+userId);
-//     //const result = await axios.get('/orders.php?status=complete');
-    
-//     if(!isUnmount){
-//       const result = await axios.get('/orders.php?u_id='+userId);
-//       setPastOrders(result.data);
-//     }
-  
-//   })();
-
-//   return () => {
-//     isUnmount = true;
-//   }
-
-// }, []);
 
 useFocusEffect(
   React.useCallback(()=>{
     
     (async () => {
       const result = await axios.get('/orders.php?u_id='+userId);
+      
+      for (var i = 0; i<result.data.length; i++) {
+        try{
+          // console.log("getting")
+          const url = await storage.ref().child(`menu/item${result.data[i].m_id}.jpg`).getDownloadURL();
+          result.data[i].url = url
+          // console.log(url, "URL");
+
+         }catch (e){
+          result.data[i].url = null;
+          continue;
+        }
+      }
+      
       setPastOrders(result.data);
+
     })();
   },[])
 )
@@ -85,6 +80,7 @@ useFocusEffect(
               newprice={order.new_price}
               oldprice={order.old_price}
               quantity={1}
+              // src={order.url}
             /> 
           )) : <View>
             <Text>No current order</Text>
@@ -104,6 +100,7 @@ useFocusEffect(
         key={past.oid}
         meal={past.m_name}
         restaurant={past.full_name}
+        src={past.url}
         />
       )) : null}
 

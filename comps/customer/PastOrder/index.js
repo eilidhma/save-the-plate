@@ -48,7 +48,7 @@ const Right = styled.View`
 
 
 const PastOrder = ({
-  src=require("../../../assets/meal.png"),
+  src="https://placekitten.com/200/200",
   plateImg=require("../../../assets/plate.png"),
   restaurant="Fratelli's Bistro", 
   meal="Fettuccine Alfredo",
@@ -74,10 +74,11 @@ const PastOrder = ({
     console.log(this)
   }
 
-  return <CardCont height={height}>
+  return <View style={styles.content}> 
+  <CardCont height={height}>
     <Content>
       <Left>
-        <Image style={{width:115, height:70, borderRadius:15}} source={src}/>
+        <Image style={{width:115, height:70, borderRadius:15}} source={{uri:src}}/>
       </Left>
       <Right>
         <Text style={{fontSize:20}}>{meal}</Text>
@@ -87,8 +88,40 @@ const PastOrder = ({
       </Right>
     </Content>
   </CardCont>
+  </View>
 }
 
 export default PastOrder;
 
+const styles = StyleSheet.create({
+  container: {
+    display:'flex',
+    backgroundColor : "#0000",
+    width:'100%',
+    flexDirection:'column',
+    borderRadius:15,
+    overflow:'hidden',
+    margin:10,
+    backgroundColor:'white',
+  },
+  content: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    elevation:3,
+    borderRadius:15,
+    width:'100%',
+    height:180,
+    display:'flex',
+    width:'100%',
+    overflow:'hidden',
+    justifyContent:'center',
+    alignItems:'center',
+    marginTop:10,
+  }
 
+});
