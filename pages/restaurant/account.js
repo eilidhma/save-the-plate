@@ -41,7 +41,7 @@ const IconCont = styled.Pressable`
 
 const Cards = styled.View`
   display:flex;
-  justify-content:flex-start;
+  justify-content:center;
   align-items:center;
   position:absolute;
   top:190px;
@@ -50,18 +50,14 @@ const Cards = styled.View`
 
 const EditMenuCont = styled.View`
   width: 90%;
-  height: 170px;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background-color: #ffffff;
   border-radius: 15px;
   margin-top: 10px;
-  padding-right:20px;
-  padding-left:20px;
-  padding-top:10px;
-  padding-bottom:10px;
+  margin-bottom: 10px;
+  padding: 20px;
 `;
 
 export default function RestarantAccount({

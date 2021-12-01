@@ -62,7 +62,7 @@ useFocusEffect(
   },[])
 )
 
-
+console.log(pastOrders)
 
 
   return (
@@ -72,15 +72,15 @@ useFocusEffect(
       </View>
       <ScrollView style={styles.scrollViewSmall}>
         <View style={{display:'flex', justifyContent:'center', alignItems:'center', overflow:'hidden'}}>
-          {orderItems ? orderItems.map((order) => (
+        {pastOrders ? pastOrders.filter((x)=> {return x.status === 'active'}).map((past) => (
             <CustCurrentOrder 
-              key={1}
-              meal={order.m_name}
-              restaurant={order.full_name}
-              newprice={order.new_price}
-              oldprice={order.old_price}
+              key={past.oid}
+              meal={past.m_name}
+              restaurant={past.full_name}
+              newprice={past.new_price}
+              oldprice={past.old_price}
               quantity={1}
-              // src={order.url}
+              src={past.url}
             /> 
           )) : <View>
             <Text>No current order</Text>

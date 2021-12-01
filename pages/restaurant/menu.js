@@ -57,27 +57,25 @@ const Cards = styled.View`
 
 const EditMenuCont = styled.View`
   width: 90%;
-  height: 387px;
+  height: 430px;
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   background-color: #ffffff;
   border-radius: 15px;
-  margin-top: 10px;
-  padding-right:20px;
-  padding-left:20px;
-  padding-top:10px;
+  margin-top:10px;
+  padding:20px;
+  padding-bottom:10px;
   overflow: hidden;
 `;
 
 const AddItemButton = styled.View`
-    width: 130%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    bottom: 0px;
+  width: 130%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0px;
 `
 
 const SingleLineInput = styled.View`
@@ -520,22 +518,21 @@ export default function Menu({
                   }) */
                 }
                 
-                <But width="100%" height="50px" text="Fettucini Alfredo" margintop="10px" onPress={()=>setEditItem(!modalVisible)}/>
-                <But width="100%" height="50px" text="Spaghetti Bolognese" margintop="10px"/>
-                <But width="100%" height="50px" text="Lasagna" margintop="10px"/>
-                <But width="100%" height="50px" text="Meatballs" margintop="10px"/>
-                <But width="100%" height="50px" text="Ravioli" margintop="10px"/>
-                <But width="100%" height="50px" text="Roasted Vegetables" margintop="10px"/>
-                <But width="100%" height="50px" text="Gnochi" margintop="10px"/>
+                <But width="100%" height="50px" text="Fettucini Alfredo" margintop="15px" onPress={()=>setEditItem(!modalVisible)}/>
+                <But width="100%" height="50px" text="Spaghetti Bolognese" margintop="15px"/>
+                <But width="100%" height="50px" text="Lasagna" margintop="15px"/>
+                <But width="100%" height="50px" text="Meatballs" margintop="15px"/>
+                <But width="100%" height="50px" text="Ravioli" margintop="15px"/>
+                <But width="100%" height="50px" text="Roasted Vegetables" margintop="15px"/>
+                <But width="100%" height="50px" text="Gnochi" margintop="15px"/>
             </ScrollView>
         </View>
         <AddItemButton>
-            <But width="100%" height="40px" text="New Item" bgColor="#F3Ad81" borderRadius="0px" onPress={()=>setModalVisible(!modalVisible)}/>
+            <But width="100%" height="40px" text="New Item" bgColor="#F3AD81" borderRadius="0px" onPress={()=>setModalVisible(!modalVisible)}/>
         </AddItemButton>
         </EditMenuCont>
 
-        <But text="Save Changes" margintop="10px" bgColor="#F3AD81"/>
-        <But text="< Back" margintop="10px" txtColor="#FE4265" bgColor="#ffffff" onPress={()=>navigation.goBack()}/>
+        <But width="200px" height="40px" text="< Back" margintop="20px" txtColor="#FE4265" bgColor="#ffffff" onPress={()=>navigation.goBack()}/>
       </Cards>
       
     </LinearGradient>
