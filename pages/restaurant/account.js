@@ -41,7 +41,7 @@ const IconCont = styled.Pressable`
 
 const Cards = styled.View`
   display:flex;
-  justify-content:flex-start;
+  justify-content:center;
   align-items:center;
   position:absolute;
   top:190px;
@@ -50,18 +50,14 @@ const Cards = styled.View`
 
 const EditMenuCont = styled.View`
   width: 90%;
-  height: 170px;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background-color: #ffffff;
   border-radius: 15px;
-  margin-top: 10px;
-  padding-right:20px;
-  padding-left:20px;
-  padding-top:10px;
-  padding-bottom:10px;
+  margin-top: 20px;
+  padding-top: 15px;
+  padding-bottom: 20px;
 `;
 
 export default function RestarantAccount({
@@ -95,25 +91,26 @@ export default function RestarantAccount({
 
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
+      
       <TopCont>
         <IconCont >
           <MaterialCommunityIcons name="account" size={60} color="white" />
         </IconCont>
-      <Text style={{fontSize:30, fontWeight:'400', color:'white', marginLeft:20}}>{auth.currentUser?.email}</Text>
+        <Text style={{fontSize:30, fontWeight:'400', color:'white', marginLeft:20}}>{auth.currentUser?.email}</Text>
       </TopCont>
+      
       <Cards>
         <PlatesSaved/>
         <InfoCard title="Contact Information" sectiontitle1="Phone number:" sectiontitle2="Address:" phone="604-456-1234" addressline1="3278 W 10th Avenue" addressline2="V6J 2G9 Vancouver, BC" edit="Edit Contact Information"/>
 
         <EditMenuCont>
-        <Text style={{color: "#FE4265", fontSize: 18, fontWeight: 'bold', alignSelf: 'flex-start'}} >Menu</Text>
-        <But width="100%" height="40px" text="View Menu" onPress={()=>navigation.navigate('Menu')}/>
-        <But width="100%" height="40px" text="Edit Menu" onPress={()=>navigation.navigate('Menu')}/>
+          <Text style={{color: "#FE4265", fontSize: 18, fontWeight: 'bold', alignSelf: 'flex-start', paddingLeft:'5%'}} >Menu</Text>
+          <But style={styles.shadowProp} width="90%" margintop="10px" height="40px" text="View Menu" onPress={()=>navigation.navigate('Menu')}/>
         </EditMenuCont>
 
-        <But text="Save Changes" margintop="10px" bgColor="#F3AD81"/>
-        <But text="Sign Out" margintop="10px" txtColor="#FE4265" bgColor="#ffffff" onPress={handleSignOut}/>
+        <But height="40px" width="200px" text="Sign Out" margintop="20px" txtColor="#FE4265" bgColor="#ffffff" onPress={handleSignOut}/>
       </Cards>
+
     </LinearGradient>
   );
 }
