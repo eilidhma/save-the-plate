@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, ScrollView, Text, Modal, Pressable } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
+import { useFocusEffect } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
 
 import {
@@ -37,6 +38,40 @@ export default function RestaurantHome ({  navigation }) {
   
   var userID = auth.currentUser?.uid;
   //console.log(userID)
+
+  useFocusEffect(
+    React.useCallback(()=>{
+
+      (async () => {
+        const result = await axios.get('/listed.php');
+        const orderResult = await axios.get('/orders.php?fuid='+userID);
+  
+          for (var i = 0; i<result.data.length; i++) {
+            try{
+              const url = await storage.ref().child(`menu/item${result.data[i].m_id}.jpg`).getDownloadURL();
+              result.data[i].url = url  
+             }catch (e){
+              result.data[i].url = null;
+              continue;
+            }
+          }
+  
+          for (var i = 0; i<orderResult.data.length; i++) {
+            try{
+              const url = await storage.ref().child(`menu/item${orderResult.data[i].m_id}.jpg`).getDownloadURL();
+              orderResult.data[i].url = url
+             }catch (e){
+              orderResult.data[i].url = null;
+              continue;
+            }
+          }
+  
+          setListedData(result.data);
+          setOrdersData(orderResult.data)
+      })();
+    },[])
+  );
+
   useEffect(() => {
 
     let isUnmount = false;
@@ -242,7 +277,7 @@ export default function RestaurantHome ({  navigation }) {
             flex:1}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
           
-          {listedData ? listedData.filter((x)=> {return x.status === 'active'}).map((listed)=>(
+          {listedData ? listedData.filter((x)=> {return x.status === 'active' && x.fuid == auth.currentUser.uid}).map((listed)=>(
             <ListingCard
               key={listed.lid}
               foodname={listed.m_name}

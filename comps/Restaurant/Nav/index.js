@@ -11,6 +11,7 @@ import styled from 'styled-components';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import axios from 'axios';
+import moment from 'moment';
 
 
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
@@ -146,7 +147,6 @@ const DeselectedTime = styled.TouchableOpacity`
   height: 40px;
 `
 
-
 const RestaurantNav = ({ 
   home="white",
   account="white",
@@ -186,6 +186,7 @@ function CountDown(){
   }
 }
 
+
 //for timers
 
 const [thirty, setThirty] = useState(false)
@@ -198,7 +199,9 @@ function ThirtyPress () {
   setFourty(false);
   setOne(false);
   setTwo(false);
-  setMealTime('00:30:00');
+  const date = moment(new Date()).add(30, "m").subtract(12, "h").toDate()
+
+  setMealTime(date.getHours() + ":" + date.getMinutes() + "PM");
 }
 
 function FourtyPress () {
@@ -206,7 +209,9 @@ function FourtyPress () {
   setFourty(true);
   setOne(false);
   setTwo(false);
-  setMealTime('00:45:00')
+  const date = moment(new Date()).add(45, "m").subtract(12, "h").toDate()
+
+  setMealTime(date.getHours() + ":" + date.getMinutes() + "PM");
 }
 
 function OnePress () {
@@ -214,7 +219,9 @@ function OnePress () {
   setFourty(false);
   setOne(true);
   setTwo(false);
-  setMealTime('01:00:00');
+  const date = moment(new Date()).add(60, "m").subtract(12, "h").toDate()
+
+  setMealTime(date.getHours() + ":" + date.getMinutes() + "PM");
 }
 
 function TwoPress () {
@@ -222,7 +229,9 @@ function TwoPress () {
   setFourty(false);
   setOne(false);
   setTwo(true);
-  setMealTime('02:00:00');
+  const date = moment(new Date()).add(120, "m").subtract(12, "h").toDate()
+
+  setMealTime(date.getHours() + ":" + date.getMinutes() + "PM");
 }
 
 function Reset () {
@@ -260,10 +269,25 @@ useEffect(() => {
     isUnmount = true;
   }
 
-}, []);
+}, [modalVisible]);
 
+PostItems = async() => {
+  for (var i = 0 ; i<count; i ++) {
 
-  
+    fuid = auth.currentUser?.uid
+      const result = await axios.post('/listed.php', {
+          modifications:mealMods,
+          time_avail:mealTime,
+          fuid:fuid,
+          m_name:mealName,
+          m_id:mid,
+          status:"active"
+      });
+    }
+setItemStep(1);
+setModalVisible(!modalVisible);
+}
+
   return <Cont>
     <LinearGradient style={{width:'100%', display:'flex', flexDirection:'row', justifyContent:'space-evenly', alignItems:'center'}} start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['rgb(243,173,129)', 'rgba(243,173,129,0.5)', 'rgb(243,173,129)']}>
     <IconCont onPress={onPressHome} backgroundColor={nav === 0 ? "rgba(250,250,250,0.3)" : "rgba(250,250,250,0)"}>
@@ -402,22 +426,7 @@ useEffect(() => {
 
         
         <TitleCont>
-          <But onPress={
-            async (fuid) => {
-
-              setItemStep(1);
-              setModalVisible(!modalVisible);
-            
-              fuid = auth.currentUser?.uid
-              const result = await axios.post('/listed.php', {
-                modifications:mealMods,
-                time_avail:mealTime,
-                fuid:fuid,
-                m_name:mealName,
-                m_id:mid,
-                status:"active"
-              });
-          }} width="182px" height="50px" text="List Item"/>
+          <But onPress={PostItems} width="182px" height="50px" text="List Item"/>
           <But width="182px" height="50px" text="Cancel" bgColor="#F3AD81"
           onPress={()=>{
             setModalVisible(!modalVisible)
