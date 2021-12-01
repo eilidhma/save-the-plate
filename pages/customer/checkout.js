@@ -12,6 +12,10 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { auth } from '../../firebase';
 import Name from '../../comps/customer/Name';
+import MapView, { Callout, Marker, Polyline } from 'react-native-maps';
+import MapViewDirections from 'react-native-maps-directions';
+import * as Location from 'expo-location';
+import * as geolib from 'geolib';
 
 
 var cardtype = require ('../../assets/visa.png');
@@ -58,6 +62,8 @@ export default function Checkout({
   route
 }) {
 
+
+
   
   const [listedData, setListedData] = useState();
 
@@ -83,7 +89,6 @@ export default function Checkout({
   
   
   //const {cartItems} = route.params;
-  console.log(cartItems)
   const ViewOrder = () => {
     navigation.navigate('Orders')
     setModalVisible(false)
@@ -115,7 +120,71 @@ export default function Checkout({
     }); 
   }
 
+  const [location, setLocation] = useState({
+    longitude: -123.1207,
+    latitude: 49.2827,
+    latitudeDelta: 0.086,
+    longitudeDelta: 0.136});
+
+  const [coordinates] = useState([
+    {
+      longitude: -123.1207,
+      latitude: 49.2827,
+    },
+    {
+      longitude: -123.001550,
+    latitude: 49.253300,
+    },
+  ]);
+
+  useEffect(() => {
+
+    let isUnmount = false;
+    
+    (async () => {
+      
+      let location = await Location.getCurrentPositionAsync({});
+      if(!isUnmount){
+         setLocation({
+          longitude: location.coords.longitude,
+          latitude: location.coords.latitude,
+          latitudeDelta: 0.0043,
+          longitudeDelta: 0.0034
+        })
+      }
+    
+    })();
+
+    return () => {
+      isUnmount = true;
+    }
+
+  }, []);
+
+  const GOOGLE_MAPS_APIKEY = "AIzaSyDA6WZ_rlulhSrphE3Z9ue1WJJSnHr2jy8";
+  const origin = {latitude: 49.2827, longitude: -123.1207};
+
+  const [distanceToRestaurant, setDistance] = useState()
   
+  useEffect(()=>{
+    Location.installWebGeolocationPolyfill();
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+          setDistance(geolib.getDistance(position.coords, {
+            latitude: 49.253300,
+            longitude: -123.001550,
+        })/1000)
+          ;
+      },
+      () => {
+          alert('Position could not be determined.');
+      }
+  );
+  },[])
+
+  var mapIcon = require ('../../assets/mapicon.png');
+
+  // console.log(latitudeRest.replace(/"/g, ''))
 
  
   return (
@@ -133,28 +202,42 @@ export default function Checkout({
         </TitleCont> : null}
         {cartItems ? <Distance>
           <SimpleLineIcons style={{marginRight:5}} name="location-pin" size={18} color="black" />
-          <Text style={{fontSize:16, color:'black'}}>{distance}<Text> away</Text></Text>
+          <Text style={{fontSize:16, color:'black'}}>{distanceToRestaurant}<Text>km away</Text></Text>
         </Distance>: 
       <View>
         <Text>You have nothing in your cart!</Text>
       </View>}
-        <View style={styles.scrollView}>
-           <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:300}}>
-           {cartItems ? <View style={{
-            width:'100%',
-            justifyContent:'center',
-            alignItems:'center'}}>
-              <Image style={{width:'90%', height:150}} source={map}></Image>
-            </View>: null}
-            {cartItems ? cartItems.map((order)=>(  
-              <CustCurrentOrder
+      {cartItems ? <View style={{
+        width:'100%',
+        height:220,
+        justifyContent:'center',
+        alignItems:'center'}}>
+          <MapView 
+            initialRegion={location}
+            showsUserLocation
+            style={{width:'100%', height:220}}
+            provider="google"
+            >
+              {cartItems ? cartItems.map((order)=>(<Marker 
                 key={order.lid}
-                meal={order.m_name}
-                restaurant={order.restaurant}
-                newprice={order.new_price}
-                oldprice={order.old_price}
-                quantity={1}
+                coordinate={{latitude:parseFloat(cartItems[0].lat),longitude:parseFloat(cartItems[0].longitude)}}
+                title={order.full_name}
+                >
+                <View style={styles.marker}>
+                  <Image style={{width:30, height:30}} source={mapIcon}/>
+                </View>
+              </Marker> )) :null}
+              <MapViewDirections
+                origin={location}
+                destination={{latitude: parseFloat(cartItems[0].lat), longitude: parseFloat(cartItems[0].longitude)}}
+                apikey={GOOGLE_MAPS_APIKEY}
               />
+          </MapView>
+        </View>: null}
+        <View style={styles.scrollViewMedium}>
+           <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:300}}>
+            {cartItems ? cartItems.map((order)=>(  
+              <PastOrder key={order.lid} restaurant={order.full_name} meal={order.m_name} src={order.url}/>
             )) : null}
  
  {cartItems ? <View style={{width:'100%', display:'flex', justifyContent:'space-between', alignItems:'center', paddingLeft:20, paddingRight:20, marginTop:30, flexDirection:'row'}}>
@@ -193,7 +276,6 @@ export default function Checkout({
           <View style={styles.modalView}>
             <View style={{display:'flex', flexDirection:'column', width:'90%', justifyContent:'center', alignItems:'center'}}>
               <Text>Thank you for your order!</Text>
-              {/* <Image source={src} style={{width:100, height:100}}/> */}
               <Pressable style={styles.shadowPropDark} title="Checkout" onPress={()=>{
                 navigation.navigate('Orders', {orderItems} );
                 setModalVisible(false)
@@ -255,6 +337,13 @@ const styles = StyleSheet.create({
     bottom:0,
     flex:1,
   },
+  scrollViewMedium: {
+    marginHorizontal: 0,
+    width:'100%',
+    position:'absolute',
+    top:300,
+    bottom:0,
+  },
   scrollViewSmall: {
     marginHorizontal: 0,
     width:'100%',
@@ -305,12 +394,6 @@ const styles = StyleSheet.create({
     padding: 10,
     elevation: 2
   },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-  },
   textStyle: {
     color: "white",
     fontWeight: "bold",
@@ -348,4 +431,19 @@ const styles = StyleSheet.create({
     padding:5,
     borderRadius:20,
   },
+  marker: {
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+    width:30,
+    height:30,
+    resizeMode : 'contain',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+  }
 });

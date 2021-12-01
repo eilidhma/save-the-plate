@@ -1,7 +1,8 @@
 // Adrian's's section - restaurant UI
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, ScrollView, Text } from "react-native";
+import { StyleSheet, View, ScrollView, Text, Modal, Pressable } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
+import { AntDesign } from '@expo/vector-icons';
 
 import {
   Raleway_700Bold,
@@ -191,10 +192,10 @@ export default function RestaurantHome ({  navigation }) {
     // <BubbleRest show={bubble} heading={heading} subheading={subheading} img={img} back={back} next={next} onPress1={HandleBubbleNext} onPress2={HandleBubbleBack} opacity={visibility}/>
   
     // !--------- End Of Tutorial ----------!
-
+    const [modalVisible, setModalVisible] = useState(false);
 
     return (
-      <LinearGradient colors={['#F3AE81', '#E94168']} style={homeStyles.container}>
+      <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
         
         <View style={{width:'100%', position:'absolute', top:80, display:'flex', justifyContent:'center', alignItems:'center'}}>
         <Tabs onPressMeal={HandleMealTab} onPressMap={HandleMapTab}
@@ -221,6 +222,7 @@ export default function RestaurantHome ({  navigation }) {
               name={order.m_name} 
               img={order.url}
               ConfirmPickup={ async()=>{
+                setModalVisible(true)
                 const patch = await axios.patch('/orders.php', {
                   id:order.oid,
                   status:status
@@ -252,16 +254,80 @@ export default function RestaurantHome ({  navigation }) {
         </ScrollView>
         </View>}
         
+        <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+          <View style={{display:'flex', width:'90%', justifyContent:'flex-start', alignItems:'flex-end', position:'absolute', top:10}}>
+                <Pressable onPress={()=>
+                  setModalVisible(false)
+                  }>
+                  <AntDesign name="close" size={24} color="black" />
+                </Pressable> 
+              </View>
+            <View style={{display:'flex', flexDirection:'column', width:'90%', justifyContent:'center', alignItems:'center', marginTop:-10}}>
+              <Pressable style={styles.shadowPropDark} title="Close" onPress={()=>{
+                setModalVisible(false)
+                navigation.navigate('RestaurantHome')
+              }} >
+                <Text style={{color:'white', fontSize:18}}>Ok</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
           
     </LinearGradient>
     )
   }
 
-  const homeStyles = StyleSheet.create({
+  const styles = StyleSheet.create({
     container: {
       flex: 1,
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center' 
-    }
+    },
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex:2,
+      backgroundColor:'rgba(0,0,0,0.25)'
+    },
+    modalView: {
+      margin: 20,
+      backgroundColor: "white",
+      borderRadius: 20,
+      padding: 0,
+      alignItems: "center",
+      justifyContent:'center',
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5,
+      width:250,
+      height:100
+    },
+    shadowPropDark: {
+      shadowColor: '#171717',
+      shadowOffset: {width: -2, height: 4},
+      shadowOpacity: 0.2,
+      shadowRadius: 3,
+      backgroundColor:'#FE4265',
+      width:150,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop:20,
+      padding:5,
+      borderRadius:20,
+    },
   });

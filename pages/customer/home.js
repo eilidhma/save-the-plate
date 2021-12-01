@@ -30,8 +30,6 @@ import SwipeUpDownModal from 'react-native-swipe-modal-up-down';
 import { auth, storage } from '../../firebase';
 
 
-
-
 var mapIcon = require ('../../assets/mapicon.png');
 
 export default function Home({
@@ -39,8 +37,6 @@ export default function Home({
   total="$5.00",
   route
 }) {
-
-
 
   const [mealtab, setMealTab] = useState(true)
   const [maptab, setMapTab] = useState(false)
@@ -126,8 +122,6 @@ export default function Home({
 
   // !--------- End Of Tutorial ----------!
 
-
-  const [restaurantData, setRestaurantData] = useState()
   
 
   useFocusEffect(
@@ -167,6 +161,7 @@ export default function Home({
     },[])
   )
 
+  const [restaurantData, setRestaurantData] = useState()
 
   const [errorMsg, setErrorMsg] = useState(null);
   const [location, setLocation] = useState({
@@ -219,8 +214,8 @@ export default function Home({
         longitude: -123.018930,
         latitude: 49.249887
       },
-      plates_saved: "290",
-      distance:'1.5km',
+      plates_saved: "180",
+      distance:'1km',
       mealQuantity:4
     },
     {
@@ -231,8 +226,8 @@ export default function Home({
         longitude: -123.007278,
         latitude: 49.256741
       },
-      plates_saved: "290",
-      distance:'1.5km',
+      plates_saved: "35",
+      distance:'300m',
       mealQuantity:4
     },
     {
@@ -325,6 +320,7 @@ export default function Home({
   const [oldPrice, setOldPrice] = useState()
   const [newPrice, setNewPrice] = useState()
   const [name, setName] = useState()
+  const [mealImg, setMealImg] = useState()
   const [cartItems, setCartItems] = useState([])
 
 
@@ -625,6 +621,10 @@ export default function Home({
     const [modalVisible, setModalVisible] = useState(false);
     const [restModalVisible, setRestModalVisible] = useState(false);
 
+    const [restTitle, setRestTitle] = useState()
+    const [platessaved, setPlatesSaved] = useState()
+    const [mapRestData, setMapRestData] = useState()
+
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
 
@@ -650,9 +650,7 @@ export default function Home({
 
         <SwipeUpDownModal
           modalVisible={showModel}
-          PressToanimate={animateModal}
-          //if you don't pass HeaderContent you should pass marginTop in view of ContentModel to Make modal swipeable
-          
+          PressToanimate={animateModal}          
           ContentModal={
             
             <View style={{marginTop:30, display:'flex', justifyContent:'center', alignItems:'center'}}>
@@ -672,6 +670,7 @@ export default function Home({
                 meal={meal}
                 newprice={newPrice}
                 oldprice={oldPrice} 
+                //src={mealImg}
                 />
               <View style={{display:'flex', flexDirection:'row', width:'90%', justifyContent:'flex-end', marginTop:20}}>
                 <Text style={{fontSize:24, fontWeight:'500'}}>Total: {newPrice}</Text>
@@ -679,7 +678,7 @@ export default function Home({
               <View style={{display:'flex', flexDirection:'row', width:'90%', justifyContent:'space-between'}}>
                 <Pressable style={styles.shadowPropDark} title="Checkout" onPress={()=>{
                   navigation.navigate('Cart', {cartItems} );
-                  setModalVisible(false);
+                  setShowModel(false);
                  
                 }} >
                   <Text style={{color:'white', fontSize:18}}>Checkout</Text>
@@ -700,47 +699,6 @@ export default function Home({
           }}
         />
         
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-
-              <View style={{display:'flex', width:'90%', justifyContent:'center', alignItems:'flex-end', height:40}}>
-                <View style={{width:70, height:2, backgroundColor:'#C3C3C3', position:'absolute', top:10, alignSelf:'center'}}></View>
-                <Pressable onPress={()=>setModalVisible(!modalVisible)}>
-                  <AntDesign name="close" size={24} color="black" />
-                </Pressable>
-              </View>
-              <View>
-
-                <SimpleOrderCard 
-                restaurant={rest} 
-                meal={meal}
-                newprice={newPrice}
-                oldprice={oldPrice} 
-                />
-              </View>
-              <View style={{display:'flex', flexDirection:'row', width:'90%', justifyContent:'flex-end', marginTop:20}}>
-                <Text style={{fontSize:24, fontWeight:'500'}}>Total: {newPrice}</Text>
-              </View>
-              <View style={{display:'flex', flexDirection:'row', width:'90%', justifyContent:'space-between'}}>
-                <Pressable style={styles.shadowPropDark} title="Checkout" onPress={()=>{
-                  navigation.navigate('Cart', {cartItems} );
-                  setModalVisible(false);
-                 
-                }} >
-                  <Text style={{color:'white', fontSize:18}}>Checkout</Text>
-                </Pressable>
-                <Pressable style={styles.shadowPropLight} title="Add more" onPress={() => setModalVisible(!modalVisible)} >
-                  <Text style={{color:'white', fontSize:18}}>Add More</Text>
-                </Pressable>
-              </View>
-            </View>
-          </View>
-        </Modal>
         {mealtab === true && <View style={{display:'flex', justifyContent:'center', alignItems:'center', marginBottom:20}}>
           <Filters
           SelectCuisine1={SelectCuisine1}
@@ -824,6 +782,7 @@ export default function Home({
                 setOldPrice(listed.old_price)
                 setNewPrice(listed.new_price)
                 setName(listed.full_name)
+                setMealImg(listed.url)
                 setCartItems([
                   ...cartItems, 
                   listed
@@ -862,9 +821,8 @@ export default function Home({
                   </View>
                   <Callout style={{borderRadius:20}} onPress={()=>{
                     setRestModalVisible(true)
-                    if(restaurant.title === ""){
-                      
-                    }
+                    setRestTitle(restaurant.title)
+                    setPlatesSaved(restaurant.plates_saved)
                   }}>
                     <View style={styles.callout}>
                       <Text style={{fontSize:24, fontWeight:'500', color:'black', marginBottom:10}}>{restaurant.title}</Text>
@@ -885,38 +843,45 @@ export default function Home({
             </MapView>
           </View>}
           <View>
-            <Modal
-            animationType="slide"
-            transparent={true}
-            visible={restModalVisible}
-            >
-              <View style={styles.mapCenteredView}>
-                <View style={styles.mapModalView}>
 
-                <View style={{display:'flex', width:'90%', justifyContent:'center', alignItems:'flex-end'}}>
-                  <View style={{width:70, height:2, backgroundColor:'#C3C3C3', position:'absolute', top:10, alignSelf:'center'}}></View>
-                  <Pressable style={{position:'absolute', top:10, zIndex:10}} onPress={()=>setRestModalVisible(!restModalVisible)}>
-                    <AntDesign name="close" size={24} color="black" />
-                  </Pressable>
-                  <View style={{display:'flex', width:'100%', justifyContent:'center', alignItems:'flex-start', position:'absolute', top:40}}>
-                    {/* MAP THIS */}
-                    <Title title={"Fratelli's Bistro"} /> 
-                  </View>
-                  <View style={{width:'100%', display:'flex', alignItems:'flex-end', position:'absolute', top:50, height:50, width:200, right:-40}}>
-                    <PlatesSaved fontSize={'16px'} flexDirection={'column'} quantity={50}/>
-                  </View>
-                </View>
-                <View style={{display:'flex', width:'100%', height:'60%', justifyContent:'flex-start', alignItems:'center', position:'absolute', top:150}}>
+
+
+          <SwipeUpDownModal
+          modalVisible={restModalVisible}
+          PressToanimate={animateModal}          
+          ContentModal={
+            <View style={{marginTop:40, display:'flex', justifyContent:'center', alignItems:'center'}}>
+
+              <View style={{display:'flex', justifyContent:'center', width:70, height:2, backgroundColor:'#C3C3C3', position:'absolute', top:-30, alignSelf:'center'}}></View>
+              <View style={{display:'flex', justifyContent:'center', alignItems:'flex-end', position:'relative', top:-10, left:170}}>
+              <View style={{display:'flex', width:'90%', justifyContent:'center', alignItems:'flex-end', marginTop:-10, marginBottom:10}}>
+                <Pressable onPress={()=>setRestModalVisible(!restModalVisible)}>
+                  <AntDesign name="close" size={24} color="black" />
+                </Pressable> 
+              </View>
+              </View>
+              <View style={{display:'flex', alignItems:'flex-start', justifyContent:'flex-start', width:'90%'}}>
+                <Title title={restTitle} />
+              </View>
+              {/* <View style={{display:'flex', justifyContent:'flex-end', alignItems:'flex-end', position:'relative', left:0, top:-20}}>
+                <PlatesSaved flexDirection={'column'} quantity={platessaved} />
+              </View> */}
+              <View style={{width:'100%', alignItems:'center', paddingBottom:105}}>
+
                 <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
-                    <CustMealCard/>
-          
+                  <CustMealCard/>
                 </ScrollView>
-
-                </View>
               </View>
             </View>
-          </Modal>
-          </View>
+          }
+          HeaderStyle={styles.headerContent}
+          ContentModalStyle={styles.ModalMap}
+          onClose={() => {
+              setRestModalVisible(false);
+              setanimateModal(false);
+          }}
+        />
+      </View>
     </LinearGradient>
   ); 
 }
@@ -1098,6 +1063,12 @@ const styles = StyleSheet.create({
   Modal: {
     backgroundColor: 'white',
     marginTop: 470,
+    borderTopRightRadius:20,
+    borderTopLeftRadius:20,
+  },
+  ModalMap: {
+    backgroundColor: 'white',
+    marginTop: 200,
     borderTopRightRadius:20,
     borderTopLeftRadius:20,
   }

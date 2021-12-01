@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Text, TouchableOpacity, View, Image, Button} from 'react-native'
+import {Text, TouchableOpacity, View, Image, Button, StyleSheet} from 'react-native'
 import styled from 'styled-components';
 import { MaterialIcons } from '@expo/vector-icons'
 import But from '../../global/Button';
@@ -112,7 +112,8 @@ const ListingCard = ({
   // console.log(img)
 
 
-    return <CardCont height={cardheight}>
+    return <View style={styles.content}>
+    <CardCont height={cardheight}>
       <FirstLayer>
         <Image source={{uri:img}} style={{width:126, height:108, borderRadius:10}}/>
         <TextCont>
@@ -140,6 +141,25 @@ const ListingCard = ({
       <But width="120%" height="40px" text="Edit Listing"/>
       </Details>
     </CardCont>
+    </View>
 }
 
 export default ListingCard;
+
+
+const styles = StyleSheet.create({
+  content: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    elevation:3,
+    borderRadius:15,
+    width:'100%',
+    display:'flex',
+    alignItems:'center'
+  }
+})
