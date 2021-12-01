@@ -24,7 +24,7 @@ import { storage, auth } from '../../firebase';
 import "firebase/storage";
 import axios from 'axios';
 
-// add a modal that says image uploaded
+// add a modal that says the item is added
 
 const TopCont = styled.Pressable`
   display:flex;

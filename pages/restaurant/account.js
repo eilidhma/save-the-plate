@@ -118,13 +118,11 @@ export default function RestarantAccount({
         <PlatesSaved quantity={platesSaved}/>
         <InfoCard title="Contact Information" sectiontitle1="Phone number:" sectiontitle2="Address:" phone={phone} addressline1={address1 + " " + address2} addressline2={postalCode + " " + city + ", " + province} edit="Edit Contact Information"/>
 
-        <EditMenuCont>
-        <Text style={{color: "#FE4265", fontSize: 18, fontWeight: 'bold', alignSelf: 'flex-start'}} >Menu</Text>
-        <But width="100%" height="40px" text="View Menu" onPress={()=>navigation.navigate('Menu')}/>
-        <But width="100%" height="40px" text="Edit Menu" onPress={()=>navigation.navigate('Menu')}/>
-        </EditMenuCont>
 
-        <But text="Save Changes" margintop="10px" bgColor="#F3AD81"/>
+        <But text="Banking Information" margintop="10px" bgColor="#F3AD81"/>
+
+
+        <But text="View & Edit Menu" margintop="10px" bgColor="#F3AD81" onPress={()=>navigation.navigate('Menu')}/>
         <But text="Sign Out" margintop="10px" txtColor="#FE4265" bgColor="#ffffff" onPress={handleSignOut}/>
       </Cards>
     </LinearGradient>
