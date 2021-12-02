@@ -72,7 +72,7 @@ console.log(pastOrders)
       </View>
       <ScrollView style={styles.scrollViewSmall}>
         <View style={{display:'flex', justifyContent:'center', alignItems:'center', overflow:'hidden'}}>
-        {pastOrders ? pastOrders.filter((x)=> {return x.status === 'active'}).map((past) => (
+        {pastOrders ? pastOrders.filter((x)=> {return x.ostatus === 'active'}).map((past) => (
             <CustCurrentOrder 
               key={past.oid}
               meal={past.m_name}
@@ -95,7 +95,7 @@ console.log(pastOrders)
       <View style={styles.scrollView}>
       <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
       {/* {pastOrders ? pastOrders.filter((x)=> {return x.status === 'complete'}).map((past) => ( */}
-      {pastOrders ? pastOrders.filter((x)=> {return x.status === 'complete'}).map((past) => (
+      {pastOrders ? pastOrders.filter((x)=> {return x.ostatus === 'complete'}).map((past) => (
         <PastOrder 
         key={past.oid}
         meal={past.m_name}

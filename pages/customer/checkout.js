@@ -133,7 +133,7 @@ export default function Checkout({
     },
     {
       longitude: -123.001550,
-    latitude: 49.253300,
+      latitude: 49.253300,
     },
   ]);
 

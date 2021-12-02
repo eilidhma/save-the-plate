@@ -110,7 +110,6 @@ const Timer = styled.Text`
 
 const CustCurrentOrder = ({
   src="https://placekitten.com/200/200",
-  plateImg=require("../../../assets/plate.png"),
   restaurant="Fratelli's Bistro", 
   meal="Fettuccine Alfredo",
   plates="217",

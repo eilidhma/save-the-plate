@@ -22,12 +22,13 @@ const Cont = styled.View`
 `
 
 const UserLocation = ({
-  address="V6J 2G9, Vancouver"
+  address="V6J 2G9, Vancouver",
+  color="white"
 }) =>{
 
   return <Cont>
-    <SimpleLineIcons style={{marginRight:5}} name="location-pin" size={18} color="white" />
-    <Text style={{fontSize:16, color:'white', fontFamily:'Raleway_400Regular'}}>Meals near <Text>{address}</Text></Text>
+    <SimpleLineIcons style={{marginRight:5}} name="location-pin" size={18} color={color} />
+    <Text style={{fontSize:16, color:color, fontWeight:'200'}}>Meals near <Text>{address}</Text></Text>
   </Cont>
   
   

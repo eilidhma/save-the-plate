@@ -4,6 +4,36 @@ import styled from 'styled-components';
 import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
 import Diets from '../../global/Diets';
 import DietSelect from '../../global/DietSelect';
+import { useFonts } from 'expo-font';
+
+import { 
+  Raleway_100Thin,
+  Raleway_100Thin_Italic,
+  Raleway_200ExtraLight,
+  Raleway_200ExtraLight_Italic,
+  Raleway_300Light,
+  Raleway_300Light_Italic,
+  Raleway_400Regular,
+  Raleway_400Regular_Italic,
+  Raleway_500Medium,
+  Raleway_500Medium_Italic,
+  Raleway_600SemiBold,
+  Raleway_600SemiBold_Italic,
+  Raleway_700Bold,
+  Raleway_700Bold_Italic,
+  Raleway_800ExtraBold,
+  Raleway_800ExtraBold_Italic,
+  Raleway_900Black,
+  Raleway_900Black_Italic 
+} from '@expo-google-fonts/raleway';
+
+import { 
+  Quicksand_300Light,
+  Quicksand_400Regular,
+  Quicksand_500Medium,
+  Quicksand_600SemiBold,
+  Quicksand_700Bold 
+} from '@expo-google-fonts/quicksand'
 
 import app from '../../../firebase';
 
@@ -122,7 +152,7 @@ const CustMealCard = ({
   plateImg=require("../../../assets/plate.png"),
   restaurant="Fratelli's Bistro", //fix this
   meal="Fettuccine Alfredo",
-  distance="400m away",
+  distance="400",
   plates="217",
   description="fettuccine pasta tossed with Parmesan cheese and butter and served with garlic toast on the side",
   newprice="$5.00",
@@ -161,7 +191,7 @@ const CustMealCard = ({
         </View>
         <RestCont>
           <Text style={{fontSize:14}}>{restaurant}</Text>
-          <Text style={{fontSize:12}}>{distance}</Text>
+          <Text style={{fontSize:12}}>{distance}m away</Text>
         </RestCont>
         <View style={{width:'100%', height:40, display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
           <PriceCont>
