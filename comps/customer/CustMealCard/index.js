@@ -13,7 +13,6 @@ import {
 } from '@expo-google-fonts/raleway';
 import {
   Quicksand_300, Quicksand_300Light, Quicksand_400Regular,
-  Quicksand_700Bold
 } from '@expo-google-fonts/quicksand';
 
 import app from '../../../firebase';
@@ -114,7 +113,7 @@ const Cart = styled.Pressable`
   background-color:#FE4265;
   position:absolute;
   bottom:0;
-  width:100%;
+  width:90%;
   z-index:10;
   justify-content:center;
   align-items:center;
@@ -124,7 +123,7 @@ const Cart = styled.Pressable`
 
 const AddToCart = styled.Text`
   color:white;
-  font-size:18px;
+  font-size:16px;
   font-family:Raleway_600SemiBold;
 `
 
