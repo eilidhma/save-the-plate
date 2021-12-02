@@ -13,6 +13,7 @@ import {
 } from '@expo-google-fonts/raleway';
 import {
   Quicksand_300, Quicksand_300Light, Quicksand_400Regular,
+  Quicksand_700Bold, Quicksand_600SemiBold
 } from '@expo-google-fonts/quicksand';
 
 import app from '../../../firebase';
@@ -191,21 +192,21 @@ const CustMealCard = ({
     <BottomContent>
       <BottomLeft>
         <TextCont>
-          <Text style={{fontSize:16, fontFamily:'Quicksand_400Regular'}}>Description:</Text>
+          <Text style={{fontSize:14, fontFamily:'Quicksand_600SemiBold'}}>Description:</Text>
         </TextCont>
         <TextCont>
-          <Text style={{fontSize:16, fontFamily:'Quicksand_400Regular'}}>Modification:</Text>
+          <Text style={{fontSize:14, fontFamily:'Quicksand_600SemiBold'}}>Modification:</Text>
         </TextCont>
         <TextCont>
-          <Text style={{fontSize:16, fontFamily:'Quicksand_400Regular'}}>Dietary Information:</Text>
+          <Text style={{fontSize:14, fontFamily:'Quicksand_600SemiBold'}}>Dietary Information:</Text>
         </TextCont>
       </BottomLeft>
       <BottomRight>
         <TextCont>
-          <Text style={{fontSize:12, fontFamily:'Quicksand_400Regular'}}>{description}</Text>
+          <Text style={{fontSize:14, fontFamily:'Quicksand_400Regular'}}>{description}</Text>
         </TextCont>
         <TextCont>
-          <Text style={{fontSize:12, fontFamily:'Quicksand_400Regular'}}>{modifications}</Text>
+          <Text style={{fontSize:14, fontFamily:'Quicksand_400Regular'}}>{modifications}</Text>
         </TextCont>
         <TextCont>
           <Diets showDairy={showDairy} showGluten={showGluten} showVege={showVege} showNut={showNut}/>

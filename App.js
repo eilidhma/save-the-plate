@@ -9,7 +9,7 @@ import {
 } from '@expo-google-fonts/raleway';
 import {
   Quicksand_300, Quicksand_300Light, Quicksand_400Regular,
-  Quicksand_700Bold
+  Quicksand_700Bold, Quicksand_600SemiBold, Quicksand_500Medium
 } from '@expo-google-fonts/quicksand';
 import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -47,7 +47,14 @@ const Stack = createNativeStackNavigator();
 
 function Landing({ navigation }) {
   let [fontsLoaded] = useFonts({
-    Raleway_700Bold, Raleway_400Regular, Raleway_600SemiBold, Quicksand_300Light, Quicksand_400Regular
+    Raleway_700Bold, 
+    Raleway_400Regular, 
+    Raleway_600SemiBold, 
+    Quicksand_300Light, 
+    Quicksand_400Regular, 
+    Quicksand_700Bold,
+    Quicksand_600SemiBold,
+    Quicksand_500Medium
   });
 
 setTimeout(() => { 
