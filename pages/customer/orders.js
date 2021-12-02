@@ -105,18 +105,20 @@ if (errorMsg) {
 
 
 const restaurantLocation = ({ latitude: lat, longitude: long });
+const [lat, setLat] = useState(49.250854)
+const [long, setLong] = useState(-123.002774)
+const [address, setAddress] = useState("SE 16, 3700 Willingdon Ave, Burnaby")
+const [end, setEnd] = useState("Habitat Pub")
 
-const openMap = createOpenLink({ ...restaurantLocation, query:address, start:address, end:end });
+const openMap = createOpenLink({ ...restaurantLocation, query:end});
+
+
+// const openMap = () => {
+  
+// }
 
 
 
-
-const [lat, setLat] = useState()
-const [long, setLong] = useState()
-const [address, setAddress] = useState()
-const [end, setEnd] = useState()
-
-console.log(pastOrders)
 
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
@@ -134,11 +136,9 @@ console.log(pastOrders)
               oldprice={past.old_price}
               quantity={1}
               src={past.url}
+              timeAvail={past.time_avail}
               HandleDirections={()=>{
-                setLat(parseFloat(past.lat));
-                setLong(parseFloat(past.longitude));
-                setAddress(JSON.stringify(past.add1),JSON.stringify(past.city))
-                setEnd(JSON.stringify(past.full_name))
+                //setEnd(JSON.stringify(past.full_name))
                 openMap();
               }}
             /> 

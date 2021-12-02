@@ -139,7 +139,7 @@ const CustCurrentOrder = ({
   return <View style={styles.content}>
   <CardCont height={height}>
     <TimerCont>
-      <Timer>Available at: {timeAvail}</Timer>
+      <Timer>{timeAvail}</Timer>
     </TimerCont>
     <Content>
       <Left>
@@ -157,8 +157,8 @@ const CustCurrentOrder = ({
           </QuantityCont>
         </RestCont>
         <PriceCont>
-          <Text style={{fontSize:16, color:'#FE4265', fontWeight:'700'}}>{newprice}</Text>
-          <Text style={{marginLeft:5, fontSize:12, textDecorationLine:'line-through'}}>{oldprice}</Text>
+          <Text style={{fontSize:16, color:'#FE4265', fontWeight:'700'}}>${newprice}</Text>
+          <Text style={{marginLeft:5, fontSize:12, textDecorationLine:'line-through'}}>${oldprice}</Text>
         </PriceCont>
         <DetailsCont onPress={HandleDirections}>
           <Pressable onPress={HandleDirections}><Text style={{marginTop:5, fontSize:18, fontWeight:'500', color:'#FE4265'}}>Directions</Text></Pressable>

@@ -211,19 +211,6 @@ export default function Home({
     },
     {
       key: 3,
-      title: "Acqua",
-      description: "Seafood restaurant",
-      location: {
-        longitude: -123.010650,
-        latitude: 49.267530
-      },
-      plates_saved: "290",
-      distance:'1.5km',
-      mealQuantity:4,
-      fuid:'xPDJegbeJVahm7a1RfriAlu66hB2',
-    },
-    {
-      key: 4,
       title: "Yasser's Restaurant",
       description: "Afghan cuisine",
       location: {
@@ -236,7 +223,7 @@ export default function Home({
       fuid:'hyMHzMeOFSXO5uqYgsky7Sil1qu2',
     },
     {
-      key: 5,
+      key: 4,
       title: "Atlas Steakhouse",
       description: "Amazing steak!",
       location: {
@@ -247,21 +234,7 @@ export default function Home({
       distance:'300m',
       mealQuantity:4,
       fuid:'GHKeZm6KSSW2NoF5Wxq0IZqCDm93',
-    },
-    {
-      key: 6,
-      title: "Earl's kitchen and bar",
-      description: "a family owned premium casual dining chain",
-      location: {
-        longitude: -123.019590,
-        latitude: 49.265350
-      },
-      plates_saved: "290",
-      distance:'1.5km',
-      mealQuantity:4,
-      fuid:'S2ZZPSTLXZZtRZNExpklx6i6l0h2',
-    },
-    
+    }
   ])
 
   const GetLatLong = () => {
@@ -739,11 +712,13 @@ export default function Home({
                oldprice={listed.old_price}
                newprice={listed.new_price}
                description={listed.description}
-               showNut={listed.nf}
-               showGluten={listed.gf}
-               showDairy={listed.df}
-               showVege={listed.v}
+               showNut={parseFloat(listed.nf)}
+               showGluten={parseFloat(listed.gf)}
+               showDairy={parseFloat(listed.df)}
+               showVege={parseFloat(listed.v)}
                src={listed.url}
+               time_avail={listed.time_avail}
+               distance={listed.distance}
                addToCart={() => {
                 setShowModel(true)
                 setMeal(listed.m_name)
