@@ -138,7 +138,7 @@ const ListingCard = ({
             <Text style={{fontSize:14, fontFamily:'Quicksand_400Regular'}}>{modifications}</Text>
         </DetailsText>
 
-      <But width="120%" height="40px" text="Edit Listing"/>
+      <But width="120%" height="40px" text="Delete Listing"/>
       </Details>
     </CardCont>
     </View>
