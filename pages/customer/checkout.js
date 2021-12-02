@@ -132,8 +132,8 @@ export default function Checkout({
   }
 
   const [location, setLocation] = useState({
-    longitude: -123.1207,
-    latitude: 49.2827,
+    longitude: -123.001550,
+    latitude: 49.253300,
     latitudeDelta: 0.086,
     longitudeDelta: 0.136});
 
@@ -243,6 +243,8 @@ export default function Checkout({
                 origin={location}
                 destination={{latitude: parseFloat(cartItems[0].lat), longitude: parseFloat(cartItems[0].longitude)}}
                 apikey={GOOGLE_MAPS_APIKEY}
+                strokeColor={"#FE4265"}
+                strokeWidth={3}
               />
           </MapView>
         </View>: null}
