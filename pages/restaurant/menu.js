@@ -198,12 +198,13 @@ export default function Menu({
   const [dF, setDF] = useState()
   const [v, setV] = useState()
   const [fuid, set] = useState()
+  const [menuItems, setMenuItems] = useState()
+  const [restData, setRestData] = useState()
+
 
   // state to set image
   const [image, setImage] = useState(null);
 
-  // state for image name
-  const [imgName, setImgName] = useState()
 
   // get permissions
   useEffect(() => {
@@ -215,11 +216,35 @@ export default function Menu({
           alert('Sorry, we need camera roll permissions to make this work!');
         }
       }
-
       /* const url = await storage.ref().child('menu/item66.jpg').getDownloadURL()
       console.log("url",url) */
     })();
   }, []);
+
+  // get meal data and restuarant data
+  useEffect(() => {
+
+let isUnmount = false;
+
+(async () => {
+  if(!isUnmount){
+    var uid = auth.currentUser?.uid;
+    const result = await axios.get('/meals.php')
+    const restaurantName = await axios.get('/users.php?fuid=' + auth.currentUser.uid)
+    setMenuItems(result.data);
+    setRestData(restaurantName.data[0].full_name)
+    /* console.log(restData) */
+    /* console.log(auth.currentUser.uid) */
+    /* console.log(result.data) */
+  }
+
+})();
+
+return () => {
+  isUnmount = true;
+}
+
+}, [EditItem]);
 
   // get image from gallery
   const pickImage = async () => {
@@ -497,7 +522,7 @@ export default function Menu({
         <IconCont >
           <MaterialCommunityIcons name="account" size={60} color="#ffffff" />
         </IconCont>
-      <Text style={{fontSize:30, fontWeight:'400', color:'#ffffff', marginLeft:20}}>{restaurant}</Text>
+      <Text style={{fontSize:30, fontWeight:'400', color:'#ffffff', marginLeft:20}}>{restData}</Text>
       </TopCont>
 
       <Cards>
@@ -505,32 +530,22 @@ export default function Menu({
         <Text style={{color: "#FE4265", fontSize: 18, fontWeight: 'bold', alignSelf: 'flex-start'}} >Menu</Text>
 
         <View style={{width: '100%', height: '95%', paddingBottom:10}}>
-            <ScrollView contentContainerStyle={{width: '100%', alignItems:'center', paddingBottom: 30}}>
-                {
-                  //getting all the image
-                  /* items.map((o,i)=>{
-                    const url = storage.ref().child(`menu/item${o.id}.jpg`);
+            <ScrollView contentContainerStyle={{width: '100%', alignItems:'center', paddingBottom: 70}}>
+            {menuItems ? menuItems.filter((x)=> {return x.fuid === auth.currentUser?.uid}).map((meals) => (
+              <But 
+              key={meals.mid} 
+              text={meals.m_name} 
+              margintop="10px"/>
+            )) : null}
 
-                    return <>
-                      <Image src={{uri:url}} />\
-                      <Text>{o.m_name}</Text>
-                    </>
-                  }) */
-                }
-                
-                <But width="100%" height="50px" text="Fettucini Alfredo" margintop="15px" onPress={()=>setEditItem(!modalVisible)}/>
-                <But width="100%" height="50px" text="Spaghetti Bolognese" margintop="15px"/>
-                <But width="100%" height="50px" text="Lasagna" margintop="15px"/>
-                <But width="100%" height="50px" text="Meatballs" margintop="15px"/>
-                <But width="100%" height="50px" text="Ravioli" margintop="15px"/>
-                <But width="100%" height="50px" text="Roasted Vegetables" margintop="15px"/>
-                <But width="100%" height="50px" text="Gnochi" margintop="15px"/>
             </ScrollView>
         </View>
         </EditMenuCont>
         <Pressable style={styles.peachButton} onPress={()=>setModalVisible(!modalVisible)}>
           <Text style={{fontSize:18, color:'white'}}>Add New Item</Text>
         </Pressable>
+
+        <But width="90%" height="40px" text="New Item" bgColor="#F3AD81" borderRadius="0px" margintop="10px" onPress={()=>setModalVisible(!modalVisible)}/>
 
         <Pressable style={styles.whiteButton} onPress={()=>navigation.goBack()}>
           <Text style={{fontSize:18, color:'#FE4265'}}>{"<"} Back</Text>
