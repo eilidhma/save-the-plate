@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'rea
 import {
   useFonts,
   Raleway_700Bold,
+  Raleway_400Regular,
 } from '@expo-google-fonts/raleway';
 import {
   Quicksand_300, Quicksand_300Light, Quicksand_400Regular
@@ -26,7 +27,7 @@ const UserLocation = ({
 
   return <Cont>
     <SimpleLineIcons style={{marginRight:5}} name="location-pin" size={18} color="white" />
-    <Text style={{fontSize:16, color:'white', fontWeight:'200'}}>Meals near <Text>{address}</Text></Text>
+    <Text style={{fontSize:16, color:'white', fontFamily:'Raleway_400Regular'}}>Meals near <Text>{address}</Text></Text>
   </Cont>
   
   

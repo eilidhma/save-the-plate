@@ -3,6 +3,15 @@ import { StyleSheet, Text, View, ScrollView, Image, Button, Pressable, TextInput
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, SimpleLineIcons, AntDesign } from '@expo/vector-icons';
 
+import {
+  useFonts,
+  Raleway_700Bold,
+  Raleway_400Regular,
+} from '@expo-google-fonts/raleway';
+import {
+  Quicksand_300, Quicksand_300Light, Quicksand_400Regular
+} from '@expo-google-fonts/quicksand';
+
 import { NavigationContainer, useFocusEffect} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
@@ -630,8 +639,8 @@ export default function Home({
 
       <View style={{width:'100%', position:'absolute', top:80, display:'flex', justifyContent:'center', alignItems:'center'}}>
         <Tabs onPressMeal={HandleMealTab} onPressMap={HandleMapTab}
-          fontWeightMeals={mealtab ? 400 : 200}
-          fontWeightMap={maptab ? 400 : 200}
+          fontFamilyMeals={mealtab ? 'Raleway_600SemiBold' : 'Raleway_400Regular'}
+          fontFamilyMap={maptab ? 'Raleway_600SemiBold' : 'Raleway_400Regular'}
           alignItems={mealtab ? 'flex-start' : 'flex-end'}
           />
           <View style={{width:'90%'}}>
@@ -683,7 +692,7 @@ export default function Home({
                 }} >
                   <Text style={{color:'white', fontSize:18}}>Checkout</Text>
                 </Pressable>
-                <Pressable style={styles.shadowPropLight} title="Add more" onPress={() => setModalVisible(!modalVisible)} >
+                <Pressable style={styles.shadowPropLight} title="Add more" onPress={() => setShowModel(!showModel)} >
                   <Text style={{color:'white', fontSize:18}}>Add More</Text>
                 </Pressable>
               </View>

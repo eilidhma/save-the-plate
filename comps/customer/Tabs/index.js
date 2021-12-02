@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'rea
 import {
   useFonts,
   Raleway_700Bold,
+  Raleway_400Regular,
+  Raleway_600SemiBold
 } from '@expo-google-fonts/raleway';
 import {
   Quicksand_300, Quicksand_300Light, Quicksand_400Regular
@@ -38,7 +40,7 @@ const Titles = styled.Text`
   font-size:26px;
   paddingLeft:10%;
   paddingRight:10%;
-  font-weight:${props=>props.fontWeight},
+  font-family:${props=>props.fontFamily};
   text-align:center;
 `
 
@@ -58,8 +60,8 @@ const Slider = styled.View`
 `
 
 const Tabs = ({
-  fontWeightMeals=400,
-  fontWeightMap=200,
+  fontFamilyMeals='Raleway_600SemiBold',
+  fontFamilyMap='Raleway_400Regular',
   onPressMeal=()=>{},
   onPressMap=()=>{},
   alignItems="flex-start"
@@ -67,8 +69,8 @@ const Tabs = ({
 
   return <Cont>
     <TopCont >
-    <TitlesCont onPress={onPressMeal}><Titles fontWeight={fontWeightMeals}>Meals</Titles></TitlesCont>
-    <TitlesCont onPress={onPressMap}><Titles fontWeight={fontWeightMap}>Map</Titles></TitlesCont>
+    <TitlesCont onPress={onPressMeal}><Titles fontFamily={fontFamilyMeals}>Meals</Titles></TitlesCont>
+    <TitlesCont onPress={onPressMap}><Titles fontFamily={fontFamilyMap}>Map</Titles></TitlesCont>
   </TopCont>
   <SliderCont alignItems={alignItems}>
     <Slider></Slider>

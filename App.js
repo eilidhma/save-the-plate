@@ -3,7 +3,9 @@ import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, StatusBar 
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   useFonts,
+  Raleway_400Regular,
   Raleway_700Bold,
+  Raleway_600SemiBold
 } from '@expo-google-fonts/raleway';
 import {
   Quicksand_300, Quicksand_300Light, Quicksand_400Regular
@@ -44,7 +46,7 @@ const Stack = createNativeStackNavigator();
 
 function Landing({ navigation }) {
   let [fontsLoaded] = useFonts({
-    Raleway_700Bold, Quicksand_300Light, Quicksand_400Regular
+    Raleway_700Bold, Raleway_400Regular, Raleway_600SemiBold, Quicksand_300Light, Quicksand_400Regular
   });
 
 setTimeout(() => { 
