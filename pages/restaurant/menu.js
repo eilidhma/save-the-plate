@@ -57,7 +57,7 @@ const Cards = styled.View`
 
 const EditMenuCont = styled.View`
   width: 90%;
-  height: 430px;
+  height: 415px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -529,7 +529,7 @@ return () => {
         <EditMenuCont>
         <Text style={{color: "#FE4265", fontSize: 18, fontWeight: 'bold', alignSelf: 'flex-start'}} >Menu</Text>
 
-        <View style={{width: '100%'}}>
+        <View style={{width: '100%', height: '95%', paddingBottom:10}}>
             <ScrollView contentContainerStyle={{width: '100%', alignItems:'center', paddingBottom: 70}}>
             {menuItems ? menuItems.filter((x)=> {return x.fuid === auth.currentUser?.uid}).map((meals) => (
               <But 
@@ -541,10 +541,15 @@ return () => {
             </ScrollView>
         </View>
         </EditMenuCont>
+        <Pressable style={styles.peachButton} onPress={()=>setModalVisible(!modalVisible)}>
+          <Text style={{fontSize:18, color:'white'}}>Add New Item</Text>
+        </Pressable>
 
         <But width="90%" height="40px" text="New Item" bgColor="#F3AD81" borderRadius="0px" margintop="10px" onPress={()=>setModalVisible(!modalVisible)}/>
 
-        <But width="200px" height="40px" text="< Back" margintop="20px" txtColor="#FE4265" bgColor="#ffffff" onPress={()=>navigation.goBack()}/>
+        <Pressable style={styles.whiteButton} onPress={()=>navigation.goBack()}>
+          <Text style={{fontSize:18, color:'#FE4265'}}>{"<"} Back</Text>
+        </Pressable>
       </Cards>
       
     </LinearGradient>
@@ -570,5 +575,35 @@ const styles = StyleSheet.create({
     marginTop:20,
     padding:5,
     borderRadius:20,
-  }
+  },
+  whiteButton: {
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    backgroundColor:'white',
+    width:250,
+    height:40,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:15,
+    padding:5,
+    borderRadius:20,
+  },
+  peachButton: {
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    backgroundColor:'#F3AD81',
+    width:250,
+    height:40,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:15,
+    padding:5,
+    borderRadius:20,
+  },
 });

@@ -65,7 +65,7 @@ const AddListingModal = styled.View`
  flex-direction: column;
  justify-content: space-between;
  width: 100%;
- height: 600px;
+ height: 500px;
  padding-right: 5%;
  padding-left: 5%;
  padding-top: 40px;
@@ -93,6 +93,13 @@ const TitleCont = styled.View`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+`;
+const ButtonCont = styled.View`
+  width: 100%;
+  display: flex;
+  justify-content: center;
   align-items: center;
   flex-direction: row;
 `;
@@ -126,14 +133,16 @@ const DescriptionCont = styled.View`
   border: 1px solid #FE4265;
 `;
 
+
 const SelectedTime = styled.View`
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #FE4265;
   border-radius: 16px;
-  width: 182px;
+  width: 150px;
   height: 40px;
+  margin:5px;
 `
 
 const DeselectedTime = styled.TouchableOpacity`
@@ -143,18 +152,98 @@ const DeselectedTime = styled.TouchableOpacity`
   border: 1px solid #FE4265;
   background-color: #ffffff;
   border-radius: 16px;
-  width: 182px;
+  width: 150px;
   height: 40px;
+  margin:5px;
 `
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputCont: {
+    width: '100%',
+    height:100,
+    display: 'flex',
+    justifyContent:'center',
+    paddingTop:10,
+    paddingLeft:10,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#FE4265',
+
+  },
+  shadowProp: {
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    backgroundColor:'#F3AE81',
+    width:200,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:20,
+    padding:5,
+    borderRadius:20,
+  },
+  backButton: {
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    backgroundColor:'#FE4265',
+    width:100,
+    height:40,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin:5,
+    padding:5,
+    borderRadius:20,
+  },
+  pinkButton: {
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    backgroundColor:'#FE4265',
+    width:150,
+    height:50,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin:5,
+    padding:5,
+    borderRadius:20,
+  },
+  peachButton: {
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    backgroundColor:'#F3AD81',
+    width:150,
+    height:50,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin:5,
+    padding:5,
+    borderRadius:20,
+  },
+});
 
 const RestaurantNav = ({ 
   home="white",
   account="white",
 }) =>{
-
+  
   const Stack = createNativeStackNavigator();
   const navigation = useNavigation();
-
+  
   const [nav, setNav] = useState(0)
 
   // modal stuff
@@ -323,10 +412,10 @@ setModalVisible(!modalVisible);
 
     {addItemStep === 1 && <View>
       <View>
-        <Search/>
+        <Text style={{color:'#FE4265', fontSize:16, fontWeight:'bold', marginBottom:10}}>Select the item</Text>
       </View>
       <View style={{width: '100%'}}>
-        <ScrollView contentContainerStyle={{width: '100%', alignItems:'center'}}>
+        <ScrollView contentContainerStyle={{width: '100%', alignItems:'center', height:'100%'}}>
           {mealsData ? mealsData.filter((x)=> {return x.fuid === auth.currentUser?.uid}).map((meals) => (
             <But 
             key={meals.mid} 
@@ -335,25 +424,32 @@ setModalVisible(!modalVisible);
               setItemStep(2)
               setMid(meals.mid)
               setMealName(meals.m_name)}} 
-            margintop="10px"/>
+            margintop="10px"
+            height="50px"/>
           )) : null}
         </ScrollView>
       </View>
     </View>
     }
 
-    {addItemStep === 2 && <View style={{flex: 1,flexDirection: "column", justifyContent: "space-between", height: "100%"}}>
+    {addItemStep === 2 && <View style={{flex: 1, flexDirection: "column", height: "100%"}}>
       <View style={{position: "relative"}}>
-        <But
+        <Pressable style={styles.backButton}
+          onPress={()=>{
+            setItemStep(1);
+            Reset();}}>
+          <Text style={{color:"white"}}>{"<"} Back</Text>
+        </Pressable>
+        {/* <But
           text="< Back"
           onPress={()=>{
             setItemStep(1);
             Reset();}}
-          width="125px"
-          height="40px"/>
+          width="100px"
+          height="40px"/> */}
       </View>
-
-        <TitleCont style={{paddingBottom: 15, paddingTop: 15}}>
+      
+        <TitleCont style={{paddingTop:10, paddingBottom:15}}>
           <Text>
             {mealName}
           </Text>
@@ -372,13 +468,17 @@ setModalVisible(!modalVisible);
             </Counter>
           </CounterCont>
         </TitleCont>
-        <DescriptionCont>
-          <TextInput onChangeText={(text)=>setMealMods(text)} editable placeholder="Add modifications"/>
-        </DescriptionCont>
+      
+        <TextInput 
+          style={styles.inputCont}
+          multiline
+          numberOfLines={5}
+          onChangeText={(text)=>setMealMods(text)} 
+          placeholder="Add modifications"/>
         
-        <View style={{flex: 1, flexDirection: "column", justifyContent: "space-between", paddingBottom: 20, paddingTop: 20, height: 10}}>
-          <Text>Available in:</Text>
-            <TitleCont>
+        <View style={{flex: 1, flexDirection: "column", paddingBottom: 20, paddingTop: 20, height: 10}}>
+          <Text style={{paddingBottom:10}}>Available in:</Text>
+            <ButtonCont>
               {thirty === true 
                 ? <SelectedTime>
                     <Text style={{color:"white"}}>30 minutes</Text>
@@ -396,9 +496,9 @@ setModalVisible(!modalVisible);
                     <Text style={{color: "#FE4265"}}>45 minutes</Text>
                   </DeselectedTime>
               }
-            </TitleCont>
+            </ButtonCont>
 
-            <TitleCont>
+            <ButtonCont>
               {onehour === true 
                 ? <SelectedTime>
                     <Text style={{color:"white"}}>1 hour</Text>
@@ -416,25 +516,30 @@ setModalVisible(!modalVisible);
                     <Text style={{color: "#FE4265"}}>2 hours</Text>
                   </DeselectedTime>
               }
-            </TitleCont>
+            </ButtonCont>
         </View>
         
-        <View style={{flex:1 , justifyContent:'space-evenly', flexDirection:'column'}}>
+        {/* <View style={{flex:1 , justifyContent:'space-evenly', flexDirection:'column'}}>
         <Text>Edit Dietary Restriction:</Text>
         <DietSelect/>
-        </View>
+        </View> */}
 
         
-        <TitleCont>
-          <But onPress={PostItems} width="182px" height="50px" text="List Item"/>
-          <But width="182px" height="50px" text="Cancel" bgColor="#F3AD81"
-          onPress={()=>{
+        <ButtonCont>
+          <Pressable style={styles.pinkButton}
+            onPress={PostItems}>
+            <Text style={{color:'white', fontSize:18}}>List Item</Text>
+          </Pressable>
+          <Pressable style={styles.peachButton}
+            onPress={()=>{
             setModalVisible(!modalVisible)
             setItemStep(1)
             setCount(1)
             Reset()
-            }}/>
-        </TitleCont>
+          }}>
+            <Text style={{color:'white', fontSize:18}}>Cancel</Text>
+          </Pressable>
+        </ButtonCont>
     </View>
     }
   </AddListingModal>
