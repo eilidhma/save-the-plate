@@ -264,7 +264,7 @@ export default function RestaurantHome ({  navigation }) {
                 }) 
               }}
             />
-          )) : <Text>No current orders</Text>}
+          )) : <Text style={{color:'white', fontSize:18}}>No orders yet!</Text>}
       
         </ScrollView>
         </View>}
@@ -285,7 +285,7 @@ export default function RestaurantHome ({  navigation }) {
               modifications={listed.modifications}
               img={listed.url}
             />
-          )): <Text>No current listings!</Text>}
+          )): <Text style={{color:'white', fontSize:18}}>No listings yet!</Text>}
         </ScrollView>
         </View>}
         
@@ -308,7 +308,7 @@ export default function RestaurantHome ({  navigation }) {
                 setModalVisible(false)
                 navigation.navigate('RestaurantHome')
               }} >
-                <Text style={{color:'white', fontSize:18}}>Ok</Text>
+                <Text style={{color:'white', fontSize:18}}>Confirm Pickup</Text>
               </Pressable>
             </View>
           </View>

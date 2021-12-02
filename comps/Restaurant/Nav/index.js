@@ -412,7 +412,7 @@ setModalVisible(!modalVisible);
 
     {addItemStep === 1 && <View>
       <View>
-        <Text style={{color:'#FE4265', fontSize:16, fontWeight:'bold', marginBottom:10}}>Select the item to list</Text>
+        <Text style={{color:'#FE4265', fontSize:16, fontWeight:'bold', marginBottom:10}}>Select the item</Text>
       </View>
       <View style={{width: '100%'}}>
         <ScrollView contentContainerStyle={{width: '100%', alignItems:'center', height:'100%'}}>

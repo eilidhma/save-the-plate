@@ -57,7 +57,7 @@ const Cards = styled.View`
 
 const EditMenuCont = styled.View`
   width: 90%;
-  height: 430px;
+  height: 415px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -504,8 +504,8 @@ export default function Menu({
         <EditMenuCont>
         <Text style={{color: "#FE4265", fontSize: 18, fontWeight: 'bold', alignSelf: 'flex-start'}} >Menu</Text>
 
-        <View style={{width: '100%'}}>
-            <ScrollView contentContainerStyle={{width: '100%', alignItems:'center', paddingBottom: 70}}>
+        <View style={{width: '100%', height: '95%', paddingBottom:10}}>
+            <ScrollView contentContainerStyle={{width: '100%', alignItems:'center', paddingBottom: 30}}>
                 {
                   //getting all the image
                   /* items.map((o,i)=>{
@@ -527,11 +527,11 @@ export default function Menu({
                 <But width="100%" height="50px" text="Gnochi" margintop="15px"/>
             </ScrollView>
         </View>
-        <AddItemButton>
-            <But width="100%" height="40px" text="Add New Item" bgColor="#F3AD81" borderRadius="0px" onPress={()=>setModalVisible(!modalVisible)}/>
-        </AddItemButton>
         </EditMenuCont>
-        
+        <Pressable style={styles.peachButton} onPress={()=>setModalVisible(!modalVisible)}>
+          <Text style={{fontSize:18, color:'white'}}>Add New Item</Text>
+        </Pressable>
+
         <Pressable style={styles.whiteButton} onPress={()=>navigation.goBack()}>
           <Text style={{fontSize:18, color:'#FE4265'}}>{"<"} Back</Text>
         </Pressable>
@@ -567,6 +567,21 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
     backgroundColor:'white',
+    width:250,
+    height:40,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:15,
+    padding:5,
+    borderRadius:20,
+  },
+  peachButton: {
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    backgroundColor:'#F3AD81',
     width:250,
     height:40,
     display: 'flex',
