@@ -14,7 +14,7 @@ import But from '../../global/Button';
 import CuisineSelect from '../CuisineSelect';
 
 const CardCont = styled.View`
-  margin-bottom:10px;
+
 `;
 
 const Content = styled.View`
