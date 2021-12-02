@@ -12,6 +12,7 @@
     "@expo-google-fonts/inter": "^0.2.0",
     "@expo-google-fonts/quicksand": "^0.2.0",
     "@expo-google-fonts/raleway": "^0.2.0",
+    "@fontsource/raleway": "^4.5.0",
     "@mui/icons-material": "^5.0.5",
     "@mui/material": "^5.0.6",
     "@react-navigation/native": "^6.0.5",
