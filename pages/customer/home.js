@@ -37,6 +37,7 @@ import Name from '../../comps/customer/Name';
 import Title from '../../comps/customer/Title';
 import SwipeUpDownModal from 'react-native-swipe-modal-up-down';
 import { auth, storage } from '../../firebase';
+import LottieView from 'lottie-react-native';
 
 
 var mapIcon = require ('../../assets/mapicon.png');
@@ -757,7 +758,20 @@ export default function Home({
               }}
                />
 
-            )) : null}
+            )) : <View style={{flex:1, justifyContent:'center', alignItems:'center', marginTop:70}}>
+            <LottieView
+              ref={(ref) => {
+                anim = ref;
+              }}
+              style={{
+                width:'50%',
+                alignItems:'center'
+              }}
+              source={require('../../assets/logo.json')}
+              autoPlay={true}
+              loop={true}
+              />
+            </View>}
             
             
         </ScrollView>
@@ -802,7 +816,7 @@ export default function Home({
                       }
                     }
                     setMapRestData(result.data)
-                    //console.log(mapRestData)
+                    
                   }}>
                     <View style={styles.callout}>
                       <Text style={{fontSize:24, fontWeight:'500', color:'black', marginBottom:10}}>{restaurant.title}</Text>
@@ -851,7 +865,7 @@ export default function Home({
                 <UserLocation address={"3700 Willingdon Ave"} color={"black"}/>
               </View>
                 <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:200}}>
-                  {mapRestData ? mapRestData.filter((x)=>{return x.status === "complete"}).map((mapRest) => (
+                  {mapRestData ? mapRestData.filter((x)=>{return x.status === "active"}).map((mapRest) => (
                     <CustMealCard
                     key={mapRest.lid}
                     meal={mapRest.m_name}
@@ -880,7 +894,20 @@ export default function Home({
                       ])
                     }}  
                     />
-                  )): null}
+                  )): <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+                  <LottieView
+                    ref={(ref) => {
+                      anim = ref;
+                    }}
+                    style={{
+                      width:'50%',
+                      alignItems:'center'
+                    }}
+                    source={require('../../assets/logo.json')}
+                    autoPlay={true}
+                    loop={true}
+                    />
+                  </View>}
                 </ScrollView>
               </View>
             </View>

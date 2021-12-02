@@ -16,6 +16,17 @@ import MapView, { Callout, Marker, Polyline } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import * as Location from 'expo-location';
 import * as geolib from 'geolib';
+import { MaterialIcons } from '@expo/vector-icons';
+import {
+  useFonts,
+  Raleway_700Bold,
+  Raleway_400Regular,
+  Raleway_600SemiBold
+} from '@expo-google-fonts/raleway';
+import {
+  Quicksand_300, Quicksand_300Light, Quicksand_400Regular,
+} from '@expo-google-fonts/quicksand';
+import LottieView from 'lottie-react-native';
 
 
 var cardtype = require ('../../assets/visa.png');
@@ -189,9 +200,9 @@ export default function Checkout({
  
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
-      <View style={{width:'100%', position:'absolute', top:80, display:'flex', justifyContent:'center', alignItems:'center'}}>
+      {listedData ? <View style={{width:'100%', position:'absolute', top:80, display:'flex', justifyContent:'center', alignItems:'center'}}>
         <Text style={styles.heading}>Checkout</Text>
-      </View>
+      </View> : null}
       <View style={{width:'90%', backgroundColor:'white', height:2, position:'absolute', top:118}}></View> 
       <Cont> 
       {cartItems ? <TitleCont> 
@@ -204,8 +215,9 @@ export default function Checkout({
           <SimpleLineIcons style={{marginRight:5}} name="location-pin" size={18} color="black" />
           <Text style={{fontSize:16, color:'black'}}>{distanceToRestaurant}<Text>km away</Text></Text>
         </Distance>: 
-      <View>
-        <Text>You have nothing in your cart!</Text>
+      <View style={{display:'flex', alignItems:'center', justifyContent:'center', height:'50%'}}>
+        <Text style={{fontFamily:'Raleway_600SemiBold', fontSize:20}}>You have nothing in your cart!</Text>
+        <MaterialIcons style={{marginTop:20}} name="remove-shopping-cart" size={35} color="black" />
       </View>}
       {cartItems ? <View style={{
         width:'100%',
@@ -359,6 +371,7 @@ const styles = StyleSheet.create({
     paddingRight:'5%',
     fontWeight:'400',
     width:'100%',
+    fontFamily:'Raleway_600SemiBold'
   },
   starStyle: {
     width: 100,

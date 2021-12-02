@@ -101,7 +101,7 @@ export default function Checkout({
       <Text style={{fontSize:30, fontWeight:'400', color:'white', marginLeft:20}}>{name}</Text>
       </TopCont>
       <Cards>
-        <PlatesSaved quantity={platesSaved}/>
+        <PlatesSaved quantity={25}/>
         <InfoCard title="Contact Information" sectiontitle1="Phone number:" sectiontitle2="Address:" phone={phone} addressline1={address1 + " " + address2} addressline2={postalCode + " " + city + ", " + province} edit="Edit Contact Information"/>
         <InfoCard title="Payment Information" sectiontitle1="Card Number:" sectiontitle2="Expiration Date:" cvc="CVC" phone="**** **** **** 8954" addressline1="**/**" addressline2="***" edit="Edit Credit Card Information"/>
         <Pressable style={styles.whiteButton} title="< Back" onPress={handleSignOut} >

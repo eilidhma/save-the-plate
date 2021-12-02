@@ -1,39 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, LayoutAnimation, Platform, UIManager } from 'react-native';
 import styled from 'styled-components';
-import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
+import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, SimpleLineIcons, AntDesign } from '@expo/vector-icons';
 import Diets from '../../global/Diets';
 import DietSelect from '../../global/DietSelect';
-import { useFonts } from 'expo-font';
 
-import { 
-  Raleway_100Thin,
-  Raleway_100Thin_Italic,
-  Raleway_200ExtraLight,
-  Raleway_200ExtraLight_Italic,
-  Raleway_300Light,
-  Raleway_300Light_Italic,
-  Raleway_400Regular,
-  Raleway_400Regular_Italic,
-  Raleway_500Medium,
-  Raleway_500Medium_Italic,
-  Raleway_600SemiBold,
-  Raleway_600SemiBold_Italic,
+import {
+  useFonts,
   Raleway_700Bold,
-  Raleway_700Bold_Italic,
-  Raleway_800ExtraBold,
-  Raleway_800ExtraBold_Italic,
-  Raleway_900Black,
-  Raleway_900Black_Italic 
+  Raleway_400Regular,
+  Raleway_600SemiBold
 } from '@expo-google-fonts/raleway';
-
-import { 
-  Quicksand_300Light,
-  Quicksand_400Regular,
-  Quicksand_500Medium,
-  Quicksand_600SemiBold,
-  Quicksand_700Bold 
-} from '@expo-google-fonts/quicksand'
+import {
+  Quicksand_300, Quicksand_300Light, Quicksand_400Regular,
+} from '@expo-google-fonts/quicksand';
 
 import app from '../../../firebase';
 
@@ -129,6 +109,7 @@ const TextCont = styled.View`
 
 const Cart = styled.Pressable`
   display:flex;
+  flex-direction:row;
   background-color:#FE4265;
   position:absolute;
   bottom:0;
@@ -143,6 +124,7 @@ const Cart = styled.Pressable`
 const AddToCart = styled.Text`
   color:white;
   font-size:18px;
+  font-family:Raleway_600SemiBold;
 `
 
 // var mealImg = require('../../assets/meal.png');
@@ -179,7 +161,8 @@ const CustMealCard = ({
 
   <CardCont style={styles.container} height={card}>
     <Cart>
-      <AddToCart onPress={addToCart} >+ Add to cart</AddToCart>
+      <AntDesign style={{paddingRight:7}} name="pluscircleo" size={20} color="white" />
+      <AddToCart onPress={addToCart} >Add to cart</AddToCart>
     </Cart>
     <TopContent>
       <TopLeft>
@@ -187,11 +170,11 @@ const CustMealCard = ({
       </TopLeft>
       <TopRight>
         <View style={{display:'flex', justifyContent:"flex-start", alignContent:'flex-start'}}>
-        <Text style={{fontSize:18, fontWeight:'bold', width:'100%'}}>{meal}</Text>
+        <Text style={{fontSize:18, fontWeight:'bold', width:'100%', fontFamily:'Raleway_600SemiBold'}}>{meal}</Text>
         </View>
         <RestCont>
-          <Text style={{fontSize:14}}>{restaurant}</Text>
-          <Text style={{fontSize:12}}>{distance}m away</Text>
+          <Text style={{fontSize:16, fontFamily:'Quicksand_400Regular'}}>{restaurant}</Text>
+          <Text style={{fontSize:14, fontFamily:'Quicksand_400Regular'}}>{distance}m away</Text>
         </RestCont>
         <View style={{width:'100%', height:40, display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
           <PriceCont>
@@ -199,7 +182,7 @@ const CustMealCard = ({
             <Text style={{fontSize:12, marginLeft:5, textDecorationLine:'line-through'}}>{oldprice}</Text>
           </PriceCont>
           <DetailsCont onPress={HandleCard}>
-            <Pressable onPress={HandleCard}><Text style={{fontSize:18, fontWeight:'600', color:'#FE4265'}}>Details</Text></Pressable>
+            <Pressable onPress={HandleCard}><Text style={{fontSize:18, fontFamily:'Raleway_600SemiBold', fontWeight:'600', color:'#FE4265'}}>Details</Text></Pressable>
             <MaterialIcons style={{marginTop:-5, transform: [{ rotate: rotation+"deg" }]}} name="arrow-drop-down" size={33} color="#FE4265" />
           </DetailsCont>
         </View>
@@ -208,21 +191,21 @@ const CustMealCard = ({
     <BottomContent>
       <BottomLeft>
         <TextCont>
-          <Text style={{fontSize:16}}>Description:</Text>
+          <Text style={{fontSize:16, fontFamily:'Quicksand_400Regular'}}>Description:</Text>
         </TextCont>
         <TextCont>
-          <Text style={{fontSize:16}}>Modification:</Text>
+          <Text style={{fontSize:16, fontFamily:'Quicksand_400Regular'}}>Modification:</Text>
         </TextCont>
         <TextCont>
-          <Text style={{fontSize:16}}>Dietary Information:</Text>
+          <Text style={{fontSize:16, fontFamily:'Quicksand_400Regular'}}>Dietary Information:</Text>
         </TextCont>
       </BottomLeft>
       <BottomRight>
         <TextCont>
-          <Text style={{fontSize:12}}>{description}</Text>
+          <Text style={{fontSize:12, fontFamily:'Quicksand_400Regular'}}>{description}</Text>
         </TextCont>
         <TextCont>
-          <Text style={{fontSize:12}}>{modifications}</Text>
+          <Text style={{fontSize:12, fontFamily:'Quicksand_400Regular'}}>{modifications}</Text>
         </TextCont>
         <TextCont>
           <Diets showDairy={showDairy} showGluten={showGluten} showVege={showVege} showNut={showNut}/>

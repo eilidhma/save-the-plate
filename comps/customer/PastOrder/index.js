@@ -2,7 +2,15 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
 import styled from 'styled-components';
 import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
-
+import {
+  useFonts,
+  Raleway_700Bold,
+  Raleway_400Regular,
+  Raleway_600SemiBold
+} from '@expo-google-fonts/raleway';
+import {
+  Quicksand_300, Quicksand_300Light, Quicksand_400Regular,
+} from '@expo-google-fonts/quicksand';
 
 const CardCont = styled.View`
   display:flex;
@@ -81,9 +89,9 @@ const PastOrder = ({
         <Image style={{width:115, height:70, borderRadius:15}} source={{uri:src}}/>
       </Left>
       <Right>
-        <Text style={{fontSize:20}}>{meal}</Text>
+        <Text style={{fontSize:20, fontFamily:'Raleway_600SemiBold'}}>{meal}</Text>
         <RestCont>
-          <Text style={{marginTop:8, fontSize:14}}>{restaurant}</Text>
+          <Text style={{marginTop:8, fontSize:14, fontFamily:'Quicksand_400Regular'}}>{restaurant}</Text>
         </RestCont>
       </Right>
     </Content>

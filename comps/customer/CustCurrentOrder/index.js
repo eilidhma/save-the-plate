@@ -2,7 +2,15 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
 import styled from 'styled-components';
 import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
-
+import {
+  useFonts,
+  Raleway_700Bold,
+  Raleway_400Regular,
+  Raleway_600SemiBold
+} from '@expo-google-fonts/raleway';
+import {
+  Quicksand_300, Quicksand_300Light, Quicksand_400Regular,
+} from '@expo-google-fonts/quicksand';
 
 const CardCont = styled.View`
   display:flex;
@@ -118,7 +126,8 @@ const CustCurrentOrder = ({
   oldprice="$21.00",
   height="170px",
   quantity="1",
-  timeAvail="6:00:00"
+  timeAvail="6:00:00",
+  HandleDirections=()=>{}
 
 }) =>{
 
@@ -140,9 +149,9 @@ const CustCurrentOrder = ({
         <Text style={{marginTop:15, fontSize:16}}>Dietary Information:</Text>
       </Left>
       <Right>
-        <Text style={{fontSize:20}}>{meal}</Text>
+        <Text style={{fontSize:20, fontFamily:'Raleway_600SemiBold'}}>{meal}</Text>
         <RestCont>
-          <Text style={{marginTop:8, fontSize:14}}>{restaurant}</Text>
+          <Text style={{marginTop:8, fontSize:14, fontFamily:'Quicksand_400Regular'}}>{restaurant}</Text>
           <QuantityCont>
             <Quantity>{quantity}</Quantity>
           </QuantityCont>
@@ -151,8 +160,8 @@ const CustCurrentOrder = ({
           <Text style={{fontSize:16, color:'#FE4265', fontWeight:'700'}}>{newprice}</Text>
           <Text style={{marginLeft:5, fontSize:12, textDecorationLine:'line-through'}}>{oldprice}</Text>
         </PriceCont>
-        <DetailsCont onPress={HandleDetails}>
-          <Pressable onPress={HandleDetails}><Text style={{marginTop:5, fontSize:18, fontWeight:'500', color:'#FE4265'}}>Directions</Text></Pressable>
+        <DetailsCont onPress={HandleDirections}>
+          <Pressable onPress={HandleDirections}><Text style={{marginTop:5, fontSize:18, fontWeight:'500', color:'#FE4265'}}>Directions</Text></Pressable>
           <MaterialIcons style={{marginTop:5}} name="arrow-right" size={33} color="#FE4265" />
         </DetailsCont>
       </Right>
