@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, ScrollView, Text, Modal, Pressable } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
+import { useFocusEffect } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
 
 import {
@@ -37,6 +38,40 @@ export default function RestaurantHome ({  navigation }) {
   
   var userID = auth.currentUser?.uid;
   //console.log(userID)
+
+  useFocusEffect(
+    React.useCallback(()=>{
+
+      (async () => {
+        const result = await axios.get('/listed.php');
+        const orderResult = await axios.get('/orders.php?fuid='+userID);
+  
+          for (var i = 0; i<result.data.length; i++) {
+            try{
+              const url = await storage.ref().child(`menu/item${result.data[i].m_id}.jpg`).getDownloadURL();
+              result.data[i].url = url  
+             }catch (e){
+              result.data[i].url = null;
+              continue;
+            }
+          }
+  
+          for (var i = 0; i<orderResult.data.length; i++) {
+            try{
+              const url = await storage.ref().child(`menu/item${orderResult.data[i].m_id}.jpg`).getDownloadURL();
+              orderResult.data[i].url = url
+             }catch (e){
+              orderResult.data[i].url = null;
+              continue;
+            }
+          }
+  
+          setListedData(result.data);
+          setOrdersData(orderResult.data)
+      })();
+    },[])
+  );
+
   useEffect(() => {
 
     let isUnmount = false;
@@ -203,15 +238,12 @@ export default function RestaurantHome ({  navigation }) {
           fontWeightMap={maptab ? 400 : 200}
           alignItems={mealtab ? 'flex-start' : 'flex-end'}
           />
-          <View style={{width:'90%'}}>
-            <Search/>
-          </View>
       </View>
 
       {mealtab === true && <View style={{marginHorizontal: 0,
             width:'100%',
             position:'absolute',
-            top:170,
+            top:130,
             bottom:0,
             flex:1}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
@@ -232,7 +264,7 @@ export default function RestaurantHome ({  navigation }) {
                 }) 
               }}
             />
-          )) : <Text>No current orders</Text>}
+          )) : <Text style={{color:'white', fontSize:18}}>No orders yet!</Text>}
       
         </ScrollView>
         </View>}
@@ -240,12 +272,12 @@ export default function RestaurantHome ({  navigation }) {
         {mealtab === false && <View style={{marginHorizontal: 0,
             width:"100%",
             position:'absolute',
-            top:170,
+            top:130,
             bottom:0,
             flex:1}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
           
-          {listedData ? listedData.filter((x)=> {return x.status === 'active'}).map((listed)=>(
+          {listedData ? listedData.filter((x)=> {return x.status === 'active' && x.fuid == auth.currentUser.uid}).map((listed)=>(
             <ListingCard
               key={listed.lid}
               foodname={listed.m_name}
@@ -253,7 +285,7 @@ export default function RestaurantHome ({  navigation }) {
               modifications={listed.modifications}
               img={listed.url}
             />
-          )): <Text>No current listings!</Text>}
+          )): <Text style={{color:'white', fontSize:18}}>No listings yet!</Text>}
         </ScrollView>
         </View>}
         
@@ -276,7 +308,7 @@ export default function RestaurantHome ({  navigation }) {
                 setModalVisible(false)
                 navigation.navigate('RestaurantHome')
               }} >
-                <Text style={{color:'white', fontSize:18}}>Ok</Text>
+                <Text style={{color:'white', fontSize:18}}>Confirm Pickup</Text>
               </Pressable>
             </View>
           </View>

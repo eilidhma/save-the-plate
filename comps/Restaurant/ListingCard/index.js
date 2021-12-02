@@ -120,7 +120,7 @@ const ListingCard = ({
           <Text style={{fontSize:20, fontFamily:'Raleway_700Bold', fontWeight: 'bold'}}>{foodname}</Text>
           
             <TimerCont>
-              <Text style={{color: '#FE4265'}}>Available in: <Text style={{fontWeight: 'bold'}}>{timer}</Text></Text>
+              <Text style={{color: '#FE4265'}}>Available at: <Text style={{fontWeight: 'bold'}}>{timer}</Text></Text>
             </TimerCont>
 
 

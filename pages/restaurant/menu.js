@@ -24,7 +24,7 @@ import { storage, auth } from '../../firebase';
 import "firebase/storage";
 import axios from 'axios';
 
-// add a modal that says image uploaded
+// add a modal that says the item is added
 
 const TopCont = styled.Pressable`
   display:flex;
@@ -57,27 +57,25 @@ const Cards = styled.View`
 
 const EditMenuCont = styled.View`
   width: 90%;
-  height: 387px;
+  height: 415px;
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   background-color: #ffffff;
   border-radius: 15px;
-  margin-top: 10px;
-  padding-right:20px;
-  padding-left:20px;
-  padding-top:10px;
+  margin-top:10px;
+  padding:20px;
+  padding-bottom:10px;
   overflow: hidden;
 `;
 
 const AddItemButton = styled.View`
-    width: 130%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    bottom: 0px;
+  width: 130%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0px;
 `
 
 const SingleLineInput = styled.View`
@@ -200,12 +198,13 @@ export default function Menu({
   const [dF, setDF] = useState()
   const [v, setV] = useState()
   const [fuid, set] = useState()
+  const [menuItems, setMenuItems] = useState()
+  const [restData, setRestData] = useState()
+
 
   // state to set image
   const [image, setImage] = useState(null);
 
-  // state for image name
-  const [imgName, setImgName] = useState()
 
   // get permissions
   useEffect(() => {
@@ -217,11 +216,35 @@ export default function Menu({
           alert('Sorry, we need camera roll permissions to make this work!');
         }
       }
-
       /* const url = await storage.ref().child('menu/item66.jpg').getDownloadURL()
       console.log("url",url) */
     })();
   }, []);
+
+  // get meal data and restuarant data
+  useEffect(() => {
+
+let isUnmount = false;
+
+(async () => {
+  if(!isUnmount){
+    var uid = auth.currentUser?.uid;
+    const result = await axios.get('/meals.php')
+    const restaurantName = await axios.get('/users.php?fuid=' + auth.currentUser.uid)
+    setMenuItems(result.data);
+    setRestData(restaurantName.data[0].full_name)
+    /* console.log(restData) */
+    /* console.log(auth.currentUser.uid) */
+    /* console.log(result.data) */
+  }
+
+})();
+
+return () => {
+  isUnmount = true;
+}
+
+}, [EditItem]);
 
   // get image from gallery
   const pickImage = async () => {
@@ -499,43 +522,34 @@ export default function Menu({
         <IconCont >
           <MaterialCommunityIcons name="account" size={60} color="#ffffff" />
         </IconCont>
-      <Text style={{fontSize:30, fontWeight:'400', color:'#ffffff', marginLeft:20}}>{restaurant}</Text>
+      <Text style={{fontSize:30, fontWeight:'400', color:'#ffffff', marginLeft:20}}>{restData}</Text>
       </TopCont>
 
       <Cards>
         <EditMenuCont>
         <Text style={{color: "#FE4265", fontSize: 18, fontWeight: 'bold', alignSelf: 'flex-start'}} >Menu</Text>
 
-        <View style={{width: '100%'}}>
+        <View style={{width: '100%', height: '95%', paddingBottom:10}}>
             <ScrollView contentContainerStyle={{width: '100%', alignItems:'center', paddingBottom: 70}}>
-                {
-                  //getting all the image
-                  /* items.map((o,i)=>{
-                    const url = storage.ref().child(`menu/item${o.id}.jpg`);
+            {menuItems ? menuItems.filter((x)=> {return x.fuid === auth.currentUser?.uid}).map((meals) => (
+              <But 
+              key={meals.mid} 
+              text={meals.m_name} 
+              margintop="10px"/>
+            )) : null}
 
-                    return <>
-                      <Image src={{uri:url}} />\
-                      <Text>{o.m_name}</Text>
-                    </>
-                  }) */
-                }
-                
-                <But width="100%" height="50px" text="Fettucini Alfredo" margintop="10px" onPress={()=>setEditItem(!modalVisible)}/>
-                <But width="100%" height="50px" text="Spaghetti Bolognese" margintop="10px"/>
-                <But width="100%" height="50px" text="Lasagna" margintop="10px"/>
-                <But width="100%" height="50px" text="Meatballs" margintop="10px"/>
-                <But width="100%" height="50px" text="Ravioli" margintop="10px"/>
-                <But width="100%" height="50px" text="Roasted Vegetables" margintop="10px"/>
-                <But width="100%" height="50px" text="Gnochi" margintop="10px"/>
             </ScrollView>
         </View>
-        <AddItemButton>
-            <But width="100%" height="40px" text="New Item" bgColor="#F3Ad81" borderRadius="0px" onPress={()=>setModalVisible(!modalVisible)}/>
-        </AddItemButton>
         </EditMenuCont>
+        <Pressable style={styles.peachButton} onPress={()=>setModalVisible(!modalVisible)}>
+          <Text style={{fontSize:18, color:'white'}}>Add New Item</Text>
+        </Pressable>
 
-        <But text="Save Changes" margintop="10px" bgColor="#F3AD81"/>
-        <But text="< Back" margintop="10px" txtColor="#FE4265" bgColor="#ffffff" onPress={()=>navigation.goBack()}/>
+        <But width="90%" height="40px" text="New Item" bgColor="#F3AD81" borderRadius="0px" margintop="10px" onPress={()=>setModalVisible(!modalVisible)}/>
+
+        <Pressable style={styles.whiteButton} onPress={()=>navigation.goBack()}>
+          <Text style={{fontSize:18, color:'#FE4265'}}>{"<"} Back</Text>
+        </Pressable>
       </Cards>
       
     </LinearGradient>
@@ -561,5 +575,35 @@ const styles = StyleSheet.create({
     marginTop:20,
     padding:5,
     borderRadius:20,
-  }
+  },
+  whiteButton: {
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    backgroundColor:'white',
+    width:250,
+    height:40,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:15,
+    padding:5,
+    borderRadius:20,
+  },
+  peachButton: {
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    backgroundColor:'#F3AD81',
+    width:250,
+    height:40,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:15,
+    padding:5,
+    borderRadius:20,
+  },
 });

@@ -3,7 +3,9 @@ import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, StatusBar 
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   useFonts,
+  Raleway_400Regular,
   Raleway_700Bold,
+  Raleway_600SemiBold
 } from '@expo-google-fonts/raleway';
 import {
   Quicksand_300, Quicksand_300Light, Quicksand_400Regular
@@ -44,37 +46,39 @@ const Stack = createNativeStackNavigator();
 
 function Landing({ navigation }) {
   let [fontsLoaded] = useFonts({
-    Raleway_700Bold, Quicksand_300Light, Quicksand_400Regular
+    Raleway_700Bold, Raleway_400Regular, Raleway_600SemiBold, Quicksand_300Light, Quicksand_400Regular
   });
 
-  setTimeout(() => { 
-    auth.onAuthStateChanged(user => {
-      // console.log(auth.currentUser?.uid)
-      if(user) {
-        var userID = auth.currentUser?.uid;
-        checkIfRestaurant(userID);
-      }
-      else {
-        navigation.navigate('Login')
-      }
-    });
-  }, 3010)
+setTimeout(() => { 
+  auth.onAuthStateChanged(user => {
+    // console.log(auth.currentUser?.uid)
+    if(user) {
+      var userID = auth.currentUser?.uid;
+      checkIfRestaurant(userID);
+    }
+    else {
+      navigation.navigate('Login')
+    }
+  });
+}, 3010)
 
-  const checkIfRestaurant = async (uid) => {
-    const result = await axios.get('/users.php?fuid=' + uid)
-    
-     var page = result.data[0].restaurant;
+const checkIfRestaurant = async (uid) => {
+  const result = await axios.get('/users.php?fuid=' + uid)
 
-     if (page === '0')
-     {
-       navigation.navigate('Home')
-     }
+  
+  var page = result.data[0].restaurant;
 
-     else if (page === '1')
-     {
-       navigation.navigate('RestaurantHome')
-     } 
+  if (page === '0')
+  {
+    navigation.navigate('Home')
   }
+
+  else if (page === '1')
+  {
+    navigation.navigate('RestaurantHome')
+  } 
+}
+
 
   if (!fontsLoaded) {
     return <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>

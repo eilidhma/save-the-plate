@@ -41,27 +41,24 @@ const IconCont = styled.Pressable`
 
 const Cards = styled.View`
   display:flex;
-  justify-content:flex-start;
+  justify-content:space-between;
   align-items:center;
   position:absolute;
   top:190px;
   width:100%;
+  height: 60%;
 `
 
 const EditMenuCont = styled.View`
   width: 90%;
-  height: 170px;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background-color: #ffffff;
   border-radius: 15px;
   margin-top: 10px;
-  padding-right:20px;
-  padding-left:20px;
-  padding-top:10px;
-  padding-bottom:10px;
+  margin-bottom: 10px;
+  padding: 20px;
 `;
 
 export default function RestarantAccount({
@@ -118,14 +115,17 @@ export default function RestarantAccount({
         <PlatesSaved quantity={platesSaved}/>
         <InfoCard title="Contact Information" sectiontitle1="Phone number:" sectiontitle2="Address:" phone={phone} addressline1={address1 + " " + address2} addressline2={postalCode + " " + city + ", " + province} edit="Edit Contact Information"/>
 
-        <EditMenuCont>
-        <Text style={{color: "#FE4265", fontSize: 18, fontWeight: 'bold', alignSelf: 'flex-start'}} >Menu</Text>
-        <But width="100%" height="40px" text="View Menu" onPress={()=>navigation.navigate('Menu')}/>
-        <But width="100%" height="40px" text="Edit Menu" onPress={()=>navigation.navigate('Menu')}/>
-        </EditMenuCont>
+        <Pressable style={styles.peachButton}>
+          <Text style={{fontSize:18, color:'white'}}>Banking Information</Text>
+        </Pressable>
 
-        <But text="Save Changes" margintop="10px" bgColor="#F3AD81"/>
-        <But text="Sign Out" margintop="10px" txtColor="#FE4265" bgColor="#ffffff" onPress={handleSignOut}/>
+        <Pressable style={styles.peachButton} onPress={()=>navigation.navigate('Menu')}>
+          <Text style={{fontSize:18, color:'white'}}>View & Edit Menu</Text>
+        </Pressable>
+
+        <Pressable style={styles.whiteButton} onPress={handleSignOut}>
+          <Text style={{fontSize:18, color:'#E94168'}}>Sign Out</Text>
+        </Pressable>
       </Cards>
     </LinearGradient>
   );
@@ -157,11 +157,27 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
     backgroundColor:'white',
-    width:200,
+    width:250,
+    height:40,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop:20,
+    marginTop:15,
+    padding:5,
+    borderRadius:20,
+  },
+  peachButton: {
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    backgroundColor:'#F3AD81',
+    width:250,
+    height:40,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:15,
     padding:5,
     borderRadius:20,
   },

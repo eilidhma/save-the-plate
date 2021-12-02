@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'rea
 import {
   useFonts,
   Raleway_700Bold,
+  Raleway_400Regular,
 } from '@expo-google-fonts/raleway';
 import {
   Quicksand_300, Quicksand_300Light, Quicksand_400Regular
