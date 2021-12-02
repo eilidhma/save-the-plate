@@ -1,5 +1,5 @@
 import React, { useState, useEffect }from 'react';
-import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, ScrollView, Modal, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, ScrollView, Modal, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   useFonts,
@@ -113,8 +113,8 @@ const AddItemModal = styled.View`
  padding-bottom: 37px;
  background-color: #ffffff;
  border-radius: 30px;
- position: absolute;
- bottom: 0px;
+ position: relative;
+ bottom: -230px;
 `
 
 const CloseModal = styled.TouchableOpacity`
@@ -201,7 +201,8 @@ export default function Menu({
   const [menuItems, setMenuItems] = useState()
   const [restData, setRestData] = useState()
 
-
+  const [refresh1, SetRefresh1] = useState()
+  const [refresh2, SetRefresh2] = useState()
   // state to set image
   const [image, setImage] = useState(null);
 
@@ -320,7 +321,7 @@ return () => {
       animationType="slide"
       transparent={true}
       visible={modalVisible}>
-      
+      <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={40}>
       <AddItemModal>
         <CloseModal onPress={()=>setModalVisible(!modalVisible)}>
           <AntDesign name="close" size={13} color="#C4C4C4" />
@@ -356,6 +357,7 @@ return () => {
             </CameraButtonCont>
           </ImageButtons>
         </ModalRow>
+        
 
         {/* Name row */}
         <ModalRow>
@@ -416,8 +418,9 @@ return () => {
             setImage(null)
             }}/>
         </ButtonCont>
- 
       </AddItemModal>
+      </KeyboardAvoidingView>
+
       </Modal>
 
       {/* edit item modal */}
@@ -545,7 +548,6 @@ return () => {
           <Text style={{fontSize:18, color:'white'}}>Add New Item</Text>
         </Pressable>
 
-        <But width="90%" height="40px" text="New Item" bgColor="#F3AD81" borderRadius="0px" margintop="10px" onPress={()=>setModalVisible(!modalVisible)}/>
 
         <Pressable style={styles.whiteButton} onPress={()=>navigation.goBack()}>
           <Text style={{fontSize:18, color:'#FE4265'}}>{"<"} Back</Text>
