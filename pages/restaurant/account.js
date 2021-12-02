@@ -41,11 +41,12 @@ const IconCont = styled.Pressable`
 
 const Cards = styled.View`
   display:flex;
-  justify-content:center;
+  justify-content:space-between;
   align-items:center;
   position:absolute;
   top:190px;
   width:100%;
+  height: 60%;
 `
 
 const EditMenuCont = styled.View`
