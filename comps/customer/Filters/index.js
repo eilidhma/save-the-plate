@@ -156,10 +156,10 @@ const Filters = ({
                   <Text textColor={c1TextColor} style={{color:c1TextColor, fontSize:16, padding:5,}}>Italian</Text>
                 </Pressable>
                 <Pressable onPress={SelectCuisine2} backgroundColor={c2Color} style={styles.containerButton}>
-                  <Text textColor={c2TextColor} style={{color:c2TextColor, fontSize:16, padding:5,}}>Mexican</Text>
+                  <Text textColor={c2TextColor} style={{color:c2TextColor, fontSize:16, padding:5,}}>Indian</Text>
                 </Pressable>
                 <Pressable onPress={SelectCuisine3} backgroundColor={c3Color} style={styles.containerButton}>
-                  <Text textColor={c3TextColor} style={{color:c3TextColor, fontSize:16, padding:5,}}>Vietnamese</Text>
+                  <Text textColor={c3TextColor} style={{color:c3TextColor, fontSize:16, padding:5,}}>Middle Eastern</Text>
                 </Pressable>
                 <Pressable onPress={SelectCuisine4} backgroundColor={c4Color} style={styles.containerButton}>
                   <Text textColor={c4TextColor} style={{color:c4TextColor, fontSize:16, padding:5,}}>American</Text>
