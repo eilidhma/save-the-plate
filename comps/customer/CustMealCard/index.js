@@ -13,6 +13,7 @@ import {
 } from '@expo-google-fonts/raleway';
 import {
   Quicksand_300, Quicksand_300Light, Quicksand_400Regular,
+  Quicksand_700Bold
 } from '@expo-google-fonts/quicksand';
 
 import app from '../../../firebase';
@@ -178,8 +179,8 @@ const CustMealCard = ({
         </RestCont>
         <View style={{width:'100%', height:40, display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
           <PriceCont>
-            <Text style={{fontSize:16, color:'#FE4265', fontWeight:'700'}}>{newprice}</Text>
-            <Text style={{fontSize:12, marginLeft:5, textDecorationLine:'line-through'}}>{oldprice}</Text>
+            <Text style={{fontSize:16, color:'#FE4265', fontFamily:'Quicksand_700Bold'}}>{newprice}</Text>
+            <Text style={{fontSize:12, marginLeft:5, fontFamily:'Quicksand_400Regular', textDecorationLine:'line-through'}}>{oldprice}</Text>
           </PriceCont>
           <DetailsCont onPress={HandleCard}>
             <Pressable onPress={HandleCard}><Text style={{fontSize:18, fontFamily:'Raleway_600SemiBold', fontWeight:'600', color:'#FE4265'}}>Details</Text></Pressable>

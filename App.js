@@ -8,7 +8,8 @@ import {
   Raleway_600SemiBold
 } from '@expo-google-fonts/raleway';
 import {
-  Quicksand_300, Quicksand_300Light, Quicksand_400Regular
+  Quicksand_300, Quicksand_300Light, Quicksand_400Regular,
+  Quicksand_700Bold
 } from '@expo-google-fonts/quicksand';
 import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
