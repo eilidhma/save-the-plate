@@ -26,6 +26,7 @@ import Search from "../../comps/Restaurant/SearchBar";
 import BubbleRest from "../../comps/Restaurant/BubbleRest";
 import axios from 'axios';
 import { auth, storage } from "../../firebase";
+import { height } from "dom-helpers";
 
 
 
@@ -35,50 +36,56 @@ export default function RestaurantHome ({  navigation }) {
   const [ordersData, setOrdersData] = useState(null);
   const [oid, setOid] = useState();
   const [status, setStatus] = useState("complete");
+
+  const [refreshOrders, setRefreshOrders] = useState(1)
+  const [refreshListings, setRefreshListings] = useState(1)
   
   var userID = auth.currentUser?.uid;
   //console.log(userID)
 
-  useFocusEffect(
-    React.useCallback(()=>{
-
-      (async () => {
-        const result = await axios.get('/listed.php');
-        const orderResult = await axios.get('/orders.php?fuid='+userID);
-  
-          for (var i = 0; i<result.data.length; i++) {
-            try{
-              const url = await storage.ref().child(`menu/item${result.data[i].m_id}.jpg`).getDownloadURL();
-              result.data[i].url = url  
-             }catch (e){
-              result.data[i].url = null;
-              continue;
-            }
-          }
-  
-          for (var i = 0; i<orderResult.data.length; i++) {
-            try{
-              const url = await storage.ref().child(`menu/item${orderResult.data[i].m_id}.jpg`).getDownloadURL();
-              orderResult.data[i].url = url
-             }catch (e){
-              orderResult.data[i].url = null;
-              continue;
-            }
-          }
-  
-          setListedData(result.data);
-          setOrdersData(orderResult.data)
-      })();
-    },[])
-  );
-
+  // GET ORDERS ==========================================
   useEffect(() => {
 
     let isUnmount = false;
     
     (async () => {
-      const result = await axios.get('/listed.php');
+      setOrdersData(null)
+
       const orderResult = await axios.get('/orders.php?fuid='+userID);
+      if(!isUnmount){
+        for (var i = 0; i<orderResult.data.length; i++) {
+          try{
+            // console.log("getting")
+            const url = await storage.ref().child(`menu/item${orderResult.data[i].m_id}.jpg`).getDownloadURL();
+            orderResult.data[i].url = url
+            // console.log(url, "URL");
+
+           }catch (e){
+            orderResult.data[i].url = null;
+            continue;
+          }
+        }
+        setOrdersData(orderResult.data)
+      }
+    
+    })();
+
+    return () => {
+      isUnmount = true;
+    }
+
+  }, [refreshOrders]);
+
+
+  // GET LISTED ============================================
+  useEffect(() => {
+
+    let isUnmount = false;
+    
+    (async () => {
+      setListedData(null)
+
+      const result = await axios.get('/listed.php');
       if(!isUnmount){
 
         for (var i = 0; i<result.data.length; i++) {
@@ -94,24 +101,9 @@ export default function RestaurantHome ({  navigation }) {
           }
         }
 
-        for (var i = 0; i<orderResult.data.length; i++) {
-          try{
-            // console.log("getting")
-            const url = await storage.ref().child(`menu/item${orderResult.data[i].m_id}.jpg`).getDownloadURL();
-            orderResult.data[i].url = url
-            // console.log(url, "URL");
-
-           }catch (e){
-            orderResult.data[i].url = null;
-            continue;
-          }
-        }
-
-
 
         // console.log(orderResult.data)
         setListedData(result.data);
-        setOrdersData(orderResult.data)
         //console.log(orderResult.data)
       }
     
@@ -121,7 +113,10 @@ export default function RestaurantHome ({  navigation }) {
       isUnmount = true;
     }
 
-  }, []);
+  }, [refreshListings]);
+
+
+
 
   const ConfirmPickup = async () =>{
     const patch = await axios.patch('/orders.php', {
@@ -246,6 +241,12 @@ export default function RestaurantHome ({  navigation }) {
             top:130,
             bottom:0,
             flex:1}}>
+        <Pressable style={{backgroundColor:"#FE4265", justifyContent: "center", alignItems:"center", height: 50, top:-11}}
+          onPress={()=>setRefreshOrders(refreshOrders+1)}>
+            <Text style={{color:"white"}}>
+              Refresh
+            </Text>
+        </Pressable>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
           {ordersData ? ordersData.filter((x)=> {return x.ostatus === 'active'}).map((order)=>(
             <OrderCard 
@@ -264,7 +265,7 @@ export default function RestaurantHome ({  navigation }) {
                 }) 
               }}
             />
-          )) : <Text style={{color:'white', fontSize:18}}>No orders yet!</Text>}
+          )) : <Text>No current orders</Text>}
       
         </ScrollView>
         </View>}
@@ -275,8 +276,15 @@ export default function RestaurantHome ({  navigation }) {
             top:130,
             bottom:0,
             flex:1}}>
+        <Pressable style={{backgroundColor:"#FE4265", justifyContent: "center", alignItems:"center", height: 50, top:-11}}
+          onPress={()=>setRefreshListings(refreshListings+1)}>
+            <Text style={{color:"white"}}>
+              Refresh
+            </Text>
+        </Pressable>
+
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
-          
+
           {listedData ? listedData.filter((x)=> {return x.status === 'active' && x.fuid == auth.currentUser.uid}).map((listed)=>(
             <ListingCard
               key={listed.lid}
@@ -285,7 +293,7 @@ export default function RestaurantHome ({  navigation }) {
               modifications={listed.modifications}
               img={listed.url}
             />
-          )): <Text style={{color:'white', fontSize:18}}>No listings yet!</Text>}
+          )): <Text>No current listings!</Text>}
         </ScrollView>
         </View>}
         
@@ -308,7 +316,7 @@ export default function RestaurantHome ({  navigation }) {
                 setModalVisible(false)
                 navigation.navigate('RestaurantHome')
               }} >
-                <Text style={{color:'white', fontSize:18}}>Confirm Pickup</Text>
+                <Text style={{color:'white', fontSize:18}}>Ok</Text>
               </Pressable>
             </View>
           </View>
