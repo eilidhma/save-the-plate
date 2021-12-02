@@ -13,6 +13,7 @@ import {
 } from '@expo-google-fonts/raleway';
 import {
   Quicksand_300, Quicksand_300Light, Quicksand_400Regular,
+  Quicksand_700Bold, Quicksand_600SemiBold
 } from '@expo-google-fonts/quicksand';
 
 import app from '../../../firebase';
@@ -113,7 +114,7 @@ const Cart = styled.Pressable`
   background-color:#FE4265;
   position:absolute;
   bottom:0;
-  width:100%;
+  width:90%;
   z-index:10;
   justify-content:center;
   align-items:center;
@@ -123,7 +124,7 @@ const Cart = styled.Pressable`
 
 const AddToCart = styled.Text`
   color:white;
-  font-size:18px;
+  font-size:16px;
   font-family:Raleway_600SemiBold;
 `
 
@@ -178,8 +179,8 @@ const CustMealCard = ({
         </RestCont>
         <View style={{width:'100%', height:40, display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
           <PriceCont>
-            <Text style={{fontSize:16, color:'#FE4265', fontWeight:'700'}}>${newprice}</Text>
-            <Text style={{fontSize:12, marginLeft:5, textDecorationLine:'line-through'}}>${oldprice}</Text>
+            <Text style={{fontSize:16, color:'#FE4265', fontFamily:'Quicksand_700Bold'}}>${newprice}</Text>
+            <Text style={{fontSize:12, marginLeft:5, fontFamily:'Quicksand_400Regular', textDecorationLine:'line-through'}}>${oldprice}</Text>
           </PriceCont>
           <DetailsCont onPress={HandleCard}>
             <Pressable onPress={HandleCard}><Text style={{fontSize:18, fontFamily:'Raleway_600SemiBold', fontWeight:'600', color:'#FE4265'}}>Details</Text></Pressable>
@@ -191,24 +192,24 @@ const CustMealCard = ({
     <BottomContent>
       <BottomLeft>
         <TextCont>
-          <Text style={{fontSize:16, fontFamily:'Quicksand_400Regular'}}>Description:</Text>
+          <Text style={{fontSize:14, fontFamily:'Quicksand_600SemiBold'}}>Description:</Text>
         </TextCont>
         <TextCont>
-          <Text style={{fontSize:16, fontFamily:'Quicksand_400Regular'}}>Modification:</Text>
+          <Text style={{fontSize:14, fontFamily:'Quicksand_600SemiBold'}}>Modification:</Text>
         </TextCont>
         <TextCont>
-          <Text style={{fontSize:16, fontFamily:'Quicksand_400Regular'}}>Available:</Text>
+          <Text style={{fontSize:16, fontFamily:'Quicksand_600SemiBold'}}>Available:</Text>
         </TextCont>
         <TextCont>
-          <Text style={{fontSize:16, fontFamily:'Quicksand_400Regular'}}>Dietary Information:</Text>
+          <Text style={{fontSize:16, fontFamily:'Quicksand_600SemiBold'}}>Dietary Information:</Text>
         </TextCont>
       </BottomLeft>
       <BottomRight>
         <TextCont>
-          <Text style={{fontSize:12, fontFamily:'Quicksand_400Regular'}}>{description}</Text>
+          <Text style={{fontSize:14, fontFamily:'Quicksand_400Regular'}}>{description}</Text>
         </TextCont>
         <TextCont>
-          <Text style={{fontSize:12, fontFamily:'Quicksand_400Regular'}}>{modifications}</Text>
+          <Text style={{fontSize:14, fontFamily:'Quicksand_400Regular'}}>{modifications}</Text>
         </TextCont>
         <TextCont>
           <Text style={{fontSize:12, fontFamily:'Quicksand_400Regular'}}>{time_avail}</Text>
