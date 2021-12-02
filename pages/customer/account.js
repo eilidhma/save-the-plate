@@ -98,14 +98,14 @@ export default function Checkout({
         <IconCont>
           <MaterialCommunityIcons name="account" size={60} color="white" />
         </IconCont>
-      <Text style={{fontSize:30, fontWeight:'400', color:'white', marginLeft:20}}>{name}</Text>
+      <Text style={{fontSize:30, fontFamily:'Raleway_600SemiBold', color:'white', marginLeft:20}}>{name}</Text>
       </TopCont>
       <Cards>
         <PlatesSaved quantity={25}/>
         <InfoCard title="Contact Information" sectiontitle1="Phone number:" sectiontitle2="Address:" phone={phone} addressline1={address1 + " " + address2} addressline2={postalCode + " " + city + ", " + province} edit="Edit Contact Information"/>
         <InfoCard title="Payment Information" sectiontitle1="Card Number:" sectiontitle2="Expiration Date:" cvc="CVC" phone="**** **** **** 8954" addressline1="**/**" addressline2="***" edit="Edit Credit Card Information"/>
         <Pressable style={styles.whiteButton} title="< Back" onPress={handleSignOut} >
-          <Text style={{fontSize:18, color:'#E94168'}}>Sign Out</Text>
+          <Text style={{fontSize:18, color:'#E94168', fontFamily:'Quicksand_500Medium'}}>Sign Out</Text>
         </Pressable>
       </Cards>
     </LinearGradient>

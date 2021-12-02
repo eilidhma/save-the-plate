@@ -9,7 +9,8 @@ import {
   Raleway_400Regular,
 } from '@expo-google-fonts/raleway';
 import {
-  Quicksand_300, Quicksand_300Light, Quicksand_400Regular
+  Quicksand_300, Quicksand_300Light, Quicksand_400Regular,
+  Quicksand_700Bold
 } from '@expo-google-fonts/quicksand';
 
 import { NavigationContainer, useFocusEffect} from '@react-navigation/native';
@@ -794,14 +795,14 @@ export default function Home({
                     
                   }}>
                     <View style={styles.callout}>
-                      <Text style={{fontSize:24, fontWeight:'500', color:'black', marginBottom:10}}>{restaurant.title}</Text>
-                      <Text style={{marginBottom:10}}>{restaurant.distance} away</Text>
+                      <Text style={{fontSize:24, fontFamily:'Raleway_600SemiBold', color:'black', marginBottom:10}}>{restaurant.title}</Text>
+                      <Text style={{marginBottom:10, fontFamily:'Quicksand_400Regular'}}>{restaurant.distance} away</Text>
                       <View style={{display:'flex', flexDirection:'row'}}>
-                        <Text style={{fontWeight:'800', color:'#F3AE81', fontSize:18}}>{restaurant.mealQuantity}</Text>
-                        <Text style={{fontWeight:'300', fontSize:18}}> meals available!</Text>
+                        <Text style={{fontWeight:'800', color:'#F3AE81', fontSize:18, fontFamily:'Quicksand_700Bold'}}>{restaurant.mealQuantity}</Text>
+                        <Text style={{fontWeight:'300', fontSize:18, fontFamily:'Quicksand_400Regular'}}> meals available!</Text>
                       </View>
                       <Pressable style={styles.shadowPropDark} title="open restaurant" >
-                        <Text style={{color:'white', fontSize:18}}>View meals</Text>
+                        <Text style={{color:'white', fontSize:18, fontFamily:'Quicksand_400Regular'}}>View meals</Text>
                       </Pressable>
                       <View/>
                     </View>
@@ -878,7 +879,7 @@ export default function Home({
                       width:'50%',
                       alignItems:'center'
                     }}
-                    source={require('../../assets/logo.json')}
+                    source={require('../../assets/logopink.json')}
                     autoPlay={true}
                     loop={true}
                     />
