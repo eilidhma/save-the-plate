@@ -85,8 +85,7 @@ const Timer = styled.Text`
 
 
 const SimpleOrderCard = ({
-  src=require("../../../assets/meal.png"),
-  plateImg=require("../../../assets/plate.png"),
+  src="../../../assets/meal.png",
   restaurant="Fratelli's Bistro", 
   meal="Fettuccine Alfredo",
   newprice="$5.00",
@@ -112,7 +111,7 @@ const SimpleOrderCard = ({
   return <CardCont style={styles.container}>
     <Content>
       <Left>
-        <Image style={{width:115, height:105, borderRadius:15}} source={src}/>
+        <Image style={{width:115, height:105, borderRadius:15}} source={{uri:src}}/>
       </Left>
       <Right>
         <Text style={{fontSize:20}}>{meal}</Text>

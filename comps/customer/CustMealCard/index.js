@@ -122,7 +122,7 @@ const CustMealCard = ({
   plateImg=require("../../../assets/plate.png"),
   restaurant="Fratelli's Bistro", //fix this
   meal="Fettuccine Alfredo",
-  distance="400m away",
+  distance="400",
   plates="217",
   description="fettuccine pasta tossed with Parmesan cheese and butter and served with garlic toast on the side",
   newprice="$5.00",
@@ -161,7 +161,7 @@ const CustMealCard = ({
         </View>
         <RestCont>
           <Text style={{fontSize:14}}>{restaurant}</Text>
-          <Text style={{fontSize:12}}>{distance}</Text>
+          <Text style={{fontSize:12}}>{distance}m away</Text>
         </RestCont>
         <View style={{width:'100%', height:40, display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
           <PriceCont>

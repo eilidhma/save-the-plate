@@ -31,6 +31,7 @@ import { auth, storage } from '../../firebase';
 
 
 var mapIcon = require ('../../assets/mapicon.png');
+var userId = auth.currentUser?.uid
 
 export default function Home({
   navigation,
@@ -122,8 +123,6 @@ export default function Home({
 
   // !--------- End Of Tutorial ----------!
 
-  
-
   useFocusEffect(
     React.useCallback(()=>{
       (async () => {
@@ -132,7 +131,8 @@ export default function Home({
         const mexican = await axios.get('/listed.php?cuisine=mexican');
         const vietnamese = await axios.get('/listed.php?cuisine=vietnamese');
         const result = await axios.get('/listed.php');
-        const restaurants = await axios.get('/users.php?restaurant=1')
+        const restaurants = await axios.get('/users.php?restaurant=1');
+        const check = await axios.get('/orders.php?u_id='+userId);
 
         for (var i = 0; i<result.data.length; i++) {
           try{
@@ -156,10 +156,12 @@ export default function Home({
           setMexicanFood(mexican.data);
           setVietnameseFood(vietnamese.data)
           setRestaurantData(restaurants.data)
+          setOrderStatus(check.data)
 
       })();
     },[])
   )
+
 
   const [restaurantData, setRestaurantData] = useState()
 
@@ -179,8 +181,9 @@ export default function Home({
         latitude: 49.253300
       },
       plates_saved: "50",
-      distance:'400m',
-      mealQuantity:3
+      distance:'100m',
+      mealQuantity:3,
+      fuid:'Eg1a2bGY1pYSsHI9uae1mJBrEIr2',
     },
     {
       key: 2,
@@ -192,7 +195,8 @@ export default function Home({
       },
       plates_saved: "120",
       distance:'1.2km',
-      mealQuantity:2
+      mealQuantity:2,
+      fuid:'si1HZrRyTlc3pubOQlTIzA6W3Og1',
     },
     {
       key: 3,
@@ -204,7 +208,8 @@ export default function Home({
       },
       plates_saved: "290",
       distance:'1.5km',
-      mealQuantity:4
+      mealQuantity:4,
+      fuid:'xPDJegbeJVahm7a1RfriAlu66hB2',
     },
     {
       key: 4,
@@ -216,7 +221,8 @@ export default function Home({
       },
       plates_saved: "180",
       distance:'1km',
-      mealQuantity:4
+      mealQuantity:4,
+      fuid:'hyMHzMeOFSXO5uqYgsky7Sil1qu2',
     },
     {
       key: 5,
@@ -228,7 +234,8 @@ export default function Home({
       },
       plates_saved: "35",
       distance:'300m',
-      mealQuantity:4
+      mealQuantity:4,
+      fuid:'GHKeZm6KSSW2NoF5Wxq0IZqCDm93',
     },
     {
       key: 6,
@@ -240,7 +247,8 @@ export default function Home({
       },
       plates_saved: "290",
       distance:'1.5km',
-      mealQuantity:4
+      mealQuantity:4,
+      fuid:'S2ZZPSTLXZZtRZNExpklx6i6l0h2',
     },
     
   ])
@@ -273,6 +281,7 @@ export default function Home({
   const [mexicanFood, setMexicanFood] = useState(null)
   const [americanFood, setAmericanFood] = useState(null)
   const [vietnameseFood, setVietnameseFood] = useState(null)
+  const [orderStatus, setOrderStatus] = useState(null)
   
   
 
@@ -623,7 +632,10 @@ export default function Home({
 
     const [restTitle, setRestTitle] = useState()
     const [platessaved, setPlatesSaved] = useState()
+    const [fuid, setFuid] = useState()
     const [mapRestData, setMapRestData] = useState()
+
+    const [orderNumber, setOrderNumber] = useState()
 
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
@@ -635,7 +647,7 @@ export default function Home({
           alignItems={mealtab ? 'flex-start' : 'flex-end'}
           />
           <View style={{width:'90%'}}>
-            <UserLocation />
+            <UserLocation address={"3700 Willingdon Ave"}/>
           </View>
       </View>
        
@@ -645,59 +657,6 @@ export default function Home({
             top:170,
             bottom:0,
             flex:1}}>
-        
-
-
-        <SwipeUpDownModal
-          modalVisible={showModel}
-          PressToanimate={animateModal}          
-          ContentModal={
-            
-            <View style={{marginTop:30, display:'flex', justifyContent:'center', alignItems:'center'}}>
-
-              
-              <View style={{display:'flex', width:'90%', justifyContent:'center', width:70, height:2, backgroundColor:'#C3C3C3', position:'absolute', top:-20, alignSelf:'center'}}></View>
-              <View style={{display:'flex', width:'90%', justifyContent:'center', alignItems:'flex-end'}}>
-              <View style={{display:'flex', width:'90%', justifyContent:'center', alignItems:'flex-end', height:40, marginTop:-20, marginBottom:10}}>
-                <Pressable onPress={()=>setShowModel(!showModel)}>
-                  <AntDesign name="close" size={24} color="black" />
-                </Pressable> 
-              </View>
-              </View>
-
-                <SimpleOrderCard 
-                restaurant={rest} 
-                meal={meal}
-                newprice={newPrice}
-                oldprice={oldPrice} 
-                //src={mealImg}
-                />
-              <View style={{display:'flex', flexDirection:'row', width:'90%', justifyContent:'flex-end', marginTop:20}}>
-                <Text style={{fontSize:24, fontWeight:'500'}}>Total: {newPrice}</Text>
-              </View>
-              <View style={{display:'flex', flexDirection:'row', width:'90%', justifyContent:'space-between'}}>
-                <Pressable style={styles.shadowPropDark} title="Checkout" onPress={()=>{
-                  navigation.navigate('Cart', {cartItems} );
-                  setShowModel(false);
-                 
-                }} >
-                  <Text style={{color:'white', fontSize:18}}>Checkout</Text>
-                </Pressable>
-                <Pressable style={styles.shadowPropLight} title="Add more" onPress={() => setModalVisible(!modalVisible)} >
-                  <Text style={{color:'white', fontSize:18}}>Add More</Text>
-                </Pressable>
-              </View>
-            </View>
-
-            
-          }
-          HeaderStyle={styles.headerContent}
-          ContentModalStyle={styles.Modal}
-          onClose={() => {
-              setShowModel(false);
-              setanimateModal(false);
-          }}
-        />
         
         {mealtab === true && <View style={{display:'flex', justifyContent:'center', alignItems:'center', marginBottom:20}}>
           <Filters
@@ -776,7 +735,6 @@ export default function Home({
                src={listed.url}
                addToCart={() => {
                 setShowModel(true)
-                //setModalVisible(true)
                 setMeal(listed.m_name)
                 setRestaurant(listed.full_name)
                 setOldPrice(listed.old_price)
@@ -819,10 +777,23 @@ export default function Home({
                   <View style={styles.marker}>
                     <Image style={{width:30, height:30}} source={mapIcon}/>
                   </View>
-                  <Callout style={{borderRadius:20}} onPress={()=>{
+                  <Callout style={{borderRadius:20}} onPress={async()=>{
                     setRestModalVisible(true)
                     setRestTitle(restaurant.title)
                     setPlatesSaved(restaurant.plates_saved)
+                    setFuid(restaurant.fuid)
+                    const result = await axios.get('/listed.php?fuid='+restaurant.fuid);
+                    for (var i = 0; i<result.data.length; i++) {
+                      try{
+                        const url = await storage.ref().child(`menu/item${result.data[i].m_id}.jpg`).getDownloadURL();
+                        result.data[i].url = url
+                       }catch (e){
+                        result.data[i].url = null;
+                        continue;
+                      }
+                    }
+                    setMapRestData(result.data)
+                    //console.log(mapRestData)
                   }}>
                     <View style={styles.callout}>
                       <Text style={{fontSize:24, fontWeight:'500', color:'black', marginBottom:10}}>{restaurant.title}</Text>
@@ -850,9 +821,9 @@ export default function Home({
           modalVisible={restModalVisible}
           PressToanimate={animateModal}          
           ContentModal={
-            <View style={{marginTop:40, display:'flex', justifyContent:'center', alignItems:'center'}}>
+            <View style={{marginTop:30, display:'flex', alignItems:'center'}}>
 
-              <View style={{display:'flex', justifyContent:'center', width:70, height:2, backgroundColor:'#C3C3C3', position:'absolute', top:-30, alignSelf:'center'}}></View>
+              <View style={{display:'flex', justifyContent:'center', width:70, height:2, backgroundColor:'#C3C3C3', position:'absolute', top:-20, alignSelf:'center'}}></View>
               <View style={{display:'flex', justifyContent:'center', alignItems:'flex-end', position:'relative', top:-10, left:170}}>
               <View style={{display:'flex', width:'90%', justifyContent:'center', alignItems:'flex-end', marginTop:-10, marginBottom:10}}>
                 <Pressable onPress={()=>setRestModalVisible(!restModalVisible)}>
@@ -860,16 +831,47 @@ export default function Home({
                 </Pressable> 
               </View>
               </View>
-              <View style={{display:'flex', alignItems:'flex-start', justifyContent:'flex-start', width:'90%'}}>
+              <View style={{display:'flex', flexDirection:'row', justifyContent:'space-between', alignItems:'center', position:'relative', left:0, top:-20, width:'90%'}}>
                 <Title title={restTitle} />
+                <View style={{paddingLeft:10, display:'flex', width:160}}>
+                  <PlatesSaved fontSize={'15px'} flexDirection={'column'} quantity={platessaved}/>
+                </View>
               </View>
-              {/* <View style={{display:'flex', justifyContent:'flex-end', alignItems:'flex-end', position:'relative', left:0, top:-20}}>
-                <PlatesSaved flexDirection={'column'} quantity={platessaved} />
-              </View> */}
               <View style={{width:'100%', alignItems:'center', paddingBottom:105}}>
-
-                <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
-                  <CustMealCard/>
+              <View style={{width:'90%'}}>
+                <UserLocation address={"3700 Willingdon Ave"} color={"black"}/>
+              </View>
+                <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:200}}>
+                  {mapRestData ? mapRestData.filter((x)=>{return x.status === "complete"}).map((mapRest) => (
+                    <CustMealCard
+                    key={mapRest.lid}
+                    meal={mapRest.m_name}
+                    modifications={mapRest.modifications}
+                    restaurant={mapRest.full_name}
+                    oldprice={mapRest.old_price}
+                    newprice={mapRest.new_price}
+                    description={mapRest.description}
+                    showNut={mapRest.nf}
+                    showGluten={mapRest.gf}
+                    showDairy={mapRest.df}
+                    showVege={mapRest.v}
+                    src={mapRest.url}
+                    addToCart={() => {
+                      setRestModalVisible(false)
+                      setShowModel(true)
+                      setMeal(mapRest.m_name)
+                      setRestaurant(mapRest.full_name)
+                      setOldPrice(mapRest.old_price)
+                      setNewPrice(mapRest.new_price)
+                      setName(mapRest.full_name)
+                      setMealImg(mapRest.url)
+                      setCartItems([
+                        ...cartItems, 
+                        mapRest
+                      ])
+                    }}  
+                    />
+                  )): null}
                 </ScrollView>
               </View>
             </View>
@@ -882,6 +884,57 @@ export default function Home({
           }}
         />
       </View>
+
+      <SwipeUpDownModal
+          modalVisible={showModel}
+          PressToanimate={animateModal}          
+          ContentModal={
+            
+            <View style={{marginTop:30, display:'flex', justifyContent:'center', alignItems:'center'}}>
+
+              
+              <View style={{display:'flex', width:'90%', justifyContent:'center', width:70, height:2, backgroundColor:'#C3C3C3', position:'absolute', top:-20, alignSelf:'center'}}></View>
+              <View style={{display:'flex', width:'90%', justifyContent:'center', alignItems:'flex-end'}}>
+              <View style={{display:'flex', width:'90%', justifyContent:'center', alignItems:'flex-end', height:40, marginTop:-20, marginBottom:10}}>
+                <Pressable onPress={()=>setShowModel(!showModel)}>
+                  <AntDesign name="close" size={24} color="black" />
+                </Pressable> 
+              </View>
+              </View>
+
+                <SimpleOrderCard 
+                restaurant={rest} 
+                meal={meal}
+                newprice={newPrice}
+                oldprice={oldPrice} 
+                src={mealImg}
+                />
+              <View style={{display:'flex', flexDirection:'row', width:'90%', justifyContent:'flex-end', marginTop:20}}>
+                <Text style={{fontSize:24, fontWeight:'500'}}>Total: {newPrice}</Text>
+              </View>
+              <View style={{display:'flex', flexDirection:'row', width:'90%', justifyContent:'space-between'}}>
+                <Pressable style={styles.shadowPropDark} title="Checkout" onPress={()=>{
+                    navigation.navigate('Cart', {cartItems} );
+                    setShowModel(false);
+                }} >
+                  <Text style={{color:'white', fontSize:18}}>Checkout</Text>
+                </Pressable>
+                <Pressable style={styles.shadowPropLight} title="Add more" onPress={() => setModalVisible(!modalVisible)} >
+                  <Text style={{color:'white', fontSize:18}}>Add More</Text>
+                </Pressable>
+              </View>
+            </View>
+
+            
+          }
+          HeaderStyle={styles.headerContent}
+          ContentModalStyle={styles.Modal}
+          onClose={() => {
+              setShowModel(false);
+              setanimateModal(false);
+          }}
+        />
+
     </LinearGradient>
   ); 
 }
