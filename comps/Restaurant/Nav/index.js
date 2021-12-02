@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, TouchableOpacity, Modal, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, TouchableOpacity, Modal, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import {
   useFonts,
   Raleway_700Bold,
@@ -30,7 +30,8 @@ const Cont = styled.View`
   display:flex;
   flex-direction:row;
   width:100%;
-  position:absolute;
+  /* position:absolute; */
+  /* position: relative; */
   bottom:0;
   height:100px;
   border-color:white;
@@ -60,20 +61,20 @@ const AddItem = styled.TouchableOpacity`
 `;
 
 
-const AddListingModal = styled.View`
+const AddListingModal = styled.Pressable`
  display: flex;
  flex-direction: column;
  justify-content: space-between;
  width: 100%;
- height: 500px;
+ height: 550px;
  padding-right: 5%;
  padding-left: 5%;
  padding-top: 40px;
  padding-bottom: 37px;
  background-color: #ffffff;
  border-radius: 30px;
- position: absolute;
- bottom: 0px;
+ position: relative;
+ bottom: -350px;
 `
 
 const CloseModal = styled.TouchableOpacity`
@@ -155,6 +156,31 @@ const DeselectedTime = styled.TouchableOpacity`
   width: 150px;
   height: 40px;
   margin:5px;
+`
+
+const SelectedNow = styled.View`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FE4265;
+  border-radius: 16px;
+  width: 310px;
+  height: 40px;
+  margin:5px;
+  align-self: center;
+`
+
+const DeselectedNow = styled.TouchableOpacity`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #FE4265;
+  background-color: #ffffff;
+  border-radius: 16px;
+  width: 310px;
+  height: 40px;
+  margin:5px;
+  align-self: center;
 `
 
 const styles = StyleSheet.create({
@@ -282,12 +308,14 @@ const [thirty, setThirty] = useState(false)
 const [fourtyfive, setFourty] = useState(false)
 const [onehour, setOne] = useState(false)
 const [twohours, setTwo] = useState(false)
+const [now, setNow] = useState(false)
 
 function ThirtyPress () {
   setThirty(true);
   setFourty(false);
   setOne(false);
   setTwo(false);
+  setNow(false);
   const date = moment(new Date()).add(30, "m").subtract(12, "h").toDate()
 
   setMealTime(date.getHours() + ":" + date.getMinutes() + "PM");
@@ -298,6 +326,7 @@ function FourtyPress () {
   setFourty(true);
   setOne(false);
   setTwo(false);
+  setNow(false);
   const date = moment(new Date()).add(45, "m").subtract(12, "h").toDate()
 
   setMealTime(date.getHours() + ":" + date.getMinutes() + "PM");
@@ -308,6 +337,7 @@ function OnePress () {
   setFourty(false);
   setOne(true);
   setTwo(false);
+  setNow(false);
   const date = moment(new Date()).add(60, "m").subtract(12, "h").toDate()
 
   setMealTime(date.getHours() + ":" + date.getMinutes() + "PM");
@@ -323,11 +353,22 @@ function TwoPress () {
   setMealTime(date.getHours() + ":" + date.getMinutes() + "PM");
 }
 
+function NowPress() {
+  setThirty(false);
+  setFourty(false);
+  setOne(false);
+  setTwo(false);
+  setNow(true)
+  const date = moment(new Date()).subtract(12, "h").toDate()
+  setMealTime(date.getHours() + ":" + date.getMinutes() + "PM");
+}
+
 function Reset () {
   setThirty(false);
   setFourty(false);
   setOne(false);
   setTwo(false);
+  setNow(false);
 }
 
 const [mealsData, setMealsData] = useState();
@@ -399,8 +440,9 @@ setModalVisible(!modalVisible);
       transparent={true}
       visible={modalVisible}
   >
+  <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={100}>
   
-  <AddListingModal>
+  <AddListingModal onPress={() => Keyboard.dismiss()}>
     <CloseModal onPress={()=>{
       setModalVisible(!modalVisible)
       setItemStep(1)
@@ -433,7 +475,7 @@ setModalVisible(!modalVisible);
     }
 
     {addItemStep === 2 && <View style={{flex: 1, flexDirection: "column", height: "100%"}}>
-      <View style={{position: "relative"}}>
+      <View>
         <Pressable style={styles.backButton}
           onPress={()=>{
             setItemStep(1);
@@ -517,6 +559,15 @@ setModalVisible(!modalVisible);
                   </DeselectedTime>
               }
             </ButtonCont>
+
+            {now === true 
+                ? <SelectedNow >
+                    <Text style={{color:"white"}}>List Now</Text>
+                  </SelectedNow>
+                : <DeselectedNow onPress={NowPress}>
+                    <Text style={{color: "#FE4265"}}>List Now</Text>
+                  </DeselectedNow>
+              }
         </View>
         
         {/* <View style={{flex:1 , justifyContent:'space-evenly', flexDirection:'column'}}>
@@ -543,7 +594,7 @@ setModalVisible(!modalVisible);
     </View>
     }
   </AddListingModal>
-
+</KeyboardAvoidingView>
   </Modal>
   </Cont>
 }
