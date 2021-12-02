@@ -15,7 +15,6 @@ const CardCont = styled.View`
   overflow:hidden;
   height:60px;
   margin-top:10px;
-  margin-bottom:10px;
   justify-content:center;
   align-items:center;
 `;
