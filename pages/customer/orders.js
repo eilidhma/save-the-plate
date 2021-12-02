@@ -16,6 +16,12 @@ import CustMealCard from '../../comps/customer/CustMealCard';
 import PastOrder from '../../comps/customer/PastOrder';
 import axios from 'axios';
 import { auth, storage } from '../../firebase';
+import openMap from 'react-native-open-maps';
+import { createOpenLink } from 'react-native-open-maps';
+import * as Location from 'expo-location';
+import * as geolib from 'geolib';
+import PlatesSaved from '../../comps/customer/PlatesSaved'
+import LottieView from 'lottie-react-native';
 
 var logo = require ('../../assets/logo1.png');
 const Stack = createNativeStackNavigator();
@@ -62,14 +68,61 @@ useFocusEffect(
   },[])
 )
 
-console.log(pastOrders)
+const [location, setLocation] = useState(null);
+const [errorMsg, setErrorMsg] = useState(null);
 
+useEffect(() => {
+
+  let isUnmount = false;
+  
+  (async () => {
+    
+    let location = await Location.getCurrentPositionAsync({});
+    if(!isUnmount){
+       setLocation({
+        longitude: location.coords.longitude,
+        latitude: location.coords.latitude,
+        latitudeDelta: 0.0043,
+        longitudeDelta: 0.0034
+      })
+    }
+  
+  })();
+
+  return () => {
+    isUnmount = true;
+  }
+
+}, []);
+
+
+let text = 'Waiting..';
+if (errorMsg) {
+  text = errorMsg;
+} else if (location) {
+  text = JSON.stringify(location);
+}
+
+
+const restaurantLocation = ({ latitude: lat, longitude: long });
+
+const openMap = createOpenLink({ ...restaurantLocation, query:address, start:address, end:end });
+
+
+
+
+const [lat, setLat] = useState()
+const [long, setLong] = useState()
+const [address, setAddress] = useState()
+const [end, setEnd] = useState()
+
+console.log(pastOrders)
 
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
-      <View style={{width:'100%', position:'absolute', top:80, display:'flex', justifyContent:'center', alignItems:'center'}}>
+      {pastOrders ?<View style={{width:'100%', position:'absolute', top:80, display:'flex', justifyContent:'center', alignItems:'center'}}>
         <Text style={styles.heading}>Current Orders</Text>
-      </View>
+      </View>:null}
       <ScrollView style={styles.scrollViewSmall}>
         <View style={{display:'flex', justifyContent:'center', alignItems:'center', overflow:'hidden'}}>
         {pastOrders ? pastOrders.filter((x)=> {return x.ostatus === 'active'}).map((past) => (
@@ -81,16 +134,36 @@ console.log(pastOrders)
               oldprice={past.old_price}
               quantity={1}
               src={past.url}
+              HandleDirections={()=>{
+                setLat(parseFloat(past.lat));
+                setLong(parseFloat(past.longitude));
+                setAddress(JSON.stringify(past.add1),JSON.stringify(past.city))
+                setEnd(JSON.stringify(past.full_name))
+                openMap();
+              }}
             /> 
-          )) : <View>
-            <Text>No current order</Text>
-            </View>}
+          )) : null}
             
         </View>
       </ScrollView>
-      <View style={{width:'90%', backgroundColor:'white', height:2, position:'absolute', top:320}}></View> 
-      <View style={{width:'100%', display:'flex', justifyContent:'center', alignItems:'center', position:'absolute', top:340,}}>
-        <Text style={{color:'white', fontSize:26, paddingLeft:'5%', paddingRight:'5%', fontWeight:'400', width:'100%'}}>Past Orders</Text>
+      {pastOrders ? <View style={{width:'90%', backgroundColor:'white', height:2, position:'absolute', top:325}}></View> : null}
+      <View style={{width:'100%', display:'flex', justifyContent:'center', alignItems:'center', position:'absolute', top:340}}>
+        {pastOrders ? <Text style={styles.heading}>Past Orders</Text> : 
+         <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+          <LottieView
+            ref={(ref) => {
+              anim = ref;
+            }}
+            style={{
+              width:'50%',
+              alignItems:'center'
+            }}
+            source={require('../../assets/logo.json')}
+            autoPlay={true}
+            loop={true}
+            />
+          </View>
+        }
       </View> 
       <View style={styles.scrollView}>
       <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
@@ -170,5 +243,6 @@ const styles = StyleSheet.create({
     paddingRight:'5%',
     fontWeight:'400',
     width:'100%',
+    fontFamily:'Raleway_600SemiBold'
   },
 });

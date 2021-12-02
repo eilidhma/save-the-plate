@@ -112,7 +112,7 @@ export default function RestarantAccount({
       <Text style={{fontSize:30, fontWeight:'400', color:'white', marginLeft:20}}>{name}</Text>
       </TopCont>
       <Cards>
-        <PlatesSaved quantity={platesSaved}/>
+        <PlatesSaved quantity={120}/>
         <InfoCard title="Contact Information" sectiontitle1="Phone number:" sectiontitle2="Address:" phone={phone} addressline1={address1 + " " + address2} addressline2={postalCode + " " + city + ", " + province} edit="Edit Contact Information"/>
 
         <Pressable style={styles.peachButton}>

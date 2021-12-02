@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View, ScrollView, Text, Modal, Pressable } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect } from '@react-navigation/native';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+
 
 import {
   Raleway_700Bold,
@@ -26,7 +27,9 @@ import Search from "../../comps/Restaurant/SearchBar";
 import BubbleRest from "../../comps/Restaurant/BubbleRest";
 import axios from 'axios';
 import { auth, storage } from "../../firebase";
+import LottieView from 'lottie-react-native';
 import { height } from "dom-helpers";
+
 
 
 
@@ -265,7 +268,23 @@ export default function RestaurantHome ({  navigation }) {
                 }) 
               }}
             />
-          )) : <Text>No current orders</Text>}
+
+          )) : <View style={{display:'flex', alignItems:'center', justifyContent:'center', height:500}}>
+          <View style={{flex:1, justifyContent:'center', alignItems:'center', marginTop:30}}>
+            <LottieView
+              ref={(ref) => {
+                anim = ref;
+              }}
+              style={{
+                width:'50%',
+                alignItems:'center'
+              }}
+              source={require('../../assets/logo.json')}
+              autoPlay={true}
+              loop={true}
+              />
+            </View>
+          </View>}
       
         </ScrollView>
         </View>}
@@ -293,7 +312,23 @@ export default function RestaurantHome ({  navigation }) {
               modifications={listed.modifications}
               img={listed.url}
             />
-          )): <Text>No current listings!</Text>}
+
+          )): <View style={{display:'flex', alignItems:'center', justifyContent:'center', height:500}}>
+          <View style={{flex:1, justifyContent:'center', alignItems:'center', marginTop:30}}>
+            <LottieView
+              ref={(ref) => {
+                anim = ref;
+              }}
+              style={{
+                width:'50%',
+                alignItems:'center'
+              }}
+              source={require('../../assets/logo.json')}
+              autoPlay={true}
+              loop={true}
+              />
+            </View>
+        </View>}
         </ScrollView>
         </View>}
         
