@@ -143,7 +143,7 @@ const InfoCard = ({
     <Content>
       <Title>{title}</Title>
       <Section>
-        <Text style={{width:120, fontSize:14, fontWeight:'300', marginTop:10}}>{sectiontitle1}</Text><Text style={{fontSize:16, fontWeight:'200', marginTop:10, marginLeft:5}}>{phone}</Text>
+        <Text style={{width:120, fontSize:14, fontWeight:'300', marginTop:10}}>{sectiontitle1}</Text><Text style={{fontSize:16, marginTop:10, marginLeft:5}}>{phone}</Text>
       </Section>
       <Section>
         <Text style={{width:120, fontSize:14, fontWeight:'300', marginTop:10}}>{sectiontitle2}</Text><Text style={{fontSize:16, fontWeight:'200', marginTop:10, marginLeft:5}}>{addressline1}</Text>

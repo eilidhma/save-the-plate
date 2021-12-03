@@ -254,7 +254,7 @@ export default function RestaurantHome ({  navigation }) {
             flex:1}}>
         <Pressable style={{backgroundColor:"#FE4265", justifyContent: "center", alignItems:"center", height: 30, width: "90%", alignSelf: 'center', borderRadius: 30, marginBottom: 10}}
           onPress={()=>setRefreshOrders(refreshOrders+1)}>
-            <Text style={{color:"white", fontWeight:"bold"}}>
+            <Text style={{color:"white", fontFamily:'Quicksand_700Bold'}}>
               Refresh
             </Text>
         </Pressable>
@@ -305,7 +305,7 @@ export default function RestaurantHome ({  navigation }) {
             bottom:0,
             flex:1}}>
         <Pressable style={{backgroundColor:"#FE4265", justifyContent: "center", alignItems:"center", height: 30, width: "90%", alignSelf: 'center', borderRadius: 30, marginBottom: 10}}          onPress={()=>setRefreshListings(refreshListings+1)}>
-            <Text style={{color:"white", fontWeight: 'bold'}}>
+            <Text style={{color:"white", fontFamily:'Quicksand_700Bold'}}>
               Refresh
             </Text>
         </Pressable>

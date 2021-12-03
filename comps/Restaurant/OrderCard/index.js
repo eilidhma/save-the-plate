@@ -8,6 +8,7 @@ import But from '../../global/Button'
 import {
   useFonts,
   Raleway_700Bold,
+  Raleway_600SemiBold
 } from '@expo-google-fonts/raleway';
 import {
   Quicksand_300, Quicksand_300Light, Quicksand_400Regular
@@ -140,16 +141,16 @@ const RestaurantCard = ({
       <FirstLayer>
         <Image source={{uri:img}} style={{width:126, height:108, borderRadius:10}}/>
         <TextCont>
-          <Text style={{fontSize:20, fontWeight: 'bold'}}>Order #{ordernum}</Text>
+          <Text style={{fontSize:20, fontFamily:'Raleway_700Bold'}}>Order #{ordernum}</Text>
 
-          <Text style={{fontSize:18}}>{ordername}</Text>
+          <Text style={{fontSize:18, fontFamily:'Raleway_400Regular'}}>{ordername}</Text>
 
           <TimerCont>
-            <Text style={{color: '#FE4265'}}>Available{timer}</Text>
+            <Text style={{color: '#FE4265', fontFamily:'Quicksand_500Medium'}}>Available {timer}</Text>
           </TimerCont>
 
           <ExpandCont onPress={Expand}>
-            <Text style={{color: '#FE4265', fontWeight:'bold'}}>Open to Confirm</Text>
+            <Text style={{color: '#FE4265', fontfamily:'Quicksand_400Regular'}}>Open to Confirm</Text>
 
             <MaterialIcons name={arrow} size={33} color="#FE4265" />
           </ExpandCont>
