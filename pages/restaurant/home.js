@@ -61,14 +61,13 @@ export default function RestaurantHome ({  navigation }) {
             // console.log("getting")
             const url = await storage.ref().child(`menu/item${orderResult.data[i].m_id}.jpg`).getDownloadURL();
             orderResult.data[i].url = url
-            // console.log(url, "URL");
-
            }catch (e){
             orderResult.data[i].url = null;
             continue;
           }
         }
         setOrdersData(orderResult.data)
+        console.log(orderResult.data)
       }
     
     })();
@@ -244,9 +243,9 @@ export default function RestaurantHome ({  navigation }) {
             top:130,
             bottom:0,
             flex:1}}>
-        <Pressable style={{backgroundColor:"#FE4265", justifyContent: "center", alignItems:"center", height: 50, top:-11}}
+        <Pressable style={{backgroundColor:"#FE4265", justifyContent: "center", alignItems:"center", height: 30, width: "90%", alignSelf: 'center', borderRadius: 30, marginBottom: 10}}
           onPress={()=>setRefreshOrders(refreshOrders+1)}>
-            <Text style={{color:"white"}}>
+            <Text style={{color:"white", fontWeight:"bold"}}>
               Refresh
             </Text>
         </Pressable>
@@ -295,9 +294,8 @@ export default function RestaurantHome ({  navigation }) {
             top:130,
             bottom:0,
             flex:1}}>
-        <Pressable style={{backgroundColor:"#FE4265", justifyContent: "center", alignItems:"center", height: 50, top:-11}}
-          onPress={()=>setRefreshListings(refreshListings+1)}>
-            <Text style={{color:"white"}}>
+        <Pressable style={{backgroundColor:"#FE4265", justifyContent: "center", alignItems:"center", height: 30, width: "90%", alignSelf: 'center', borderRadius: 30, marginBottom: 10}}          onPress={()=>setRefreshListings(refreshListings+1)}>
+            <Text style={{color:"white", fontWeight: 'bold'}}>
               Refresh
             </Text>
         </Pressable>

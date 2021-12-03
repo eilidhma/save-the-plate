@@ -318,7 +318,7 @@ function ThirtyPress () {
   setNow(false);
   const date = moment(new Date()).add(30, "m").subtract(12, "h").toDate()
 
-  setMealTime(date.getHours() + ":" + date.getMinutes() + "PM");
+  setMealTime(" at: "+date.getHours() + ":" + date.getMinutes() + "PM");
 }
 
 function FourtyPress () {
@@ -329,7 +329,7 @@ function FourtyPress () {
   setNow(false);
   const date = moment(new Date()).add(45, "m").subtract(12, "h").toDate()
 
-  setMealTime(date.getHours() + ":" + date.getMinutes() + "PM");
+  setMealTime(" at: " + date.getHours() + ":" + date.getMinutes() + "PM");
 }
 
 function OnePress () {
@@ -340,7 +340,7 @@ function OnePress () {
   setNow(false);
   const date = moment(new Date()).add(60, "m").subtract(12, "h").toDate()
 
-  setMealTime(date.getHours() + ":" + date.getMinutes() + "PM");
+  setMealTime(" at: " + date.getHours() + ":" + date.getMinutes() + "PM");
 }
 
 function TwoPress () {
@@ -350,7 +350,7 @@ function TwoPress () {
   setTwo(true);
   const date = moment(new Date()).add(120, "m").subtract(12, "h").toDate()
 
-  setMealTime(date.getHours() + ":" + date.getMinutes() + "PM");
+  setMealTime(" at: " + date.getHours() + ":" + date.getMinutes() + "PM");
 }
 
 function NowPress() {
@@ -360,7 +360,7 @@ function NowPress() {
   setTwo(false);
   setNow(true)
   // const date = moment(new Date()).subtract(12, "h").toDate()
-  setMealTime("Now");
+  setMealTime(" Now!");
 }
 
 function Reset () {
