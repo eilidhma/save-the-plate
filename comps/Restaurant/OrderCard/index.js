@@ -142,10 +142,10 @@ const RestaurantCard = ({
         <TextCont>
           <Text style={{fontSize:20, fontWeight: 'bold'}}>Order #{ordernum}</Text>
 
-          <Text style={{fontSize:18}}>{name}</Text>
+          <Text style={{fontSize:18}}>{ordername}</Text>
 
           <TimerCont>
-            <Text style={{color: '#FE4265'}}>Available {timer}</Text>
+            <Text style={{color: '#FE4265'}}>Available{timer}</Text>
           </TimerCont>
 
           <ExpandCont onPress={Expand}>
@@ -169,7 +169,7 @@ const RestaurantCard = ({
             </Left>
 
             <Text style={{paddingLeft:11}}>
-              {ordername}
+              {name}
             </Text>
           </OrderRow>
 
@@ -181,7 +181,7 @@ const RestaurantCard = ({
             </Left>
 
             <Text style={{paddingLeft:11}}>
-              {name}
+              {phonenum}
             </Text>
           </OrderRow>
         </View>

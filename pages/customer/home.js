@@ -134,6 +134,8 @@ export default function Home({
   // <BubbleCust show={bubble} heading={heading} subheading={subheading} img={img} back={back} next={next} onPress1={HandleBubbleNext} onPress2={HandleBubbleBack} opacity={visibility}/>
 
   // !--------- End Of Tutorial ----------!
+
+  const [refresh, setRefresh] = useState(1);
   
   useFocusEffect(
     React.useCallback(()=>{
@@ -828,6 +830,14 @@ export default function Home({
           />
 
         </View>}
+        
+        {/* <Pressable style={{backgroundColor:"#FE4265", justifyContent: "center", alignItems:"center", height: 30, width: "90%", alignSelf: 'center', borderRadius: 30, marginBottom: 10}}
+          onPress={()=>setRefresh(refreshOrders+1)}>
+            <Text style={{color:"white", fontWeight:"bold"}}>
+              Refresh
+            </Text>
+        </Pressable> */}
+
         <View style={{width:'100%', alignItems:'center', paddingBottom:105}}>
         <ScrollView contentContainerStyle={{width:'100%', alignItems:'center', paddingBottom:105}}>
             {listedData ? listedData.filter((x)=> {return x.status === "active"}).map((listed) => (
