@@ -267,6 +267,7 @@ export default function RestaurantHome ({  navigation }) {
               timer={order.time_avail}
               phonenum={order.phone} 
               name={orderName ? orderName.filter((x)=>{return x.fuid === order.ofuid}).map((y)=>{return y.full_name}) : "Saihaj Albanel"}
+              mods={order.modifications}
               img={order.url}
               ConfirmPickup={ async()=>{
                 setModalVisible(true)

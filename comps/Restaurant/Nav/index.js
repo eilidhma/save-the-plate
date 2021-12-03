@@ -73,8 +73,8 @@ const AddListingModal = styled.Pressable`
  padding-bottom: 37px;
  background-color: #ffffff;
  border-radius: 30px;
- position: relative;
- bottom: -350px;
+ position: absolute;
+ bottom: 0px;
 `
 
 const CloseModal = styled.TouchableOpacity`
@@ -440,7 +440,7 @@ setModalVisible(!modalVisible);
       transparent={true}
       visible={modalVisible}
   >
-  <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={100}>
+  {/* <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={100}> */}
   
   <AddListingModal onPress={() => Keyboard.dismiss()}>
     <CloseModal onPress={()=>{
@@ -594,7 +594,7 @@ setModalVisible(!modalVisible);
     </View>
     }
   </AddListingModal>
-</KeyboardAvoidingView>
+{/* </KeyboardAvoidingView> */}
   </Modal>
   </Cont>
 }
