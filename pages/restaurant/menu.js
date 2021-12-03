@@ -1,5 +1,5 @@
 import React, { useState, useEffect }from 'react';
-import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, ScrollView, Modal, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, ScrollView, Modal, TouchableOpacity, KeyboardAvoidingView, Keyboard } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   useFonts,
@@ -101,7 +101,7 @@ const DescriptionCont = styled.View`
   padding: 10px;
 `
 
-const AddItemModal = styled.View`
+const AddItemModal = styled.Pressable`
  display: flex;
  flex-direction: column;
  justify-content: space-between;
@@ -193,6 +193,7 @@ export default function Menu({
   const [mealName, setMealName] = useState();
   const [description, setDescription] = useState()
   const [price, setPrice] = useState()
+  const [oldprice, setOldPrice] = useState()
   const [nF, setnF] = useState()
   const [gF, setGF] = useState()
   const [dF, setDF] = useState()
@@ -282,11 +283,11 @@ return () => {
     const restaurantId = await axios.get('/users.php?fuid=' + auth.currentUser.uid)
 
     /* console.log(restaurantId.data[0].id) */
-
     const newMeal = await axios.post('/meals.php', {
       m_name:mealName,
-      new_price:price,
       description:description,
+      old_price:oldprice,
+      new_price:price,
       nf:nF,
       gf:gF,
       df:dF,
@@ -294,8 +295,7 @@ return () => {
       u_id:restaurantId.data[0].id
     });
 
-
-    console.log(newMeal.data)
+    /* console.log(newMeal.data) */
     UploadIMG(newMeal.data)
   }
 
@@ -321,8 +321,8 @@ return () => {
       animationType="slide"
       transparent={true}
       visible={modalVisible}>
-      <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={40}>
-      <AddItemModal>
+      <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={60}>
+      <AddItemModal onPress={() => Keyboard.dismiss()}>
         <CloseModal onPress={()=>setModalVisible(!modalVisible)}>
           <AntDesign name="close" size={13} color="#C4C4C4" />
         </CloseModal>
@@ -388,7 +388,18 @@ return () => {
           </TextCont>
 
           <SingleLineInput>
-            <TextInput placeholder="Price" placeholderTextColor="#aaaaaa" onChangeText={text=>setPrice(text)}></TextInput>
+            <TextInput keyboardType="decimal-pad" placeholder="Price" placeholderTextColor="#aaaaaa" onChangeText={text=>setPrice(text)}></TextInput>
+          </SingleLineInput>
+        </ModalRow>
+
+        
+        <ModalRow>
+          <TextCont>
+            <Text style={{fontWeight: 'bold'}}>Old Price:</Text>
+          </TextCont>
+
+          <SingleLineInput>
+            <TextInput keyboardType="decimal-pad" placeholder="Old Price" placeholderTextColor="#aaaaaa" onChangeText={text=>setOldPrice(text)}></TextInput>
           </SingleLineInput>
         </ModalRow>
         
