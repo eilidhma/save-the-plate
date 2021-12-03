@@ -7,12 +7,16 @@ import { AntDesign, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 
 
 import {
+  useFonts,
   Raleway_700Bold,
+  Raleway_400Regular,
+  Raleway_600SemiBold,
+  Raleway_300Light
 } from '@expo-google-fonts/raleway';
 import {
-  Quicksand_300, Quicksand_300Light, Quicksand_400Regular
+  Quicksand_300, Quicksand_300Light, Quicksand_400Regular,
+  Quicksand_700Bold
 } from '@expo-google-fonts/quicksand';
-import { useFonts } from 'expo-font';
 
 import AddedItem from "../../comps/customer/AddedItem";
 
@@ -65,8 +69,6 @@ export default function RestaurantHome ({  navigation }) {
             // console.log("getting")
             const url = await storage.ref().child(`menu/item${orderResult.data[i].m_id}.jpg`).getDownloadURL();
             orderResult.data[i].url = url
-            // console.log(url, "URL");
-
            }catch (e){
             orderResult.data[i].url = null;
             continue;
@@ -238,8 +240,8 @@ export default function RestaurantHome ({  navigation }) {
         
         <View style={{width:'100%', position:'absolute', top:80, display:'flex', justifyContent:'center', alignItems:'center'}}>
         <Tabs onPressMeal={HandleMealTab} onPressMap={HandleMapTab}
-          fontWeightMeals={mealtab ? 400 : 200}
-          fontWeightMap={maptab ? 400 : 200}
+          fontFamilyMeals={mealtab ? 'Raleway_600SemiBold' : 'Raleway_300Light'}
+          fontFamilyMap={maptab ? 'Raleway_600SemiBold' : 'Raleway_300Light'}
           alignItems={mealtab ? 'flex-start' : 'flex-end'}
           />
       </View>
@@ -250,9 +252,9 @@ export default function RestaurantHome ({  navigation }) {
             top:130,
             bottom:0,
             flex:1}}>
-        <Pressable style={{backgroundColor:"#FE4265", justifyContent: "center", alignItems:"center", height: 50, top:-11}}
+        <Pressable style={{backgroundColor:"#FE4265", justifyContent: "center", alignItems:"center", height: 30, width: "90%", alignSelf: 'center', borderRadius: 30, marginBottom: 10}}
           onPress={()=>setRefreshOrders(refreshOrders+1)}>
-            <Text style={{color:"white"}}>
+            <Text style={{color:"white", fontWeight:"bold"}}>
               Refresh
             </Text>
         </Pressable>
@@ -301,9 +303,8 @@ export default function RestaurantHome ({  navigation }) {
             top:130,
             bottom:0,
             flex:1}}>
-        <Pressable style={{backgroundColor:"#FE4265", justifyContent: "center", alignItems:"center", height: 50, top:-11}}
-          onPress={()=>setRefreshListings(refreshListings+1)}>
-            <Text style={{color:"white"}}>
+        <Pressable style={{backgroundColor:"#FE4265", justifyContent: "center", alignItems:"center", height: 30, width: "90%", alignSelf: 'center', borderRadius: 30, marginBottom: 10}}          onPress={()=>setRefreshListings(refreshListings+1)}>
+            <Text style={{color:"white", fontWeight: 'bold'}}>
               Refresh
             </Text>
         </Pressable>

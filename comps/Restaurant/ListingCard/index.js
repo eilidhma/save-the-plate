@@ -120,7 +120,7 @@ const ListingCard = ({
           <Text style={{fontSize:20, fontFamily:'Raleway_700Bold', fontWeight: 'bold'}}>{foodname}</Text>
           
             <TimerCont>
-              <Text style={{color: '#FE4265'}}>Available at: <Text style={{fontWeight: 'bold'}}>{timer}</Text></Text>
+              <Text style={{color: '#FE4265'}}>Available {timer}</Text>
             </TimerCont>
 
 
@@ -135,7 +135,7 @@ const ListingCard = ({
 
       <Details>
         <DetailsText>
-            <Text style={{fontSize:14, fontFamily:'Quicksand_400Regular'}}>{modifications}</Text>
+            <Text style={{fontSize:14, fontFamily:'Quicksand_400Regular', top: 2}}>{modifications}</Text>
         </DetailsText>
 
       <But width="120%" height="40px" text="Delete Listing"/>

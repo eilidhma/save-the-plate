@@ -61,7 +61,7 @@ const Slider = styled.View`
 
 const Tabs = ({
   fontFamilyMeals='Raleway_600SemiBold',
-  fontFamilyMap='Raleway_400Regular',
+  fontFamilyMap='Raleway_300Light',
   onPressMeal=()=>{},
   onPressMap=()=>{},
   alignItems="flex-start"

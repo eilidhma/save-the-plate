@@ -51,11 +51,11 @@ export default function Login({ navigation }) {
       <TextInput secureTextEntry value={password} onChangeText={text=>setPassword(text)} autoCompleteType={'password'} style={styles.username} placeholder={'password'} textAlign={'center'} textContentType={'password'}/>
       <Pressable style={styles.shadowProp} title="Login"
         onPress={handleLogin} >
-        <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Login</Text>
+        <Text style={{color:'white', fontFamily:'Quicksand_400Regular', fontSize:18}}>Login</Text>
       </Pressable>
       <Pressable style={styles.shadowProp} title="Signup"
         onPress={() => navigation.navigate('Signup')} >
-        <Text style={{color:'white', fontFamily:'Quicksand_300Light', fontSize:18}}>Sign Up</Text>
+        <Text style={{color:'white', fontFamily:'Quicksand_400Regular', fontSize:18}}>Sign Up</Text>
       </Pressable>
      
     </LinearGradient>

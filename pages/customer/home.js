@@ -7,6 +7,7 @@ import {
   useFonts,
   Raleway_700Bold,
   Raleway_400Regular,
+  Raleway_300Light
 } from '@expo-google-fonts/raleway';
 import {
   Quicksand_300, Quicksand_300Light, Quicksand_400Regular,
@@ -752,8 +753,8 @@ export default function Home({
 
       <View style={{width:'100%', position:'absolute', top:80, display:'flex', justifyContent:'center', alignItems:'center'}}>
         <Tabs onPressMeal={HandleMealTab} onPressMap={HandleMapTab}
-          fontFamilyMeals={mealtab ? 'Raleway_600SemiBold' : 'Raleway_400Regular'}
-          fontFamilyMap={maptab ? 'Raleway_600SemiBold' : 'Raleway_400Regular'}
+          fontFamilyMeals={mealtab ? 'Raleway_600SemiBold' : 'Raleway_300Light'}
+          fontFamilyMap={maptab ? 'Raleway_600SemiBold' : 'Raleway_300Light'}
           alignItems={mealtab ? 'flex-start' : 'flex-end'}
           />
           <View style={{width:'90%'}}>

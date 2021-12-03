@@ -35,10 +35,10 @@ const FirstLayer = styled.View`
 
 const Details = styled.View`
   padding: 11px;
-  height: 111px;
+  height: 100px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
 `;
 
 const ButtonRow = styled.View`
@@ -49,6 +49,7 @@ const ButtonRow = styled.View`
 const OrderRow = styled.View`
   display: flex;
   flex-direction: row;
+  justify-content: flex-start;
 `;
 
 const Order = styled.View`
@@ -75,11 +76,26 @@ const TimerCont = styled.View`
   border-radius: 25px;
 `;
 
+const ModsCont = styled.View`
+  width: 100%;
+  height: 35px;
+  border: 1px solid #FE4265;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 25px;
+`;
+
 const ExpandCont = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
   align-items: center;
 `;
+
+const Left = styled.View`
+  width: 126px;
+`
 
 
 
@@ -92,10 +108,12 @@ const RestaurantCard = ({
   phonenum="604-456-67890",
   ordername="Fettucini Alfredo",
   orderquant="1",
-  ConfirmPickup=()=>{}
+  mods="hello i am mods"
 }) =>{
 
   const [isexpanded, setExpand] = useState(false)
+
+  const [visibility, setVisibilty] = useState(true)
 
   const [cardheight, setCardHeight] = useState("131px")
 
@@ -104,7 +122,7 @@ const RestaurantCard = ({
   function Expand () {
     if (isexpanded == false)
     {
-      setCardHeight("272px")
+      setCardHeight("280px")
       setArrow("arrow-drop-up")
       setExpand(!isexpanded)
     }
@@ -117,7 +135,7 @@ const RestaurantCard = ({
 
 
     return <View style={styles.content}>
-
+    {visibility === true ?
     <CardCont height={cardheight}>
       <FirstLayer>
         <Image source={{uri:img}} style={{width:126, height:108, borderRadius:10}}/>
@@ -127,11 +145,11 @@ const RestaurantCard = ({
           <Text style={{fontSize:18}}>{name}</Text>
 
           <TimerCont>
-            <Text style={{color: '#FE4265'}}>Time left: <Text style={{fontWeight: 'bold'}}>{timer}</Text></Text>
+            <Text style={{color: '#FE4265'}}>Available {timer}</Text>
           </TimerCont>
 
           <ExpandCont onPress={Expand}>
-            <Text style={{color: '#FE4265', fontWeight:'bold'}}>More details</Text>
+            <Text style={{color: '#FE4265', fontWeight:'bold'}}>Open to Confirm</Text>
 
             <MaterialIcons name={arrow} size={33} color="#FE4265" />
           </ExpandCont>
@@ -139,21 +157,50 @@ const RestaurantCard = ({
       </FirstLayer>
 
 
+
+
       <Details>
+        <View style={{justifyContent: 'space-between', flexDirection:'column', height: 45, position: 'relative', top: -12}}>
+          <OrderRow>
+            <Left>
+              <Text style={{fontWeight: 'bold'}}>
+                Customer Name:
+              </Text>
+            </Left>
 
-        <Text style={{fontSize:14, paddingBottom: 4}}>Phone number: {phonenum}</Text>
+            <Text style={{paddingLeft:11}}>
+              {ordername}
+            </Text>
+          </OrderRow>
 
-          <Order>
-            <Text style={{fontSize:14, fontWeight: 'bold', paddingBottom:9, paddingTop:12}}>Order Details</Text>
-            <OrderRow>
-              <Text style={{fontSize:14, fontWeight: 'bold', paddingLeft: 9, paddingRight: 15}}>{orderquant}</Text>
-              <Text style={{fontSize:14}}>{ordername}</Text>
-            </OrderRow>
-          </Order>
+          <OrderRow>
+            <Left>
+              <Text style={{fontWeight: 'bold'}}>
+                Phone Number:
+              </Text>
+            </Left>
 
+            <Text style={{paddingLeft:11}}>
+              {name}
+            </Text>
+          </OrderRow>
+        </View>
+
+          <ModsCont>
+            <Text style={{marginLeft: 5}}>
+              {mods}
+            </Text>
+          </ModsCont>
+        <OrderRow>
+
+        </OrderRow>
       </Details>
-      <But onPress={ConfirmPickup} width="100%" radius="0px" height="30px" text="Confirm Pickup"/>
+
+      
+      <But onPress={()=>setVisibilty(false)} width="100%" radius="0px" height="30px" text="Confirm Pickup"/>
     </CardCont>
+    
+    : null}
     </View>
 }
 
