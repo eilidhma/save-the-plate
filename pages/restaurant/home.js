@@ -37,6 +37,9 @@ export default function RestaurantHome ({  navigation }) {
 
   const [listedData, setListedData] = useState(null);
   const [ordersData, setOrdersData] = useState(null);
+  
+  const [orderName, setOrderName] = useState(null);
+  
   const [oid, setOid] = useState();
   const [status, setStatus] = useState("complete");
 
@@ -53,8 +56,9 @@ export default function RestaurantHome ({  navigation }) {
     
     (async () => {
       setOrdersData(null)
-
+      setOrderName(null)
       const orderResult = await axios.get('/orders.php?fuid='+userID);
+      const names = await axios.get('/users.php');
       if(!isUnmount){
         for (var i = 0; i<orderResult.data.length; i++) {
           try{
@@ -69,6 +73,7 @@ export default function RestaurantHome ({  navigation }) {
           }
         }
         setOrdersData(orderResult.data)
+        setOrderName(names.data)
       }
     
     })();
@@ -226,6 +231,7 @@ export default function RestaurantHome ({  navigation }) {
   
     // !--------- End Of Tutorial ----------!
     const [modalVisible, setModalVisible] = useState(false);
+    console.log(ordersData)
 
     return (
       <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
@@ -258,7 +264,7 @@ export default function RestaurantHome ({  navigation }) {
               ordername={order.m_name} 
               timer={order.time_avail}
               phonenum={order.phone} 
-              name={order.m_name} 
+              name={orderName ? orderName.filter((x)=>{return x.fuid === order.ofuid}).map((y)=>{return y.full_name}) : "Saihaj Albanel"}
               img={order.url}
               ConfirmPickup={ async()=>{
                 setModalVisible(true)

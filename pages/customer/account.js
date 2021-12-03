@@ -92,28 +92,8 @@ export default function Checkout({
     .catch(error => alert(error.message))
   }
 
-  const [modalVisible, setModalVisible] = useState(false);
-
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <View style={{display:'flex', flexDirection:'column', width:'90%', justifyContent:'center', alignItems:'center'}}>
-              <View style={{position:'relative', left:150}}>
-                <Pressable  onPress={()=>setModalVisible(!modalVisible)}>
-                  <AntDesign name="close" size={24} color="black" />
-                </Pressable> 
-              </View>
-              <BubbleCust />
-            </View>
-          </View>
-        </View>
-      </Modal>
       <TopCont>
         <IconCont>
           <MaterialCommunityIcons name="account" size={60} color="white" />
