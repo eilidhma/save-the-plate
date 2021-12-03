@@ -109,7 +109,8 @@ const RestaurantCard = ({
   phonenum="604-456-67890",
   ordername="Fettucini Alfredo",
   orderquant="1",
-  mods="hello i am mods"
+  mods="hello i am mods",
+  ConfirmPickup=()=>{}
 }) =>{
 
   const [isexpanded, setExpand] = useState(false)
@@ -164,31 +165,31 @@ const RestaurantCard = ({
         <View style={{justifyContent: 'space-between', flexDirection:'column', height: 45, position: 'relative', top: -12}}>
           <OrderRow>
             <Left>
-              <Text style={{fontWeight: 'bold'}}>
+              <Text style={{fontFamily:'Quicksand_600SemiBold'}}>
                 Customer Name:
               </Text>
             </Left>
 
-            <Text style={{paddingLeft:11}}>
+            <Text style={{paddingLeft:11, fontfamily:'Quicksand_400Regular'}}>
               {name}
             </Text>
           </OrderRow>
 
           <OrderRow>
             <Left>
-              <Text style={{fontWeight: 'bold'}}>
+              <Text style={{fontFamily:'Quicksand_600SemiBold'}}>
                 Phone Number:
               </Text>
             </Left>
 
-            <Text style={{paddingLeft:11}}>
+            <Text style={{paddingLeft:11, fontfamily:'Quicksand_400Regular'}}>
               {phonenum}
             </Text>
           </OrderRow>
         </View>
 
           <ModsCont>
-            <Text style={{marginLeft: 5}}>
+            <Text style={{marginLeft: 5, fontfamily:'Quicksand_400Regular'}}>
               {mods}
             </Text>
           </ModsCont>
@@ -198,7 +199,10 @@ const RestaurantCard = ({
       </Details>
 
       
-      <But onPress={()=>setVisibilty(false)} width="100%" radius="0px" height="30px" text="Confirm Pickup"/>
+      <But onPress={()=>
+        {setVisibilty(false);
+          ConfirmPickup()
+        }} width="100%" radius="0px" height="30px" text="Confirm Pickup"/>
     </CardCont>
     
     : null}
