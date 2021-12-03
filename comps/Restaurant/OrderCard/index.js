@@ -170,7 +170,7 @@ const RestaurantCard = ({
               </Text>
             </Left>
 
-            <Text style={{paddingLeft:11, fontfamily:'Quicksand_400Regular'}}>
+            <Text style={{paddingLeft:11, fontFamily:'Quicksand_400Regular'}}>
               {name}
             </Text>
           </OrderRow>
@@ -182,14 +182,14 @@ const RestaurantCard = ({
               </Text>
             </Left>
 
-            <Text style={{paddingLeft:11, fontfamily:'Quicksand_400Regular'}}>
+            <Text style={{paddingLeft:11, fontFamily:'Quicksand_400Regular'}}>
               {phonenum}
             </Text>
           </OrderRow>
         </View>
 
           <ModsCont>
-            <Text style={{marginLeft: 5, fontfamily:'Quicksand_400Regular'}}>
+            <Text style={{marginLeft: 5, fontFamily:'Quicksand_400Regular'}}>
               {mods}
             </Text>
           </ModsCont>
