@@ -118,7 +118,7 @@ export default function Checkout({
         <IconCont>
           <MaterialCommunityIcons name="account" size={60} color="white" />
         </IconCont>
-      <Text style={{fontSize:30, fontWeight:'400', color:'white', marginLeft:20}}>{name}</Text>
+      <Text style={{fontSize:30, fontFamily:'Raleway_600SemiBold', color:'white', marginLeft:20}}>{name}</Text>
       </TopCont>
       <Cards>
         <PlatesSaved quantity={25}/>
@@ -130,7 +130,7 @@ export default function Checkout({
           <Text style={{fontSize:18, color:'#E94168'}}>Tutorial</Text>
         </Pressable>
         <Pressable style={styles.whiteButton} title="< Back" onPress={handleSignOut} >
-          <Text style={{fontSize:18, color:'#E94168'}}>Sign Out</Text>
+          <Text style={{fontSize:18, color:'#E94168', fontFamily:'Quicksand_500Medium'}}>Sign Out</Text>
         </Pressable>
       </Cards>
     </LinearGradient>

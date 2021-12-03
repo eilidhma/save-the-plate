@@ -5,7 +5,9 @@ import {
   Raleway_700Bold,
 } from '@expo-google-fonts/raleway';
 import {
-  Quicksand_300, Quicksand_300Light, Quicksand_400Regular
+  Quicksand_300, 
+  Quicksand_300Light, 
+  Quicksand_400Regular
 } from '@expo-google-fonts/quicksand';
 import styled from 'styled-components';
 import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
@@ -150,10 +152,10 @@ const Filters = ({
       </Top>
         <Bottom>
             <View style={{margin:5}}>
-                <Text style={{fontFamily:'Quicksand_400Regular', fontSize:16, padding:5}}>Cuisine</Text>
+                <Text style={{fontFamily:'Raleway_400Regular', fontSize:16, padding:5}}>Cuisine</Text>
               <ScrollView horizontal={true} contentContainerStyle={{width:'100%', justifyContent:'space-between'}}>
                 <Pressable onPress={SelectCuisine1} backgroundColor={c1Color} style={styles.containerButton}>
-                  <Text textColor={c1TextColor} style={{color:c1TextColor, fontSize:16, padding:5,}}>Italian</Text>
+                  <Text textColor={c1TextColor} style={{color:c1TextColor, fontSize:16, padding:5, fontFamily:'Quicksand_400Regular'}}>Italian</Text>
                 </Pressable>
                 <Pressable onPress={SelectCuisine2} backgroundColor={c2Color} style={styles.containerButton}>
                   <Text textColor={c2TextColor} style={{color:c2TextColor, fontSize:16, padding:5,}}>Indian</Text>
@@ -162,67 +164,67 @@ const Filters = ({
                   <Text textColor={c3TextColor} style={{color:c3TextColor, fontSize:16, padding:5,}}>Middle Eastern</Text>
                 </Pressable>
                 <Pressable onPress={SelectCuisine4} backgroundColor={c4Color} style={styles.containerButton}>
-                  <Text textColor={c4TextColor} style={{color:c4TextColor, fontSize:16, padding:5,}}>American</Text>
+                  <Text textColor={c4TextColor} style={{color:c4TextColor, fontSize:16, padding:5, fontFamily:'Quicksand_400Regular'}}>American</Text>
                 </Pressable>
               </ScrollView>
             </View>
 
             <View style={{margin:5}}>
-                <Text style={{fontFamily:'Quicksand_400Regular', fontSize:16, padding:5}}>Distance from me</Text>
+                <Text style={{fontFamily:'Raleway_400Regular', fontSize:16, padding:5}}>Distance from me</Text>
               <ScrollView horizontal={true} contentContainerStyle={{width:'100%', justifyContent:'space-between'}}>
                 <Pressable onPress={SelectDistance1} backgroundColor={dist1Color} style={styles.containerButton}>
-                  <Text textColor={dist1TextColor} style={{color:dist1TextColor, fontSize:16, padding:5,}}>200m</Text>
+                  <Text textColor={dist1TextColor} style={{color:dist1TextColor, fontSize:16, padding:5, fontFamily:'Quicksand_400Regular'}}>200m</Text>
                 </Pressable>
                 <Pressable onPress={SelectDistance2} backgroundColor={dist2Color} style={styles.containerButton}>
-                  <Text textColor={dist2TextColor} style={{color:dist2TextColor, fontSize:16, padding:5,}}>500m</Text>
+                  <Text textColor={dist2TextColor} style={{color:dist2TextColor, fontSize:16, padding:5, fontFamily:'Quicksand_400Regular'}}>500m</Text>
                 </Pressable>
                 <Pressable onPress={SelectDistance3} backgroundColor={dist3Color} style={styles.containerButton}>
-                  <Text textColor={dist3TextColor} style={{color:dist3TextColor, fontSize:16, padding:5,}}>1km</Text>
+                  <Text textColor={dist3TextColor} style={{color:dist3TextColor, fontSize:16, padding:5, fontFamily:'Quicksand_400Regular'}}>1km</Text>
                 </Pressable>
                 <Pressable onPress={SelectDistance4} backgroundColor={dist4Color} style={styles.containerButton}>
-                  <Text textColor={dist4TextColor} style={{color:dist4TextColor, fontSize:16, padding:5,}}>5km</Text>
+                  <Text textColor={dist4TextColor} style={{color:dist4TextColor, fontSize:16, padding:5, fontFamily:'Quicksand_400Regular'}}>5km</Text>
                 </Pressable>
                 <Pressable onPress={SelectDistance5} backgroundColor={dist5Color} style={styles.containerButton}>
-                  <Text textColor={dist5TextColor} style={{color:dist5TextColor, fontSize:16, padding:5,}}>10km</Text>
+                  <Text textColor={dist5TextColor} style={{color:dist5TextColor, fontSize:16, padding:5, fontFamily:'Quicksand_400Regular'}}>10km</Text>
                 </Pressable>
               </ScrollView>
             </View>
 
             <View style={{margin:5}}>
-                <Text style={{fontFamily:'Quicksand_400Regular', fontSize:16, padding:5}}>Dietary restrictions</Text>
+                <Text style={{fontFamily:'Raleway_400Regular', fontSize:16, padding:5}}>Dietary restrictions</Text>
               <ScrollView horizontal={true} contentContainerStyle={{width:'100%', justifyContent:'space-between'}}>
                 <Pressable onPress={SelectDiet1} backgroundColor={diet1Color} style={styles.containerButton}>
-                  <Text textColor={diet1TextColor} style={{color:diet1TextColor, fontSize:16, padding:5,}}>Gluten Free</Text>
+                  <Text textColor={diet1TextColor} style={{color:diet1TextColor, fontSize:16, padding:5, fontFamily:'Quicksand_400Regular'}}>Gluten Free</Text>
                 </Pressable>
                 <Pressable onPress={SelectDiet2} backgroundColor={diet2Color} style={styles.containerButton}>
-                  <Text textColor={diet2TextColor} style={{color:diet2TextColor, fontSize:16, padding:5,}}>Dairy Free</Text>
+                  <Text textColor={diet2TextColor} style={{color:diet2TextColor, fontSize:16, padding:5, fontFamily:'Quicksand_400Regular'}}>Dairy Free</Text>
                 </Pressable>
                 <Pressable onPress={SelectDiet3} backgroundColor={diet3Color} style={styles.containerButton}>
-                  <Text textColor={diet3TextColor} style={{color:diet3TextColor, fontSize:16, padding:5,}}>Nut Free</Text>
+                  <Text textColor={diet3TextColor} style={{color:diet3TextColor, fontSize:16, padding:5, fontFamily:'Quicksand_400Regular'}}>Nut Free</Text>
                 </Pressable>
                 <Pressable onPress={SelectDiet4} backgroundColor={diet4Color} style={styles.containerButton}>
-                  <Text textColor={diet4TextColor} style={{color:diet4TextColor, fontSize:16, padding:5,}}>Vegetarian</Text>
+                  <Text textColor={diet4TextColor} style={{color:diet4TextColor, fontSize:16, padding:5, fontFamily:'Quicksand_400Regular'}}>Vegetarian</Text>
                 </Pressable>
               </ScrollView>
             </View>
 
             <View style={{margin:5}}>
-                <Text style={{fontFamily:'Quicksand_400Regular', fontSize:16, padding:5}}>Time available</Text>
+                <Text style={{fontFamily:'Raleway_400Regular', fontSize:16, padding:5}}>Time available</Text>
               <ScrollView horizontal={true} contentContainerStyle={{width:'100%', justifyContent:'space-between'}}>
                 <Pressable onPress={SelectTime1} backgroundColor={time1Color} style={styles.containerButton}>
-                  <Text textColor={time1TextColor} style={{color:time1TextColor, fontSize:16, padding:5,}}>Now</Text>
+                  <Text textColor={time1TextColor} style={{color:time1TextColor, fontSize:16, padding:5, fontFamily:'Quicksand_400Regular'}}>Now</Text>
                 </Pressable>
                 <Pressable onPress={SelectTime2} backgroundColor={time2Color} style={styles.containerButton}>
-                  <Text textColor={time2TextColor} style={{color:time2TextColor, fontSize:16, padding:5,}}>30 min</Text>
+                  <Text textColor={time2TextColor} style={{color:time2TextColor, fontSize:16, padding:5, fontFamily:'Quicksand_400Regular'}}>30 min</Text>
                 </Pressable>
                 <Pressable onPress={SelectTime3} backgroundColor={time3Color} style={styles.containerButton}>
-                  <Text textColor={time3TextColor} style={{color:time3TextColor, fontSize:16, padding:5,}}>1 hr</Text>
+                  <Text textColor={time3TextColor} style={{color:time3TextColor, fontSize:16, padding:5, fontFamily:'Quicksand_400Regular'}}>1 hr</Text>
                 </Pressable>
                 <Pressable onPress={SelectTime4} backgroundColor={time4Color} style={styles.containerButton}>
-                  <Text textColor={time4TextColor} style={{color:time4TextColor, fontSize:16, padding:5,}}>2 hrs</Text>
+                  <Text textColor={time4TextColor} style={{color:time4TextColor, fontSize:16, padding:5, fontFamily:'Quicksand_400Regular'}}>2 hrs</Text>
                 </Pressable>
                 <Pressable onPress={SelectTime5} backgroundColor={time5Color} style={styles.containerButton}>
-                  <Text textColor={time5TextColor} style={{color:time5TextColor, fontSize:16, padding:5,}}>3+ hrs</Text>
+                  <Text textColor={time5TextColor} style={{color:time5TextColor, fontSize:16, padding:5, fontFamily:'Quicksand_400Regular'}}>3+ hrs</Text>
                 </Pressable>
               </ScrollView>
             </View>
