@@ -18,7 +18,7 @@ const Title = ({
   title="name"
 }) =>{
 
-  return <Text style={{fontSize:28}}>{title}</Text>
+  return <Text style={{fontSize:28, fontFamily:'Raleway_700Bold'}}>{title}</Text>
   
   
 }

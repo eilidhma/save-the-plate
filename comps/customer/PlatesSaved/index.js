@@ -33,14 +33,14 @@ const Quantity = styled.Text`
   fontSize:${props=>props.fontSize};
   color:#FE4265;
   text-align:center;
-  font-weight:700;
+  font-family:'Raleway_700Bold';
 `
 
 const Plates = styled.Text`
   fontSize:${props=>props.fontSize};
   color:#FE4265;
   text-align:center;
-  font-weight:700;
+  font-family:'Raleway_700Bold';
   margin-left:5px;
 `
 
@@ -58,7 +58,7 @@ const PlatesSaved = ({
   return <CardCont flexDirection={flexDirection}>
     <PlateCont>
       <Quantity fontSize={fontSize}>{quantity}</Quantity>
-      <Image style={{width:width, height:height}} source={plate}></Image>
+      <Image style={{marginTop:5, width:width, height:height}} source={plate}></Image>
     </PlateCont>
     <Plates fontSize={fontSize}>plates saved!</Plates>
   </CardCont>

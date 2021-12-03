@@ -122,8 +122,8 @@ const SimpleOrderCard = ({
           </QuantityCont>
         </RestCont>
         <PriceCont>
-          <Text style={{marginTop:8, fontSize:16, color:'#FE4265', fontWeight:'700'}}>{newprice}</Text>
-          <Text style={{marginTop:10, fontSize:12, textDecorationLine:'line-through'}}>{oldprice}</Text>
+          <Text style={{marginTop:8, fontSize:16, color:'#FE4265', fontWeight:'700'}}>${newprice}</Text>
+          <Text style={{marginTop:10, fontSize:12, textDecorationLine:'line-through'}}>${oldprice}</Text>
         </PriceCont>
 
       </Right>

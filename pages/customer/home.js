@@ -7,9 +7,11 @@ import {
   useFonts,
   Raleway_700Bold,
   Raleway_400Regular,
+  Raleway_300Light
 } from '@expo-google-fonts/raleway';
 import {
-  Quicksand_300, Quicksand_300Light, Quicksand_400Regular
+  Quicksand_300, Quicksand_300Light, Quicksand_400Regular,
+  Quicksand_700Bold
 } from '@expo-google-fonts/quicksand';
 
 import { NavigationContainer, useFocusEffect} from '@react-navigation/native';
@@ -132,14 +134,19 @@ export default function Home({
   // <BubbleCust show={bubble} heading={heading} subheading={subheading} img={img} back={back} next={next} onPress1={HandleBubbleNext} onPress2={HandleBubbleBack} opacity={visibility}/>
 
   // !--------- End Of Tutorial ----------!
-
+  
   useFocusEffect(
     React.useCallback(()=>{
       (async () => {
         const american = await axios.get('/listed.php?cuisine=american');
         const italian = await axios.get('/listed.php?cuisine=italian');
-        const mexican = await axios.get('/listed.php?cuisine=mexican');
-        const vietnamese = await axios.get('/listed.php?cuisine=vietnamese');
+        const indian = await axios.get('/listed.php?cuisine=indian');
+        const middleeastern = await axios.get('/listed.php?cuisine=middleeastern');
+        const gf = await axios.get('/listed.php?gf=1');
+        const df = await axios.get('/listed.php?df=1');
+        const nf = await axios.get('/listed.php?nf=1');
+        const v = await axios.get('/listed.php?v=1');
+        
         const result = await axios.get('/listed.php');
         const restaurants = await axios.get('/users.php?restaurant=1');
         const check = await axios.get('/orders.php?u_id='+userId);
@@ -156,6 +163,110 @@ export default function Home({
             continue;
           }
         }
+
+        for (var i = 0; i<american.data.length; i++) {
+          try{
+            // console.log("getting")
+            const url = await storage.ref().child(`menu/item${american.data[i].m_id}.jpg`).getDownloadURL();
+            american.data[i].url = url
+            // console.log(url, "URL");
+
+           }catch (e){
+            american.data[i].url = null;
+            continue;
+          }
+        }
+
+        for (var i = 0; i<italian.data.length; i++) {
+          try{
+            // console.log("getting")
+            const url = await storage.ref().child(`menu/item${italian.data[i].m_id}.jpg`).getDownloadURL();
+            italian.data[i].url = url
+            // console.log(url, "URL");
+
+           }catch (e){
+            italian.data[i].url = null;
+            continue;
+          }
+        }
+
+        for (var i = 0; i<indian.data.length; i++) {
+          try{
+            // console.log("getting")
+            const url = await storage.ref().child(`menu/item${indian.data[i].m_id}.jpg`).getDownloadURL();
+            indian.data[i].url = url
+            // console.log(url, "URL");
+
+           }catch (e){
+            indian.data[i].url = null;
+            continue;
+          }
+        }
+
+        for (var i = 0; i<middleeastern.data.length; i++) {
+          try{
+            // console.log("getting")
+            const url = await storage.ref().child(`menu/item${middleeastern.data[i].m_id}.jpg`).getDownloadURL();
+            middleeastern.data[i].url = url
+            // console.log(url, "URL");
+
+           }catch (e){
+            middleeastern.data[i].url = null;
+            continue;
+          }
+        }
+
+        for (var i = 0; i<gf.data.length; i++) {
+          try{
+            // console.log("getting")
+            const url = await storage.ref().child(`menu/item${gf.data[i].m_id}.jpg`).getDownloadURL();
+            gf.data[i].url = url
+            // console.log(url, "URL");
+
+           }catch (e){
+            gf.data[i].url = null;
+            continue;
+          }
+        }
+
+        for (var i = 0; i<nf.data.length; i++) {
+          try{
+            // console.log("getting")
+            const url = await storage.ref().child(`menu/item${nf.data[i].m_id}.jpg`).getDownloadURL();
+            nf.data[i].url = url
+            // console.log(url, "URL");
+
+           }catch (e){
+            nf.data[i].url = null;
+            continue;
+          }
+        }
+
+        for (var i = 0; i<df.data.length; i++) {
+          try{
+            // console.log("getting")
+            const url = await storage.ref().child(`menu/item${df.data[i].m_id}.jpg`).getDownloadURL();
+            df.data[i].url = url
+            // console.log(url, "URL");
+
+           }catch (e){
+            df.data[i].url = null;
+            continue;
+          }
+        }
+
+        for (var i = 0; i<v.data.length; i++) {
+          try{
+            // console.log("getting")
+            const url = await storage.ref().child(`menu/item${v.data[i].m_id}.jpg`).getDownloadURL();
+            v.data[i].url = url
+            // console.log(url, "URL");
+
+           }catch (e){
+            v.data[i].url = null;
+            continue;
+          }
+        }
         //console.log(result)
         
           setListedData(result.data);
@@ -163,10 +274,14 @@ export default function Home({
           setAllFood(result.data);
           setAmericanFood(american.data);
           setItalianFood(italian.data);
-          setMexicanFood(mexican.data);
-          setVietnameseFood(vietnamese.data)
+          setIndianFood(indian.data);
+          setMiddleEasternFood(middleeastern.data)
           setRestaurantData(restaurants.data)
           setOrderStatus(check.data)
+          setGFFood(gf.data)
+          setDFFood(df.data)
+          setNFFood(nf.data)
+          setVFood(v.data)
 
       })();
     },[])
@@ -210,19 +325,6 @@ export default function Home({
     },
     {
       key: 3,
-      title: "Acqua",
-      description: "Seafood restaurant",
-      location: {
-        longitude: -123.010650,
-        latitude: 49.267530
-      },
-      plates_saved: "290",
-      distance:'1.5km',
-      mealQuantity:4,
-      fuid:'xPDJegbeJVahm7a1RfriAlu66hB2',
-    },
-    {
-      key: 4,
       title: "Yasser's Restaurant",
       description: "Afghan cuisine",
       location: {
@@ -235,7 +337,7 @@ export default function Home({
       fuid:'hyMHzMeOFSXO5uqYgsky7Sil1qu2',
     },
     {
-      key: 5,
+      key: 4,
       title: "Atlas Steakhouse",
       description: "Amazing steak!",
       location: {
@@ -246,21 +348,7 @@ export default function Home({
       distance:'300m',
       mealQuantity:4,
       fuid:'GHKeZm6KSSW2NoF5Wxq0IZqCDm93',
-    },
-    {
-      key: 6,
-      title: "Earl's kitchen and bar",
-      description: "a family owned premium casual dining chain",
-      location: {
-        longitude: -123.019590,
-        latitude: 49.265350
-      },
-      plates_saved: "290",
-      distance:'1.5km',
-      mealQuantity:4,
-      fuid:'S2ZZPSTLXZZtRZNExpklx6i6l0h2',
-    },
-    
+    }
   ])
 
   const GetLatLong = () => {
@@ -288,9 +376,15 @@ export default function Home({
   const [allFood, setAllFood] = useState(null)
 
   const [italianFood, setItalianFood] = useState(null)
-  const [mexicanFood, setMexicanFood] = useState(null)
+  const [indianFood, setIndianFood] = useState(null)
   const [americanFood, setAmericanFood] = useState(null)
-  const [vietnameseFood, setVietnameseFood] = useState(null)
+  const [middleeasternFood, setMiddleEasternFood] = useState(null)
+
+  const [gfFood, setGFFood] = useState(null)
+  const [dfFood, setDFFood] = useState(null)
+  const [nfFood, setNFFood] = useState(null)
+  const [vFood, setVFood] = useState(null)
+  
   const [orderStatus, setOrderStatus] = useState(null)
   
   
@@ -364,7 +458,7 @@ export default function Home({
         setListedData(allFood)
       }
     }
-    // MEXICAN
+    // INDIAN
     const [c2Color, setC2Color] = useState("white")
     const [c2TextColor, setC2TextColor] = useState("#ff1a44")
     const [c2Selected, setC2Selected] = useState(false)
@@ -374,14 +468,14 @@ export default function Home({
       if(c2Selected === false){
         setC2Color("#ff1a44")
         setC2TextColor("white")
-        setListedData(mexicanFood)
+        setListedData(indianFood)
       } else {
         setC2Color("white")
         setC2TextColor("#ff1a44")
         setListedData(allFood)
       }
     }
-    // VIETNAMESE
+    // MIDDLEEASTERN
     const [c3Color, setC3Color] = useState("white")
     const [c3TextColor, setC3TextColor] = useState("#ff1a44")
     const [c3Selected, setC3Selected] = useState(false)
@@ -391,7 +485,7 @@ export default function Home({
       if(c3Selected === false){
         setC3Color("#ff1a44")
         setC3TextColor("white")
-        setListedData(vietnameseFood)
+        setListedData(middleeasternFood)
       } else {
         setC3Color("white")
         setC3TextColor("#ff1a44")
@@ -504,9 +598,11 @@ export default function Home({
       if(diet1Selected === false){
         setDiet1Color("#ff1a44")
         setDiet1TextColor("white")
+        setListedData(gfFood)
       } else {
         setDiet1Color("white")
         setDiet1TextColor("#ff1a44")
+        setListedData(allFood)
       }
     }
     // Dairy Free
@@ -519,10 +615,11 @@ export default function Home({
       if(diet2Selected === false){
         setDiet2Color("#ff1a44")
         setDiet2TextColor("white")
+        setListedData(dfFood)
       } else {
         setDiet2Color("white")
         setDiet2TextColor("#ff1a44")
-        // console.log(hello)
+        setListedData(allFood)
       }
     }
     // Nut Free
@@ -535,9 +632,11 @@ export default function Home({
       if(diet3Selected === false){
         setDiet3Color("#ff1a44")
         setDiet3TextColor("white")
+        setListedData(nfFood)
       } else {
         setDiet3Color("white")
         setDiet3TextColor("#ff1a44")
+        setListedData(allFood)
       }
     }
     // Vegetarien
@@ -550,9 +649,11 @@ export default function Home({
       if(diet4Selected === false){
         setDiet4Color("#ff1a44")
         setDiet4TextColor("white")
+        setListedData(vFood)
       } else {
         setDiet4Color("white")
         setDiet4TextColor("#ff1a44")
+        setListedData(allFood)
       }
     }
 
@@ -652,8 +753,8 @@ export default function Home({
 
       <View style={{width:'100%', position:'absolute', top:80, display:'flex', justifyContent:'center', alignItems:'center'}}>
         <Tabs onPressMeal={HandleMealTab} onPressMap={HandleMapTab}
-          fontFamilyMeals={mealtab ? 'Raleway_600SemiBold' : 'Raleway_400Regular'}
-          fontFamilyMap={maptab ? 'Raleway_600SemiBold' : 'Raleway_400Regular'}
+          fontFamilyMeals={mealtab ? 'Raleway_600SemiBold' : 'Raleway_300Light'}
+          fontFamilyMap={maptab ? 'Raleway_600SemiBold' : 'Raleway_300Light'}
           alignItems={mealtab ? 'flex-start' : 'flex-end'}
           />
           <View style={{width:'90%'}}>
@@ -738,11 +839,13 @@ export default function Home({
                oldprice={listed.old_price}
                newprice={listed.new_price}
                description={listed.description}
-               showNut={listed.nf}
-               showGluten={listed.gf}
-               showDairy={listed.df}
-               showVege={listed.v}
+               showNut={parseFloat(listed.nf)}
+               showGluten={parseFloat(listed.gf)}
+               showDairy={parseFloat(listed.df)}
+               showVege={parseFloat(listed.v)}
                src={listed.url}
+               time_avail={listed.time_avail}
+               distance={listed.distance}
                addToCart={() => {
                 setShowModel(true)
                 setMeal(listed.m_name)
@@ -819,14 +922,14 @@ export default function Home({
                     
                   }}>
                     <View style={styles.callout}>
-                      <Text style={{fontSize:24, fontWeight:'500', color:'black', marginBottom:10}}>{restaurant.title}</Text>
-                      <Text style={{marginBottom:10}}>{restaurant.distance} away</Text>
+                      <Text style={{fontSize:24, fontFamily:'Raleway_600SemiBold', color:'black', marginBottom:10}}>{restaurant.title}</Text>
+                      <Text style={{marginBottom:10, fontFamily:'Quicksand_400Regular'}}>{restaurant.distance} away</Text>
                       <View style={{display:'flex', flexDirection:'row'}}>
-                        <Text style={{fontWeight:'800', color:'#F3AE81', fontSize:18}}>{restaurant.mealQuantity}</Text>
-                        <Text style={{fontWeight:'300', fontSize:18}}> meals available!</Text>
+                        <Text style={{fontWeight:'800', color:'#F3AE81', fontSize:18, fontFamily:'Quicksand_700Bold'}}>{restaurant.mealQuantity}</Text>
+                        <Text style={{fontWeight:'300', fontSize:18, fontFamily:'Quicksand_400Regular'}}> meals available!</Text>
                       </View>
                       <Pressable style={styles.shadowPropDark} title="open restaurant" >
-                        <Text style={{color:'white', fontSize:18}}>View meals</Text>
+                        <Text style={{color:'white', fontSize:18, fontFamily:'Quicksand_400Regular'}}>View meals</Text>
                       </Pressable>
                       <View/>
                     </View>
@@ -903,7 +1006,7 @@ export default function Home({
                       width:'50%',
                       alignItems:'center'
                     }}
-                    source={require('../../assets/logo.json')}
+                    source={require('../../assets/logopink.json')}
                     autoPlay={true}
                     loop={true}
                     />

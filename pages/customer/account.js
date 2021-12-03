@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View, Image, Button, Pressable, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, Pressable, TextInput, Modal } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   useFonts,
@@ -11,11 +11,12 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styled from 'styled-components';
-import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather, MaterialIcons, Ionicons, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import PlatesSaved from '../../comps/customer/PlatesSaved';
 import InfoCard from '../../comps/customer/InfoCard';
 import { auth } from '../../firebase';
 import axios from 'axios'
+import BubbleCust from '../../comps/customer/BubbleCust';
 
 
 var logo = require ('../../assets/logo1.png');
@@ -91,21 +92,45 @@ export default function Checkout({
     .catch(error => alert(error.message))
   }
 
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <LinearGradient colors={['#F3AE81', '#E94168']} style={styles.container}>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={{display:'flex', flexDirection:'column', width:'90%', justifyContent:'center', alignItems:'center'}}>
+              <View style={{position:'relative', left:150}}>
+                <Pressable  onPress={()=>setModalVisible(!modalVisible)}>
+                  <AntDesign name="close" size={24} color="black" />
+                </Pressable> 
+              </View>
+              <BubbleCust />
+            </View>
+          </View>
+        </View>
+      </Modal>
       <TopCont>
         <IconCont>
           <MaterialCommunityIcons name="account" size={60} color="white" />
         </IconCont>
-      <Text style={{fontSize:30, fontWeight:'400', color:'white', marginLeft:20}}>{name}</Text>
+      <Text style={{fontSize:30, fontFamily:'Raleway_600SemiBold', color:'white', marginLeft:20}}>{name}</Text>
       </TopCont>
       <Cards>
         <PlatesSaved quantity={25}/>
         <InfoCard title="Contact Information" sectiontitle1="Phone number:" sectiontitle2="Address:" phone={phone} addressline1={address1 + " " + address2} addressline2={postalCode + " " + city + ", " + province} edit="Edit Contact Information"/>
         <InfoCard title="Payment Information" sectiontitle1="Card Number:" sectiontitle2="Expiration Date:" cvc="CVC" phone="**** **** **** 8954" addressline1="**/**" addressline2="***" edit="Edit Credit Card Information"/>
+        <Pressable style={styles.whiteButton} title="Tutorial" onPress={()=>{
+          setModalVisible(true)
+        }} >
+          <Text style={{fontSize:18, color:'#E94168'}}>Tutorial</Text>
+        </Pressable>
         <Pressable style={styles.whiteButton} title="< Back" onPress={handleSignOut} >
-          <Text style={{fontSize:18, color:'#E94168'}}>Sign Out</Text>
+          <Text style={{fontSize:18, color:'#E94168', fontFamily:'Quicksand_500Medium'}}>Sign Out</Text>
         </Pressable>
       </Cards>
     </LinearGradient>
@@ -161,5 +186,30 @@ const styles = StyleSheet.create({
     borderRadius:20,
     fontFamily:'Quicksand_300Light', 
     fontSize:16
-  }
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex:2,
+    backgroundColor:'rgba(0,0,0,0.25)'
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 0,
+    alignItems: "center",
+    justifyContent:'flex-end',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    width:350,
+    height:550
+  },
 });

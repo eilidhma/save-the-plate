@@ -2,9 +2,9 @@ import React from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 
 const Vegetarian = ({
-  show=false
+  show=0
  }) => {
-  if (show === false){
+  if (show === 0){
     return (
       <Image 
         style={styles.iconDisabled} 
@@ -19,9 +19,9 @@ const Vegetarian = ({
  };
 
  const DairyFree = ({
-  show=false
+  show=0
  }) => {
-  if (show === false){
+  if (show === 0){
     return (
       <Image 
         style={styles.iconDisabled} 
@@ -36,9 +36,9 @@ const Vegetarian = ({
  };
 
  const GlutenFree = ({
-  show=false
+  show=0
  }) => {
-  if (show === false){
+  if (show === 0){
     return (
       <Image 
         style={styles.iconDisabled} 
@@ -53,9 +53,9 @@ const Vegetarian = ({
  };
 
  const NutFree = ({
-  show=false
+  show=0
  }) => {
-  if (show === false){
+  if (show === 0){
   return (
     <Image 
       style={styles.iconDisabled}
@@ -70,10 +70,10 @@ const Vegetarian = ({
  };
 
 const Diets = ({
-  showVege=false,
-  showDairy=false,
-  showGluten=false,
-  showNut=false,
+  showVege=0,
+  showDairy=0,
+  showGluten=0,
+  showNut=0,
  }) => {
  
  return (
