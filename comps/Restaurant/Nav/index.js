@@ -359,8 +359,8 @@ function NowPress() {
   setOne(false);
   setTwo(false);
   setNow(true)
-  const date = moment(new Date()).subtract(12, "h").toDate()
-  setMealTime(date.getHours() + ":" + date.getMinutes() + "PM");
+  // const date = moment(new Date()).subtract(12, "h").toDate()
+  setMealTime("Now");
 }
 
 function Reset () {
