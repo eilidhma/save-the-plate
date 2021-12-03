@@ -7,12 +7,16 @@ import { AntDesign, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 
 
 import {
+  useFonts,
   Raleway_700Bold,
+  Raleway_400Regular,
+  Raleway_600SemiBold,
+  Raleway_300Light
 } from '@expo-google-fonts/raleway';
 import {
-  Quicksand_300, Quicksand_300Light, Quicksand_400Regular
+  Quicksand_300, Quicksand_300Light, Quicksand_400Regular,
+  Quicksand_700Bold
 } from '@expo-google-fonts/quicksand';
-import { useFonts } from 'expo-font';
 
 import AddedItem from "../../comps/customer/AddedItem";
 
@@ -232,8 +236,8 @@ export default function RestaurantHome ({  navigation }) {
         
         <View style={{width:'100%', position:'absolute', top:80, display:'flex', justifyContent:'center', alignItems:'center'}}>
         <Tabs onPressMeal={HandleMealTab} onPressMap={HandleMapTab}
-          fontWeightMeals={mealtab ? 400 : 200}
-          fontWeightMap={maptab ? 400 : 200}
+          fontFamilyMeals={mealtab ? 'Raleway_600SemiBold' : 'Raleway_300Light'}
+          fontFamilyMap={maptab ? 'Raleway_600SemiBold' : 'Raleway_300Light'}
           alignItems={mealtab ? 'flex-start' : 'flex-end'}
           />
       </View>

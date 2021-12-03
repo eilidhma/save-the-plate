@@ -5,7 +5,8 @@ import {
   useFonts,
   Raleway_400Regular,
   Raleway_700Bold,
-  Raleway_600SemiBold
+  Raleway_600SemiBold,
+  Raleway_300Light
 } from '@expo-google-fonts/raleway';
 import {
   Quicksand_300, Quicksand_300Light, Quicksand_400Regular,
@@ -50,6 +51,7 @@ function Landing({ navigation }) {
     Raleway_700Bold, 
     Raleway_400Regular, 
     Raleway_600SemiBold, 
+    Raleway_300Light,
     Quicksand_300Light, 
     Quicksand_400Regular, 
     Quicksand_700Bold,
