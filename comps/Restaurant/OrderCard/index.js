@@ -8,6 +8,7 @@ import But from '../../global/Button'
 import {
   useFonts,
   Raleway_700Bold,
+  Raleway_600SemiBold
 } from '@expo-google-fonts/raleway';
 import {
   Quicksand_300, Quicksand_300Light, Quicksand_400Regular
@@ -108,7 +109,8 @@ const RestaurantCard = ({
   phonenum="604-456-67890",
   ordername="Fettucini Alfredo",
   orderquant="1",
-  mods="hello i am mods"
+  mods="hello i am mods",
+  ConfirmPickup=()=>{}
 }) =>{
 
   const [isexpanded, setExpand] = useState(false)
@@ -140,16 +142,16 @@ const RestaurantCard = ({
       <FirstLayer>
         <Image source={{uri:img}} style={{width:126, height:108, borderRadius:10}}/>
         <TextCont>
-          <Text style={{fontSize:20, fontWeight: 'bold'}}>Order #{ordernum}</Text>
+          <Text style={{fontSize:20, fontFamily:'Raleway_700Bold'}}>Order #{ordernum}</Text>
 
-          <Text style={{fontSize:18}}>{ordername}</Text>
+          <Text style={{fontSize:18, fontFamily:'Raleway_400Regular'}}>{ordername}</Text>
 
           <TimerCont>
-            <Text style={{color: '#FE4265'}}>Available{timer}</Text>
+            <Text style={{color: '#FE4265', fontFamily:'Quicksand_500Medium'}}>Available {timer}</Text>
           </TimerCont>
 
           <ExpandCont onPress={Expand}>
-            <Text style={{color: '#FE4265', fontWeight:'bold'}}>Open to Confirm</Text>
+            <Text style={{color: '#FE4265', fontfamily:'Quicksand_400Regular'}}>Open to Confirm</Text>
 
             <MaterialIcons name={arrow} size={33} color="#FE4265" />
           </ExpandCont>
@@ -163,31 +165,31 @@ const RestaurantCard = ({
         <View style={{justifyContent: 'space-between', flexDirection:'column', height: 45, position: 'relative', top: -12}}>
           <OrderRow>
             <Left>
-              <Text style={{fontWeight: 'bold'}}>
+              <Text style={{fontFamily:'Quicksand_600SemiBold'}}>
                 Customer Name:
               </Text>
             </Left>
 
-            <Text style={{paddingLeft:11}}>
+            <Text style={{paddingLeft:11, fontfamily:'Quicksand_400Regular'}}>
               {name}
             </Text>
           </OrderRow>
 
           <OrderRow>
             <Left>
-              <Text style={{fontWeight: 'bold'}}>
+              <Text style={{fontFamily:'Quicksand_600SemiBold'}}>
                 Phone Number:
               </Text>
             </Left>
 
-            <Text style={{paddingLeft:11}}>
+            <Text style={{paddingLeft:11, fontfamily:'Quicksand_400Regular'}}>
               {phonenum}
             </Text>
           </OrderRow>
         </View>
 
           <ModsCont>
-            <Text style={{marginLeft: 5}}>
+            <Text style={{marginLeft: 5, fontfamily:'Quicksand_400Regular'}}>
               {mods}
             </Text>
           </ModsCont>
@@ -197,7 +199,10 @@ const RestaurantCard = ({
       </Details>
 
       
-      <But onPress={()=>setVisibilty(false)} width="100%" radius="0px" height="30px" text="Confirm Pickup"/>
+      <But onPress={()=>
+        {setVisibilty(false);
+          ConfirmPickup()
+        }} width="100%" radius="0px" height="30px" text="Confirm Pickup"/>
     </CardCont>
     
     : null}

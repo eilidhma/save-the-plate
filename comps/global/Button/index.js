@@ -33,7 +33,7 @@ const But = ({
         onPress={onPress}
         margintop={margintop}
         >
-        <Text style={{color:txtColor, fontWeight: 'bold'}}>{text}</Text>
+        <Text style={{color:txtColor, fontFamily:'Quicksand_700Bold'}}>{text}</Text>
     </ButtonCont>
 }
 

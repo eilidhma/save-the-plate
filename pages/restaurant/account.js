@@ -116,15 +116,15 @@ export default function RestarantAccount({
         <InfoCard title="Contact Information" sectiontitle1="Phone number:" sectiontitle2="Address:" phone={phone} addressline1={address1 + " " + address2} addressline2={postalCode + " " + city + ", " + province} edit="Edit Contact Information"/>
 
         <Pressable style={styles.peachButton}>
-          <Text style={{fontSize:18, color:'white'}}>Banking Information</Text>
+          <Text style={{fontSize:18, color:'white', fontFamily:'Quicksand_500Medium'}}>Banking Information</Text>
         </Pressable>
 
         <Pressable style={styles.peachButton} onPress={()=>navigation.navigate('Menu')}>
-          <Text style={{fontSize:18, color:'white'}}>View & Edit Menu</Text>
+          <Text style={{fontSize:18, color:'white', fontFamily:'Quicksand_500Medium'}}>View & Edit Menu</Text>
         </Pressable>
 
         <Pressable style={styles.whiteButton} onPress={handleSignOut}>
-          <Text style={{fontSize:18, color:'#E94168'}}>Sign Out</Text>
+          <Text style={{fontSize:18, color:'#E94168', fontFamily:'Quicksand_500Medium'}}>Sign Out</Text>
         </Pressable>
       </Cards>
     </LinearGradient>

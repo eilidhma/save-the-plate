@@ -117,15 +117,15 @@ const ListingCard = ({
       <FirstLayer>
         <Image source={{uri:img}} style={{width:126, height:108, borderRadius:10}}/>
         <TextCont>
-          <Text style={{fontSize:20, fontFamily:'Raleway_700Bold', fontWeight: 'bold'}}>{foodname}</Text>
+          <Text style={{fontSize:20, fontFamily:'Raleway_700Bold'}}>{foodname}</Text>
           
             <TimerCont>
-              <Text style={{color: '#FE4265'}}>Available {timer}</Text>
+              <Text style={{color: '#FE4265', fontFamily:'Quicksand_500Medium'}}>Available {timer}</Text>
             </TimerCont>
 
 
           <ExpandCont onPress={Expand}>
-            <Text style={{color: '#FE4265', fontWeight:'bold'}}>More details</Text>
+            <Text style={{color: '#FE4265', fontfamily:'Quicksand_400Regular'}}>More details</Text>
 
             <MaterialIcons name={arrow} size={33} color="#FE4265" />
           </ExpandCont>

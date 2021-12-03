@@ -33,7 +33,7 @@ const Section = styled.View`
 
 const Title = styled.Text`
   font-size:20px;
-  font-weight:500;
+  font-family:'Raleway_700Bold';
   color:#FE4265;
   margin-bottom:5px;
 `
@@ -53,7 +53,7 @@ const Edit = styled.Pressable`
 const EditText = styled.Text`
   color:white;
   font-size:16px;
-  font-weight:500;
+  font-family:'Quicksand_500Medium';
 `
 
 const AddItemModal = styled.View`
@@ -143,13 +143,13 @@ const InfoCard = ({
     <Content>
       <Title>{title}</Title>
       <Section>
-        <Text style={{width:120, fontSize:14, fontWeight:'300', marginTop:10}}>{sectiontitle1}</Text><Text style={{fontSize:16, fontWeight:'200', marginTop:10, marginLeft:5}}>{phone}</Text>
+        <Text style={{width:120, fontSize:14, fontFamily:'Quicksand_500Medium', marginTop:10}}>{sectiontitle1}</Text><Text style={{fontSize:16, fontFamily:'Quicksand_300Light', marginTop:10, marginLeft:5}}>{phone}</Text>
       </Section>
       <Section>
-        <Text style={{width:120, fontSize:14, fontWeight:'300', marginTop:10}}>{sectiontitle2}</Text><Text style={{fontSize:16, fontWeight:'200', marginTop:10, marginLeft:5}}>{addressline1}</Text>
+        <Text style={{width:120, fontSize:14, fontFamily:'Quicksand_500Medium', marginTop:10}}>{sectiontitle2}</Text><Text style={{fontSize:16, fontFamily:'Quicksand_300Light', marginTop:10, marginLeft:5}}>{addressline1}</Text>
       </Section>
       <Section>
-        <Text style={{width:120, fontSize:14, fontWeight:'300', marginTop:10}}>{cvc}</Text><Text style={{fontSize:16, fontWeight:'200', marginTop:10, marginLeft:5}}>{addressline2}</Text>
+        <Text style={{width:120, fontSize:14, fontFamily:'Quicksand_500Medium', marginTop:10}}>{cvc}</Text><Text style={{fontSize:16, fontFamily:'Quicksand_300Light', marginTop:10, marginLeft:5}}>{addressline2}</Text>
       </Section>
     </Content>
 
