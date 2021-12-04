@@ -38,7 +38,7 @@ const Cont = styled.View`
   display:flex;
   width:100%;
   height:100%;
-  top:170px;
+  top:140px;
   backgroundColor:white;
   paddingTop:10px;
   paddingBottom:10px;

@@ -144,10 +144,10 @@ const RestaurantCard = ({
         <TextCont>
           <Text style={{fontSize:20, fontFamily:'Raleway_700Bold'}}>Order #{ordernum}</Text>
 
-          <Text style={{fontSize:18, fontFamily:'Raleway_400Regular'}}>{ordername}</Text>
+          <Text style={{fontSize:14, paddingBottom:5, fontFamily:'Raleway_400Regular'}}>{ordername}</Text>
 
           <TimerCont>
-            <Text style={{color: '#FE4265', fontFamily:'Quicksand_500Medium'}}>Available {timer}</Text>
+            <Text style={{color: '#FE4265', fontFamily:'Quicksand_500Medium'}}>Available{timer}</Text>
           </TimerCont>
 
           <ExpandCont onPress={Expand}>

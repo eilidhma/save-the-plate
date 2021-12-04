@@ -359,7 +359,7 @@ export default function RestaurantHome ({  navigation }) {
                 setModalVisible(false)
                 navigation.navigate('RestaurantHome')
               }} >
-                <Text style={{color:'white', fontSize:18}}>Ok</Text>
+                <Text style={{color:'white', fontSize:18}}>Confirm Pickup</Text>
               </Pressable>
             </View>
           </View>
