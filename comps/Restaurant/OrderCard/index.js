@@ -151,7 +151,7 @@ const RestaurantCard = ({
           </TimerCont>
 
           <ExpandCont onPress={Expand}>
-            <Text style={{color: '#FE4265', fontfamily:'Quicksand_400Regular'}}>Open to Confirm</Text>
+            <Text style={{color: '#FE4265', fontFamily:'Quicksand_400Regular'}}>Open to Confirm</Text>
 
             <MaterialIcons name={arrow} size={33} color="#FE4265" />
           </ExpandCont>

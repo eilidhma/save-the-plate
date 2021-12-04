@@ -125,7 +125,7 @@ const ListingCard = ({
 
 
           <ExpandCont onPress={Expand}>
-            <Text style={{color: '#FE4265', fontfamily:'Quicksand_400Regular'}}>More details</Text>
+            <Text style={{color: '#FE4265', fontFamily:'Quicksand_400Regular'}}>More details</Text>
 
             <MaterialIcons name={arrow} size={33} color="#FE4265" />
           </ExpandCont>
